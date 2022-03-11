@@ -40,7 +40,7 @@ for subj = 1
 
         % Start loop through ULIFT files per subject
 
-        for file = 4%1:nfiles
+        for file = 1:nfiles
             if contains(content(file).name, movement) && contains(content(file).name, '.mvnx')
                 number  = str2num(content(file).name(13:end-5));
                 file_ik = fullfile(path.subj, content(file).name);
@@ -349,7 +349,7 @@ for subj = 1
                     hold on;
                     plot(datasmooth, "Color",'#A2142F', "DisplayName","Filtered 1Hz")
                     hold off
-                    title(content(file).name)
+                    title("filterd velocity data")
 
                     % display the results of the change points
                     nexttile
@@ -415,6 +415,14 @@ for subj = 1
                     %legend('Position',[0.85,0.25,0.15,0.2])
                     title("Start/end points")
                     ylabel("position Z")
+
+                    nexttile
+                    stackedplot(Kinematics.(subj_id).GlenohumeraalZ.Phase1.normalised);
+                    title('Shoulder joint phase 1')
+                  
+                    nexttile 
+                    stackedplot(Kinematics.(subj_id).GlenohumeraalZ.Phase4.normalised);
+                    title('Shoulder joint phase 4')
                 end
 
 
