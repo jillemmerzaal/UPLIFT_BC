@@ -1,5 +1,5 @@
 %% Extract the results of the ULIFT task
-%
+%Deze text moet ik nog toevoegen om als inleiding van deze code
 
 clear all; close all; clc
 cd("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\UPLIFT_BC")
