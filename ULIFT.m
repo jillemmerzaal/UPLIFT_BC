@@ -197,101 +197,6 @@ for subj = 1
                     startPhase4 = zx(find(zx < minIndices(end-3), 1, 'last'));
                 end
 
-
-                %% Display the results
-                %---------------------
-                if plot_or_not
-                    figure;
-                    % Read the data from the structure e.g. segment 14
-                    if isfield(tree.segmentData,'position')
-                        % Plot position of segment 1
-                        tiledlayout('flow')
-                        nexttile;
-                        plot(tree.segmentData(jointno).position)
-                        xlabel('frames')
-                        ylabel('Position in the global frame')
-                        legend('x','y','z')
-                        title ('Position of lower arm segment')
-
-                        % Plot 3D displacement of segment 14
-                        %figure('name','Position of first segment in 3D')
-                        nexttile;
-                        plot3(tree.segmentData(jointno).position(:,1),tree.segmentData(jointno).position(:,2),tree.segmentData(jointno).position(:,3));
-                        xlabel('x')
-                        ylabel('y')
-                        zlabel('z')
-                        title ('Displacement of lower arm in space')
-                    end
-
-                    % display the results of the filtered and unfiltered data
-                    nexttile; plot(data, "Color",[77 190 238]/255, 'DisplayName', "Unfiltered");
-                    hold on;
-                    plot(datasmooth, "Color",'#A2142F', "DisplayName","Filtered 1Hz")
-                    hold off
-                    title(content(file).name)
-
-                    % display the results of the change points
-                    nexttile
-                    plot(peaks,"Color",[77 190 238]/255,"DisplayName","Input data")
-                    hold on
-
-                    % Plot segments between change points
-                    plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
-
-                    %Plot change points
-                    x = repelem(find(changeIndices),3);
-                    y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
-                    plot(x,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
-                    title("Number of change points: " + nnz(changeIndices))
-
-                    hold off
-                    legend('Position',[0.85,0.25,0.15,0.2])
-                    clear segmentMean x y peaks
-
-                    % display the results of the peak detection
-                    nexttile
-                    plot(datasmooth,"Color",[77 190 238]/255,"DisplayName","Input data")
-                    hold on
-                    % Plot local maxima
-                    plot(maxIndices,datasmooth(maxIndices),"^","Color",[217 83 25]/255,...
-                        "MarkerFaceColor",[217 83 25]/255,"DisplayName","Local maxima")
-                    % Plot local minima
-                    plot(minIndices,datasmooth(minIndices),"v","Color",[237 177 32]/255,...
-                        "MarkerFaceColor",[237 177 32]/255,"DisplayName","Local minima")
-                    title("Number of extrema: " + (nnz(maxIndices)+nnz(minIndices)))
-                    legend('Position',[0.85,0.25,0.15,0.2])
-                    % input the change points
-                    x = find(changeIndices);
-                    xline(x(1), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- endPh1")
-                    xline(x(2), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- strPh4")
-
-                    yline(0, "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- zerocros")
-                    hold off
-
-                    % Plot the start and end points!
-                    nexttile
-                    plot(datasmooth,"Color",[77 190 238]/255,"DisplayName","Velocity")
-                    hold on
-                    xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
-                    xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
-
-                    xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
-                    xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
-                    hold off
-                    legend('Position',[0.85,0.25,0.15,0.2])
-
-                    nexttile
-                    plot(segmentData(jointno).position(:,3),"Color",[77 190 238]/255, "DisplayName", "position")
-                    hold on
-                    xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
-                    xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
-
-                    xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
-                    xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
-                    hold off
-                    legend('Position',[0.85,0.25,0.15,0.2])
-                end
-
                 %% Extract the relevant timeseries
                 %---------------------------------
 
@@ -321,60 +226,199 @@ for subj = 1
                 %-------------------------------------------------
                 nf = 101;
                 for jnt = 1:4
-                    temp.X = jointData(jointNo(jnt)).jointAngle(T_phase1, 1);
+                    temp.X_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 1); %fist phase
+                    temp.X_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 1); %fourth phase
                     IK_X = [jointNames{jnt}, 'X'];
 
+                    temp.Y_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 2);
+                    temp.Y_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 2); %fourth phase
 
-
-                    temp.Y = jointData(jointNo(jnt)).jointAngle(T_phase1, 2);
                     IK_Y = [jointNames{jnt}, 'Y'];
-                    temp.Z = jointData(jointNo(jnt)).jointAngle(T_phase1, 3);
+
+                    temp.Z_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 3);
+                    temp.Z_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 3); %fourth phase
+
                     IK_Z = [jointNames{jnt}, 'Z'];
 
                     %normalize data to 101 frames
                     %----------------------------
                     if strcmp(arm, 'left')
                         subj_id = [subj_name, 'L'];
-                        % timedata of the individual phases
-                        Kinematics.(subj_id).(IK_X).Phase1.(fileName) = temp.X;
-                        Kinematics.(subj_id).(IK_Y).Phase1.(fileName) = temp.Y;
-                        Kinematics.(subj_id).(IK_Z).Phase1.(fileName) = temp.Z;
+
+                        % Timedata of the individual phases; phase 1
+                        %-------------------------------------------
+                        Kinematics.(subj_id).(IK_X).Phase1.(fileName) = temp.X_phase1;
+                        Kinematics.(subj_id).(IK_Y).Phase1.(fileName) = temp.Y_phase1;
+                        Kinematics.(subj_id).(IK_Z).Phase1.(fileName) = temp.Z_phase1;
+
+                        % Timedata of the individual phases; phase 4
+                        %-------------------------------------------
+                        Kinematics.(subj_id).(IK_X).Phase4.(fileName) = temp.X_phase4;
+                        Kinematics.(subj_id).(IK_Y).Phase4.(fileName) = temp.Y_phase4;
+                        Kinematics.(subj_id).(IK_Z).Phase4.(fileName) = temp.Z_phase4;
+
+                        % Time normalised phases; phase 1
+                        %--------------------------------
+                        Kinematics.(subj_id).(IK_X).Phase1.normalised(:,counter) = interp1([1:size(temp.X_phase1,1)],...
+                            temp.X_phase1', [1:(size(temp.X_phase1,1))/nf:size(temp.X_phase1,1)], 'spline');
+
+                        Kinematics.(subj_id).(IK_Y).Phase1.normalised(:,counter) = interp1([1:size(temp.Y_phase1,1)],...
+                            temp.Y_phase1', [1:(size(temp.Y_phase1,1))/nf:size(temp.Y_phase1,1)], 'spline');
+
+                        Kinematics.(subj_id).(IK_Z).Phase1.normalised(:,counter) = interp1([1:size(temp.Z_phase1,1)],...
+                            temp.Z_phase1', [1:(size(temp.Z_phase1,1))/nf:size(temp.Z_phase1,1)], 'spline');
+
+                        % Time normalised phases; phase 4
+                        %--------------------------------
+                        Kinematics.(subj_id).(IK_X).Phase4.normalised(:,counter) = interp1([1:size(temp.X_phase4,1)],...
+                            temp.X_phase4', [1:(size(temp.X_phase4,1))/nf:size(temp.X_phase4,1)], 'spline');
+
+                        Kinematics.(subj_id).(IK_Y).Phase4.normalised(:,counter) = interp1([1:size(temp.Y_phase4,1)],...
+                            temp.Y_phase4', [1:(size(temp.Y_phase4,1))/nf:size(temp.Y_phase4,1)], 'spline');
+
+                        Kinematics.(subj_id).(IK_Z).Phase4.normalised(:,counter) = interp1([1:size(temp.Z_phase4,1)],...
+                            temp.Z_phase4', [1:(size(temp.Z_phase4,1))/nf:size(temp.Z_phase4,1)], 'spline');
 
 
-                        % time normalised phases
-                        Kinematics.(subj_id).(IK_X)Phase1.(:,counter) = interp1([1:size(temp.X,1)],...
-                            temp.X', [1:(size(temp.X,1))/nf:size(temp.X,1)], 'spline');
-
-                        Kinematics.(subj_id).(IK_Y)(:,counter) = interp1([1:size(temp.Y,1)],...
-                            temp.Y', [1:(size(temp.Y,1))/nf:size(temp.Y,1)], 'spline');
-
-                        Kinematics.(subj_id).(IK_Z)(:,counter) = interp1([1:size(temp.Z,1)],...
-                            temp.Z', [1:(size(temp.Z,1))/nf:size(temp.Z,1)], 'spline');
                     else
                         subj_id = [subj_name, 'R'];
 
-                        % timedata of the individual phases
-                        %----------------------------------
-                        Kinematics.(subj_id).(IK_X).Phase1.(fileName) = temp.X;
-                        Kinematics.(subj_id).(IK_Y).Phase1.(fileName) = temp.Y;
-                        Kinematics.(subj_id).(IK_Z).Phase1.(fileName) = temp.Z;
+                        % Timedata of the individual phases; phase 1
+                        %-------------------------------------------
+                        Kinematics.(subj_id).(IK_X).Phase1.(fileName) = temp.X_phase1;
+                        Kinematics.(subj_id).(IK_Y).Phase1.(fileName) = temp.Y_phase1;
+                        Kinematics.(subj_id).(IK_Z).Phase1.(fileName) = temp.Z_phase1;
 
-                        % time normalised phases
-                        %-----------------------
-                        Kinematics.(subj_id).(IK_X)(:,counter) = interp1([1:size(temp.X,1)],...
-                            temp.X', [1:(size(temp.X,1))/nf:size(temp.X,1)], 'spline');
+                        % Timedata of the individual phases; phase 4
+                        %-------------------------------------------
+                        Kinematics.(subj_id).(IK_X).Phase4.(fileName) = temp.X_phase4;
+                        Kinematics.(subj_id).(IK_Y).Phase4.(fileName) = temp.Y_phase4;
+                        Kinematics.(subj_id).(IK_Z).Phase4.(fileName) = temp.Z_phase4;
 
-                        Kinematics.(subj_id).(IK_Y)(:,counter) = interp1([1:size(temp.Y,1)],...
-                            temp.Y', [1:(size(temp.Y,1))/nf:size(temp.Y,1)], 'spline');
+                        % Time normalised phases; phase 1
+                        %--------------------------------
+                        Kinematics.(subj_id).(IK_X).Phase1.normalised(:,counter) = interp1([1:size(temp.X_phase1,1)],...
+                            temp.X_phase1', [1:(size(temp.X_phase1,1))/nf:size(temp.X_phase1,1)], 'spline');
 
-                        Kinematics.(subj_id).(IK_Z)(:,counter) = interp1([1:size(temp.Z,1)],...
-                            temp.Z', [1:(size(temp.Z,1))/nf:size(temp.Z,1)], 'spline');
+                        Kinematics.(subj_id).(IK_Y).Phase1.normalised(:,counter) = interp1([1:size(temp.Y_phase1,1)],...
+                            temp.Y_phase1', [1:(size(temp.Y_phase1,1))/nf:size(temp.Y_phase1,1)], 'spline');
+
+                        Kinematics.(subj_id).(IK_Z).Phase1.normalised(:,counter) = interp1([1:size(temp.Z_phase1,1)],...
+                            temp.Z_phase1', [1:(size(temp.Z_phase1,1))/nf:size(temp.Z_phase1,1)], 'spline');
+
+                        % Time normalised phases; phase 4
+                        %--------------------------------
+                        Kinematics.(subj_id).(IK_X).Phase4.normalised(:,counter) = interp1([1:size(temp.X_phase4,1)],...
+                            temp.X_phase4', [1:(size(temp.X_phase4,1))/nf:size(temp.X_phase4,1)], 'spline');
+
+                        Kinematics.(subj_id).(IK_Y).Phase4.normalised(:,counter) = interp1([1:size(temp.Y_phase4,1)],...
+                            temp.Y_phase4', [1:(size(temp.Y_phase4,1))/nf:size(temp.Y_phase4,1)], 'spline');
+
+                        Kinematics.(subj_id).(IK_Z).Phase4.normalised(:,counter) = interp1([1:size(temp.Z_phase4,1)],...
+                            temp.Z_phase4', [1:(size(temp.Z_phase4,1))/nf:size(temp.Z_phase4,1)], 'spline');
                     end
+                end
+                clear temp
+
+                %% Display the results
+                %---------------------
+                if plot_or_not
+                    figure;
+
+                    % Plot position of lower arm segement
+                    tiledlayout('flow')
+                    nexttile;
+                    plot(tree.segmentData(jointno).position)
+                    xlabel('frames')
+                    ylabel('Position in the global frame')
+                    legend('x','y','z')
+                    title ('Position of lower arm segment')
+
+                    % Plot 3D displacement of segment 14
+                    %figure('name','Position of first segment in 3D')
+                    nexttile;
+                    plot3(tree.segmentData(jointno).position(:,1),tree.segmentData(jointno).position(:,2),tree.segmentData(jointno).position(:,3));
+                    xlabel('x')
+                    ylabel('y')
+                    zlabel('z')
+                    title ('Displacement of lower arm in space')
+
+
+                    % display the results of the filtered and unfiltered data
+                    nexttile; plot(data, "Color",[77 190 238]/255, 'DisplayName', "Unfiltered");
+                    hold on;
+                    plot(datasmooth, "Color",'#A2142F', "DisplayName","Filtered 1Hz")
+                    hold off
+                    title(content(file).name)
+
+                    % display the results of the change points
+                    nexttile
+                    plot(peaks,"Color",[77 190 238]/255,"DisplayName","Input data")
+                    hold on
+
+                    % Plot segments between change points
+                    plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
+
+                    %Plot change points
+                    x = repelem(find(changeIndices),3);
+                    y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                    plot(x,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
+                    title("Number of change points: " + nnz(changeIndices))
+
+                    hold off
+                    %legend('Position',[0.85,0.25,0.15,0.2])
+                    clear segmentMean x y peaks
+
+                    % display the results of the peak detection
+                    nexttile
+                    plot(datasmooth,"Color",[77 190 238]/255,"DisplayName","Input data")
+                    hold on
+                    % Plot local maxima
+                    plot(maxIndices,datasmooth(maxIndices),"^","Color",[217 83 25]/255,...
+                        "MarkerFaceColor",[217 83 25]/255,"DisplayName","Local maxima")
+                    % Plot local minima
+                    plot(minIndices,datasmooth(minIndices),"v","Color",[237 177 32]/255,...
+                        "MarkerFaceColor",[237 177 32]/255,"DisplayName","Local minima")
+                    title("Number of extrema: " + (nnz(maxIndices)+nnz(minIndices)))
+                    %legend('Position',[0.85,0.25,0.15,0.2])
+                    % input the change points
+                    x = find(changeIndices);
+                    xline(x(1), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- endPh1")
+                    xline(x(2), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- strPh4")
+
+                    yline(0, "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- zerocros")
+                    hold off
+
+                    % Plot the start and end points!
+                    nexttile
+                    plot(datasmooth,"Color",[77 190 238]/255,"DisplayName","Velocity")
+                    hold on
+                    xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
+                    xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
+
+                    xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
+                    xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
+                    hold off
+                    %legend('Position',[0.85,0.25,0.15,0.2])
+                    title("Start/end points")
+                    ylabel("Velocity Z")
+
+                    nexttile
+                    plot(segmentData(jointno).position(:,3),"Color",[77 190 238]/255, "DisplayName", "position")
+                    hold on
+                    xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
+                    xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
+
+                    xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
+                    xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
+                    hold off
+                    %legend('Position',[0.85,0.25,0.15,0.2])
+                    title("Start/end points")
+                    ylabel("position Z")
                 end
 
 
 
-                clear temp
 
             end % end if movement && .mvnx
         end %end number of files
