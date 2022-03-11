@@ -45,13 +45,6 @@ for subj = 1
                 number  = str2num(content(file).name(13:end-5));
                 file_ik = fullfile(path.subj, content(file).name);
 
-
-
-
-                [~,name, ~] = fileparts(content(file).name);
-                [fileName] = regexprep(name, '-', '_');
-
-
                 if contains(content(file).name, 'R')
                     arm = 'right';
                 else
@@ -305,6 +298,8 @@ for subj = 1
 
 
                 T_phase1 = startPhase1:endPhase1;
+               
+
                 T_phase4 = startPhase4:endPhase4;
 
                 if strcmp(arm, 'left')
@@ -323,9 +318,6 @@ for subj = 1
                 for jnt = 1:4
                     temp.X = jointData(jointNo(jnt)).jointAngle(T_phase1, 1);
                     IK_X = [jointNames{jnt}, 'X'];
-
-
-
                     temp.Y = jointData(jointNo(jnt)).jointAngle(T_phase1, 2);
                     IK_Y = [jointNames{jnt}, 'Y'];
                     temp.Z = jointData(jointNo(jnt)).jointAngle(T_phase1, 3);
@@ -335,14 +327,7 @@ for subj = 1
                     %----------------------------
                     if strcmp(arm, 'left')
                         subj_id = [subj_name, 'L'];
-                        % timedata of the individual phases
-                        Kinematics.(subj_id).(IK_X).Phase1.(fileName) = temp.X;
-                        Kinematics.(subj_id).(IK_Y).Phase1.(fileName) = temp.Y;
-                        Kinematics.(subj_id).(IK_Z).Phase1.(fileName) = temp.Z;
-
-
-                        % time normalised phases
-                        Kinematics.(subj_id).(IK_X)Phase1.(:,counter) = interp1([1:size(temp.X,1)],...
+                        Kinematics.(subj_id).(IK_X)(:,counter) = interp1([1:size(temp.X,1)],...
                             temp.X', [1:(size(temp.X,1))/nf:size(temp.X,1)], 'spline');
 
                         Kinematics.(subj_id).(IK_Y)(:,counter) = interp1([1:size(temp.Y,1)],...
@@ -352,15 +337,6 @@ for subj = 1
                             temp.Z', [1:(size(temp.Z,1))/nf:size(temp.Z,1)], 'spline');
                     else
                         subj_id = [subj_name, 'R'];
-
-                        % timedata of the individual phases
-                        %----------------------------------
-                        Kinematics.(subj_id).(IK_X).Phase1.(fileName) = temp.X;
-                        Kinematics.(subj_id).(IK_Y).Phase1.(fileName) = temp.Y;
-                        Kinematics.(subj_id).(IK_Z).Phase1.(fileName) = temp.Z;
-
-                        % time normalised phases
-                        %-----------------------
                         Kinematics.(subj_id).(IK_X)(:,counter) = interp1([1:size(temp.X,1)],...
                             temp.X', [1:(size(temp.X,1))/nf:size(temp.X,1)], 'spline');
 
@@ -372,7 +348,7 @@ for subj = 1
                     end
                 end
 
-
+Kinematics.(subj_id).
 
                 clear temp
 
