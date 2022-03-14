@@ -232,17 +232,17 @@ for subj = 3
                     % temporary time curves with the phase data. 
                     temp.X_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 1); %fist phase
                     temp.X_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 1); %fourth phase
-                    IK_X = [jointNames{jnt}, '_abbuction']; % initiation of joint names
+                    IK_X = [jointNames{jnt}, 'ab/ad']; % initiation of joint names
 
                     temp.Y_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 2); %fist phase
                     temp.Y_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 2); %fourth phase
 
-                    IK_Y = [jointNames{jnt}, '_rotation'];
+                    IK_Y = [jointNames{jnt}, 'rotation'];
 
                     temp.Z_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 3);
                     temp.Z_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 3); %fourth phase
 
-                    IK_Z = [jointNames{jnt}, '_flexion'];
+                    IK_Z = [jointNames{jnt}, 'flexion/extension'];
 
                     %normalize data to 101 frames
                     %----------------------------
@@ -421,11 +421,11 @@ for subj = 3
                     ylabel("position Z")
 
                     nexttile
-                    stackedplot(Kinematics.(subj_id).Glenohumeraal_flexion.Phase1.normalised);
+                    stackedplot(Kinematics.(subj_id).GlenohumeraalZ.Phase1.normalised);
                     title('Shoulder joint phase 1')
                   
                     nexttile 
-                    stackedplot(Kinematics.(subj_id).Glenohumeraal_flexion.Phase4.normalised);
+                    stackedplot(Kinematics.(subj_id).GlenohumeraalZ.Phase4.normalised);
                     title('Shoulder joint phase 4')
                 end
 
