@@ -40,7 +40,7 @@ for subj = 3
 
         % Start loop through ULIFT files per subject
 
-        for file = 22%1:nfiles
+        for file = 1:nfiles
             if contains(content(file).name, movement) && contains(content(file).name, '.mvnx')
                 number  = str2num(content(file).name(13:end-5));
                 file_ik = fullfile(path.subj, content(file).name);
@@ -106,16 +106,15 @@ for subj = 3
 
 
                 %% Define start & end points of each repetition based on velocity of lower arm
-
                 data = segmentData(jointno).velocity(:,3);
+                
                 %filter data
                 fc = 1;  %cutoff freq
                 fs = 60; %sample freq
                 [b,a] = butter(2, fc/(fs/2));
                 % freqz(b,a)
                 datasmooth = filtfilt(b,a, data);
-
-
+                
                 %% change points
                 % Find the change points of the position data and the minima and maxima in the
                 % velocity data of the lower arm.
@@ -168,13 +167,30 @@ for subj = 3
                 startPhase1 = zx(find(zx < maxIndices(1),1,'last'));
 
                 % end phase 1 --> highest shelf to middle shelf
-                endPhase1 = zx(find(zx < x(1), 30, "last"));
+                endPhase1_range = zx(find(zx < x(1), 100, "last"));
 
-                if sum(endPhase1 > maxIndices(4))
-                    endPhase1 = endPhase1(find(endPhase1 < maxIndices(4), 1, 'last'));
+                % the end of phase one sould end right after the 3rd
+                % minimum velocity peak, on the condition that we start
+                % with a positive velocity peak. 
+                if maxIndices(1) < minIndices(1)
+                    if sum(endPhase1_range > minIndices(3))
+                        endPhase1 = endPhase1_range(find(endPhase1_range > minIndices(3), 1, 'first'));
+                    else
+                        endPhase1 = endPhase1_range(end);
+                    end
                 else
-                    endPhase1 = endPhase1(end);
+                    if sum(endPhase1_range > minIndices(4))
+                        endPhase1 = endPhase1_range(find(endPhase1_range > minIndices(4), 1, 'first'));
+                    else
+                        endPhase1 = endPhase1_range(end);
+                    end
                 end
+
+%                 % endphase1 should not be too far from the third minimum in
+%                 % the velocity vector
+%                 if abs(endPhase1 - minIndices(3)) > 20 
+%                     endPhase1 = endPhase1_range(find(endPhase1_range > minIndices(3), 1, 'first'));
+%                 end
 
                 %% start and end of phase 4
                 % Determine start and end points of phase 4 based on change points in the position
@@ -182,16 +198,31 @@ for subj = 3
                 %------------------------------------------------------------
                 endPhase4 = zx(find(zx > minIndices(end),1,'first'));
 
-                startPhase4 = zx(find(zx > x(2), 10, "first"));
-                if sum(startPhase4 > minIndices(end-3))
-                    startPhase4 = startPhase4(find(startPhase4 < minIndices(end-3), 1, 'last'));
+                startPhase4_range = zx(find(zx > x(2), 50, "first"));
+               if sum(startPhase4_range > minIndices(end-3))
+                    startPhase4 = startPhase4_range(find(startPhase4_range < minIndices(end-3), 1, 'last'));
                 else
-                    startPhase4 = startPhase4(1);
+                    startPhase4 = startPhase4_range(1);
                 end
 
                 if isempty(startPhase4)
-                    startPhase4 = zx(find(zx < minIndices(end-3), 1, 'last'));
+                    startPhase4 = zx(find(zx < maxIndices(end-3), 1, 'last'));
                 end
+
+                % start point of phase 4 should not be too far from the
+                % third to last maximum peak. On the condition that we end
+                % with a minimum peak. 
+
+                if maxIndices(end) > minIndices(end)
+                    if abs(startPhase4 - maxIndices(end-3)) > 20
+                        startPhase4 = startPhase4_range(find(startPhase4_range < maxIndices(end-3), 1, 'last'));
+                    end
+                else
+                    if abs(startPhase4 - maxIndices(end-2)) > 20
+                        startPhase4 = startPhase4_range(find(startPhase4_range < maxIndices(end-2), 1, 'last'));
+                    end
+                end
+
 
                 %% Extract the relevant timeseries
                 %---------------------------------
