@@ -13,11 +13,11 @@ path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - UPLIFT-BC\INVESTIGATOR 
 path.out    = fullfile(path.root,'Output','Database_ULIFT.mat');
 
 
-plot_or_not = 1;
+plot_or_not = 0;
 
 
 %% 2. load data 
-for subj = 1% [1,3]
+for subj = [1,3]
     if subj < 10
         subj_name   = ['BCT_00' num2str(subj)];
     elseif subj < 100
@@ -41,7 +41,7 @@ for subj = 1% [1,3]
         nfiles = size(content,1);
 
         % Start loop through ULIFT files per subject
-        for file = 4%1:nfiles
+        for file = 1:nfiles
             if contains(content(file).name, movement) && contains(content(file).name, '.mvnx')
                 number  = str2num(content(file).name(13:end-5));
                 file_ik = fullfile(path.subj, content(file).name);
@@ -109,7 +109,7 @@ for subj = 1% [1,3]
                 data = segmentData(jointno).velocity(:,3);
                 
                 %filter data
-                fc = 1;  %cutoff freq
+                fc = 2;  %cutoff freq
                 fs = 60; %sample freq
                 [b,a] = butter(2, fc/(fs/2));
                 % freqz(b,a)
@@ -235,7 +235,7 @@ for subj = 1% [1,3]
                 end
 
                 % set General information per participant, per trial. 
-                Data_out.(movement).General.CutIndices.(fileName) = [startPhase1, endPhase1, startPhase4, endPhase4];
+                Data_out.(movement).(Timepoint).General.CutIndices.(fileName) = [startPhase1, endPhase1, startPhase4, endPhase4];
 
                 % initialise joint names
                 jointNames = ['Scapula', "Glenohumeraal", "Elbow", "Wrist"];
@@ -266,42 +266,42 @@ for subj = 1% [1,3]
 
                     % Full ULIFT time data
                     %---------------------
-                    Data_out.(movement).IK.(arm).raw.(fileName).(IK_X) = jointData(jointNo(jnt)).jointAngle(:, 1);
-                    Data_out.(movement).IK.(arm).raw.(fileName).(IK_Y) = jointData(jointNo(jnt)).jointAngle(:, 2);
-                    Data_out.(movement).IK.(arm).raw.(fileName).(IK_Z) = jointData(jointNo(jnt)).jointAngle(:, 3);
+                    Data_out.(movement).(Timepoint).IK.(arm).raw.(fileName).(IK_X) = jointData(jointNo(jnt)).jointAngle(:, 1);
+                    Data_out.(movement).(Timepoint).IK.(arm).raw.(fileName).(IK_Y) = jointData(jointNo(jnt)).jointAngle(:, 2);
+                    Data_out.(movement).(Timepoint).IK.(arm).raw.(fileName).(IK_Z) = jointData(jointNo(jnt)).jointAngle(:, 3);
 
                     % Timedata of the phases; phase 1
                     %---------------------------------
-                    Data_out.(movement).IK.(arm).Phase1.(fileName).(IK_X) = temp.X_phase1;
-                    Data_out.(movement).IK.(arm).Phase1.(fileName).(IK_Y) = temp.Y_phase1;
-                    Data_out.(movement).IK.(arm).Phase1.(fileName).(IK_Z) = temp.Z_phase1;
+                    Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_X) = temp.X_phase1;
+                    Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_Y) = temp.Y_phase1;
+                    Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_Z) = temp.Z_phase1;
 
                     % Timedata of the phases; phase 4
                     %--------------------------------
-                    Data_out.(movement).IK.(arm).Phase4.(fileName).(IK_X) = temp.X_phase4;
-                    Data_out.(movement).IK.(arm).Phase4.(fileName).(IK_Y) = temp.Y_phase4;
-                    Data_out.(movement).IK.(arm).Phase4.(fileName).(IK_Z) = temp.Z_phase4;
+                    Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_X) = temp.X_phase4;
+                    Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_Y) = temp.Y_phase4;
+                    Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_Z) = temp.Z_phase4;
 
                     % Time normalised phases; phase 1
                     %--------------------------------
-                    Data_out.(movement).IK.(arm).Phase1.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase1,1)],...
+                    Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase1,1)],...
                         temp.X_phase1', [1:(size(temp.X_phase1,1))/nf:size(temp.X_phase1,1)], 'spline');
 
-                    Data_out.(movement).IK.(arm).Phase1.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase1,1)],...
+                    Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase1,1)],...
                         temp.Y_phase1', [1:(size(temp.Y_phase1,1))/nf:size(temp.Y_phase1,1)], 'spline');
 
-                    Data_out.(movement).IK.(arm).Phase1.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase1,1)],...
+                    Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase1,1)],...
                         temp.Z_phase1', [1:(size(temp.Z_phase1,1))/nf:size(temp.Z_phase1,1)], 'spline');
 
                     % Time normalised phases; phase 4
                     %--------------------------------
-                    Data_out.(movement).IK.(arm).Phase4.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase4,1)],...
+                    Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase4,1)],...
                         temp.X_phase4', [1:(size(temp.X_phase4,1))/nf:size(temp.X_phase4,1)], 'spline');
 
-                    Data_out.(movement).IK.(arm).Phase4.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase4,1)],...
+                    Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase4,1)],...
                         temp.Y_phase4', [1:(size(temp.Y_phase4,1))/nf:size(temp.Y_phase4,1)], 'spline');
 
-                    Data_out.(movement).IK.(arm).Phase4.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase4,1)],...
+                    Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase4,1)],...
                         temp.Z_phase4', [1:(size(temp.Z_phase4,1))/nf:size(temp.Z_phase4,1)], 'spline');
                     clear temp
                 end
@@ -386,11 +386,11 @@ for subj = 1% [1,3]
                     ylabel("position Z")
 
                     nexttile
-                    stackedplot(Data_out.(movement).IK.(arm).Phase1.normalised.Glenohumeraal_flexion)
+                    stackedplot(Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.Glenohumeraal_flexion)
                     title('Flexion/extension Shoulder--phase 1')
 
                     nexttile
-                    stackedplot(Data_out.(movement).IK.(arm).Phase4.normalised.Glenohumeraal_flexion);
+                    stackedplot(Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.Glenohumeraal_flexion);
                     title('Flexion/extension Shoulder--phase 4')
 
                  end
@@ -411,9 +411,9 @@ for subj = 1% [1,3]
         end
 
 
-        [Data.(subj_name).ULIFT] = Data_out.ULIFT;
+        [Data.(subj_name).ULIFT.(Timepoint)] = Data_out.ULIFT.(Timepoint);
         save(path.out,'Data')
-        %clear Data Data_out
+        clear Data Data_out
     end
 
     disp(['*********Finished ' subj_name '**********'])

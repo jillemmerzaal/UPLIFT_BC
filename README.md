@@ -13,16 +13,11 @@ level to middel level(Phase 1); middel level to floor (Phase 2); floor to middel
 Active range of motion of the whole shoulder complex will be evaluated. 
 
 - Cyclic weighted reaching task
-
-
   
 #### This repository holds the code to:
 Calculate joint kinematics waveform analysis during an instrumented ULIFT taks
 Calculate peak angles during an instrumented ROM taks 
 Calulcate movement quality during an instrumented cyclic weighted reaching task.
-
-
-
 
 ## Joint angles that will be extracted: 
 - Scapula ab/adduction laterale/mediale rotatie
@@ -43,7 +38,7 @@ Calulcate movement quality during an instrumented cyclic weighted reaching task.
 - Trunk flexion/extension
 
 ## Movement quality parameters
-- maximal divergence --> Lyapunove exponents
+- maximal divergence --> Lyapunov exponents
 - movement smoothness --> LDLJ_A 
 - movement complexity --> Sample enthropy 
 - regularity --> autocorrelation
