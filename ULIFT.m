@@ -13,11 +13,11 @@ path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - UPLIFT-BC\INVESTIGATOR 
 path.out    = fullfile(path.root,'Output','Database_ULIFT.mat');
 
 
-plot_or_not = 0;
+plot_or_not = 1;
 
 
 %% 2. load data 
-for subj = [1,3]
+for subj = 1% [1,3]
     if subj < 10
         subj_name   = ['BCT_00' num2str(subj)];
     elseif subj < 100
@@ -41,7 +41,7 @@ for subj = [1,3]
         nfiles = size(content,1);
 
         % Start loop through ULIFT files per subject
-        for file = 1:nfiles
+        for file = 4%1:nfiles
             if contains(content(file).name, movement) && contains(content(file).name, '.mvnx')
                 number  = str2num(content(file).name(13:end-5));
                 file_ik = fullfile(path.subj, content(file).name);
@@ -234,6 +234,9 @@ for subj = [1,3]
                     jointNo     = 11:14; % left upper extremity
                 end
 
+                % set General information per participant, per trial. 
+                Data_out.(movement).General.CutIndices.(fileName) = [startPhase1, endPhase1, startPhase4, endPhase4];
+
                 % initialise joint names
                 jointNames = ['Scapula', "Glenohumeraal", "Elbow", "Wrist"];
 
@@ -247,7 +250,8 @@ for subj = [1,3]
                 %-------------------------------------------------
                 nf = 101;
                 for jnt = 1:4
-                    % temporary time curves with the phase data.
+                    % temporary time curves with the phase data
+                    %------------------------------------------
                     temp.X_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 1); %fist phase
                     temp.X_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 1); %fourth phase
                     IK_X = [jointNames{jnt}, '_abbuction']; % initiation of joint names
@@ -258,26 +262,22 @@ for subj = [1,3]
 
                     temp.Z_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 3);
                     temp.Z_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 3); %fourth phase
-
                     IK_Z = [jointNames{jnt}, '_flexion'];
 
-
-                    % Start/end points
-                    Data_out.(movement).IK.(arm).raw.(fileName).CutIndices = [startPhase1, endPhase1, startPhase4, endPhase4];
-
                     % Full ULIFT time data
+                    %---------------------
                     Data_out.(movement).IK.(arm).raw.(fileName).(IK_X) = jointData(jointNo(jnt)).jointAngle(:, 1);
                     Data_out.(movement).IK.(arm).raw.(fileName).(IK_Y) = jointData(jointNo(jnt)).jointAngle(:, 2);
                     Data_out.(movement).IK.(arm).raw.(fileName).(IK_Z) = jointData(jointNo(jnt)).jointAngle(:, 3);
 
                     % Timedata of the phases; phase 1
-                    %-------------------------------------------
+                    %---------------------------------
                     Data_out.(movement).IK.(arm).Phase1.(fileName).(IK_X) = temp.X_phase1;
                     Data_out.(movement).IK.(arm).Phase1.(fileName).(IK_Y) = temp.Y_phase1;
                     Data_out.(movement).IK.(arm).Phase1.(fileName).(IK_Z) = temp.Z_phase1;
 
-                    % Timedata of the individual phases; phase 4
-                    %-------------------------------------------
+                    % Timedata of the phases; phase 4
+                    %--------------------------------
                     Data_out.(movement).IK.(arm).Phase4.(fileName).(IK_X) = temp.X_phase4;
                     Data_out.(movement).IK.(arm).Phase4.(fileName).(IK_Y) = temp.Y_phase4;
                     Data_out.(movement).IK.(arm).Phase4.(fileName).(IK_Z) = temp.Z_phase4;
@@ -305,125 +305,95 @@ for subj = [1,3]
                         temp.Z_phase4', [1:(size(temp.Z_phase4,1))/nf:size(temp.Z_phase4,1)], 'spline');
                     clear temp
                 end
-
-
-                %% 2.4 Extract the relevant acceleration signals
-                %-----------------------------------------------
-                disp(['    ' content(file).name ': extract relevant Accelerations'])
                 
-                if strcmp(arm, 'right')
-                    segmentNo   = 8:11;
-                else
-                    segmentNo   = 12:15;
-                end
-
-                segmentNames = {'Shoulder',}
-
-
                 %% Display the results
                 %---------------------
-%                 if plot_or_not
-%                     figure;
+                 if plot_or_not
+                     figure;
+                     tiledlayout('flow')
+                     
+                     %display the results of the filtered and unfiltered data
+                     nexttile
+                     plot(data, "Color",[77 190 238]/255, 'DisplayName', "Unfiltered");
+                     hold on;
+                     plot(datasmooth, "Color",'#A2142F', "DisplayName","Filtered 1Hz")
+                     hold off
+                     title("filterd velocity data")
+
+                     % display the results of the change points
+                     nexttile
+                     plot(peaks,"Color",[77 190 238]/255,"DisplayName","Input data")
+                     hold on
+
+                     % Plot segments between change points
+                     plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
+
+                     %Plot change points
+                     x = repelem(find(changeIndices),3);
+                     y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                     plot(x,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
+                     title("Number of change points: " + nnz(changeIndices))
+
+                     hold off
+                     %legend('Position',[0.85,0.25,0.15,0.2])
+                     clear segmentMean x y peaks
 % 
-%                     % Plot position of lower arm segement
-%                     tiledlayout('flow')
-%                     nexttile;
-%                     plot(tree.segmentData(jointno).position)
-%                     xlabel('frames')
-%                     ylabel('Position in the global frame')
-%                     legend('x','y','z')
-%                     title ('Position of lower arm segment')
+                    % display the results of the peak detection
+                    nexttile
+                    plot(datasmooth,"Color",[77 190 238]/255,"DisplayName","Input data")
+                    hold on
+                    % Plot local maxima
+                    plot(maxIndices,datasmooth(maxIndices),"^","Color",[217 83 25]/255,...
+                        "MarkerFaceColor",[217 83 25]/255,"DisplayName","Local maxima")
+                    % Plot local minima
+                    plot(minIndices,datasmooth(minIndices),"v","Color",[237 177 32]/255,...
+                        "MarkerFaceColor",[237 177 32]/255,"DisplayName","Local minima")
+                    title("Number of extrema: " + (nnz(maxIndices)+nnz(minIndices)))
+                    %legend('Position',[0.85,0.25,0.15,0.2])
+                    % input the change points
+                    x = find(changeIndices);
+                    xline(x(1), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- endPh1")
+                    xline(x(2), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- strPh4")
+
+                    yline(0, "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- zerocros")
+                    hold off
 % 
-%                     % Plot 3D displacement of segment 14
-%                     %figure('name','Position of first segment in 3D')
-%                     nexttile;
-%                     plot3(tree.segmentData(jointno).position(:,1),tree.segmentData(jointno).position(:,2),tree.segmentData(jointno).position(:,3));
-%                     xlabel('x')
-%                     ylabel('y')
-%                     zlabel('z')
-%                     title ('Displacement of lower arm in space')
+                    % Plot the start and end points!
+                    nexttile
+                    plot(datasmooth,"Color",[77 190 238]/255,"DisplayName","Velocity")
+                    hold on
+                    xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
+                    xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
+
+                    xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
+                    xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
+                    hold off
+                    %legend('Position',[0.85,0.25,0.15,0.2])
+                    title("Start/end points")
+                    ylabel("Velocity Z")
 % 
-% 
-%                     % display the results of the filtered and unfiltered data
-%                     nexttile; plot(data, "Color",[77 190 238]/255, 'DisplayName', "Unfiltered");
-%                     hold on;
-%                     plot(datasmooth, "Color",'#A2142F', "DisplayName","Filtered 1Hz")
-%                     hold off
-%                     title("filterd velocity data")
-% 
-%                     % display the results of the change points
-%                     nexttile
-%                     plot(peaks,"Color",[77 190 238]/255,"DisplayName","Input data")
-%                     hold on
-% 
-%                     % Plot segments between change points
-%                     plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
-% 
-%                     %Plot change points
-%                     x = repelem(find(changeIndices),3);
-%                     y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
-%                     plot(x,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
-%                     title("Number of change points: " + nnz(changeIndices))
-% 
-%                     hold off
-%                     %legend('Position',[0.85,0.25,0.15,0.2])
-%                     clear segmentMean x y peaks
-% 
-%                     % display the results of the peak detection
-%                     nexttile
-%                     plot(datasmooth,"Color",[77 190 238]/255,"DisplayName","Input data")
-%                     hold on
-%                     % Plot local maxima
-%                     plot(maxIndices,datasmooth(maxIndices),"^","Color",[217 83 25]/255,...
-%                         "MarkerFaceColor",[217 83 25]/255,"DisplayName","Local maxima")
-%                     % Plot local minima
-%                     plot(minIndices,datasmooth(minIndices),"v","Color",[237 177 32]/255,...
-%                         "MarkerFaceColor",[237 177 32]/255,"DisplayName","Local minima")
-%                     title("Number of extrema: " + (nnz(maxIndices)+nnz(minIndices)))
-%                     %legend('Position',[0.85,0.25,0.15,0.2])
-%                     % input the change points
-%                     x = find(changeIndices);
-%                     xline(x(1), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- endPh1")
-%                     xline(x(2), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- strPh4")
-% 
-%                     yline(0, "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- zerocros")
-%                     hold off
-% 
-%                     % Plot the start and end points!
-%                     nexttile
-%                     plot(datasmooth,"Color",[77 190 238]/255,"DisplayName","Velocity")
-%                     hold on
-%                     xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
-%                     xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
-% 
-%                     xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
-%                     xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
-%                     hold off
-%                     %legend('Position',[0.85,0.25,0.15,0.2])
-%                     title("Start/end points")
-%                     ylabel("Velocity Z")
-% 
-%                     nexttile
-%                     plot(segmentData(jointno).position(:,3),"Color",[77 190 238]/255, "DisplayName", "position")
-%                     hold on
-%                     xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
-%                     xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
-% 
-%                     xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
-%                     xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
-%                     hold off
-%                     %legend('Position',[0.85,0.25,0.15,0.2])
-%                     title("Start/end points")
-%                     ylabel("position Z")
-% 
-%                     nexttile
-%                     stackedplot(Kinematics.(subj_id).Phase1.normalised.Glenohumeraal_flexion);
-%                     title('Shoulder joint phase 1')
-% 
-%                     nexttile
-%                     stackedplot(Kinematics.(subj_id).Phase4.normalised.Glenohumeraal_flexion);
-%                     title('Shoulder joint phase 4')
-%                 end
+                    nexttile
+                    plot(segmentData(jointno).position(:,3),"Color",[77 190 238]/255, "DisplayName", "position")
+                    hold on
+                    xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
+                    xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
+
+                    xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
+                    xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
+                    hold off
+                    %legend('Position',[0.85,0.25,0.15,0.2])
+                    title("Start/end points")
+                    ylabel("position Z")
+
+                    nexttile
+                    stackedplot(Data_out.(movement).IK.(arm).Phase1.normalised.Glenohumeraal_flexion)
+                    title('Flexion/extension Shoulder--phase 1')
+
+                    nexttile
+                    stackedplot(Data_out.(movement).IK.(arm).Phase4.normalised.Glenohumeraal_flexion);
+                    title('Flexion/extension Shoulder--phase 4')
+
+                 end
 
 
 
@@ -443,7 +413,7 @@ for subj = [1,3]
 
         [Data.(subj_name).ULIFT] = Data_out.ULIFT;
         save(path.out,'Data')
-        clear Data Data_out
+        %clear Data Data_out
     end
 
     disp(['*********Finished ' subj_name '**********'])
