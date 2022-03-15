@@ -217,32 +217,24 @@ for subj = [1,3]
                         startPhase4 = startPhase4_range(find(startPhase4_range < maxIndices(end-2), 1, 'last'));
                     end
                 end
+                T_phase1 = startPhase1:endPhase1;
+                T_phase4 = startPhase4:endPhase4;
 
-
-                %% 2.3 Extract the relevant timeseries
+                %% 2.3 Extract the relevant kinematics
                 %-------------------------------------
                 disp(['    ' content(file).name ': extract relevant Kinematics'])
 
                 if strcmp(arm, 'right')
                     counterR    = counterR + 1;
                     counter     = counterR;
+                    jointNo     = 7:10; % right upper extremity
                 else
                     counterL    = counterL + 1;
                     counter     = counterL;
-                end
-
-
-                T_phase1 = startPhase1:endPhase1;
-                T_phase4 = startPhase4:endPhase4;
-
-                if strcmp(arm, 'left')
                     jointNo     = 11:14; % left upper extremity
-                    segmentNo   = 12:15;
-                else
-                    jointNo     = 7:10; % right upper extremity
-                    segmentNo   = 8:11;
                 end
 
+                % initialise joint names
                 jointNames = ['Scapula', "Glenohumeraal", "Elbow", "Wrist"];
 
                 % Save the timecurves to struct, per participant, per
@@ -254,9 +246,8 @@ for subj = [1,3]
                     % time normalised timecurves for each repetition
                 %-------------------------------------------------
                 nf = 101;
-
-               for jnt = 1:4
-                    % temporary time curves with the phase data. 
+                for jnt = 1:4
+                    % temporary time curves with the phase data.
                     temp.X_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 1); %fist phase
                     temp.X_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 1); %fourth phase
                     IK_X = [jointNames{jnt}, '_abbuction']; % initiation of joint names
@@ -271,53 +262,63 @@ for subj = [1,3]
                     IK_Z = [jointNames{jnt}, '_flexion'];
 
 
-                   % Start/end points
-                   Data_out.(movement).IK.(arm).raw.(fileName).CutIndices = [startPhase1, endPhase1, startPhase4, endPhase4];
+                    % Start/end points
+                    Data_out.(movement).IK.(arm).raw.(fileName).CutIndices = [startPhase1, endPhase1, startPhase4, endPhase4];
 
-                   % Full ULIFT time data
-                   Data_out.(movement).IK.(arm).raw.(fileName).(IK_X) = jointData(jointNo(jnt)).jointAngle(:, 1);
-                   Data_out.(movement).IK.(arm).raw.(fileName).(IK_Y) = jointData(jointNo(jnt)).jointAngle(:, 2);
-                   Data_out.(movement).IK.(arm).raw.(fileName).(IK_Z) = jointData(jointNo(jnt)).jointAngle(:, 3);
+                    % Full ULIFT time data
+                    Data_out.(movement).IK.(arm).raw.(fileName).(IK_X) = jointData(jointNo(jnt)).jointAngle(:, 1);
+                    Data_out.(movement).IK.(arm).raw.(fileName).(IK_Y) = jointData(jointNo(jnt)).jointAngle(:, 2);
+                    Data_out.(movement).IK.(arm).raw.(fileName).(IK_Z) = jointData(jointNo(jnt)).jointAngle(:, 3);
 
-                   % Timedata of the phases; phase 1
-                   %-------------------------------------------
-                   Data_out.(movement).IK.(arm).Phase1.(fileName).(IK_X) = temp.X_phase1;
-                   Data_out.(movement).IK.(arm).Phase1.(fileName).(IK_Y) = temp.Y_phase1;
-                   Data_out.(movement).IK.(arm).Phase1.(fileName).(IK_Z) = temp.Z_phase1;
+                    % Timedata of the phases; phase 1
+                    %-------------------------------------------
+                    Data_out.(movement).IK.(arm).Phase1.(fileName).(IK_X) = temp.X_phase1;
+                    Data_out.(movement).IK.(arm).Phase1.(fileName).(IK_Y) = temp.Y_phase1;
+                    Data_out.(movement).IK.(arm).Phase1.(fileName).(IK_Z) = temp.Z_phase1;
 
-                   % Timedata of the individual phases; phase 4
-                   %-------------------------------------------
-                   Data_out.(movement).IK.(arm).Phase4.(fileName).(IK_X) = temp.X_phase4;
-                   Data_out.(movement).IK.(arm).Phase4.(fileName).(IK_Y) = temp.Y_phase4;
-                   Data_out.(movement).IK.(arm).Phase4.(fileName).(IK_Z) = temp.Z_phase4;
+                    % Timedata of the individual phases; phase 4
+                    %-------------------------------------------
+                    Data_out.(movement).IK.(arm).Phase4.(fileName).(IK_X) = temp.X_phase4;
+                    Data_out.(movement).IK.(arm).Phase4.(fileName).(IK_Y) = temp.Y_phase4;
+                    Data_out.(movement).IK.(arm).Phase4.(fileName).(IK_Z) = temp.Z_phase4;
 
-                   % Time normalised phases; phase 1
-                   %--------------------------------
-                   Data_out.(movement).IK.(arm).Phase1.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase1,1)],...
-                       temp.X_phase1', [1:(size(temp.X_phase1,1))/nf:size(temp.X_phase1,1)], 'spline');
+                    % Time normalised phases; phase 1
+                    %--------------------------------
+                    Data_out.(movement).IK.(arm).Phase1.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase1,1)],...
+                        temp.X_phase1', [1:(size(temp.X_phase1,1))/nf:size(temp.X_phase1,1)], 'spline');
 
-                   Data_out.(movement).IK.(arm).Phase1.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase1,1)],...
-                       temp.Y_phase1', [1:(size(temp.Y_phase1,1))/nf:size(temp.Y_phase1,1)], 'spline');
+                    Data_out.(movement).IK.(arm).Phase1.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase1,1)],...
+                        temp.Y_phase1', [1:(size(temp.Y_phase1,1))/nf:size(temp.Y_phase1,1)], 'spline');
 
-                   Data_out.(movement).IK.(arm).Phase1.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase1,1)],...
-                       temp.Z_phase1', [1:(size(temp.Z_phase1,1))/nf:size(temp.Z_phase1,1)], 'spline');
+                    Data_out.(movement).IK.(arm).Phase1.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase1,1)],...
+                        temp.Z_phase1', [1:(size(temp.Z_phase1,1))/nf:size(temp.Z_phase1,1)], 'spline');
 
-                   % Time normalised phases; phase 4
-                   %--------------------------------
-                   Data_out.(movement).IK.(arm).Phase4.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase4,1)],...
-                       temp.X_phase4', [1:(size(temp.X_phase4,1))/nf:size(temp.X_phase4,1)], 'spline');
+                    % Time normalised phases; phase 4
+                    %--------------------------------
+                    Data_out.(movement).IK.(arm).Phase4.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase4,1)],...
+                        temp.X_phase4', [1:(size(temp.X_phase4,1))/nf:size(temp.X_phase4,1)], 'spline');
 
-                   Data_out.(movement).IK.(arm).Phase4.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase4,1)],...
-                       temp.Y_phase4', [1:(size(temp.Y_phase4,1))/nf:size(temp.Y_phase4,1)], 'spline');
+                    Data_out.(movement).IK.(arm).Phase4.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase4,1)],...
+                        temp.Y_phase4', [1:(size(temp.Y_phase4,1))/nf:size(temp.Y_phase4,1)], 'spline');
 
-                   Data_out.(movement).IK.(arm).Phase4.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase4,1)],...
-                       temp.Z_phase4', [1:(size(temp.Z_phase4,1))/nf:size(temp.Z_phase4,1)], 'spline');
+                    Data_out.(movement).IK.(arm).Phase4.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase4,1)],...
+                        temp.Z_phase4', [1:(size(temp.Z_phase4,1))/nf:size(temp.Z_phase4,1)], 'spline');
+                    clear temp
+                end
 
 
-
-                   clear temp
-               end
+                %% 2.4 Extract the relevant acceleration signals
+                %-----------------------------------------------
+                disp(['    ' content(file).name ': extract relevant Accelerations'])
                 
+                if strcmp(arm, 'right')
+                    segmentNo   = 8:11;
+                else
+                    segmentNo   = 12:15;
+                end
+
+                segmentNames = {'Shoulder',}
+
 
                 %% Display the results
                 %---------------------
