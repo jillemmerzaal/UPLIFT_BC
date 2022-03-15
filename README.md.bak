@@ -9,9 +9,11 @@ Within the ULIFT task, we will not be looking at movement quality
 
 
 Joint angles that will be extracted: 
-- Scapula ab/adduction
-- Scapula rotation
-- Scapula flexion/extension
+- Scapula ab/adduction laterale/mediale rotatie
+- Scapula rotation protractie (interne rotatie) / retractie (externe rotatie)
+- Scapula flexion/extension anterieure tilt/posterieure tilt
+
+### note: for glenohumaral, XZY angles are taken
 - Glenohumeral ab/adduction
 - Glenohumeral rotation
 - Glenohumeral flexion/extension
@@ -24,3 +26,14 @@ Joint angles that will be extracted:
 - Trunk ab/adduction
 - Trunk rotation
 - Trunk flexion/extension
+
+
+## Maximal range of motion task
+The range of motion tasks will be performed 3 times in a row with a pause 
+- Glenohumeral anteflexie in sigital plane
+- Glenohumeral ab/adduction in frontal plane
+- Glenohumeral rotation in logitudonal plane 
+
+## Cyclic movement 
+12 weighted reaching repetitions in a single recording. Left and right. 
+This data will be used to determine movement quality in terms of maximal divergence, movement smoothness, movement complexity and regularity. 
