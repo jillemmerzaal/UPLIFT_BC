@@ -1,39 +1,47 @@
-# ULIFT_BC
+# UPLIFT_BC Instrumented motion capture  
 
 ## Overview 
  
-The ULIFT task is a taks that has been found reliable in testing upper limb functionning.
-This repository holds the code to calculate joint kinematics during an instrumented ULIFT taks. 
-Within the ULIFT task, we will not be looking at movement quality 
+Three tasks will be performed: 
+- ULIFT
+The ULIFT task is a taks that has been found reliable in testing upper limb functionning. Is is a motion tasks that requiers people to move 3 weights from the upper
+level to middel level(Phase 1); middel level to floor (Phase 2); floor to middel level (Phase 3); middel level to upper level (Phase 4). 
+
+- Maximal range of motion task 
+Active range of motion of the whole shoulder complex will be evaluated. 
+
+- Cyclic weighted reaching task
+
+
+  
+This repository holds the code to:
+Calculate joint kinematics waveform analysis during an instrumented ULIFT taks
+Calculate peak angles during an instrumented ROM taks 
+Calulcate movement quality during an instrumented cyclic weighted reaching task.
 
 
 
-Joint angles that will be extracted: 
+
+## Joint angles that will be extracted: 
 - Scapula ab/adduction laterale/mediale rotatie
 - Scapula rotation protractie (interne rotatie) / retractie (externe rotatie)
 - Scapula flexion/extension anterieure tilt/posterieure tilt
-
-### note: for glenohumaral, XZY angles are taken
 - Glenohumeral ab/adduction
 - Glenohumeral rotation
 - Glenohumeral flexion/extension
+*note: for glenohumaral, XZY angles are taken*
 - Elbow ab/adduction
 - Elbow rotation
 - Elbow flexion/extension
 - Wrist ab/adduction
 - Wrist rotation
 - Wrist flexion/extension
-- Trunk ab/adduction
+- Trunk Latro flexion
 - Trunk rotation
 - Trunk flexion/extension
 
-
-## Maximal range of motion task
-The range of motion tasks will be performed 3 times in a row with a pause 
-- Glenohumeral anteflexie in sigital plane
-- Glenohumeral ab/adduction in frontal plane
-- Glenohumeral rotation in logitudonal plane 
-
-## Cyclic movement 
-12 weighted reaching repetitions in a single recording. Left and right. 
-This data will be used to determine movement quality in terms of maximal divergence, movement smoothness, movement complexity and regularity. 
+## Movement quality parameters
+- maximal divergence --> Lyapunove exponents
+- movement smoothness --> LDLJ_A 
+- movement complexity --> Sample enthropy 
+- regularity --> autocorrelation
