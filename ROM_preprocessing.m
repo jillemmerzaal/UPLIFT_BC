@@ -6,16 +6,16 @@ cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 
 
-Timepoint   = 'T1';
-movement    = 'Abductie'; %Abductie Anteflexie Exorotatie
-path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - UPLIFT-BC\INVESTIGATOR SITE FILE\5. Data';
+Timepoint   = 'T0';
+movement    =  'AB'; %Abductie'; %Abductie Anteflexie Exorotatie
+path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - 5. Data';
 path.out    = fullfile(path.root,'Output','Database_ULIFT.mat');
 
 plot_or_not = 1;
 
 
 %% 2. load data
-for subj = 1%1:3
+for subj = 5%1:3
     if subj < 10
         subj_name   = ['BCT_00' num2str(subj)];
     elseif subj < 100
@@ -61,10 +61,10 @@ for subj = 1%1:3
                 tree = load_mvnx(file_ik);
 
                 % Read some basic data from the file
-                mvnxVersion = tree.metaData.mvnx_version; % version of the MVN Studio used during recording
+                mvnxVersion = tree.metaData.mvnx_version; %version of the MVN Studio used during recording
 
                 if (isfield(tree.metaData, 'comment'))
-                    fileComments = tree.metaData.comment; % comments written when saving the file
+                    fileComments = tree.metaData.comment; %comments written when saving the file
                 end
 
                 % Read some basic properties of the subject;
@@ -265,4 +265,20 @@ for subj = 1%1:3
             end % end if movement && .mvnx
         end % loop of number of files
     end %check if subject exists
+     %% Save data
+    %--------------
+
+    if exist('Data_out','var')
+        if exist(path.out,'file')
+            load(path.out)
+        end
+
+
+        [Data.(subj_name).(movement).(Timepoint)] = Data_out.(movement).(Timepoint);
+        save(path.out,'Data')
+        clear Data Data_out
+    end
+
+    disp(['*********Finished ' subj_name '**********'])
+    disp(' ')
 end %end subjects
