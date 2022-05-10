@@ -38,7 +38,7 @@ for subj = 5%1:3
         content = dir(path.subj);
         nfiles = size(content,1);
 
-        % Start loop through ULIFT files per subject
+        % Start loop through ROM files per subject
         for file = 1:nfiles
 
 
