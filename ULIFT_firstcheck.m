@@ -12,7 +12,7 @@ addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 Timepoint   = 'T0';
 movement    = "ULIFT";
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
-path.out    = fullfile(path.root,'Output','Database_ULIFT.mat');
+path.out    = fullfile(path.root,'Output');
 
 figure;
 tiledlayout('flow')
@@ -164,13 +164,13 @@ for subj = 1
 
                 ppID{counter, 1} = subj_name;
                 Phase1(counter,1) = size(maxIndices_ph1,1);
-                bestand{counter,1} = fileName;
+                filename{counter,1} = fileName;
                 Phase4(counter,1) = size(maxIndices_ph4,1);
                 
                 if Phase1(counter,1) == 3 && Phase4(counter,1) == 3
-                    check(counter,1) = 0;
+                    run(counter,1) = 1;
                 else
-                    check(counter,1 ) = 1;
+                    run(counter,1 ) = 0;
                 end
 
 
@@ -178,9 +178,9 @@ for subj = 1
                
             end % if contains relevant names
         end% loop through number of files
-        T = table(ppID, bestand, Phase1, Phase4, check);
+        T = table(ppID, filename, Phase1, Phase4, run);
 
-        writetable(T, [subj_name, '.xlsx'])
+        writetable(T, fullfile(path.out, [subj_name, '.xlsx']))
     end% if subject exists
 end %number of subjects
 
