@@ -61,69 +61,100 @@ SensorFreeX = SensorFree(:,1);
 SensorFreeY = SensorFree(:,2);
 SensorFreeZ = SensorFree(:,3);
 SensorFreeVec = vecnorm(SensorFree,2,2);
-
+SensorFreeDiff = diff(SensorFreeVec);
+SensorFreeDiff = [SensorFreeDiff; 0];
+% figure; plot(tp)
 
 %% dataframe
 df.acc      = table(accelerationX, accelerationY, accelerationZ, accelerationVec);
 df.vel      = table(velocityX, velocityY, velocityZ, velocityVec);
 df.pos      = table(positionX, positionY, positionZ, positionVec);
 df.Avel     = table(angularVelX_LA, angularVelY_LA, angularVelZ_LA, angularVelVec);
-df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec);
+df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec, SensorFreeDiff);
 
-%% plot full signals. 
+%% plot full signals.
 signals = fieldnames(df);
-plottitle = {'acceleration data', 'velocity data', 'position data', 'angular velocity', 'sensor accelration'};
-% 
+
+plottitle = {[signals{1} ' data'], [signals{2} ' data'], [signals{3} ' data'], [signals{4} ' data'], [signals{5} ' data']};
+%
 % for nPlot = 1:length(signals)
 %     figure;
 %     h = stackedplot(df.(signals{nPlot}));
 %     title(plottitle(nPlot))
-% 
+%
 %     %based on xsens
 %     ax = findobj(h.NodeChildren, 'Type','Axes');
 %     arrayfun(@(h)xline(h,x1,'LineWidth',1.5, "Color", '#A2142F', "DisplayName",'StrPh1'),ax)
 %     arrayfun(@(h)xline(h,x2, 'LineWidth', 1.5,"Color", '#A2142F', "DisplayName",'EndPh1'), ax)
 %     arrayfun(@(h)xline(h,x3,'LineWidth',1.5, "Color", '#A2142F', "DisplayName",'StrPh4'),ax)
 %     arrayfun(@(h)xline(h,x4, 'LineWidth', 1.5,"Color", '#A2142F', "DisplayName",'EndPh4'), ax)
-% 
+%
 %     %based on zerocrossing velocity Z
 %     arrayfun(@(h)xline(h,startPhase1,'LineWidth',1.5,'LineStyle', ':', "Color", 'green', "DisplayName",'StrPh1'),ax)
 %     arrayfun(@(h)xline(h,endPhase1, 'LineWidth', 1.5, 'LineStyle', ':', "Color", 'green', "DisplayName",'EndPh1'), ax)
 %     arrayfun(@(h)xline(h,startPhase4,'LineWidth',1.5,'LineStyle', ':', "Color", 'green', "DisplayName",'StrPh4'),ax)
 %     arrayfun(@(h)xline(h,endPhase4, 'LineWidth', 1.5, 'LineStyle', ':', "Color", 'green', "DisplayName",'EndPh4'), ax)
-% 
+%
 %     % change indices
 %     arrayfun(@(h)xline(h,x(1),'LineWidth',1.5,'LineStyle', ':', "Color", 'black', 'DisplayName','change1'),ax)
 %     arrayfun(@(h)xline(h,x(2), 'LineWidth', 1.5, 'LineStyle', ':', "Color", 'black', 'DisplayName','change2'), ax)
-% 
+%
 % end
 
 %% find end first phase
 % start = 1;
 % stop = x(1);
-% 
+%
 % for nPlot = 1:length(signals)
 %     figure;
 %     h = stackedplot(df.(signals{nPlot})(start:stop,:));
 %     title(plottitle(nPlot))
-% 
-% 
+%
+%
 %     %based on xsens
 %     ax = findobj(h.NodeChildren, 'Type','Axes');
 %     arrayfun(@(h)xline(h,x1,'LineWidth',1.5, "Color", '#A2142F', "DisplayName",'StrPh1'),ax)
 %     arrayfun(@(h)xline(h,x2, 'LineWidth', 1.5,"Color", '#A2142F', "DisplayName",'EndPh1'), ax)
-% 
-% 
+%
+%
 %     %based on zerocrossing velocity Z
 %     arrayfun(@(h)xline(h,startPhase1,'LineWidth',1.5,'LineStyle', ':', "Color", 'green', "DisplayName",'StrPh1'),ax)
 %     arrayfun(@(h)xline(h,endPhase1, 'LineWidth', 1.5, 'LineStyle', ':', "Color", 'green', "DisplayName",'EndPh1'), ax)
-% 
-% 
+%
+%
 %     % change indices
 %     arrayfun(@(h)xline(h,x(1),'LineWidth',1.5,'LineStyle', ':', "Color", 'black', 'DisplayName','change1'),ax)
 % end
 
-%% New end phase 1 
+%% New start phase 1
+[temp, P] = islocalmax(df.SenAcc.SensorFreeDiff(1:x(1)));
+
+
+localmax.all = temp;
+stderror= std(P(localmax.all))
+average = mean(P(localmax.all))
+%Thresh = mean(P(localmax.all)) - mean(P(localmax.all))*0.25;
+Thresh = average*0.25
+
+clear temp P
+[temp, P] = islocalmax(df.SenAcc.SensorFreeDiff(1:x(1)), 'MinProminence',Thresh);
+localmax.thresh = temp;
+
+N = 1:height(df.SenAcc);
+
+figure;
+plot(N,df.SenAcc.SensorFreeDiff,N(localmax.all),df.SenAcc.SensorFreeDiff(localmax.all),'r*')
+hold on
+xline(x(1))
+plot(N,df.SenAcc.SensorFreeDiff,N(localmax.thresh),df.SenAcc.SensorFreeDiff(localmax.thresh),'g*')
+
+localmax.prominent = N(localmax.thresh)
+localmax.incon = N(localmax.all)
+
+startPhase1_new = localmax.prominent(1);
+
+clear localmax temp P
+%% New end phase 1
 [temp, P] = islocalmin(df.SenAcc.SensorFreeX(1:x(1)));
 
 localmin.all = temp;
@@ -147,13 +178,13 @@ localmin.incon = N(localmin.all)
 endPhase1_new = localmin.incon(end-1);
 
 % idx = N(localmin);
-% 
+%
 % grab_phase1 = idx(1:2:end);
 % go_phase1 = idx(2:2:end);
 % endPhase1_new = go_phase1(end);
-% 
+%
 % clear localmin P localmax P_max idx
-clear localmin P
+clear localmin P temp
 
 
 %% new start phase 4
@@ -164,14 +195,14 @@ localmin.all = min;
 Thresh = mean(P(localmin.all)) + std(P(localmin.all)) *0.1;
 clear min P
 [min, P] = islocalmin(temp, 'MinProminence',Thresh);
-localmin.thresh = min
+localmin.thresh = min;
 
 
 figure;
 plot(N,df.SenAcc.SensorFreeX,N(localmin.all)+x(2),temp(localmin.all),'r*')
 
 %
-localmin.prominent = N(localmin.thresh)+ x(2)
+localmin.prominent = N(localmin.thresh)+ x(2);
 localmin.incon = N(localmin.all)+ x(2);
 startPhase4_new = localmin.prominent(1);
 
@@ -181,7 +212,46 @@ startPhase4_new = localmin.prominent(1);
 
 % startPhase4_new = grab_phase4(1);
 
-clear localmin
+clear localmin min P
+
+%% new end phase 4
+% temp = df.SenAcc.SensorFreeDiff(x(2):end);
+% [min, P] = islocalmin(temp);
+%
+% localmin.all = min;
+% Thresh = mean(P(localmin.all)) + std(P(localmin.all)) *0.1;
+% clear min P
+% [min, P] = islocalmin(temp, 'MinProminence',Thresh);
+% localmin.thresh = min
+%
+% figure;
+% plot(N,df.SenAcc.SensorFreeDiff,N(localmin.all)+x(2),temp(localmin.all),'r*')
+%
+% localmin.prominent = N(localmin.thresh)+ x(2)
+% localmin.incon = N(localmin.all)+ x(2)
+%
+% endPhase4_new = localmin.prominent(end)
+% clear localmin temp P min
+%% new end phase 4 version 2
+temp =df.SenAcc.SensorFreeY(x(2):end);
+[min, P] = islocalmin(temp);
+
+localmin.all = min;
+Thresh = mean(P(localmin.all)) + std(P(localmin.all)) *0.1;
+clear min P
+
+[min, P] = islocalmin(temp, 'MinProminence',Thresh);
+localmin.thresh = min;
+clear min P
+
+figure;
+plot(N, df.SenAcc.SensorFreeY, N(localmin.all)+x(2), temp(localmin.all), 'r*')
+
+localmin.prominent = N(localmin.thresh)+x(2);
+localmin.incon = N(localmin.all) + x(2);
+
+endPhase4_new2 = localmin.prominent(end);
+
 
 %% check the shit
 for nPlot = 3%1:length(signals)
@@ -197,14 +267,19 @@ for nPlot = 3%1:length(signals)
     arrayfun(@(h)xline(h,x4, 'LineWidth', 1.5,"Color", '#A2142F', "DisplayName",'EndPh4'), ax)
 
     %based on zerocrossing velocity Z
-    arrayfun(@(h)xline(h,startPhase1,'LineWidth',1.5,'LineStyle', ':', "Color", 'green', "DisplayName",'StrPh1'),ax)
-    arrayfun(@(h)xline(h,endPhase1, 'LineWidth', 1.5, 'LineStyle', ':', "Color", 'green', "DisplayName",'EndPh1'), ax)
-    arrayfun(@(h)xline(h,startPhase4,'LineWidth',1.5,'LineStyle', ':', "Color", 'green', "DisplayName",'StrPh4'),ax)
-    arrayfun(@(h)xline(h,endPhase4, 'LineWidth', 1.5, 'LineStyle', ':', "Color", 'green', "DisplayName",'EndPh4'), ax)
+    arrayfun(@(h)xline(h,startPhase1,'LineWidth',1.5, "Color", 'green', "DisplayName",'StrPh1'),ax)
+    arrayfun(@(h)xline(h,endPhase1, 'LineWidth', 1.5,  "Color", 'green', "DisplayName",'EndPh1'), ax)
+    arrayfun(@(h)xline(h,startPhase4,'LineWidth',1.5, "Color", 'green', "DisplayName",'StrPh4'),ax)
+    arrayfun(@(h)xline(h,endPhase4, 'LineWidth', 1.5,  "Color", 'green', "DisplayName",'EndPh4'), ax)
 
     %based on sensor free acceleration in X direction
     arrayfun(@(h)xline(h,endPhase1_new, 'LineWidth', 1.5, 'LineStyle', ':', "Color", 'Blue', "DisplayName",'EndPh1'), ax)
     arrayfun(@(h)xline(h, startPhase4_new, 'LineWidth', 1.5, 'LineStyle', ':', 'Color', 'Blue', 'DisplayName', 'StrPh4'), ax)
+
+    %new start phase 1 based on the highest rate of change of the
+    %acceleration vector
+    arrayfun(@(h)xline(h, startPhase1_new, 'Linewidth', 1.5, 'LineStyle', ':', 'Color', 'Blue', 'DisplayName', 'StartPh1'), ax)
+    arrayfun(@(h)xline(h, endPhase4_new2, 'Linewidth', 1.5, 'LineStyle', ':', 'Color', 'Blue', 'DisplayName', 'endPh4'), ax)
 
 
     % change indices

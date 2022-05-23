@@ -21,7 +21,7 @@ plot_or_not = 1;
  %initialize counters
  counter=0;
 %% 2. load data
-for subj = 1
+for subj = 3
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -137,7 +137,7 @@ for subj = 1
                 thresh_ph1 = mean(segmentMean(1:x(1))) + mean(segmentMean(1:x(1)))*0.05;
                 [maxIndices_ph1, ~] = peakfinder(posdata(1:x(1)), [], thresh_ph1, 1, []);
 
-                thresh_ph4 = mean(segmentMean(x(2):end)) + mean(segmentMean(x(2):end))*0.05;
+                thresh_ph4 = mean(segmentMean(x(2):end)) + mean(segmentMean(x(2):end))*0.025;
                 [maxIndices_ph4, ~] = peakfinder(posdata(x(2):end), [], thresh_ph4, 1, []);
                 maxIndices_ph4 = maxIndices_ph4 + x(2);
 

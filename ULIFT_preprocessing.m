@@ -17,7 +17,7 @@ plot_or_not = 1;
 
 
 %% 2. load data
-for subj = 2
+for subj = 1
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -44,7 +44,7 @@ for subj = 2
         nfiles = size(content,1);
 
         % Start loop through ULIFT files per subject
-        for file = 1:nfiles
+        for file = 30%1:nfiles
             if contains(content(file).name, movement) && contains(content(file).name, '.mvnx')
                 number  = str2num(content(file).name(13:end-5));
                 file_ik = fullfile(path.subj, content(file).name);
@@ -150,15 +150,17 @@ for subj = 2
                     SensorFreeY = SensorFree(:,2);
                     SensorFreeZ = SensorFree(:,3);
                     SensorFreeVec = vecnorm(SensorFree,2,2);
+                    SensorFreeDiff = [diff(SensorFreeVec); 0];
+%                     SensorFreeDiff = [SensorFreeDiff; 0];
 
                     % dataframes
 
                     df.vel      = table(velocityX, velocityY, velocityZ, velocityVec);
                     df.pos      = table(positionX, positionY, positionZ, positionVec);
-                    df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec);
+                    df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec, SensorFreeDiff);
 
                     clear position positionX positionY positionZ positionVec
-                    clear sensorFree sensorFreeX sensorFreeY SensorFreeZ sensorFreeVec
+                    clear sensorFree sensorFreeX sensorFreeY SensorFreeZ sensorFreeVec SensorFreeDiff
                     clear velocity velocityX velocityY velocityZ velocityVec
 
                     %% define start and end of whole trial.
@@ -183,72 +185,72 @@ for subj = 2
 
                     %start phase 1
 
-
-
-                    n=1.5;
-                    thresh = mean(df.vel.velocityZ) + n * std(df.vel.velocityZ);
-                    [maxIndices, ~] = peakfinder(df.vel.velocityZ, [], thresh, 1, []);
-                    [minIndices, ~] = peakfinder(df.vel.velocityZ, [], thresh*-1, -1, []);
-
-                    % lower threshold untill 12 maxima are found. break while loop if the
-                    % threshold is lower than 0
-                    while size(maxIndices,1)<12
-                        n=n-0.05;
-                        thresh = mean(df.vel.velocityZ) + n * std(df.vel.velocityZ);
-                        [maxIndices, ~] = peakfinder(df.vel.velocityZ, [], thresh, 1, []);
-                        [minIndices, ~] = peakfinder(df.vel.velocityZ, [], thresh*-1, -1, []);
-                        %disp(['threshold = ' num2str(thresh)])
-                        if thresh < 0
-                            break
-                        end
-                    end
-
-                    % if while loop above had to break, and no 12 maxima are found,
-                    % try again but with a dicreasing data around the peaks
-                    idx = 4;
-                    sel = (max(df.vel.velocityZ)-min(df.vel.velocityZ))/idx;
-                    while size(maxIndices, 1) < 12
-                        sel = sel - 0.05;
-                        [maxIndices, ~] = peakfinder(df.vel.velocityZ, sel, thresh, 1, []);
-                        %disp(['Sel = ' num2str(sel)])
-
-                    end
-
-                    n=1.5;
-                    while size(minIndices,1) < 12
-                        n=n-0.05;
-                        thresh = (mean(df.vel.velocityZ) + n * std(df.vel.velocityZ));
-                        [minIndices, ~] = peakfinder(df.vel.velocityZ, [], thresh*-1, -1, []);
-
-
-                        if thresh*-1 > -0.3
-                            break
-                        end
-
-                    end
-
-                    idx = 4;
-                    sel = (max(df.vel.velocityZ)-min(df.vel.velocityZ))/idx;
-                    while size(minIndices, 1) < 12
-                        sel = sel - 0.05;
-                        [minIndices, ~] = peakfinder(df.vel.velocityZ, sel, thresh*-1, -1, []);
-                        %disp(['Sel = ' num2str(sel)])
-
-                    end
-
-
-                    %% start phase 1 --> highest shelf to middle shelf
-                    %------------zerocrossing vertical acceleration------------
-                    zci = @(v) find(v(:).*circshift(v(:), [-1 0]) <= 0.0001);                       % Returns Zero-Crossing Indices Of Argument Vector
-                    zx = zci(df.vel.velocityZ);                                                           % Approximate Zero-Crossing Indices
-                    %find the crossings surounding the first positive peak
-                    %-----------------------------------------------------
-                    fistMax = maxIndices(1);
-                    startPhase1 = zx(find(zx < maxIndices(1),1,'last'));
-
-                    %% end phase 4
-
-                    endPhase4 = zx(find(zx > minIndices(end),1,'first'));
+% 
+% 
+%                     n=1.5;
+%                     thresh = mean(df.vel.velocityZ) + n * std(df.vel.velocityZ);
+%                     [maxIndices, ~] = peakfinder(df.vel.velocityZ, [], thresh, 1, []);
+%                     [minIndices, ~] = peakfinder(df.vel.velocityZ, [], thresh*-1, -1, []);
+% 
+%                     % lower threshold untill 12 maxima are found. break while loop if the
+%                     % threshold is lower than 0
+%                     while size(maxIndices,1)<12
+%                         n=n-0.05;
+%                         thresh = mean(df.vel.velocityZ) + n * std(df.vel.velocityZ);
+%                         [maxIndices, ~] = peakfinder(df.vel.velocityZ, [], thresh, 1, []);
+%                         [minIndices, ~] = peakfinder(df.vel.velocityZ, [], thresh*-1, -1, []);
+%                         %disp(['threshold = ' num2str(thresh)])
+%                         if thresh < 0
+%                             break
+%                         end
+%                     end
+% 
+%                     % if while loop above had to break, and no 12 maxima are found,
+%                     % try again but with a dicreasing data around the peaks
+%                     idx = 4;
+%                     sel = (max(df.vel.velocityZ)-min(df.vel.velocityZ))/idx;
+%                     while size(maxIndices, 1) < 12
+%                         sel = sel - 0.05;
+%                         [maxIndices, ~] = peakfinder(df.vel.velocityZ, sel, thresh, 1, []);
+%                         %disp(['Sel = ' num2str(sel)])
+% 
+%                     end
+% 
+%                     n=1.5;
+%                     while size(minIndices,1) < 12
+%                         n=n-0.05;
+%                         thresh = (mean(df.vel.velocityZ) + n * std(df.vel.velocityZ));
+%                         [minIndices, ~] = peakfinder(df.vel.velocityZ, [], thresh*-1, -1, []);
+% 
+% 
+%                         if thresh*-1 > -0.3
+%                             break
+%                         end
+% 
+%                     end
+% 
+%                     idx = 4;
+%                     sel = (max(df.vel.velocityZ)-min(df.vel.velocityZ))/idx;
+%                     while size(minIndices, 1) < 12
+%                         sel = sel - 0.05;
+%                         [minIndices, ~] = peakfinder(df.vel.velocityZ, sel, thresh*-1, -1, []);
+%                         %disp(['Sel = ' num2str(sel)])
+% 
+%                     end
+% 
+% 
+%                     %% start phase 1 --> highest shelf to middle shelf
+%                     %------------zerocrossing vertical acceleration------------
+%                     zci = @(v) find(v(:).*circshift(v(:), [-1 0]) <= 0.0001);                       % Returns Zero-Crossing Indices Of Argument Vector
+%                     zx = zci(df.vel.velocityZ);                                                           % Approximate Zero-Crossing Indices
+%                     %find the crossings surounding the first positive peak
+%                     %-----------------------------------------------------
+%                     fistMax = maxIndices(1);
+%                     startPhase1 = zx(find(zx < maxIndices(1),1,'last'));
+% 
+%                     %% end phase 4
+% 
+%                     endPhase4 = zx(find(zx > minIndices(end),1,'first'));
 
                     %% define change points based on position data
                     %---------------------------------------------
@@ -256,6 +258,31 @@ for subj = 2
                     [changeIndices,segmentMean] = ischange(df.pos.positionZ,"MaxNumChanges",2);
                     x = find(changeIndices);
 
+                    
+                    %% New start phase 1
+                    [temp, P] = islocalmax(df.SenAcc.SensorFreeDiff(1:x(1)));
+
+
+                    localmax.all = temp;
+                    Thresh = mean(P(localmax.all)) - mean(P(localmax.all))*0.25;
+                    clear temp P
+                    [temp, P] = islocalmax(df.SenAcc.SensorFreeDiff(1:x(1)), 'MinProminence',Thresh);
+                    localmax.thresh = temp;
+
+                    N = 1:height(df.SenAcc);
+
+%                     figure;
+%                     plot(N,df.SenAcc.SensorFreeDiff,N(localmax.all),df.SenAcc.SensorFreeDiff(localmax.all),'r*')
+%                     hold on
+%                     xline(x(1))
+
+                    localmax.prominent = N(localmax.thresh);
+                    localmax.incon = N(localmax.all);
+
+                    startPhase1 = localmax.prominent(1);
+
+                    clear localmax temp P
+                    
                     %% New end phase 1
                     [temp, P] = islocalmin(df.SenAcc.SensorFreeX(1:x(1)));
 
@@ -264,7 +291,7 @@ for subj = 2
                     Thresh = mean(P(localmin.all));
 
                     clear temp P
-                    [temp, P] = islocalmin(df.SenAcc.SensorFreeX(1:x(1)), 'MaxNumExtrema', 12, 'MinProminence',Thresh);
+                    [temp, P] = islocalmin(df.SenAcc.SensorFreeX(1:x(1)), 'MinProminence',Thresh);
                     localmin.thresh = temp;
                     N = 1:height(df.SenAcc.SensorFreeX);
 
@@ -279,10 +306,11 @@ for subj = 2
 
                     % endPhase1_new = localmin.incon(find(localmin.incon == localmin.prominent(end))-1)
                     endPhase1 = localmin.incon(end-1);
-                    clear localmin P
+                    clear localmin P temp
 
 
-                    % start and end of phase 4
+
+                    %% start and end of phase 4
                     % Determine start and end points of phase 4 based on change points in the position
                     % data, zero crossing and last 3 peaks in the velocity signal
                     %------------------------------------------------------------
@@ -339,32 +367,49 @@ for subj = 2
                     [minima, P] = islocalmin(temp, 'MinProminence',Thresh);
                     localmin.thresh = minima;
 
-
-
-
                     % the first prominent acceleration peak
                     localmin.prominent = N(localmin.thresh)+ x(2);
                     localmin.incon = N(localmin.all)+ x(2);
                     startPhase4 = localmin.prominent(1);
 
-                    figure;
-                    plot(N,df.SenAcc.SensorFreeX,N(localmin.all)+x(2),temp(localmin.all),'r*')
-                    hold on
-                    xline(startPhase4)
+%                     figure;
+%                     plot(N,df.SenAcc.SensorFreeX,N(localmin.all)+x(2),temp(localmin.all),'r*')
+%                     hold on
+%                     xline(startPhase4)
 
-                    clear localmin temp
+                    clear localmin temp P
 
 
-                    if isempty(startPhase1 )
-                        startPhase1 = 1;
-                    end
+                    %% new end phase 4
+                    temp = df.SenAcc.SensorFreeY(x(2):end);
+                    [minima, P] = islocalmin(temp);
+
+                    localmin.all = minima;
+                    Thresh = mean(P(localmin.all)) + std(P(localmin.all)) *0.1;
+                    clear minima P
+                    [minima, P] = islocalmin(temp, 'MinProminence',Thresh);
+                    localmin.thresh = minima;
+
+%                     figure;
+%                     plot(N,df.SenAcc.SensorFreeDiff,N(localmin.all)+x(2),temp(localmin.all),'r*')
+
+                    localmin.prominent = N(localmin.thresh)+ x(2);
+                    localmin.incon = N(localmin.all)+ x(2);
+
+                    endPhase4 = localmin.prominent(end);
+
+                    clear localmin temp P minima
+
+%                     if isempty(startPhase1 )
+%                         startPhase1 = 1;
+%                     end
                     T_phase1 = startPhase1:endPhase1;
                     T_phase4 = startPhase4:endPhase4;
 
                     %% 2.3 Define start & end points of the middel rep based on velocity of lower arm
                     %--------------------------------------------------------------------------------
-                    midrep_phase1 = minIndices(1):minIndices(2);
-                    midrep_phase4 = minIndices(end-2):minIndices(end-1);
+%                     midrep_phase1 = minIndices(1):minIndices(2);
+%                     midrep_phase4 = minIndices(end-2):minIndices(end-1);
                     %% 2.4 Extract the relevant kinematics
                     %-------------------------------------
                     disp(['    ' content(file).name ': extract relevant Kinematics'])
@@ -433,52 +478,52 @@ for subj = 2
 
                         %% midrep phase 1
                         %----------------
-                        temp.X_midrep1 = jointData(jointNo(jnt)).jointAngle(midrep_phase1,1);
-                        temp.Y_midrep1 = jointData(jointNo(jnt)).jointAngle(midrep_phase1,2);
-                        temp.Z_midrep1 = jointData(jointNo(jnt)).jointAngle(midrep_phase1,3);
+%                         temp.X_midrep1 = jointData(jointNo(jnt)).jointAngle(midrep_phase1,1);
+%                         temp.Y_midrep1 = jointData(jointNo(jnt)).jointAngle(midrep_phase1,2);
+%                         temp.Z_midrep1 = jointData(jointNo(jnt)).jointAngle(midrep_phase1,3);
 
-                        if size(temp.X_midrep1,1) < 100
-                            nf = 102;
-                        else
-                            nf = 101;
-                        end
+%                         if size(temp.X_midrep1,1) < 100
+%                             nf = 102;
+%                         else
+%                             nf = 101;
+%                         end
 
                         % Time normalised middle repetitions 1
                         %------------------------------------
-                        Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_midrep1,1)],...
-                            temp.X_midrep1', [1:(size(temp.X_midrep1,1))/nf:size(temp.X_midrep1,1)], 'spline');
-
-                        Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_midrep1,1)],...
-                            temp.Y_midrep1', [1:(size(temp.Y_midrep1,1))/nf:size(temp.Y_midrep1,1)], 'spline');
-
-                        Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_midrep1,1)],...
-                            temp.Z_midrep1', [1:(size(temp.Z_midrep1,1))/nf:size(temp.Z_midrep1,1)], 'spline');
+%                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_midrep1,1)],...
+%                             temp.X_midrep1', [1:(size(temp.X_midrep1,1))/nf:size(temp.X_midrep1,1)], 'spline');
+% 
+%                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_midrep1,1)],...
+%                             temp.Y_midrep1', [1:(size(temp.Y_midrep1,1))/nf:size(temp.Y_midrep1,1)], 'spline');
+% 
+%                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_midrep1,1)],...
+%                             temp.Z_midrep1', [1:(size(temp.Z_midrep1,1))/nf:size(temp.Z_midrep1,1)], 'spline');
 
 
 
                         %% midrep phase 4
                         %----------------
-                        temp.X_midrep4 = jointData(jointNo(jnt)).jointAngle(midrep_phase4,1 );
-                        temp.Y_midrep4 = jointData(jointNo(jnt)).jointAngle(midrep_phase4,2);
-                        temp.Z_midrep4 = jointData(jointNo(jnt)).jointAngle(midrep_phase4,3);
+%                         temp.X_midrep4 = jointData(jointNo(jnt)).jointAngle(midrep_phase4,1 );
+%                         temp.Y_midrep4 = jointData(jointNo(jnt)).jointAngle(midrep_phase4,2);
+%                         temp.Z_midrep4 = jointData(jointNo(jnt)).jointAngle(midrep_phase4,3);
 
-                        if size(temp.X_midrep4, 1) < 100
-                            nf = 102;
-                        else
-                            nf = 101;
-                        end
+%                         if size(temp.X_midrep4, 1) < 100
+%                             nf = 102;
+%                         else
+%                             nf = 101;
+%                         end
 
 
                         % Time normalised middle repetitions 4
                         %------------------------------------
-                        Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_midrep4,1)],...
-                            temp.X_midrep4', [1:(size(temp.X_midrep4,1))/nf:size(temp.X_midrep4,1)], 'spline');
-
-                        Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_midrep4,1)],...
-                            temp.Y_midrep4', [1:(size(temp.Y_midrep4,1))/nf:size(temp.Y_midrep4,1)], 'spline');
-
-                        Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_midrep4,1)],...
-                            temp.Z_midrep4', [1:(size(temp.Z_midrep4,1))/nf:size(temp.Z_midrep4,1)], 'spline');
+%                         Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_midrep4,1)],...
+%                             temp.X_midrep4', [1:(size(temp.X_midrep4,1))/nf:size(temp.X_midrep4,1)], 'spline');
+% 
+%                         Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_midrep4,1)],...
+%                             temp.Y_midrep4', [1:(size(temp.Y_midrep4,1))/nf:size(temp.Y_midrep4,1)], 'spline');
+% 
+%                         Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_midrep4,1)],...
+%                             temp.Z_midrep4', [1:(size(temp.Z_midrep4,1))/nf:size(temp.Z_midrep4,1)], 'spline');
 
                         %% phase 4
                         %---------
@@ -528,15 +573,15 @@ for subj = 2
 
                         % Timedata of the middle repetitions; phase 1
                         %--------------------------------------------
-                        Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_X) = temp.Z_midrep1;
-                        Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Y) = temp.Y_midrep1;
-                        Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Z) = temp.Z_midrep1;
+%                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_X) = temp.Z_midrep1;
+%                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Y) = temp.Y_midrep1;
+%                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Z) = temp.Z_midrep1;
 
                         % Timedata of the middle repetitions; phase 4
                         %--------------------------------------------
-                        Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_X) = temp.Z_midrep4;
-                        Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Y) = temp.Y_midrep4;
-                        Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Z) = temp.Z_midrep4;
+%                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_X) = temp.Z_midrep4;
+%                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Y) = temp.Y_midrep4;
+%                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Z) = temp.Z_midrep4;
 
                         clear temp
                     end
@@ -564,34 +609,34 @@ for subj = 2
                         plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
 
                         %Plot change points
-                        x = repelem(find(changeIndices),3);
+                        x_rep = repelem(find(changeIndices),3);
                         y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
-                        plot(x,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
+                        plot(x_rep,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
                         title("Number of change points: " + nnz(changeIndices))
 
                         hold off
                         %legend('Position',[0.85,0.25,0.15,0.2])
-                        clear segmentMean x y posdata
+                        clear segmentMean x_rep y posdata
                         %
-                        % display the results of the peak detection
-                        nexttile
-                        plot(df.vel.velocityZ,"Color",[77 190 238]/255,"DisplayName","Input data")
-                        hold on
-                        % Plot local maxima
-                        plot(maxIndices,df.vel.velocityZ(maxIndices),"^","Color",[217 83 25]/255,...
-                            "MarkerFaceColor",[217 83 25]/255,"DisplayName","Local maxima")
-                        % Plot local minima
-                        plot(minIndices,df.vel.velocityZ(minIndices),"v","Color",[237 177 32]/255,...
-                            "MarkerFaceColor",[237 177 32]/255,"DisplayName","Local minima")
-                        title("Number of extrema: " + (nnz(maxIndices)+nnz(minIndices)))
-                        %legend('Position',[0.85,0.25,0.15,0.2])
-                        % input the change points
-                        x = find(changeIndices);
-                        xline(x(1), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- endPh1")
-                        xline(x(2), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- strPh4")
-
-                        yline(0, "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- zerocros")
-                        hold off
+%                         % display the results of the peak detection
+%                         nexttile
+%                         plot(df.vel.velocityZ,"Color",[77 190 238]/255,"DisplayName","Input data")
+%                         hold on
+%                         % Plot local maxima
+%                         plot(maxIndices,df.vel.velocityZ(maxIndices),"^","Color",[217 83 25]/255,...
+%                             "MarkerFaceColor",[217 83 25]/255,"DisplayName","Local maxima")
+%                         % Plot local minima
+%                         plot(minIndices,df.vel.velocityZ(minIndices),"v","Color",[237 177 32]/255,...
+%                             "MarkerFaceColor",[237 177 32]/255,"DisplayName","Local minima")
+%                         title("Number of extrema: " + (nnz(maxIndices)+nnz(minIndices)))
+%                         %legend('Position',[0.85,0.25,0.15,0.2])
+%                         % input the change points
+%                         x = find(changeIndices);
+%                         xline(x(1), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- endPh1")
+%                         xline(x(2), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- strPh4")
+% 
+%                         yline(0, "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- zerocros")
+%                         hold off
                         %
                         % Plot the start and end points!
                         nexttile
@@ -628,13 +673,13 @@ for subj = 2
                         stackedplot(Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.Glenohumeraal_flexion);
                         title('Flexion/extension Shoulder--phase 4')
 
-                        nexttile
-                        stackedplot(Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.Glenohumeraal_flexion)
-                        title('Flexion/extension Shoulder--midrep 1')
-
-                        nexttile
-                        stackedplot(Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.Glenohumeraal_flexion)
-                        title('Flexion/extension Shoulder--midrep4')
+%                         nexttile
+%                         stackedplot(Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.Glenohumeraal_flexion)
+%                         title('Flexion/extension Shoulder--midrep 1')
+% 
+%                         nexttile
+%                         stackedplot(Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.Glenohumeraal_flexion)
+%                         title('Flexion/extension Shoulder--midrep4')
 
                         disp('      ')
                     end%plot_or_not
