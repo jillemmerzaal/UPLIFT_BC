@@ -17,7 +17,7 @@ plot_or_not = 1;
 
 
 %% 2. load data
-for subj = 3
+for subj = 1
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -153,9 +153,9 @@ for subj = 3
                     SensorFreeDiff = [diff(SensorFreeVec); 0];
 
                     angularVel_LA = filtfilt(b,a, segmentData(segmentno).angularVelocity);
-                    angularVelX = angularVel_LA(:,1);
-                    angularVelY = angularVel_LA(:,2);
-                    angularVelZ = angularVel_LA(:,3);
+                    angularVelX_LA = angularVel_LA(:,1);
+                    angularVelY_LA = angularVel_LA(:,2);
+                    angularVelZ_LA = angularVel_LA(:,3);
                     angularVelVec = vecnorm(angularVel_LA, 2, 2);
                     angularVelDiff = [diff(angularVelVec); 0];
 
@@ -165,12 +165,11 @@ for subj = 3
                     df.vel      = table(velocityX, velocityY, velocityZ, velocityVec);
                     df.pos      = table(positionX, positionY, positionZ, positionVec);
                     df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec, SensorFreeDiff);
-                    df.Avel     = table(angularVelX, angularVelY, angularVelZ, angularVelVec, angularVelDiff);
+                    df.Avel     = table(angularVel_)
 
                     clear position positionX positionY positionZ positionVec
                     clear sensorFree sensorFreeX sensorFreeY SensorFreeZ sensorFreeVec SensorFreeDiff
                     clear velocity velocityX velocityY velocityZ velocityVec
-                    clear angularVel_X angularVelY angularVelZ angularVelVec angularVelDiff
 
                     %% define start and end of whole trial.
 
@@ -403,29 +402,29 @@ for subj = 3
                     clear localmin temp P
 
 
-%                     %% new end phase 4
-%                     temp = df.SenAcc.SensorFreeY(x(2):end);
-%                     [minima, P] = islocalmin(temp);
-% 
-%                     localmin.all = minima;
-%                     Thresh = mean(P(localmin.all)) + std(P(localmin.all)) *0.1;
-%                     clear minima P
-%                     [minima, P] = islocalmin(temp, 'MinProminence',Thresh);
-%                     localmin.thresh = minima;
-% 
-%                     %                     figure;
-%                     %                     plot(N,df.SenAcc.SensorFreeDiff,N(localmin.all)+x(2),temp(localmin.all),'r*')
-% 
-%                     localmin.prominent = N(localmin.thresh)+ x(2);
-%                     localmin.incon = N(localmin.all)+ x(2);
-% 
-%                     endPhase4 = localmin.prominent(end);
-% 
-%                     clear localmin temp P minima
-% 
-%                     %                     if isempty(startPhase1 )
-%                     %                         startPhase1 = 1;
-%                     %                     end
+                    %% new end phase 4
+                    temp = df.SenAcc.SensorFreeY(x(2):end);
+                    [minima, P] = islocalmin(temp);
+
+                    localmin.all = minima;
+                    Thresh = mean(P(localmin.all)) + std(P(localmin.all)) *0.1;
+                    clear minima P
+                    [minima, P] = islocalmin(temp, 'MinProminence',Thresh);
+                    localmin.thresh = minima;
+
+                    %                     figure;
+                    %                     plot(N,df.SenAcc.SensorFreeDiff,N(localmin.all)+x(2),temp(localmin.all),'r*')
+
+                    localmin.prominent = N(localmin.thresh)+ x(2);
+                    localmin.incon = N(localmin.all)+ x(2);
+
+                    endPhase4 = localmin.prominent(end);
+
+                    clear localmin temp P minima
+
+                    %                     if isempty(startPhase1 )
+                    %                         startPhase1 = 1;
+                    %                     end
 
                     %% new end phase 4 version 3
                     temp =df.Avel.angularVelDiff(x(2):end)*-1;
@@ -441,15 +440,8 @@ for subj = 3
                     localmin.prominent = N(localmin.thresh)+x(2);
                     localmin.incon = N(localmin.all) + x(2);
 
-                    if isempty(localmin.thresh)
-                        Thresh = average ;
-                        [peakLoc, peakMag] = peakfinder(temp, [], Thresh);
-                        endPhase4 = peakLoc(end) + x(2);
-                    else
-                        endPhase4 = peakLoc(end) + x(2);
-                    end
+                    endPhase4 = peakLoc(end) + x(2);
 
-                    clear localmin peakLoc peakMag temp
                     T_phase1 = startPhase1:endPhase1;
                     T_phase4 = startPhase4:endPhase4;
 

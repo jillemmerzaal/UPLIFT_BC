@@ -185,11 +185,8 @@ xline(x(1))
 % localmax.prominent = N(localmax.thresh)
 % localmax.incon = N(localmax.all)
 
-if isempty(localmax.thresh)
-    startPhase1_new2 = localmax.all(1);
-else
-    startPhase1_new2 = localmax.thresh(1);
-end
+startPhase1_new2 = local(1);
+
 clear localmax temp P
 
 %% New end phase 1
