@@ -185,8 +185,11 @@ xline(x(1))
 % localmax.prominent = N(localmax.thresh)
 % localmax.incon = N(localmax.all)
 
-startPhase1_new2 = local(1);
-
+if isempty(localmax.thresh)
+    startPhase1_new2 = localmax.all(1);
+else
+    startPhase1_new2 = localmax.thresh(1);
+end
 clear localmax temp P
 
 %% New end phase 1
@@ -369,3 +372,12 @@ for nPlot = 1:length(signals)
     arrayfun(@(h)xline(h,x(2), 'LineWidth', 1.5, 'LineStyle', ':', "Color", 'black', 'DisplayName','change2'), ax)
 
 end
+
+
+%% plot for paper? 
+
+plottable = table(df.pos.positionZ, df.Avel.angularVelDiff, df.SenAcc.SensorFreeX);
+plottable.Properties.VariableNames = {'Position Z', 'Diff Angular Vel Vec', 'Acc X'};
+plottable.Properties.VariableUnits = {'m', 'Arbitrary', ''}
+
+stackedplot(plottable)

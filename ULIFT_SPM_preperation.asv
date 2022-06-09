@@ -29,7 +29,7 @@ nsubjects = size(subjects,1);
 IK_angles = fieldnames(Data.(subjects{1}).ULIFT.(timepoint).IK.L.Phase1.normalised);
 nangles = size(IK_angles,1);
 
-for subj =1:nsubjects
+for subj = 4%1:nsubjects
     %% check left
     temp = mean(Data.(subjects{subj}).ULIFT.(timepoint).IK.L.Phase1.normalised.Glenohumeraal_flexion, 2);
 
@@ -37,14 +37,13 @@ for subj =1:nsubjects
     for reps = 1:nReps
         R = corrcoef(Data.(subjects{subj}).ULIFT.(timepoint).IK.L.Phase1.normalised.Glenohumeraal_flexion(:,reps), temp);
         BC.IK.L.general(reps).corrcoef = R(1,2)';
-         rounded(reps) = round(R(1,2)*100)/100
         if BC.IK.L.general(reps).corrcoef < 0.8
             for ang = 1:nangles
                 Data.(subjects{subj}).ULIFT.(timepoint).IK.L.Phase1.normalised.(IK_angles{ang})(:,reps) = nan;
             end
         end
     end
-    clear temp rounded
+    clear temp
     %% check right
     temp = mean(Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase1.normalised.Glenohumeraal_flexion, 2);
 
@@ -85,16 +84,14 @@ for subj =1:nsubjects
 
                 for ang = 1:nangles
 
-                    tempCorrected = Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase1.(ULIFT_names{rep+1}).(IK_angles{ang})(abs(lags(ix)):end);
-                    Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase1.corrected.(IK_angles{ang})(:,rep) = tempCorrected;
+                    tempCorrected = Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase1.(ULIFT_names{reps+1}).(IK_angles{ang})(abs(lags(ix)):end);
+                    Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase1.corrected.(IK_angles{ang})(:,reps) = tempCorrected;
 
 
                     nf = 101;
-                    Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase1.normalised.(IK_angles{ang})(:,rep) = ...
+                    Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase1.normalised.(IK_angles{ang})(:,reps) = ...
                         interp1([1:size(tempCorrected,1)], tempCorrected', [1:(size(tempCorrected,1))/nf:size(tempCorrected,1)], 'spline');
 
-
-                    Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase1.normalised.(IK_angles{ang})(:,rep) = nan;
                     clear tempCorrected
                 end
 
@@ -148,8 +145,5 @@ for ang = 1:nangles
 end
 
 
-figure
-for subj = 1:nsubjects
-    plot(Data.(subjects{subj}).ULIFT.T0.IK.R.Phase1.normalised.Glenohumeraal_flexion)
-    hold on
-end
+
+

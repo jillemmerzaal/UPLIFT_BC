@@ -21,7 +21,7 @@ plot_or_not = 1;
  %initialize counters
  counter=0;
 %% 2. load data
-for subj = 3
+for subj = 5
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100

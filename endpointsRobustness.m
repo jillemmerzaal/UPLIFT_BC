@@ -372,3 +372,12 @@ for nPlot = 1:length(signals)
     arrayfun(@(h)xline(h,x(2), 'LineWidth', 1.5, 'LineStyle', ':', "Color", 'black', 'DisplayName','change2'), ax)
 
 end
+
+
+%% plot for paper? 
+
+plottable = table(df.pos.positionZ, df.Avel.angularVelDiff, df.SenAcc.SensorFreeX);
+plottable.Properties.VariableNames = {'Position Z', 'Diff Angular Vel Vec', 'Acc X'};
+
+
+writetable(plottable, 'EventDetection.csv')

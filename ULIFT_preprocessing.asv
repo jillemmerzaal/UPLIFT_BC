@@ -17,7 +17,7 @@ plot_or_not = 1;
 
 
 %% 2. load data
-for subj = 1
+for subj = 1:6
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -31,9 +31,10 @@ for subj = 1
 
     path.subj   = fullfile(path.root, subj_name, 'Xsens', Timepoint, 'Reproces');
     check_subj  = exist(path.subj);
-    T = readtable(fullfile(path.root, 'Output', [subj_name, '.xlsx']));
 
     if check_subj == 7
+        T = readtable(fullfile(path.root, 'Output', [subj_name, '.xlsx']));
+
         %initialize counters
         counterR        = 0;
         counterR_SSS    = 0;
@@ -153,9 +154,9 @@ for subj = 1
                     SensorFreeDiff = [diff(SensorFreeVec); 0];
 
                     angularVel_LA = filtfilt(b,a, segmentData(segmentno).angularVelocity);
-                    angularVelX_LA = angularVel_LA(:,1);
-                    angularVelY_LA = angularVel_LA(:,2);
-                    angularVelZ_LA = angularVel_LA(:,3);
+                    angularVelX = angularVel_LA(:,1);
+                    angularVelY = angularVel_LA(:,2);
+                    angularVelZ = angularVel_LA(:,3);
                     angularVelVec = vecnorm(angularVel_LA, 2, 2);
                     angularVelDiff = [diff(angularVelVec); 0];
 
@@ -165,11 +166,12 @@ for subj = 1
                     df.vel      = table(velocityX, velocityY, velocityZ, velocityVec);
                     df.pos      = table(positionX, positionY, positionZ, positionVec);
                     df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec, SensorFreeDiff);
-                    df.Avel     = table(angularVel_)
+                    df.Avel     = table(angularVelX, angularVelY, angularVelZ, angularVelVec, angularVelDiff);
 
                     clear position positionX positionY positionZ positionVec
                     clear sensorFree sensorFreeX sensorFreeY SensorFreeZ sensorFreeVec SensorFreeDiff
                     clear velocity velocityX velocityY velocityZ velocityVec
+                    clear angularVel_X angularVelY angularVelZ angularVelVec angularVelDiff
 
                     %% define start and end of whole trial.
 
@@ -402,29 +404,29 @@ for subj = 1
                     clear localmin temp P
 
 
-                    %% new end phase 4
-                    temp = df.SenAcc.SensorFreeY(x(2):end);
-                    [minima, P] = islocalmin(temp);
-
-                    localmin.all = minima;
-                    Thresh = mean(P(localmin.all)) + std(P(localmin.all)) *0.1;
-                    clear minima P
-                    [minima, P] = islocalmin(temp, 'MinProminence',Thresh);
-                    localmin.thresh = minima;
-
-                    %                     figure;
-                    %                     plot(N,df.SenAcc.SensorFreeDiff,N(localmin.all)+x(2),temp(localmin.all),'r*')
-
-                    localmin.prominent = N(localmin.thresh)+ x(2);
-                    localmin.incon = N(localmin.all)+ x(2);
-
-                    endPhase4 = localmin.prominent(end);
-
-                    clear localmin temp P minima
-
-                    %                     if isempty(startPhase1 )
-                    %                         startPhase1 = 1;
-                    %                     end
+                    %                     %% new end phase 4
+                    %                     temp = df.SenAcc.SensorFreeY(x(2):end);
+                    %                     [minima, P] = islocalmin(temp);
+                    %
+                    %                     localmin.all = minima;
+                    %                     Thresh = mean(P(localmin.all)) + std(P(localmin.all)) *0.1;
+                    %                     clear minima P
+                    %                     [minima, P] = islocalmin(temp, 'MinProminence',Thresh);
+                    %                     localmin.thresh = minima;
+                    %
+                    %                     %                     figure;
+                    %                     %                     plot(N,df.SenAcc.SensorFreeDiff,N(localmin.all)+x(2),temp(localmin.all),'r*')
+                    %
+                    %                     localmin.prominent = N(localmin.thresh)+ x(2);
+                    %                     localmin.incon = N(localmin.all)+ x(2);
+                    %
+                    %                     endPhase4 = localmin.prominent(end);
+                    %
+                    %                     clear localmin temp P minima
+                    %
+                    %                     %                     if isempty(startPhase1 )
+                    %                     %                         startPhase1 = 1;
+                    %                     %                     end
 
                     %% new end phase 4 version 3
                     temp =df.Avel.angularVelDiff(x(2):end)*-1;
@@ -440,287 +442,298 @@ for subj = 1
                     localmin.prominent = N(localmin.thresh)+x(2);
                     localmin.incon = N(localmin.all) + x(2);
 
-                    endPhase4 = peakLoc(end) + x(2);
+                    if isempty(localmin.thresh)
+                        Thresh = average ;
+                        [peakLoc, peakMag] = peakfinder(temp, [], Thresh);
+                        endPhase4 = peakLoc(end) + x(2);
+                    else
+                        endPhase4 = peakLoc(end) + x(2);
+                    end
 
+                    clear localmin peakLoc peakMag temp
                     T_phase1 = startPhase1:endPhase1;
                     T_phase4 = startPhase4:endPhase4;
 
-                    %% 2.3 Define start & end points of the middel rep based on velocity of lower arm
-                    %--------------------------------------------------------------------------------
-                    %                     midrep_phase1 = minIndices(1):minIndices(2);
-                    %                     midrep_phase4 = minIndices(end-2):minIndices(end-1);
-                    %% 2.4 Extract the relevant kinematics
-                    %-------------------------------------
-                    disp(['    ' content(file).name ': extract relevant Kinematics'])
-
-                    if strcmp(arm, 'R_SSS')
-                        counterR_SSS    = counterR_SSS + 1;
-                        counter         = counterR_SSS;
-                        jointNo         = 7:10; % right upper extremity
-                    elseif strcmp(arm, 'R')
-                        counterR        = counterR + 1;
-                        counter         = counterR;
-                        jointNo         = 7:10; % right upper extremity
-                    elseif strcmp(arm, 'L_SSS')
-                        counterL_SSS    = counterL_SSS + 1;
-                        counter         = counterL_SSS;
-                        jointNo         = 11:14; % left upper extremity
-                    elseif strcmp(arm, 'L')
-                        counterL        = counterL + 1;
-                        counter         = counterL;
-                        jointNo         = 11:14; % left upper extremity
-                    end
-
-                    % set General information per participant, per trial.
-                    Data_out.(movement).(Timepoint).General.CutIndices.(fileName) = [startPhase1, endPhase1, startPhase4, endPhase4];
-
-                    % initialise joint names
-                    jointNames = ['Scapula', "Glenohumeraal", "Elbow", "Wrist"];
-
-                    % Save the timecurves to struct, per participant, per
-                    % repetition.
-                    % Struct holds:
-                    % full timecurve
-                    % start and end points of phase 1 and phase 4
-                    % timecurves for each repetition
-                    % time normalised timecurves for each repetition
-                    %-------------------------------------------------
-
-                    for jnt = 1:4
-                        % initiation of joint names
-                        IK_X = [jointNames{jnt}, '_abbuction'];
-                        IK_Y = [jointNames{jnt}, '_rotation'];
-                        IK_Z = [jointNames{jnt}, '_flexion'];
+                    if size(T_phase1,2) > 50 && size(T_phase4, 2) > 50
 
 
-                        %% Phase 1
-                        %---------
-                        temp.X_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 1); %fist phase
-                        temp.Y_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 2); %fist phase
-                        temp.Z_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 3);
+                        %% 2.3 Define start & end points of the middel rep based on velocity of lower arm
+                        %--------------------------------------------------------------------------------
+                        %                     midrep_phase1 = minIndices(1):minIndices(2);
+                        %                     midrep_phase4 = minIndices(end-2):minIndices(end-1);
+                        %% 2.4 Extract the relevant kinematics
+                        %-------------------------------------
+                        disp(['    ' content(file).name ': extract relevant Kinematics'])
 
-                        if size(temp.X_phase1, 1) < 100
-                            nf = 102;
-                        else
-                            nf = 101;
-                        end
-                        % Time normalised phases; phase 1
-                        %--------------------------------
-                        Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase1,1)],...
-                            temp.X_phase1', [1:(size(temp.X_phase1,1))/nf:size(temp.X_phase1,1)], 'spline');
-
-                        Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase1,1)],...
-                            temp.Y_phase1', [1:(size(temp.Y_phase1,1))/nf:size(temp.Y_phase1,1)], 'spline');
-
-                        Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase1,1)],...
-                            temp.Z_phase1', [1:(size(temp.Z_phase1,1))/nf:size(temp.Z_phase1,1)], 'spline');
-
-                        %% midrep phase 1
-                        %----------------
-                        %                         temp.X_midrep1 = jointData(jointNo(jnt)).jointAngle(midrep_phase1,1);
-                        %                         temp.Y_midrep1 = jointData(jointNo(jnt)).jointAngle(midrep_phase1,2);
-                        %                         temp.Z_midrep1 = jointData(jointNo(jnt)).jointAngle(midrep_phase1,3);
-
-                        %                         if size(temp.X_midrep1,1) < 100
-                        %                             nf = 102;
-                        %                         else
-                        %                             nf = 101;
-                        %                         end
-
-                        % Time normalised middle repetitions 1
-                        %------------------------------------
-                        %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_midrep1,1)],...
-                        %                             temp.X_midrep1', [1:(size(temp.X_midrep1,1))/nf:size(temp.X_midrep1,1)], 'spline');
-                        %
-                        %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_midrep1,1)],...
-                        %                             temp.Y_midrep1', [1:(size(temp.Y_midrep1,1))/nf:size(temp.Y_midrep1,1)], 'spline');
-                        %
-                        %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_midrep1,1)],...
-                        %                             temp.Z_midrep1', [1:(size(temp.Z_midrep1,1))/nf:size(temp.Z_midrep1,1)], 'spline');
-
-
-
-                        %% midrep phase 4
-                        %----------------
-                        %                         temp.X_midrep4 = jointData(jointNo(jnt)).jointAngle(midrep_phase4,1 );
-                        %                         temp.Y_midrep4 = jointData(jointNo(jnt)).jointAngle(midrep_phase4,2);
-                        %                         temp.Z_midrep4 = jointData(jointNo(jnt)).jointAngle(midrep_phase4,3);
-
-                        %                         if size(temp.X_midrep4, 1) < 100
-                        %                             nf = 102;
-                        %                         else
-                        %                             nf = 101;
-                        %                         end
-
-
-                        % Time normalised middle repetitions 4
-                        %------------------------------------
-                        %                         Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_midrep4,1)],...
-                        %                             temp.X_midrep4', [1:(size(temp.X_midrep4,1))/nf:size(temp.X_midrep4,1)], 'spline');
-                        %
-                        %                         Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_midrep4,1)],...
-                        %                             temp.Y_midrep4', [1:(size(temp.Y_midrep4,1))/nf:size(temp.Y_midrep4,1)], 'spline');
-                        %
-                        %                         Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_midrep4,1)],...
-                        %                             temp.Z_midrep4', [1:(size(temp.Z_midrep4,1))/nf:size(temp.Z_midrep4,1)], 'spline');
-
-                        %% phase 4
-                        %---------
-
-                        temp.X_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 1); %fourth phase
-                        temp.Y_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 2); %fourth phase
-                        temp.Z_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 3); %fourth phase
-
-                        if size(temp.X_phase4, 1) < 100
-                            nf = 102;
-                        else
-                            nf = 101;
+                        if strcmp(arm, 'R_SSS')
+                            counterR_SSS    = counterR_SSS + 1;
+                            counter         = counterR_SSS;
+                            jointNo         = 7:10; % right upper extremity
+                        elseif strcmp(arm, 'R')
+                            counterR        = counterR + 1;
+                            counter         = counterR;
+                            jointNo         = 7:10; % right upper extremity
+                        elseif strcmp(arm, 'L_SSS')
+                            counterL_SSS    = counterL_SSS + 1;
+                            counter         = counterL_SSS;
+                            jointNo         = 11:14; % left upper extremity
+                        elseif strcmp(arm, 'L')
+                            counterL        = counterL + 1;
+                            counter         = counterL;
+                            jointNo         = 11:14; % left upper extremity
                         end
 
-                        % Time normalised phases; phase 4
-                        %--------------------------------
-                        Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase4,1)],...
-                            temp.X_phase4', [1:(size(temp.X_phase4,1))/nf:size(temp.X_phase4,1)], 'spline');
+                        % set General information per participant, per trial.
+                        Data_out.(movement).(Timepoint).General.CutIndices.(fileName) = [startPhase1, endPhase1, startPhase4, endPhase4];
 
-                        Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase4,1)],...
-                            temp.Y_phase4', [1:(size(temp.Y_phase4,1))/nf:size(temp.Y_phase4,1)], 'spline');
+                        % initialise joint names
+                        jointNames = ['Scapula', "Glenohumeraal", "Elbow", "Wrist"];
 
-                        Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase4,1)],...
-                            temp.Z_phase4', [1:(size(temp.Z_phase4,1))/nf:size(temp.Z_phase4,1)], 'spline');
+                        % Save the timecurves to struct, per participant, per
+                        % repetition.
+                        % Struct holds:
+                        % full timecurve
+                        % start and end points of phase 1 and phase 4
+                        % timecurves for each repetition
+                        % time normalised timecurves for each repetition
+                        %-------------------------------------------------
+
+                        for jnt = 1:4
+                            % initiation of joint names
+                            IK_X = [jointNames{jnt}, '_abbuction'];
+                            IK_Y = [jointNames{jnt}, '_rotation'];
+                            IK_Z = [jointNames{jnt}, '_flexion'];
+
+
+                            %% Phase 1
+                            %---------
+                            temp.X_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 1); %fist phase
+                            temp.Y_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 2); %fist phase
+                            temp.Z_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 3);
+
+                            if size(temp.X_phase1, 1) < 100
+                                nf = 102;
+                            else
+                                nf = 101;
+                            end
+                            % Time normalised phases; phase 1
+                            %--------------------------------
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase1,1)],...
+                                temp.X_phase1', [1:(size(temp.X_phase1,1))/nf:size(temp.X_phase1,1)], 'spline');
+
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase1,1)],...
+                                temp.Y_phase1', [1:(size(temp.Y_phase1,1))/nf:size(temp.Y_phase1,1)], 'spline');
+
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase1,1)],...
+                                temp.Z_phase1', [1:(size(temp.Z_phase1,1))/nf:size(temp.Z_phase1,1)], 'spline');
+
+                            %% midrep phase 1
+                            %----------------
+                            %                         temp.X_midrep1 = jointData(jointNo(jnt)).jointAngle(midrep_phase1,1);
+                            %                         temp.Y_midrep1 = jointData(jointNo(jnt)).jointAngle(midrep_phase1,2);
+                            %                         temp.Z_midrep1 = jointData(jointNo(jnt)).jointAngle(midrep_phase1,3);
+
+                            %                         if size(temp.X_midrep1,1) < 100
+                            %                             nf = 102;
+                            %                         else
+                            %                             nf = 101;
+                            %                         end
+
+                            % Time normalised middle repetitions 1
+                            %------------------------------------
+                            %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_midrep1,1)],...
+                            %                             temp.X_midrep1', [1:(size(temp.X_midrep1,1))/nf:size(temp.X_midrep1,1)], 'spline');
+                            %
+                            %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_midrep1,1)],...
+                            %                             temp.Y_midrep1', [1:(size(temp.Y_midrep1,1))/nf:size(temp.Y_midrep1,1)], 'spline');
+                            %
+                            %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_midrep1,1)],...
+                            %                             temp.Z_midrep1', [1:(size(temp.Z_midrep1,1))/nf:size(temp.Z_midrep1,1)], 'spline');
+
+
+
+                            %% midrep phase 4
+                            %----------------
+                            %                         temp.X_midrep4 = jointData(jointNo(jnt)).jointAngle(midrep_phase4,1 );
+                            %                         temp.Y_midrep4 = jointData(jointNo(jnt)).jointAngle(midrep_phase4,2);
+                            %                         temp.Z_midrep4 = jointData(jointNo(jnt)).jointAngle(midrep_phase4,3);
+
+                            %                         if size(temp.X_midrep4, 1) < 100
+                            %                             nf = 102;
+                            %                         else
+                            %                             nf = 101;
+                            %                         end
+
+
+                            % Time normalised middle repetitions 4
+                            %------------------------------------
+                            %                         Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_midrep4,1)],...
+                            %                             temp.X_midrep4', [1:(size(temp.X_midrep4,1))/nf:size(temp.X_midrep4,1)], 'spline');
+                            %
+                            %                         Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_midrep4,1)],...
+                            %                             temp.Y_midrep4', [1:(size(temp.Y_midrep4,1))/nf:size(temp.Y_midrep4,1)], 'spline');
+                            %
+                            %                         Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_midrep4,1)],...
+                            %                             temp.Z_midrep4', [1:(size(temp.Z_midrep4,1))/nf:size(temp.Z_midrep4,1)], 'spline');
+
+                            %% phase 4
+                            %---------
+
+                            temp.X_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 1); %fourth phase
+                            temp.Y_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 2); %fourth phase
+                            temp.Z_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 3); %fourth phase
+
+                            if size(temp.X_phase4, 1) < 100
+                                nf = 102;
+                            else
+                                nf = 101;
+                            end
+
+                            % Time normalised phases; phase 4
+                            %--------------------------------
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase4,1)],...
+                                temp.X_phase4', [1:(size(temp.X_phase4,1))/nf:size(temp.X_phase4,1)], 'spline');
+
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase4,1)],...
+                                temp.Y_phase4', [1:(size(temp.Y_phase4,1))/nf:size(temp.Y_phase4,1)], 'spline');
+
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase4,1)],...
+                                temp.Z_phase4', [1:(size(temp.Z_phase4,1))/nf:size(temp.Z_phase4,1)], 'spline');
 
 
 
 
-                        %% non-normalised data
-                        % Full ULIFT time data
+                            %% non-normalised data
+                            % Full ULIFT time data
+                            %---------------------
+                            Data_out.(movement).(Timepoint).IK.(arm).raw.(fileName).(IK_X) = jointData(jointNo(jnt)).jointAngle(:, 1);
+                            Data_out.(movement).(Timepoint).IK.(arm).raw.(fileName).(IK_Y) = jointData(jointNo(jnt)).jointAngle(:, 2);
+                            Data_out.(movement).(Timepoint).IK.(arm).raw.(fileName).(IK_Z) = jointData(jointNo(jnt)).jointAngle(:, 3);
+
+                            % Timedata of the phases; phase 1
+                            %---------------------------------
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_X) = temp.X_phase1;
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_Y) = temp.Y_phase1;
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_Z) = temp.Z_phase1;
+
+                            % Timedata of the phases; phase 4
+                            %--------------------------------
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_X) = temp.X_phase4;
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_Y) = temp.Y_phase4;
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_Z) = temp.Z_phase4;
+
+                            % Timedata of the middle repetitions; phase 1
+                            %--------------------------------------------
+                            %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_X) = temp.Z_midrep1;
+                            %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Y) = temp.Y_midrep1;
+                            %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Z) = temp.Z_midrep1;
+
+                            % Timedata of the middle repetitions; phase 4
+                            %--------------------------------------------
+                            %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_X) = temp.Z_midrep4;
+                            %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Y) = temp.Y_midrep4;
+                            %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Z) = temp.Z_midrep4;
+
+                            clear temp
+                        end
+
+                        %% Display the results
                         %---------------------
-                        Data_out.(movement).(Timepoint).IK.(arm).raw.(fileName).(IK_X) = jointData(jointNo(jnt)).jointAngle(:, 1);
-                        Data_out.(movement).(Timepoint).IK.(arm).raw.(fileName).(IK_Y) = jointData(jointNo(jnt)).jointAngle(:, 2);
-                        Data_out.(movement).(Timepoint).IK.(arm).raw.(fileName).(IK_Z) = jointData(jointNo(jnt)).jointAngle(:, 3);
+                        if plot_or_not
+                            figure;
+                            tiledlayout('flow')
 
-                        % Timedata of the phases; phase 1
-                        %---------------------------------
-                        Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_X) = temp.X_phase1;
-                        Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_Y) = temp.Y_phase1;
-                        Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_Z) = temp.Z_phase1;
+                            %display the results of the filtered and unfiltered data
+                            nexttile
+                            plot(segmentData(segmentno).velocity(:,3), "Color",[77 190 238]/255, 'DisplayName', "Unfiltered");
+                            hold on;
+                            plot(df.vel.velocityZ, "Color",'#A2142F', "DisplayName","Filtered 1Hz")
+                            hold off
+                            title("filterd velocity data")
 
-                        % Timedata of the phases; phase 4
-                        %--------------------------------
-                        Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_X) = temp.X_phase4;
-                        Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_Y) = temp.Y_phase4;
-                        Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_Z) = temp.Z_phase4;
+                            % display the results of the change points
+                            nexttile
+                            plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")
+                            hold on
 
-                        % Timedata of the middle repetitions; phase 1
-                        %--------------------------------------------
-                        %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_X) = temp.Z_midrep1;
-                        %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Y) = temp.Y_midrep1;
-                        %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Z) = temp.Z_midrep1;
+                            % Plot segments between change points
+                            plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
 
-                        % Timedata of the middle repetitions; phase 4
-                        %--------------------------------------------
-                        %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_X) = temp.Z_midrep4;
-                        %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Y) = temp.Y_midrep4;
-                        %                         Data_out.(movement).(Timepoint).IK.(arm).midrep1.(fileName).(IK_Z) = temp.Z_midrep4;
+                            %Plot change points
+                            x_rep = repelem(find(changeIndices),3);
+                            y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                            plot(x_rep,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
+                            title("Number of change points: " + nnz(changeIndices))
 
-                        clear temp
-                    end
+                            hold off
+                            %legend('Position',[0.85,0.25,0.15,0.2])
+                            clear segmentMean x_rep y posdata
+                            %
+                            %                         % display the results of the peak detection
+                            %                         nexttile
+                            %                         plot(df.vel.velocityZ,"Color",[77 190 238]/255,"DisplayName","Input data")
+                            %                         hold on
+                            %                         % Plot local maxima
+                            %                         plot(maxIndices,df.vel.velocityZ(maxIndices),"^","Color",[217 83 25]/255,...
+                            %                             "MarkerFaceColor",[217 83 25]/255,"DisplayName","Local maxima")
+                            %                         % Plot local minima
+                            %                         plot(minIndices,df.vel.velocityZ(minIndices),"v","Color",[237 177 32]/255,...
+                            %                             "MarkerFaceColor",[237 177 32]/255,"DisplayName","Local minima")
+                            %                         title("Number of extrema: " + (nnz(maxIndices)+nnz(minIndices)))
+                            %                         %legend('Position',[0.85,0.25,0.15,0.2])
+                            %                         % input the change points
+                            %                         x = find(changeIndices);
+                            %                         xline(x(1), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- endPh1")
+                            %                         xline(x(2), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- strPh4")
+                            %
+                            %                         yline(0, "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- zerocros")
+                            %                         hold off
+                            %
+                            % Plot the start and end points!
+                            nexttile
+                            plot(df.SenAcc.SensorFreeX ,"Color",[77 190 238]/255,"DisplayName","sensorfree acceleration")
+                            hold on
+                            xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
+                            xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
 
-                    %% Display the results
-                    %---------------------
-                    if plot_or_not
-                        figure;
-                        tiledlayout('flow')
+                            xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
+                            xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
+                            hold off
+                            %legend('Position',[0.85,0.25,0.15,0.2])
+                            title("Start/end points")
+                            ylabel("Acceleration X")
+                            %
+                            nexttile
+                            plot(segmentData(jointno).position(:,3),"Color",[77 190 238]/255, "DisplayName", "position")
+                            hold on
+                            xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
+                            xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
 
-                        %display the results of the filtered and unfiltered data
-                        nexttile
-                        plot(segmentData(segmentno).velocity(:,3), "Color",[77 190 238]/255, 'DisplayName', "Unfiltered");
-                        hold on;
-                        plot(df.vel.velocityZ, "Color",'#A2142F', "DisplayName","Filtered 1Hz")
-                        hold off
-                        title("filterd velocity data")
+                            xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
+                            xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
+                            hold off
+                            %legend('Position',[0.85,0.25,0.15,0.2])
+                            title("Start/end points")
+                            ylabel("position Z")
 
-                        % display the results of the change points
-                        nexttile
-                        plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")
-                        hold on
+                            nexttile
+                            stackedplot(Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.Glenohumeraal_flexion)
+                            title('Flexion/extension Shoulder--phase 1')
 
-                        % Plot segments between change points
-                        plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
+                            nexttile
+                            stackedplot(Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.Glenohumeraal_flexion);
+                            title('Flexion/extension Shoulder--phase 4')
 
-                        %Plot change points
-                        x_rep = repelem(find(changeIndices),3);
-                        y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
-                        plot(x_rep,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
-                        title("Number of change points: " + nnz(changeIndices))
+                            %                         nexttile
+                            %                         stackedplot(Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.Glenohumeraal_flexion)
+                            %                         title('Flexion/extension Shoulder--midrep 1')
+                            %
+                            %                         nexttile
+                            %                         stackedplot(Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.Glenohumeraal_flexion)
+                            %                         title('Flexion/extension Shoulder--midrep4')
 
-                        hold off
-                        %legend('Position',[0.85,0.25,0.15,0.2])
-                        clear segmentMean x_rep y posdata
-                        %
-                        %                         % display the results of the peak detection
-                        %                         nexttile
-                        %                         plot(df.vel.velocityZ,"Color",[77 190 238]/255,"DisplayName","Input data")
-                        %                         hold on
-                        %                         % Plot local maxima
-                        %                         plot(maxIndices,df.vel.velocityZ(maxIndices),"^","Color",[217 83 25]/255,...
-                        %                             "MarkerFaceColor",[217 83 25]/255,"DisplayName","Local maxima")
-                        %                         % Plot local minima
-                        %                         plot(minIndices,df.vel.velocityZ(minIndices),"v","Color",[237 177 32]/255,...
-                        %                             "MarkerFaceColor",[237 177 32]/255,"DisplayName","Local minima")
-                        %                         title("Number of extrema: " + (nnz(maxIndices)+nnz(minIndices)))
-                        %                         %legend('Position',[0.85,0.25,0.15,0.2])
-                        %                         % input the change points
-                        %                         x = find(changeIndices);
-                        %                         xline(x(1), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- endPh1")
-                        %                         xline(x(2), "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- strPh4")
-                        %
-                        %                         yline(0, "Color",[51 160 44]/255,"LineWidth",1, "DisplayName", "+/- zerocros")
-                        %                         hold off
-                        %
-                        % Plot the start and end points!
-                        nexttile
-                        plot(df.SenAcc.SensorFreeX ,"Color",[77 190 238]/255,"DisplayName","sensorfree acceleration")
-                        hold on
-                        xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
-                        xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
-
-                        xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
-                        xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
-                        hold off
-                        %legend('Position',[0.85,0.25,0.15,0.2])
-                        title("Start/end points")
-                        ylabel("Acceleration X")
-                        %
-                        nexttile
-                        plot(segmentData(jointno).position(:,3),"Color",[77 190 238]/255, "DisplayName", "position")
-                        hold on
-                        xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
-                        xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
-
-                        xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
-                        xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
-                        hold off
-                        %legend('Position',[0.85,0.25,0.15,0.2])
-                        title("Start/end points")
-                        ylabel("position Z")
-
-                        nexttile
-                        stackedplot(Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.Glenohumeraal_flexion)
-                        title('Flexion/extension Shoulder--phase 1')
-
-                        nexttile
-                        stackedplot(Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.Glenohumeraal_flexion);
-                        title('Flexion/extension Shoulder--phase 4')
-
-                        %                         nexttile
-                        %                         stackedplot(Data_out.(movement).(Timepoint).IK.(arm).midrep1.normalised.Glenohumeraal_flexion)
-                        %                         title('Flexion/extension Shoulder--midrep 1')
-                        %
-                        %                         nexttile
-                        %                         stackedplot(Data_out.(movement).(Timepoint).IK.(arm).midrep4.normalised.Glenohumeraal_flexion)
-                        %                         title('Flexion/extension Shoulder--midrep4')
-
-                        disp('      ')
+                            disp('      ')
+                        end % too few data after segmentation
                     end%plot_or_not
                 end% first check
             end % end if movement && .mvnx
