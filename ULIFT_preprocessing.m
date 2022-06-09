@@ -17,7 +17,7 @@ plot_or_not = 1;
 
 
 %% 2. load data
-for subj = 5
+for subj = 2
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -45,7 +45,7 @@ for subj = 5
         nfiles = size(content,1);
 
         % Start loop through ULIFT files per subject
-        for file = 1:nfiles
+        for file = 22%1:nfiles
             if contains(content(file).name, movement) && contains(content(file).name, '.mvnx')
                 number  = str2num(content(file).name(13:end-5));
                 file_ik = fullfile(path.subj, content(file).name);
@@ -649,7 +649,7 @@ for subj = 5
                             hold on;
                             plot(df.vel.velocityZ, "Color",'#A2142F', "DisplayName","Filtered 1Hz")
                             hold off
-                            title("filterd velocity data")
+                            title(["filterd velocity data", fileName])
 
                             % display the results of the change points
                             nexttile

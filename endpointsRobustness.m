@@ -378,6 +378,15 @@ end
 
 plottable = table(df.pos.positionZ, df.Avel.angularVelDiff, df.SenAcc.SensorFreeX);
 plottable.Properties.VariableNames = {'Position Z', 'Diff Angular Vel Vec', 'Acc X'};
+writetable(plottable, 'EventDetectionTimecures.csv')
+
+interest.Start_phase1(2)    = startPhase1_new2;
+interest.Stop_phase1(2)     = endPhase1_new;
+interest.Start_phase4(2)    = startPhase4_new;
+interest.Stop_phase4(2)     = endPhase4_new3;
+interest.Change1(2)         = find(changeIndices, 1, 'first');
+interest.Change2(2)         = find(changeIndices, 1, 'last');
 
 
-writetable(plottable, 'EventDetection.csv')
+writetable(interest, 'EventDetectionPOI.csv')
+
