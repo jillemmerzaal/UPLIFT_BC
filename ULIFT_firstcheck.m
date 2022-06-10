@@ -65,6 +65,8 @@ for subj = 5
                 %% 2.1 Load xsens data
                 % Change the filename here to the name of the file you would like to import
                 disp(['    ' content(file).name ': read xsens file'])
+
+                
                 tree = load_mvnx(file_ik);
 
                 % Read some basic data from the file
