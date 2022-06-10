@@ -15,11 +15,8 @@
 clear all; close all; clc
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 
-
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 load(fullfile(path.root,'Output','Database_ULIFT.mat'));
-
-
 
 timepoint = 'T0';
 
