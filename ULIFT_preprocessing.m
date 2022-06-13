@@ -14,7 +14,7 @@ path.table  = fullfile(path.root,'Output');
 plot_or_not = 1;
 
 %% 2. load data
-for subj = 2
+for subj = 3
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -30,19 +30,20 @@ for subj = 2
     check_subj  = exist(path.subj);
 
     if check_subj == 7
-        T = readtable(fullfile(path.root, 'Output', [subj_name, '.xlsx']));
+        %T = readtable(fullfile(path.root, 'Output', [subj_name, '.xlsx']));
 
         %initialize counters
         counterR        = 0;
         counterR_SSS    = 0;
         counterL        = 0;
         counterL_SSS    = 0;
-
+        
+        counterRUN      = 0;
         content = dir(path.subj);
         nfiles = size(content,1);
 
         % Start loop through ULIFT files per subject
-        for file = 22%1:nfiles
+        for file = 1:nfiles
             if contains(content(file).name, movement) && contains(content(file).name, '.mvnx')
                 number  = str2num(content(file).name(13:end-5));
                 file_ik = fullfile(path.subj, content(file).name);
@@ -50,125 +51,151 @@ for subj = 2
                 [~,name, ~] = fileparts(content(file).name);
                 [fileName] = regexprep(name, '-', '_');
 
-                idx = find(ismember(T.filename, fileName));
+%                 idx = find(ismember(T.filename, fileName));
 
-                if T.run(idx)==1
+                % if T.run(idx)==1
 
-                    d = strfind(name,'_');
-                    if size(d,2) == 1
-                        arm = content(file).name(d+1);
+                d = strfind(name,'_');
+                if size(d,2) == 1
+                    arm = content(file).name(d+1);
 
-                    elseif size(d,2) == 2
-                        temp = content(file).name(d(2)+1);
-                        arm = [temp, '_SSS']; % SSS = self-selected speed
-                        clear temp
-                    end
+                elseif size(d,2) == 2
+                    temp = content(file).name(d(2)+1);
+                    arm = [temp, '_SSS']; % SSS = self-selected speed
+                    clear temp
+                end
 
-                    disp(['     ' 'Analysing: ' fileName '.....'])
-                    disp(['   ' 'Arm of interst: ' arm '.....'])
+                disp(['     ' 'Analysing: ' fileName '.....'])
+                disp(['   ' 'Arm of interst: ' arm '.....'])
 
-                    %% 2.1 Load xsens data
-                    % Change the filename here to the name of the file you would like to import
-                    disp(['    ' content(file).name ': read xsens file'])
-                    [sensorData, segmentData, jointData]= MVN(file_ik);
+                %% 2.1 Load xsens data
+                % Change the filename here to the name of the file you would like to import
+                disp(['    ' content(file).name ': read xsens file'])
+                [sensorData, segmentData, jointData]= MVN(file_ik);
 
-                    if contains(arm, 'L')
-                        jointno     = 14;
-                        segmentno   = 14;
-                        sensorno    = 10;
-                    else
-                        jointno     = 10;
-                        segmentno   = 10;
-                        sensorno    = 6;
-                    end
-
-
-                    %% 2.2 Define data needed for segmentation
-                    %-----------------------------------------
-                    disp(['    ' content(file).name ': define start and end points'])
-
-                    %filter data
-                    fc = 2;  %cutoff freq
-                    fs = 60; %sample freq
-                    [b,a] = butter(2, fc/(fs/2));
-
-                    position = filtfilt(b,a, segmentData(segmentno).position);
-                    positionX = position(:,1);
-                    positionY = position(:,2);
-                    positionZ = position(:,3);
-                    positionVec = vecnorm(position, 2,2);
-
-                    SensorFree = filtfilt(b,a, sensorData(sensorno).sensorFreeAcceleration);
-                    SensorFreeX = SensorFree(:,1);
-                    SensorFreeY = SensorFree(:,2);
-                    SensorFreeZ = SensorFree(:,3);
-                    SensorFreeVec = vecnorm(SensorFree,2,2);
-                    SensorFreeDiff = [diff(SensorFreeVec); 0];
-
-                    angularVel_LA = filtfilt(b,a, segmentData(segmentno).angularVelocity);
-                    angularVelX = angularVel_LA(:,1);
-                    angularVelY = angularVel_LA(:,2);
-                    angularVelZ = angularVel_LA(:,3);
-                    angularVelVec = vecnorm(angularVel_LA, 2, 2);
-                    angularVelDiff = [diff(angularVelVec); 0];
+                if contains(arm, 'L')
+                    jointno     = 14;
+                    segmentno   = 14;
+                    sensorno    = 10;
+                else
+                    jointno     = 10;
+                    segmentno   = 10;
+                    sensorno    = 6;
+                end
 
 
-                    % dataframes
-                    df.pos      = table(positionX, positionY, positionZ, positionVec);
-                    df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec, SensorFreeDiff);
-                    df.Avel     = table(angularVelX, angularVelY, angularVelZ, angularVelVec, angularVelDiff);
+                %% 2.2 Define data needed for segmentation
+                %-----------------------------------------
+                disp(['    ' content(file).name ': define start and end points'])
 
-                    clear position positionX positionY positionZ positionVec
-                    clear sensorFree sensorFreeX sensorFreeY SensorFreeZ sensorFreeVec SensorFreeDiff
-                    clear angularVel_X angularVelY angularVelZ angularVelVec angularVelDiff
-                    
-                   
-                    %% define change points based on position data
-                    %---------------------------------------------
-                    [changeIndices,segmentMean] = ischange(df.pos.positionZ,"MaxNumChanges",2);
-                    x = find(changeIndices);
+                %filter data
+                fc = 2;  %cutoff freq
+                fs = 60; %sample freq
+                [b,a] = butter(2, fc/(fs/2));
 
-                    %% set counters
-                    if strcmp(arm, 'R_SSS')
-                        counterR_SSS    = counterR_SSS + 1;
-                        counter         = counterR_SSS;
-                        jointNo         = 7:10; % right upper extremity
-                    elseif strcmp(arm, 'R')
-                        counterR        = counterR + 1;
-                        counter         = counterR;
-                        jointNo         = 7:10; % right upper extremity
-                    elseif strcmp(arm, 'L_SSS')
-                        counterL_SSS    = counterL_SSS + 1;
-                        counter         = counterL_SSS;
-                        jointNo         = 11:14; % left upper extremity
-                    elseif strcmp(arm, 'L')
-                        counterL        = counterL + 1;
-                        counter         = counterL;
-                        jointNo         = 11:14; % left upper extremity
-                    end
-                    %% check the number of highest points -- should be 3 per phase
-                    tempPos = df.pos(:,3);
-                    thresh_ph1 = mean(segmentMean(1:x(1))) + mean(segmentMean(1:x(1)))*0.05;
+                position = filtfilt(b,a, segmentData(segmentno).position);
+                positionX = position(:,1);
+                positionY = position(:,2);
+                positionZ = position(:,3);
+                positionVec = vecnorm(position, 2,2);
+
+                SensorFree = filtfilt(b,a, sensorData(sensorno).sensorFreeAcceleration);
+                SensorFreeX = SensorFree(:,1);
+                SensorFreeY = SensorFree(:,2);
+                SensorFreeZ = SensorFree(:,3);
+                SensorFreeVec = vecnorm(SensorFree,2,2);
+                SensorFreeDiff = [diff(SensorFreeVec); 0];
+
+                angularVel_LA = filtfilt(b,a, segmentData(segmentno).angularVelocity);
+                angularVelX = angularVel_LA(:,1);
+                angularVelY = angularVel_LA(:,2);
+                angularVelZ = angularVel_LA(:,3);
+                angularVelVec = vecnorm(angularVel_LA, 2, 2);
+                angularVelDiff = [diff(angularVelVec); 0];
+
+
+                % dataframes
+                df.pos      = table(positionX, positionY, positionZ, positionVec);
+                df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec, SensorFreeDiff);
+                df.Avel     = table(angularVelX, angularVelY, angularVelZ, angularVelVec, angularVelDiff);
+
+                clear position positionX positionY positionZ positionVec
+                clear sensorFree sensorFreeX sensorFreeY SensorFreeZ sensorFreeVec SensorFreeDiff
+                clear angularVel_X angularVelY angularVelZ angularVelVec angularVelDiff
+
+                %% set counters
+                if strcmp(arm, 'R_SSS')
+                    counterR_SSS    = counterR_SSS + 1;
+                    counter         = counterR_SSS;
+                    jointNo         = 7:10; % right upper extremity
+                elseif strcmp(arm, 'R')
+                    counterR        = counterR + 1;
+                    counter         = counterR;
+                    jointNo         = 7:10; % right upper extremity
+                elseif strcmp(arm, 'L_SSS')
+                    counterL_SSS    = counterL_SSS + 1;
+                    counter         = counterL_SSS;
+                    jointNo         = 11:14; % left upper extremity
+                elseif strcmp(arm, 'L')
+                    counterL        = counterL + 1;
+                    counter         = counterL;
+                    jointNo         = 11:14; % left upper extremity
+                end
+
+                counterRUN = counterRUN + 1;
+                %% Step 1: define change points based on position data
+                %-----------------------------------------------------
+                [changeIndices,segmentMean] = ischange(df.pos.positionZ,"MaxNumChanges",2);
+                x = find(changeIndices);
+
+
+                % check the number of highest points -- should be 3 per phase
+                % If there are more than 3, trial will not be run.  
+                %------------------------------------------------------------
+                thresh_ph1 = mean(segmentMean(1:x(1))) + mean(segmentMean(1:x(1)))*0.05;
+                [maxIndices_ph1, peakMag] = peakfinder(df.pos.positionZ(1:x(1)), [], thresh_ph1, 1, []);
+
+                if length(maxIndices_ph1) > 3
+                    thresh_ph1 = mean(peakMag) - 2*std(peakMag);
                     [maxIndices_ph1, ~] = peakfinder(df.pos.positionZ(1:x(1)), [], thresh_ph1, 1, []);
+                end
 
-                    thresh_ph4 = mean(segmentMean(x(2):end)) + mean(segmentMean(x(2):end))*0.025;
+                
+
+
+                thresh_ph4 = mean(segmentMean(x(2):end)) + mean(segmentMean(x(2):end))*0.025;
+
+                [maxIndices_ph4, peakMag] = peakfinder(df.pos.positionZ(x(2):end), [], thresh_ph4);
+
+                if length(maxIndices_ph4) > 3
+                    thresh_ph4 = mean(peakMag) - std(peakMag);
                     [maxIndices_ph4, ~] = peakfinder(df.pos.positionZ(x(2):end), [], thresh_ph4, 1, []);
-                    maxIndices_ph4 = maxIndices_ph4 + x(2);
+                end
+
+                maxIndices_ph4 = maxIndices_ph4 + x(2);
+
+                ppID{counterRUN, 1} = subj_name;
+                Phase1(counterRUN,1) = size(maxIndices_ph1,1);
+                filename{counterRUN,1} = fileName;
+                Phase4(counterRUN,1) = size(maxIndices_ph4,1);
+                Tpoint{counterRUN, 1} = Timepoint;
 
 
+                if Phase1(counterRUN,1) == 3 && Phase4(counterRUN,1) == 3
+                    run(counterRUN,1) = 1;
+                else
+                    run(counterRUN,1 ) = 0;
+                end
+               
 
-                    ppID{counter, 1} = subj_name;
-                    Phase1(counter,1) = size(maxIndices_ph1,1);
-                    filename{counter,1} = fileName;
-                    Phase4(counter,1) = size(maxIndices_ph4,1);
+                if run(counterRUN,1) ==1
+                    %% Step 2: Start and end of the ULIFT task
+                    % define start and end of the ULIFT task as using the
+                    % peak rate of thange of the angular velocity vector of
+                    % the lower arm sensor
+                    %------------------------------------------------------
 
-                    if Phase1(counter,1) == 3 && Phase4(counter,1) == 3
-                        run(counter,1) = 1;
-                    else
-                        run(counter,1 ) = 0;
-                    end
-
-                    %% new start phase 1 version 2
+                    % Start phase 1 
                     [peakLoc, peakMag] = peakfinder(df.Avel.angularVelDiff(1:x(1)));
                     localmax.all = peakLoc;
                     Thresh = mean(peakMag) *1.5;
@@ -182,46 +209,13 @@ for subj = 2
                     end
 
                     clear localmax peakLoc peakMag
-                    %% New end phase 1
-                    [temp, P] = islocalmin(df.SenAcc.SensorFreeX(1:x(1)));
 
-                    localmin.all = temp;
-                    Thresh = mean(P(localmin.all));
-
-                    clear temp P
-                    [temp, P] = islocalmin(df.SenAcc.SensorFreeX(1:x(1)), 'MinProminence',Thresh);
-                    localmin.thresh = temp;
-                    N = 1:height(df.SenAcc.SensorFreeX);
-
-                    %select the less prominent minima between the last two most prominent minima
-                    localmin.prominent = N(localmin.thresh);
-                    localmin.incon = N(localmin.all);
-
-                    % endPhase1_new = localmin.incon(find(localmin.incon == localmin.prominent(end))-1)
-                    endPhase1 = localmin.incon(end-1);
-                    clear localmin P temp
-
-                    %% new start phase 4
-                    temp = df.SenAcc.SensorFreeX(x(2):end);
-                    [minima, P] = islocalmin(temp);
-
-                    localmin.all = minima;
-                    Thresh = mean(P(localmin.all)) + std(P(localmin.all)) *0.25;
-                    clear minima P
-                    [minima, P] = islocalmin(temp, 'MinProminence',Thresh);
-                    localmin.thresh = minima;
-
-                    % the first prominent acceleration peak
-                    localmin.prominent = N(localmin.thresh)+ x(2);
-                    localmin.incon = N(localmin.all)+ x(2);
-                    startPhase4 = localmin.prominent(1);
-
-                    clear localmin temp P
-                    %% new end phase 4 version 3
+                    % End phase 4
                     temp = df.Avel.angularVelDiff(x(2):end)*-1;
                     [peakLoc, peakMag] = peakfinder(temp);
                     localmin.all = peakLoc + x(2);
 
+                    N = 1:height(df.Avel.angularVelDiff);
                     % localmin.all = min;
                     average = mean(peakMag);
                     Thresh = average *1.5;
@@ -240,15 +234,57 @@ for subj = 2
                     end
 
                     clear localmin peakLoc peakMag temp
+
+                    %% Step 3: End phase 1 and start phase 4 
+                    % define the end of phase 1 and the start of phase 4
+                    % using the peak acceleration signal in x-direction of 
+                    % thelower arm sensor
+                    %------------------------------------------------------
+
+                    % End phase 1
+                    [temp, P] = islocalmin(df.SenAcc.SensorFreeX(1:x(1)));
+
+                    localmin.all = temp;
+                    Thresh = mean(P(localmin.all));
+
+                    clear temp P
+                    [temp, P] = islocalmin(df.SenAcc.SensorFreeX(1:x(1)), 'MinProminence',Thresh);
+                    localmin.thresh = temp;
+                    N = 1:height(df.SenAcc.SensorFreeX);
+
+                    %select the less prominent minima between the last two most prominent minima
+                    localmin.prominent = N(localmin.thresh);
+                    localmin.incon = N(localmin.all);
+
+                    % endPhase1_new = localmin.incon(find(localmin.incon == localmin.prominent(end))-1)
+                    endPhase1 = localmin.incon(end-1);
+                    clear localmin P temp
+
+                    % start phase 4
+                    temp = df.SenAcc.SensorFreeX(x(2):end);
+                    [minima, P] = islocalmin(temp);
+
+                    localmin.all = minima;
+                    Thresh = mean(P(localmin.all)) + std(P(localmin.all)) *0.25;
+                    clear minima P
+                    [minima, P] = islocalmin(temp, 'MinProminence',Thresh);
+                    localmin.thresh = minima;
+
+                    % the first prominent acceleration peak
+                    localmin.prominent = N(localmin.thresh)+ x(2);
+                    localmin.incon = N(localmin.all)+ x(2);
+                    startPhase4 = localmin.prominent(1);
+
+                    clear localmin temp P
+                   
+                    % the time axis of the phases. 
                     T_phase1 = startPhase1:endPhase1;
                     T_phase4 = startPhase4:endPhase4;
 
                     if size(T_phase1,2) > 50 && size(T_phase4, 2) > 50
-                        %% 2.4 Extract the relevant kinematics
+                        %% Step 4: Extract the relevant kinematics
                         %-------------------------------------
                         disp(['    ' content(file).name ': extract relevant Kinematics'])
-
-                        
 
                         % set General information per participant, per trial.
                         Data_out.(movement).(Timepoint).General.CutIndices.(fileName) = [startPhase1, endPhase1, startPhase4, endPhase4];
@@ -294,7 +330,7 @@ for subj = 2
                             Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase1,1)],...
                                 temp.Z_phase1', [1:(size(temp.Z_phase1,1))/nf:size(temp.Z_phase1,1)], 'spline');
 
-                           
+
                             %% phase 4
                             %---------
 
@@ -366,7 +402,7 @@ for subj = 2
                             hold off
                             %legend('Position',[0.85,0.25,0.15,0.2])
                             clear segmentMean x_rep y posdata
-                           
+
                             % Plot the start and end points!
                             nexttile
                             plot(df.SenAcc.SensorFreeX ,"Color",[77 190 238]/255,"DisplayName","sensorfree acceleration")
@@ -408,26 +444,34 @@ for subj = 2
             end % end if movement && .mvnx
         end %end number of files
 
-        
-        T = table(ppID, filename, Phase1, Phase4, run);
-        writetable(T, fullfile(path.table, [subj_name, '.xlsx']))
+        if strcmp(Timepoint, 'T0')
+            T = table(ppID, filename, Tpoint, Phase1, Phase4, run);
+            writetable(T, fullfile(path.table, [subj_name, '.xlsx']))
+        else
+            tablefile = fullfile(path.table, [subj_name, '.xlsx']);
+            T_orig = readtable(tablefile);
+
+            T_new = table(ppID, filename, Tpoint, Phase1, Phase4, run);
+            T = [T_orig; T_new];            
+            writetable(T, fullfile(path.table, [subj_name, '.xlsx']))
+
+
+        end
 
     end% end check if subject path exists
 
     %% Save data
     %--------------
 
-    if exist('Data_out','var')
-        if exist(path.out,'file')
-            load(path.out)
+        if exist('Data_out','var')
+            if exist(path.out,'file')
+                load(path.out)
+            end
+    
+            [Data.(subj_name).ULIFT.(Timepoint)] = Data_out.ULIFT.(Timepoint);
+            save(path.out,'Data')
+            clear Data Data_out
         end
-
-
-        subj_name2 = [subj_name, '_Reprocess'];
-        [Data.(subj_name).ULIFT.(Timepoint)] = Data_out.ULIFT.(Timepoint);
-        save(path.out,'Data')
-        clear Data Data_out
-    end
 
     disp(['*********Finished ' subj_name '**********'])
     disp(' ')

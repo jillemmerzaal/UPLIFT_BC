@@ -1,3 +1,3 @@
-subj_id,Trial,Start_phase1,Stop_phase1,Start_phase4,Stop_phase4,Change1,Change2
-BC_002,ULIFT_L_001,69,347,1036,1313,0,0
-,,72,346,1009,1315,390,953
+subj_id,Trial,Start_phase1,Stop_phase1,Start_phase4,Stop_phase4,Var7,Change1,Change2
+BC_005,ULIFT_R_002,53,393,1124,1454,NaN,0,0
+,,57,399,1126,1445,0,451,1043

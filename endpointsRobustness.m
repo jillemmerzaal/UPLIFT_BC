@@ -363,14 +363,15 @@ for nPlot = 1:length(signals)
 
     %new version 2 start phase 1 based on the highest rate of change of the
     %angular velocity vector
-    arrayfun(@(h)xline(h, startPhase1_new2, 'Linewidth', 1.5, 'LineStyle', ':', 'Color', 'yellow', 'DisplayName', 'StartPh1'), ax)
+    arrayfun(@(h)xline(h, startPhase1_new2, 'Linewidth', 1.5, 'LineStyle', ':', 'Color', 'm', 'DisplayName', 'StartPh1'), ax)
 
-    arrayfun(@(h)xline(h, endPhase4_new3, 'Linewidth', 1.5, 'LineStyle', ':', 'Color', 'yellow', 'DisplayName', 'StartPh1'), ax)
+    arrayfun(@(h)xline(h, endPhase4_new3, 'Linewidth', 1.5, 'LineStyle', ':', 'Color', 'm', 'DisplayName', 'StartPh1'), ax)
 
     % change indices
     arrayfun(@(h)xline(h,x(1),'LineWidth',1.5,'LineStyle', ':', "Color", 'black', 'DisplayName','change1'),ax)
     arrayfun(@(h)xline(h,x(2), 'LineWidth', 1.5, 'LineStyle', ':', "Color", 'black', 'DisplayName','change2'), ax)
 
+  
 end
 
 
