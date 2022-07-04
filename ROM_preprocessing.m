@@ -9,19 +9,19 @@
 %       KU Leuven, Tervuursevest 101, box 1501
 %       Research Group for Rehabilitation in Internal Disorders
 
-clear all; close all; clc
+clear all; %close all; clc
 %% 1. input data
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 
 Timepoint   = 'T0';
-activities  =  {'ABD', 'AF', 'EXO'}; %Abductie'; %Abductie Anteflexie Exorotatie
+activities  =  {'ABD'}%, 'AF', 'EXO'}; %Abductie'; %Abductie Anteflexie Exorotatie
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 path.out    = fullfile(path.root,'Output','Database_ROM.mat');
 plot_or_not = 1;
 
 %% 2. load data
-for subj = 1:5
+for subj = 1%:8
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -45,7 +45,6 @@ for subj = 1:5
         nfiles = size(content,1);
 
         % Start loop through ROM files per subject
-
         for mv = 1:3
             movement = string(activities(mv));
 
@@ -56,21 +55,8 @@ for subj = 1:5
                     [~,name, ~] = fileparts(content(file).name);
                     [fileName] = regexprep(name, '-', '_');
 
-                    %                 if contains(content(file).name, 'R')
-                    %                     arm = 'right';
-                    %                 else
-                    %                     arm = 'left';
-                    %                 end
-
-
-
                     d = strfind(name,'_');
                     arm = content(file).name(d+1);
-
-                    %                 interest = timepoints(strcmp(timepoints.Trial, name),:);
-
-
-
 
                     %% 2.1 Load xsens data
                     % Change the filename here to the name of the file you would like to import

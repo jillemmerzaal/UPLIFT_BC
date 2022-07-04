@@ -1,21 +1,21 @@
-function [sensorData, segmentData, jointData]= MVN(file_ik)
+function [sensorData, segmentData, jointData, tree]= MVN(file_ik)
 
 tree = load_mvnx(file_ik);
 
 % Read some basic data from the file
-mvnxVersion = tree.metaData.mvnx_version; %version of the MVN Studio used during recording
+tree.mvnxVersion = tree.metaData.mvnx_version; %version of the MVN Studio used during recording
 
 if (isfield(tree.metaData, 'comment'))
-    fileComments = tree.metaData.comment; %comments written when saving the file
+    tree.fileComments = tree.metaData.comment; %comments written when saving the file
 end
 
 % Read some basic properties of the subject;
 
-frameRate = tree.metaData.subject_frameRate;
-suitLabel = tree.metaData.subject_label;
-originalFilename = tree.metaData.subject_originalFilename;
-recDate = tree.metaData.subject_recDate;
-segmentCount = tree.metaData.subject_segmentCount;
+tree.frameRate = tree.metaData.subject_frameRate;
+tree.suitLabel = tree.metaData.subject_label;
+tree.originalFilename = tree.metaData.subject_originalFilename;
+tree.recDate = tree.metaData.subject_recDate;
+tree.segmentCount = tree.metaData.subject_segmentCount;
 
 % Retrieve sensor label
 % creates a struct with sensor data

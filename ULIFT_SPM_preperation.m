@@ -1,4 +1,4 @@
-%% ULIFT SMP preperation
+%% ULIFT SPM preperation
 % this code will prepare the data to be used in the SPM analysis in
 % python. It will:
 % 1) read the data from the preprocessing step
@@ -26,7 +26,10 @@ nsubjects = size(subjects,1);
 IK_angles = fieldnames(Data.(subjects{1}).ULIFT.(timepoint).IK.L.Phase1.normalised);
 nangles = size(IK_angles,1);
 
-for subj =1:nsubjects
+
+
+
+for subj = 1:nsubjects
     %% LEFT arm
     %----------
     % phase 1
@@ -116,6 +119,21 @@ end
 % end
 
 %% Kinematics
+
+jointsOfInterst ={'Scapula_abbuction'      
+    'Scapula_rotation'       
+    'Scapula_flexion'        
+    'Glenohumeraal_abbuction'
+    'Glenohumeraal_rotation' 
+    'Glenohumeraal_flexion'         
+    'Elbow_flexion'          
+    'Trunk_lateroflexion'    
+    'Trunk_rotation'         
+    'Trunk_flexion'      };    
+
+nangles = size(jointsOfInterst,1);
+
+
 % phase 1
 fig1 = figure;
 set(fig1,'Position',[1 31.4000 1536 758.4])
@@ -130,11 +148,11 @@ for ang = 1:nangles
     subplot(p(1),p(2),ang)
     %PREOP
     %---------------------------------
-    Av_bc_l = nanmean(BC.IK.L_phase1.(IK_angles{ang}),2);
-    Sd_bc_l = nanstd(BC.IK.L_phase1.(IK_angles{ang}),0,2);
+    Av_bc_l = nanmean(BC.IK.L_phase1.(jointsOfInterst{ang}),2);
+    Sd_bc_l = nanstd(BC.IK.L_phase1.(jointsOfInterst{ang}),0,2);
 
-    Av_bc_r = nanmean(BC.IK.R_phase1.(IK_angles{ang}),2);
-    Sd_bc_r = nanstd(BC.IK.R_phase1.(IK_angles{ang}),0,2);
+    Av_bc_r = nanmean(BC.IK.R_phase1.(jointsOfInterst{ang}),2);
+    Sd_bc_r = nanstd(BC.IK.R_phase1.(jointsOfInterst{ang}),0,2);
 
     L_BC = shadedErrorBar(x,Av_bc_l,Sd_bc_l,{'Color',color_BC_l},[0.5]);
     hold on
@@ -144,7 +162,7 @@ for ang = 1:nangles
     set(R_BC.mainLine, 'LineWidth', 1.5)
     set(gca,'XLim',[1 100])
 
-    title(IK_angles{ang},'FontSize',13);
+    title(jointsOfInterst{ang},'FontSize',13);
     xlabel('% of ULIFT cycle','FontSize',13);
 end
 
@@ -163,11 +181,11 @@ for ang = 1:nangles
     subplot(p(1),p(2),ang)
     %PREOP
     %---------------------------------
-    Av_bc_l = nanmean(BC.IK.L_phase4.(IK_angles{ang}),2);
-    Sd_bc_l = nanstd(BC.IK.L_phase4.(IK_angles{ang}),0,2);
+    Av_bc_l = nanmean(BC.IK.L_phase4.(jointsOfInterst{ang}),2);
+    Sd_bc_l = nanstd(BC.IK.L_phase4.(jointsOfInterst{ang}),0,2);
 
-    Av_bc_r = nanmean(BC.IK.R_phase4.(IK_angles{ang}),2);
-    Sd_bc_r = nanstd(BC.IK.R_phase4.(IK_angles{ang}),0,2);
+    Av_bc_r = nanmean(BC.IK.R_phase4.(jointsOfInterst{ang}),2);
+    Sd_bc_r = nanstd(BC.IK.R_phase4.(jointsOfInterst{ang}),0,2);
 
     L_BC = shadedErrorBar(x,Av_bc_l,Sd_bc_l,{'Color',color_BC_l},[0.5]);
     hold on
@@ -177,15 +195,8 @@ for ang = 1:nangles
     set(R_BC.mainLine, 'LineWidth', 1.5)
     set(gca,'XLim',[1 100])
 
-    title(IK_angles{ang},'FontSize',13);
+    title(jointsOfInterst{ang},'FontSize',13);
     xlabel('% of ULIFT cycle','FontSize',13);
 end
 
 
-% figure
-% for subj = 1:nsubjects
-%     plot(Data.(subjects{subj}).ULIFT.T0.IK.R.Phase1.normalised.Glenohumeraal_flexion)
-%     hold on
-% end
-% figure;
-% plot(BC.IK.L.Glenohumeraal_flexion);

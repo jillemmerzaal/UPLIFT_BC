@@ -14,7 +14,7 @@ path.table  = fullfile(path.root,'Output');
 plot_or_not = 1;
 
 %% 2. load data
-for subj = 3
+for subj = 8% [7:10]
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -37,13 +37,13 @@ for subj = 3
         counterR_SSS    = 0;
         counterL        = 0;
         counterL_SSS    = 0;
-        
+
         counterRUN      = 0;
         content = dir(path.subj);
         nfiles = size(content,1);
 
         % Start loop through ULIFT files per subject
-        for file = 1:nfiles
+        for file = 26%1:nfiles
             if contains(content(file).name, movement) && contains(content(file).name, '.mvnx')
                 number  = str2num(content(file).name(13:end-5));
                 file_ik = fullfile(path.subj, content(file).name);
@@ -51,7 +51,7 @@ for subj = 3
                 [~,name, ~] = fileparts(content(file).name);
                 [fileName] = regexprep(name, '-', '_');
 
-%                 idx = find(ismember(T.filename, fileName));
+                %                 idx = find(ismember(T.filename, fileName));
 
                 % if T.run(idx)==1
 
@@ -71,7 +71,11 @@ for subj = 3
                 %% 2.1 Load xsens data
                 % Change the filename here to the name of the file you would like to import
                 disp(['    ' content(file).name ': read xsens file'])
-                [sensorData, segmentData, jointData]= MVN(file_ik);
+                [sensorData, segmentData, jointData, tree]= MVN(file_ik);
+
+                if isfield(tree, 'fileComments')
+                    disp(['     Comment in file: ' tree.fileComments])
+                end
 
                 if contains(arm, 'L')
                     jointno     = 14;
@@ -113,7 +117,6 @@ for subj = 3
                 angularVelVec = vecnorm(angularVel_LA, 2, 2);
                 angularVelDiff = [diff(angularVelVec); 0];
 
-
                 % dataframes
                 df.pos      = table(positionX, positionY, positionZ, positionVec);
                 df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec, SensorFreeDiff);
@@ -123,24 +126,7 @@ for subj = 3
                 clear sensorFree sensorFreeX sensorFreeY SensorFreeZ sensorFreeVec SensorFreeDiff
                 clear angularVel_X angularVelY angularVelZ angularVelVec angularVelDiff
 
-                %% set counters
-                if strcmp(arm, 'R_SSS')
-                    counterR_SSS    = counterR_SSS + 1;
-                    counter         = counterR_SSS;
-                    jointNo         = 7:10; % right upper extremity
-                elseif strcmp(arm, 'R')
-                    counterR        = counterR + 1;
-                    counter         = counterR;
-                    jointNo         = 7:10; % right upper extremity
-                elseif strcmp(arm, 'L_SSS')
-                    counterL_SSS    = counterL_SSS + 1;
-                    counter         = counterL_SSS;
-                    jointNo         = 11:14; % left upper extremity
-                elseif strcmp(arm, 'L')
-                    counterL        = counterL + 1;
-                    counter         = counterL;
-                    jointNo         = 11:14; % left upper extremity
-                end
+               
 
                 counterRUN = counterRUN + 1;
                 %% Step 1: define change points based on position data
@@ -150,7 +136,7 @@ for subj = 3
 
 
                 % check the number of highest points -- should be 3 per phase
-                % If there are more than 3, trial will not be run.  
+                % If there are more than 3, trial will not be run.
                 %------------------------------------------------------------
                 thresh_ph1 = mean(segmentMean(1:x(1))) + mean(segmentMean(1:x(1)))*0.05;
                 [maxIndices_ph1, peakMag] = peakfinder(df.pos.positionZ(1:x(1)), [], thresh_ph1, 1, []);
@@ -160,7 +146,7 @@ for subj = 3
                     [maxIndices_ph1, ~] = peakfinder(df.pos.positionZ(1:x(1)), [], thresh_ph1, 1, []);
                 end
 
-                
+
 
 
                 thresh_ph4 = mean(segmentMean(x(2):end)) + mean(segmentMean(x(2):end))*0.025;
@@ -186,19 +172,37 @@ for subj = 3
                 else
                     run(counterRUN,1 ) = 0;
                 end
-               
+
 
                 if run(counterRUN,1) ==1
+                     %% set counters
+                     if strcmp(arm, 'R_SSS')
+                         counterR_SSS    = counterR_SSS + 1;
+                         counter         = counterR_SSS;
+                         jointNo         = 7:10; % right upper extremity
+                     elseif strcmp(arm, 'R')
+                         counterR        = counterR + 1;
+                         counter         = counterR;
+                         jointNo         = 7:10; % right upper extremity
+                     elseif strcmp(arm, 'L_SSS')
+                         counterL_SSS    = counterL_SSS + 1;
+                         counter         = counterL_SSS;
+                         jointNo         = 11:14; % left upper extremity
+                     elseif strcmp(arm, 'L')
+                         counterL        = counterL + 1;
+                         counter         = counterL;
+                         jointNo         = 11:14; % left upper extremity
+                     end
                     %% Step 2: Start and end of the ULIFT task
                     % define start and end of the ULIFT task as using the
                     % peak rate of thange of the angular velocity vector of
                     % the lower arm sensor
                     %------------------------------------------------------
 
-                    % Start phase 1 
+                    % Start phase 1
                     [peakLoc, peakMag] = peakfinder(df.Avel.angularVelDiff(1:x(1)));
                     localmax.all = peakLoc;
-                    Thresh = mean(peakMag) *1.5;
+                    Thresh = mean(peakMag) * 1.5; 
                     [peakLoc, peakMag] = peakfinder(df.Avel.angularVelDiff(1:x(1)), [], Thresh);
                     localmax.thresh = peakLoc;
 
@@ -207,6 +211,12 @@ for subj = 3
                     else
                         startPhase1 = localmax.thresh(1);
                     end
+
+
+% Extra check toevoegen dat er 3 pieken van positie data tussen start phase
+% 1 en change point moet zitten
+% Dit is nodig voor onderandere proefpersoon 8
+
 
                     clear localmax peakLoc peakMag
 
@@ -223,7 +233,7 @@ for subj = 3
 
                     localmin.thresh = peakLoc + x(2);
                     localmin.prominent = N(localmin.thresh)+x(2);
-                    localmin.incon = N(localmin.all) + x(2);
+                    %localmin.incon = N(localmin.all) + x(2);
 
                     if isempty(localmin.thresh)
                         Thresh = average ;
@@ -235,9 +245,9 @@ for subj = 3
 
                     clear localmin peakLoc peakMag temp
 
-                    %% Step 3: End phase 1 and start phase 4 
+                    %% Step 3: End phase 1 and start phase 4
                     % define the end of phase 1 and the start of phase 4
-                    % using the peak acceleration signal in x-direction of 
+                    % using the peak acceleration signal in x-direction of
                     % thelower arm sensor
                     %------------------------------------------------------
 
@@ -276,8 +286,8 @@ for subj = 3
                     startPhase4 = localmin.prominent(1);
 
                     clear localmin temp P
-                   
-                    % the time axis of the phases. 
+
+                    % the time axis of the phases.
                     T_phase1 = startPhase1:endPhase1;
                     T_phase4 = startPhase4:endPhase4;
 
@@ -310,50 +320,16 @@ for subj = 3
 
                             %% Phase 1
                             %---------
-                            temp.X_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 1); %fist phase
-                            temp.Y_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 2); %fist phase
-                            temp.Z_phase1 = jointData(jointNo(jnt)).jointAngle(T_phase1, 3);
+                        
+                            %phase1
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_X)(:,counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 1), T_phase1);
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_Y)(:,counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 2), T_phase1);
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_Z)(:,counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 3), T_phase1);
 
-                            if size(temp.X_phase1, 1) < 100
-                                nf = 102;
-                            else
-                                nf = 101;
-                            end
-                            % Time normalised phases; phase 1
-                            %--------------------------------
-                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase1,1)],...
-                                temp.X_phase1', [1:(size(temp.X_phase1,1))/nf:size(temp.X_phase1,1)], 'spline');
-
-                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase1,1)],...
-                                temp.Y_phase1', [1:(size(temp.Y_phase1,1))/nf:size(temp.Y_phase1,1)], 'spline');
-
-                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase1,1)],...
-                                temp.Z_phase1', [1:(size(temp.Z_phase1,1))/nf:size(temp.Z_phase1,1)], 'spline');
-
-
-                            %% phase 4
-                            %---------
-
-                            temp.X_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 1); %fourth phase
-                            temp.Y_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 2); %fourth phase
-                            temp.Z_phase4 = jointData(jointNo(jnt)).jointAngle(T_phase4, 3); %fourth phase
-
-                            if size(temp.X_phase4, 1) < 100
-                                nf = 102;
-                            else
-                                nf = 101;
-                            end
-
-                            % Time normalised phases; phase 4
-                            %--------------------------------
-                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_X)(:,counter) = interp1([1:size(temp.X_phase4,1)],...
-                                temp.X_phase4', [1:(size(temp.X_phase4,1))/nf:size(temp.X_phase4,1)], 'spline');
-
-                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_Y)(:,counter) = interp1([1:size(temp.Y_phase4,1)],...
-                                temp.Y_phase4', [1:(size(temp.Y_phase4,1))/nf:size(temp.Y_phase4,1)], 'spline');
-
-                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_Z)(:,counter) = interp1([1:size(temp.Z_phase4,1)],...
-                                temp.Z_phase4', [1:(size(temp.Z_phase4,1))/nf:size(temp.Z_phase4,1)], 'spline');
+                            %phase4
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_X)(:,counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 1), T_phase4);
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_Y)(:,counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 2), T_phase4);
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_Z)(:,counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 3), T_phase4);
 
 
                             %% non-normalised data
@@ -365,19 +341,59 @@ for subj = 3
 
                             % Timedata of the phases; phase 1
                             %---------------------------------
-                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_X) = temp.X_phase1;
-                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_Y) = temp.Y_phase1;
-                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_Z) = temp.Z_phase1;
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_X) = jointData(jointNo(jnt)).jointAngle(T_phase1, 1);
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_Y) = jointData(jointNo(jnt)).jointAngle(T_phase1, 2);
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_Z) = jointData(jointNo(jnt)).jointAngle(T_phase1, 3);
 
                             % Timedata of the phases; phase 4
                             %--------------------------------
-                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_X) = temp.X_phase4;
-                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_Y) = temp.Y_phase4;
-                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_Z) = temp.Z_phase4;
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_X) = jointData(jointNo(jnt)).jointAngle(T_phase4, 1);
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_Y) = jointData(jointNo(jnt)).jointAngle(T_phase4, 2);
+                            Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_Z) = jointData(jointNo(jnt)).jointAngle(T_phase4, 3);
 
 
                             clear temp
                         end
+
+                        trunk = jointData(2).jointAngle + jointData(3).jointAngle + jointData(4).jointAngle; %+ jointData(5).jointAngle;
+                        Trunk_lateroflexion = trunk(:,1);
+                        Trunk_rotation = trunk(:,2);
+                        Trunk_flexion = trunk(:,3);
+
+
+                        % initiation of trunk names
+                        IK_X = 'Trunk_lateroflexion';
+                        IK_Y = 'Trunk_rotation';
+                        IK_Z = 'Trunk_flexion';
+
+                        %phase1
+                        Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_X)(:,counter) = normalisation(trunk(:,1), T_phase1);
+                        Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_Y)(:,counter) = normalisation(trunk(:,2), T_phase1);
+                        Data_out.(movement).(Timepoint).IK.(arm).Phase1.normalised.(IK_Z)(:,counter) = normalisation(trunk(:,3), T_phase1);
+
+                        %phase4
+                        Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_X)(:,counter) = normalisation(trunk(:,1), T_phase4);
+                        Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_Y)(:,counter) = normalisation(trunk(:,2), T_phase4);
+                        Data_out.(movement).(Timepoint).IK.(arm).Phase4.normalised.(IK_Z)(:,counter) = normalisation(trunk(:,3), T_phase4);
+
+                        %% non-normalised data
+                        % Full ULIFT time data
+                        %---------------------
+                        Data_out.(movement).(Timepoint).IK.(arm).raw.(fileName).(IK_X) = trunk(:,1);
+                        Data_out.(movement).(Timepoint).IK.(arm).raw.(fileName).(IK_Y) = trunk(:, 2);
+                        Data_out.(movement).(Timepoint).IK.(arm).raw.(fileName).(IK_Z) = trunk(:, 3);
+
+                        % Timedata of the phases; phase 1
+                        %---------------------------------
+                        Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_X) = trunk(T_phase1, 1);
+                        Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_Y) = trunk(T_phase1, 2);
+                        Data_out.(movement).(Timepoint).IK.(arm).Phase1.(fileName).(IK_Z) = trunk(T_phase1, 3);
+
+                        % Timedata of the phases; phase 4
+                        %--------------------------------
+                        Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_X) = trunk(T_phase4, 1);
+                        Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_Y) = trunk(T_phase4, 2);
+                        Data_out.(movement).(Timepoint).IK.(arm).Phase4.(fileName).(IK_Z) = trunk(T_phase4, 3);
 
                         %% Display the results
                         %---------------------
@@ -452,7 +468,7 @@ for subj = 3
             T_orig = readtable(tablefile);
 
             T_new = table(ppID, filename, Tpoint, Phase1, Phase4, run);
-            T = [T_orig; T_new];            
+            T = [T_orig; T_new];
             writetable(T, fullfile(path.table, [subj_name, '.xlsx']))
 
 
@@ -463,15 +479,15 @@ for subj = 3
     %% Save data
     %--------------
 
-        if exist('Data_out','var')
-            if exist(path.out,'file')
-                load(path.out)
-            end
-    
-            [Data.(subj_name).ULIFT.(Timepoint)] = Data_out.ULIFT.(Timepoint);
-            save(path.out,'Data')
-            clear Data Data_out
+    if exist('Data_out','var')
+        if exist(path.out,'file')
+            load(path.out)
         end
+
+        [Data.(subj_name).ULIFT.(Timepoint)] = Data_out.ULIFT.(Timepoint);
+        save(path.out,'Data')
+        clear Data Data_out
+    end
 
     disp(['*********Finished ' subj_name '**********'])
     disp(' ')
