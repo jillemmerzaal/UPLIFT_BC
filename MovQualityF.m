@@ -413,17 +413,53 @@ for subj = 1:20
                         sparc_z(:,idx) = SpectralArcLength(avel.z(reps(idx):reps(idx+1)), fs, params);
                         sparc_res(:,idx) = SpectralArcLength(avel.res(reps(idx):reps(idx+1)), fs, params);
                     end
-                    %% sample entropy
-                    %----------------
+                    %% sample entropy --> tolerance based on 0.2 * std(signal)
+                    %---------------------------------------------------------
                     r = 0.2;
                     m = 2;
-                    SampleEntropy_x     = sampen(acc.x, m, r);
-                    SampleEntropy_y     = sampen(acc.y, m, r);
-                    SampleEntropy_z     = sampen(acc.z, m, r);
-                    SampleEntropy_res   = sampen(acc.res, m, r);
+                    SampleEntropy_x     = sampen(acc.x(reps(1):reps(end)), m, r);
+                    SampleEntropy_y     = sampen(acc.y(reps(1):reps(end)), m, r);
+                    SampleEntropy_z     = sampen(acc.z(reps(1):reps(end)), m, r);
+                    SampleEntropy_res   = sampen(acc.res(reps(1):reps(end)), m, r);
 
+                    %% sample entropy Jill --> fixed tolerance
+                    %-----------------------------------------
+                    r = 0.2;
+                    m = 2;
+                    sampen_x = sampen_Jill(acc.x(reps(1):reps(end)), m, r);
+                    sampen_y = sampen_Jill(acc.y(reps(1):reps(end)), m, r);
+                    sampen_z = sampen_Jill(acc.z(reps(1):reps(end)), m, r);
+                    sampen_res = sampen_Jill(acc.res(reps(1):reps(end)), m, r);
+
+                    %% sample entropy Jill --> TO defines tollerance
+                    %----------------------------------------------- 
+                    if strcmp(Timepoint, 'T0')
+                        % calculate personalised tollerance based on pre-op
+                        % "healthy" data
+                        sigma = std(acc{reps(1):reps(end), :}, [], 1);
+                        r = 0.2 * sigma;
+                        m=2;
+
+                        tollarance_table.(arm)(subj, :) = table(ppID, r);
+                        
+                    else                   
+                        m = 2;
+                        load tollarance_table.mat
+                        r = tollarance_table.(arm).r( strcmp(tollarance_table.(arm).ppID, subj_name),:);
+
+                        
+                    end
+
+
+                    sampen_x_var = sampen_Jill(acc.x(reps(1):reps(end), :), m, r(1));
+                    sampen_y_var = sampen_Jill(acc.y(reps(1):reps(end), :), m, r(2));
+                    sampen_z_var = sampen_Jill(acc.z(reps(1):reps(end), :), m, r(3));
+                    sampen_res_var = sampen_Jill(acc.res(reps(1):reps(end), :), m, r(4));
+
+
+                    
                     %% Autocorrelation
-
+                    %-----------------
                     [acorr_x, reg_x] = Symmetry(vel.x(reps(1):reps(end)));
                     [acorr_y, reg_y] = Symmetry(vel.y(reps(1):reps(end)));
                     [acorr_z, reg_z] = Symmetry(vel.z(reps(1):reps(end)));
@@ -479,16 +515,12 @@ for subj = 1:20
                         %matlab function
                         aff.lyapExp(subj,:) = table(ppID, lyapExp_x, lyapExp_y, lyapExp_z, lyapExp_res);
 
-                        %smoothness || LDLJ
-                        aff.LDLJ_A_aff (subj, :) = table(ppID, mean(ldlj_a));
-                        aff.LDLJ_A_aff.Properties.VariableNames = {'ppID', 'LDLJ_A'};
-
-                        %smoothness || SPARC
-                        aff.SPARC_aff(subj,:) = table(ppID, mean(sparc_x), mean(sparc_y), mean(sparc_z), mean(sparc_res));
-                        aff.SPARC_aff.Properties.VariableNames = {'ppID', 'sparc_x', 'sparc_y', 'sparc_z', 'sparc_res'};
-
-                        %complexity || Sample Entropy
+                                              
+                        %predictability || Sample Entropy
                         aff.SampEn_aff(subj, :) = table(ppID, SampleEntropy_x, SampleEntropy_y, SampleEntropy_z, SampleEntropy_res);
+                        aff.Entropy_aff(subj,:) = table(ppID, sampen_x, sampen_y, sampen_z, sampen_res);
+                        aff.Entropy_var(subj,:) = table(ppID, sampen_x_var,sampen_y_var, sampen_z_var, sampen_res_var);
+
 
                         %movement time || average
                         aff.avg_move_time_aff(subj,:) = table(ppID, mean(movement_time));
@@ -509,6 +541,13 @@ for subj = 1:20
                         %variability || root mean square ratio
                         aff.RMSR_x(subj,:) = table(ppID, rmsr_x, rmsr_y, rmsr_z);
 
+                        %smoothness || SPARC
+                        aff.SPARC_aff(subj,:) = table(ppID, mean(sparc_x), mean(sparc_y), mean(sparc_z), mean(sparc_res));
+                        aff.SPARC_aff.Properties.VariableNames = {'ppID', 'sparc_x', 'sparc_y', 'sparc_z', 'sparc_res'};
+
+                        %smoothness || LDLJ
+                        aff.LDLJ_A_aff (subj, :) = table(ppID, mean(ldlj_a));
+                        aff.LDLJ_A_aff.Properties.VariableNames = {'ppID', 'LDLJ_A'};
 
                     elseif strcmp(side, 'unaffected')
                         unaff.key(subj,:) = table(ppID, trial, time);
@@ -530,17 +569,11 @@ for subj = 1:20
                         %stability || lyapunov exponent || using builed in
                         %matlab function
                         unaff.lyapExp(subj,:) = table(ppID, lyapExp_x, lyapExp_y, lyapExp_z, lyapExp_res);
-
-                        %smoothness ||LDLJ
-                        unaff.LDLJ_A_unaff(subj, :) = table(ppID, mean(ldlj_a));
-                        unaff.LDLJ_A_unaff.Properties.VariableNames = {'ppID', 'LDLJ_A'};
-
-                        %smoothness || SPARC
-                        unaff.SPARC_unaff(subj,:) = table(ppID, mean(sparc_x), mean(sparc_y), mean(sparc_z), mean(sparc_res));
-                        unaff.SPARC_unaff.Properties.VariableNames = {'ppID', 'sparc_x', 'sparc_y', 'sparc_z', 'sparc_res'};
-
-                        %complexity || sample entropy
+                        
+                        %predictability || sample entropy
                         unaff.SampEn_unaff(subj, :) = table(ppID, SampleEntropy_x, SampleEntropy_y, SampleEntropy_z, SampleEntropy_res);
+                        unaff.Entropy_unaff(subj,:) = table(ppID, sampen_x, sampen_y, sampen_z, sampen_res);
+                        unaff.Entropy_var(subj,:) = table(ppID, sampen_x_var,sampen_y_var, sampen_z_var, sampen_res_var);
 
                         %movement time || average
                         unaff.avg_move_time_unaff(subj,:) = table(ppID, mean(movement_time));
@@ -558,6 +591,14 @@ for subj = 1:20
 
                         %variability || root mean square ratio
                         unaff.RMSR_x(subj,:) = table(ppID, rmsr_x, rmsr_y, rmsr_z);
+
+                        %smoothness || SPARC
+                        unaff.SPARC_unaff(subj,:) = table(ppID, mean(sparc_x), mean(sparc_y), mean(sparc_z), mean(sparc_res));
+                        unaff.SPARC_unaff.Properties.VariableNames = {'ppID', 'sparc_x', 'sparc_y', 'sparc_z', 'sparc_res'};
+
+                        %smoothness ||LDLJ
+                        unaff.LDLJ_A_unaff(subj, :) = table(ppID, mean(ldlj_a));
+                        unaff.LDLJ_A_unaff.Properties.VariableNames = {'ppID', 'LDLJ_A'};
 
                     end
                 end% if information about the affected side is availible
@@ -593,4 +634,6 @@ writetable(MovementQual.unaff,'MoveQual_unaff.xlsx', 'FileType', 'spreadsheet', 
 
 writetable(MovementQual.aff, 'MoveQual_aff.xlsx', 'FileType', 'spreadsheet', ...
     'WriteMode', 'append', 'sheet', Timepoint)
+
+save('tollarance_table.mat','tollarance_table')
 

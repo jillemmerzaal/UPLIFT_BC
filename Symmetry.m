@@ -23,5 +23,4 @@ symm_idx = TT.pos_locs(I + 1);
 symm = acorr_norm(symm_idx); 
 
 
-
 end

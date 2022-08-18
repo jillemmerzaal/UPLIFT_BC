@@ -8,7 +8,7 @@
 % are autmatically extracated based on change points, peak detection,
 % and zerro crossing, but this could be faulty for some trials. Thus
 % the correlation coefficient of each trail is compared to the average
-% for that participant. When the R is lower than 0.7 that particular
+% for that participant. When the R is lower than 0.8 that particular
 % trial will be flagged and removed.
 % 3) data will be saved and stored in a seperate struct to be used in
 % python.
@@ -26,7 +26,7 @@ nsubjects = size(subjects,1);
 IK_angles = fieldnames(Data.(subjects{1}).ULIFT.(timepoint).IK.L.Phase1.normalised);
 nangles = size(IK_angles,1);
 
-
+Affected_table = readtable(fullfile(path.root,"Aangedane zijde.xlsx"));
 
 
 for subj = 1:nsubjects
@@ -99,17 +99,27 @@ for subj = 1:nsubjects
     end
     clear temp rounded
 
-    %% create averages
-    for ang = 1:nangles
-        %LEFT
-        BC.IK.L_phase1.(IK_angles{ang})(:,subj) = nanmean(Data.(subjects{subj}).ULIFT.(timepoint).IK.L.Phase1.normalised.(IK_angles{ang}), 2);
-        BC.IK.L_phase4.(IK_angles{ang})(:,subj) = nanmean(Data.(subjects{subj}).ULIFT.(timepoint).IK.L.Phase4.normalised.(IK_angles{ang}), 2);
+    %% define (un)affected side
+    affected = Affected_table(strcmp(Affected_table.ppID, subjects{subj}), "involved");
+    %% create average
+    if strcmp(Affected_table{strcmp(Affected_table.ppID, subjects{subj}), "involved"}, 'L')
+        for ang = 1:nangles
+            %LEFT || affected
+            BC.IK.affected_phase1.(timepoint).(IK_angles{ang})(:,subj) = nanmean(Data.(subjects{subj}).ULIFT.(timepoint).IK.L.Phase1.normalised.(IK_angles{ang}), 2);
+            BC.IK.affected_phase4.(timepoint).(IK_angles{ang})(:,subj) = nanmean(Data.(subjects{subj}).ULIFT.(timepoint).IK.L.Phase4.normalised.(IK_angles{ang}), 2);
 
-        %RIGHT
-        BC.IK.R_phase1.(IK_angles{ang})(:,subj) = nanmean(Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase1.normalised.(IK_angles{ang}), 2);
-        BC.IK.R_phase4.(IK_angles{ang})(:,subj) = nanmean(Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase4.normalised.(IK_angles{ang}), 2);
+            %RIGHT || unaffected
+            BC.IK.unaffected_phase1.(timepoint).(IK_angles{ang})(:,subj) = nanmean(Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase1.normalised.(IK_angles{ang}), 2);
+            BC.IK.unaffected_phase4.(timepoint).(IK_angles{ang})(:,subj) = nanmean(Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase4.normalised.(IK_angles{ang}), 2);
+        end
+    elseif strcmp(Affected_table{strcmp(Affected_table.ppID, subjects{subj}), "involved"}, 'R')
+        % LEFT || unaffected 
+        BC.IK.unaffected_phase1.(timepoint).(IK_angles{ang})(:,subj) = nanmean(Data.(subjects{subj}).ULIFT.(timepoint).IK.L.Phase1.normalised.(IK_angles{ang}), 2);
+        BC.IK.unaffected_phase4.(timepoint).(IK_angles{ang})(:,subj) = nanmean(Data.(subjects{subj}).ULIFT.(timepoint).IK.L.Phase4.normalised.(IK_angles{ang}), 2);
 
-
+        % RIGHT || affected
+        BC.IK.affected_phase1.(timepoint).(IK_angles{ang})(:,subj) = nanmean(Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase1.normalised.(IK_angles{ang}), 2);
+        BC.IK.affected_phase4.(timepoint).(IK_angles{ang})(:,subj) = nanmean(Data.(subjects{subj}).ULIFT.(timepoint).IK.R.Phase4.normalised.(IK_angles{ang}), 2);
     end
 end
 
@@ -138,32 +148,33 @@ nangles = size(jointsOfInterst,1);
 fig1 = figure;
 set(fig1,'Position',[1 31.4000 1536 758.4])
 
-color_BC_l = [0 1 0];
-color_BC_r = [0 0 0];
+color_BC_aff = [0 1 0];
+color_BC_unaff = [0 0 0];
 x = [1:101];
 
 p = numSubplots(nangles);
 
 for ang = 1:nangles
     subplot(p(1),p(2),ang)
-    %PREOP
+    %PRE-OP
     %---------------------------------
-    Av_bc_l = nanmean(BC.IK.L_phase1.(jointsOfInterst{ang}),2);
-    Sd_bc_l = nanstd(BC.IK.L_phase1.(jointsOfInterst{ang}),0,2);
+    Av_bc_aff = nanmean(BC.IK.affected_phase1.(timepoint).(jointsOfInterst{ang}),2);
+    Sd_bc_aff = nanstd(BC.IK.affected_phase1.(timepoint).(jointsOfInterst{ang}),0,2);
 
-    Av_bc_r = nanmean(BC.IK.R_phase1.(jointsOfInterst{ang}),2);
-    Sd_bc_r = nanstd(BC.IK.R_phase1.(jointsOfInterst{ang}),0,2);
+    Av_bc_unaff = nanmean(BC.IK.unaffected_phase1.(timepoint).(jointsOfInterst{ang}),2);
+    Sd_bc_unaff = nanstd(BC.IK.unaffected_phase1.(timepoint).(jointsOfInterst{ang}),0,2);
 
-    L_BC = shadedErrorBar(x,Av_bc_l,Sd_bc_l,{'Color',color_BC_l},[0.5]);
+    aff_BC = shadedErrorBar(x,Av_bc_aff,Sd_bc_aff,{'Color',color_BC_aff},[0.5]);
     hold on
-    R_BC = shadedErrorBar(x,Av_bc_r, Sd_bc_r, {'Color', color_BC_r}, [0.5]);
+    unaff_BC = shadedErrorBar(x,Av_bc_unaff, Sd_bc_unaff, {'Color', color_BC_unaff}, [0.5]);
 
-    set(L_BC.mainLine,'LineWidth',1.5)
-    set(R_BC.mainLine, 'LineWidth', 1.5)
+    set(aff_BC.mainLine,'LineWidth',1.5)
+    set(unaff_BC.mainLine, 'LineWidth', 1.5)
     set(gca,'XLim',[1 100])
 
     title(jointsOfInterst{ang},'FontSize',13);
     xlabel('% of ULIFT cycle','FontSize',13);
+    legend('affected', 'unaffected')
 end
 
 
@@ -171,8 +182,8 @@ end
 fig2 = figure;
 set(fig2,'Position',[1 31.4000 1536 758.4])
 
-color_BC_l = [0 1 0];
-color_BC_r = [0 0 0];
+color_BC_aff = [0 1 0];
+color_BC_unaff = [0 0 0];
 x = [1:101];
 
 p = numSubplots(nangles);
@@ -181,22 +192,23 @@ for ang = 1:nangles
     subplot(p(1),p(2),ang)
     %PREOP
     %---------------------------------
-    Av_bc_l = nanmean(BC.IK.L_phase4.(jointsOfInterst{ang}),2);
-    Sd_bc_l = nanstd(BC.IK.L_phase4.(jointsOfInterst{ang}),0,2);
+    Av_bc_aff = nanmean(BC.IK.affected_phase4.(timepoint).(jointsOfInterst{ang}),2);
+    Sd_bc_aff = nanstd(BC.IK.affected_phase4.(timepoint).(jointsOfInterst{ang}),0,2);
 
-    Av_bc_r = nanmean(BC.IK.R_phase4.(jointsOfInterst{ang}),2);
-    Sd_bc_r = nanstd(BC.IK.R_phase4.(jointsOfInterst{ang}),0,2);
+    Av_bc_unaff = nanmean(BC.IK.unaffected_phase4.(timepoint).(jointsOfInterst{ang}),2);
+    Sd_bc_unaff = nanstd(BC.IK.unaffected_phase4.(timepoint).(jointsOfInterst{ang}),0,2);
 
-    L_BC = shadedErrorBar(x,Av_bc_l,Sd_bc_l,{'Color',color_BC_l},[0.5]);
+    aff_BC = shadedErrorBar(x,Av_bc_aff,Sd_bc_aff,{'Color',color_BC_aff},[0.5]);
     hold on
-    R_BC = shadedErrorBar(x,Av_bc_r, Sd_bc_r, {'Color', color_BC_r}, [0.5]);
+    unaff_BC = shadedErrorBar(x,Av_bc_unaff, Sd_bc_unaff, {'Color', color_BC_unaff}, [0.5]);
 
-    set(L_BC.mainLine,'LineWidth',1.5)
-    set(R_BC.mainLine, 'LineWidth', 1.5)
+    set(aff_BC.mainLine,'LineWidth',1.5)
+    set(unaff_BC.mainLine, 'LineWidth', 1.5)
     set(gca,'XLim',[1 100])
 
     title(jointsOfInterst{ang},'FontSize',13);
     xlabel('% of ULIFT cycle','FontSize',13);
+    legend('affected', 'unaffected')
 end
 
 
