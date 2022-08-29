@@ -1,15 +1,313 @@
- 
+
 <strong>Processing: BC_001 at Timepoint: T0....... 
 </strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_001\Xsens\T0\Reproces 
 <strong>	 Analysing: ULIFT_L_001 
 </strong>		 Arm of interest: L 
 	 	 ULIFT_L-001.mvnx: read xsens file 
 	 	 ULIFT_L-001.mvnx: define start and end points 
+		 ULIFT_L-001.mvnx: more than 3 position peaks found in phase 4 
+	 	 ULIFT_L-001.mvnx: Please refine the borders of phase 4 
 	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
 	 	 ULIFT_L-001.mvnx: Please select peaks phase 4 
-[Warning: Number of peaks found exceeds 7 \n peaks manually selected] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 507)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',507,0)">line 507</a>)] 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 621)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',621,0)">line 621</a>)] 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 621)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',621,0)">line 621</a>)] 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 473)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',473,0)">line 473</a>)] 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 621)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',621,0)">line 621</a>)] 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Please select peaks phase 1 
+<strong>		 ERROR: BC_001 at TIMEPOINT: T0 in FILENAME: ULIFT_R_003 
+ 		 Interrupted by figure deletion LINE: 84 
+</strong><strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+		 ULIFT_R_L-002.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R_L-002.mvnx: Please refine the borders of phase 1 
+<strong>		 ERROR: BC_001 at TIMEPOINT: T0 in FILENAME: ULIFT_R_L_002 
+ 		 Interrupted by figure deletion LINE: 84 
+</strong><strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_001 **********
+
+<strong>Processing: BC_002 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_002\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 621)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',621,0)">line 621</a>)] 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 621)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',621,0)">line 621</a>)] 
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_002 **********
+
+<strong>Processing: BC_001 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_001\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>getSegmentNodeData', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 167)" style="font-weight:bold">load_mvnx>getSegmentNodeData</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',167,0)">line 167</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseSegmentChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 65)" style="font-weight:bold">load_mvnx>parseSegmentChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',65,0)">line 65</a>)
+            [name,childs,Data] = getSegmentNodeData(theChild, Data, numChildNodes, myName, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>getSegmentNodeData', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 309)" style="font-weight:bold">load_mvnx>getSegmentNodeData</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',309,0)">line 309</a>)
+                [childs,Data] = parseSegmentChildNodes(theNode, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseSegmentChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 65)" style="font-weight:bold">load_mvnx>parseSegmentChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',65,0)">line 65</a>)
+            [name,childs,Data] = getSegmentNodeData(theChild, Data, numChildNodes, myName, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>getNodeData', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 329)" style="font-weight:bold">load_mvnx>getNodeData</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',329,0)">line 329</a>)
+        [~,Data] = parseSegmentChildNodes(theNode, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 40)" style="font-weight:bold">load_mvnx>parseChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',40,0)">line 40</a>)
+            [name,Data] = getNodeData(theChild, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>getNodeData', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 332)" style="font-weight:bold">load_mvnx>getNodeData</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',332,0)">line 332</a>)
+        [Data] = parseChildNodes(theNode, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 40)" style="font-weight:bold">load_mvnx>parseChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',40,0)">line 40</a>)
+            [name,Data] = getNodeData(theChild, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 28)" style="font-weight:bold">load_mvnx</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',28,0)">line 28</a>)
+    [mvnx] = parseChildNodes(xDoc, mvnx, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('MVN', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\MVN.m', 3)" style="font-weight:bold">MVN</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\MVN.m',3,0)">line 3</a>)
+tree = load_mvnx(file_ik);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 82)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',82,0)">line 82</a>)
+                    [sensorData, segmentData, jointData, tree]= MVN(file_ik);
+} 
+type myDiaryFile
+
+ 
+<strong>Processing: BC_002 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_002\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+      
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+      
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+      
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+      
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+      
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+      
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+      
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+      
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+      
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+      
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+      
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+*********Finished BC_002 ********** 
+<strong>Processing: BC_002 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_002\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
       
 		 ULIFT_L_001: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_L_002 
@@ -49,10 +347,10 @@
 	 	 ULIFT_R-003.mvnx: read xsens file 
 	 	 ULIFT_R-003.mvnx: define start and end points 
 	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
-	 	 ULIFT_R-003.mvnx: Please select peaks phase 1 
-<strong>		 ERROR: BC_001 at TIMEPOINT: T0 in FILENAME: ULIFT_R_003 
- 		 Interrupted by figure deletion LINE: 84 
-</strong><strong>	 Analysing: ULIFT_R_L_001 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_001 
 </strong>		 Arm of interest: L_SSS 
 	 	 ULIFT_R_L-001.mvnx: read xsens file 
 	 	 ULIFT_R_L-001.mvnx: define start and end points 
@@ -64,6 +362,10 @@
 </strong>		 Arm of interest: L_SSS 
 	 	 ULIFT_R_L-002.mvnx: read xsens file 
 	 	 ULIFT_R_L-002.mvnx: define start and end points 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_L_002: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_R_L_003 
 </strong>		 Arm of interest: L_SSS 
 	 	 ULIFT_R_L-003.mvnx: read xsens file 
@@ -92,69 +394,44 @@
 </strong>		 Arm of interest: R_SSS 
 	 	 ULIFT_R_R-003.mvnx: read xsens file 
 	 	 ULIFT_R_R-003.mvnx: define start and end points 
-	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
-	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
-      
-		 ULIFT_R_R_003: Extract relevant kinematics 
-*********Finished BC_001 **********
- 
-<strong>Processing: BC_007 at Timepoint: T0....... 
-</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_007\Xsens\T0\Reproces 
-<strong>	 Analysing: ULIFT_L_001 
-</strong>		 Arm of interest: L 
-	 	 ULIFT_L-001.mvnx: read xsens file 
-	 	 ULIFT_L-001.mvnx: define start and end points 
-	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
-<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',300,1)">300 </a>                        [peakLoc.phase1, peakMag.phase1] = peakfinder(df.SenAcc.SensorFreeX(T_phase1), [],[],-1);
-peakfinder(df.SenAcc.SensorFreeX(T_phase1), [],[],-1)
- [peakLoc.phase1, peakMag.phase1] = peakfinder(df.SenAcc.SensorFreeX(T_phase1), [],[],-1);
-                        grab_idx.phase1 = peakLoc.phase1(1:2:end)+startPhase1;
-                        release_idx.phase1 = peakLoc.phase1(2:2:end)+startPhase1;
+*********Finished BC_002 **********
 
-                        T_middle_phase1 = grab_idx.phase1(2):grab_idx.phase1(3);
-if system_dependent('IsDebugMode')==1, dbquit all; end
-ULIFT_preprocessing_V2
- 
-<strong>Processing: BC_007 at Timepoint: T0....... 
-</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_007\Xsens\T0\Reproces 
+<strong>Processing: BC_002 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_002\Xsens\T0\Reproces 
 <strong>	 Analysing: ULIFT_L_001 
 </strong>		 Arm of interest: L 
 	 	 ULIFT_L-001.mvnx: read xsens file 
 	 	 ULIFT_L-001.mvnx: define start and end points 
 	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_L_001: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_L_002 
 </strong>		 Arm of interest: L 
 	 	 ULIFT_L-002.mvnx: read xsens file 
 	 	 ULIFT_L-002.mvnx: define start and end points 
 	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
-<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_002 
- 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 304 
-</strong><strong>	 Analysing: ULIFT_L_003 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
 </strong>		 Arm of interest: L 
 	 	 ULIFT_L-003.mvnx: read xsens file 
 	 	 ULIFT_L-003.mvnx: define start and end points 
 	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
-<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_003 
- 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 443 
-</strong><strong>	 Analysing: ULIFT_R_001 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
 </strong>		 Arm of interest: R 
 	 	 ULIFT_R-001.mvnx: read xsens file 
 	 	 ULIFT_R-001.mvnx: define start and end points 
 	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
-	 	 ULIFT_R-001.mvnx: Please select peaks phase 1 
-<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_R_001 
- 		 Array indices must be positive integers or logical values. LINE: 423 
-</strong><strong>	 Analysing: ULIFT_R_002 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
 </strong>		 Arm of interest: R 
 	 	 ULIFT_R-002.mvnx: read xsens file 
 	 	 ULIFT_R-002.mvnx: define start and end points 
 	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_R_002: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_R_003 
 </strong>		 Arm of interest: R 
@@ -162,17 +439,37 @@ ULIFT_preprocessing_V2
 	 	 ULIFT_R-003.mvnx: define start and end points 
 	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_R_003: Extract relevant kinematics 
-<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_R_003 
- 		 Unable to perform assignment because the size of the left side is 100-by-1 and the size of the right side is 1-by-101. LINE: 637 
-</strong><strong>	 Analysing: ULIFT_R_R_001 
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 621)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',621,0)">line 621</a>)] 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
 </strong>		 Arm of interest: R_SSS 
 	 	 ULIFT_R_R-001.mvnx: read xsens file 
 	 	 ULIFT_R_R-001.mvnx: define start and end points 
 	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_R_R_001: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_R_R_002 
 </strong>		 Arm of interest: R_SSS 
@@ -180,7 +477,6 @@ ULIFT_preprocessing_V2
 	 	 ULIFT_R_R-002.mvnx: define start and end points 
 	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_R_R_002: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_R_R_003 
 </strong>		 Arm of interest: R_SSS 
@@ -188,294 +484,1972 @@ ULIFT_preprocessing_V2
 	 	 ULIFT_R_R-003.mvnx: define start and end points 
 	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
-      
+	 	 ULIFT_R_R-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 621)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',621,0)">line 621</a>)] 
 		 ULIFT_R_R_003: Extract relevant kinematics 
-*********Finished BC_007 **********
- 
-<strong>Processing: BC_007 at Timepoint: T0....... 
-</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_007\Xsens\T0\Reproces 
+*********Finished BC_002 **********
+
+<strong>Processing: BC_002 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_002\Xsens\T0\Reproces 
 <strong>	 Analysing: ULIFT_L_001 
 </strong>		 Arm of interest: L 
 	 	 ULIFT_L-001.mvnx: read xsens file 
 	 	 ULIFT_L-001.mvnx: define start and end points 
 	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_L_001: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_L_002 
 </strong>		 Arm of interest: L 
 	 	 ULIFT_L-002.mvnx: read xsens file 
 	 	 ULIFT_L-002.mvnx: define start and end points 
 	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
-<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_002 
- 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 304 
-</strong><strong>	 Analysing: ULIFT_L_003 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
 </strong>		 Arm of interest: L 
 	 	 ULIFT_L-003.mvnx: read xsens file 
 	 	 ULIFT_L-003.mvnx: define start and end points 
 	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
-<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_003 
- 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 443 
-</strong><strong>	 Analysing: ULIFT_R_001 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
 </strong>		 Arm of interest: R 
 	 	 ULIFT_R-001.mvnx: read xsens file 
 	 	 ULIFT_R-001.mvnx: define start and end points 
 	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
-	 	 ULIFT_R-001.mvnx: Please select peaks phase 1 
-<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',420,1)">420 </a>                               ind(1) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1) ,loc(1),'nearest');
-loc
-
-loc =
-
-  206.9892
-  302.6882
-
-interp1(peakLoc.phase1, 1:length(peakLoc.phase1) ,loc(1),'nearest')
-
-ans =
-
-   NaN
-
-loc(1)
-
-ans =
-
-  206.9892
-
-peakLoc.phase1
-
-ans =
-
-     1
-    32
-    90
-   126
-   192
-
-startPhase1
-
-startPhase1 =
-
-   176
-
-peakLoc.phase1
-
-ans =
-
-     1
-    32
-    90
-   126
-   192
-
-                        peakLoc.phase1 = peakLoc.phase1 + startPhase1
-
-peakLoc = 
-
-  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
-
-    phase1: [5×1 double]
-
-peakLoc.phase1
-
-ans =
-
-   177
-   208
-   266
-   302
-   368
-
-ind(1) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1) ,loc(1),'nearest')
-
-ind =
-
-     2
-
-ind(2) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1), loc(2), 'nearest')
-
-ind =
-
-     2     4
-
-T_middle_phase1 = peakLoc.phase1(ind(1)):peakLoc.phase1(ind(2))
-
-T_middle_phase1 =
-
-  Columns 1 through 38
-
-   208   209   210   211   212   213   214   215   216   217   218   219   220   221   222   223   224   225   226   227   228   229   230   231   232   233   234   235   236   237   238   239   240   241   242   243   244   245
-
-  Columns 39 through 76
-
-   246   247   248   249   250   251   252   253   254   255   256   257   258   259   260   261   262   263   264   265   266   267   268   269   270   271   272   273   274   275   276   277   278   279   280   281   282   283
-
-  Columns 77 through 95
-
-   284   285   286   287   288   289   290   291   292   293   294   295   296   297   298   299   300   301   302
-
-if system_dependent('IsDebugMode')==1, dbquit all; end
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 621)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',621,0)">line 621</a>)] 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 621)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',621,0)">line 621</a>)] 
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_002 **********
 ULIFT_preprocessing_V2
- 
-<strong>Processing: BC_007 at Timepoint: T0....... 
-</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_007\Xsens\T0\Reproces 
+
+<strong>Processing: BC_001 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_001\Xsens\T0\Reproces 
 <strong>	 Analysing: ULIFT_L_001 
 </strong>		 Arm of interest: L 
 	 	 ULIFT_L-001.mvnx: read xsens file 
 	 	 ULIFT_L-001.mvnx: define start and end points 
+		 ULIFT_L-001.mvnx: more than 3 position peaks found in phase 4 
+	 	 ULIFT_L-001.mvnx: Please refine the borders of phase 4 
 	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
-      
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
 		 ULIFT_L_001: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_L_002 
 </strong>		 Arm of interest: L 
 	 	 ULIFT_L-002.mvnx: read xsens file 
 	 	 ULIFT_L-002.mvnx: define start and end points 
 	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
-<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_002 
- 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 306 
-</strong><strong>	 Analysing: ULIFT_L_003 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
 </strong>		 Arm of interest: L 
 	 	 ULIFT_L-003.mvnx: read xsens file 
 	 	 ULIFT_L-003.mvnx: define start and end points 
 	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
-<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_003 
- 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 446 
-</strong><strong>	 Analysing: ULIFT_R_001 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
 </strong>		 Arm of interest: R 
 	 	 ULIFT_R-001.mvnx: read xsens file 
 	 	 ULIFT_R-001.mvnx: define start and end points 
 	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
-	 	 ULIFT_R-001.mvnx: Please select peaks phase 1 
-<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',422,1)">422 </a>                               ind(1) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1) ,loc(1),'nearest');
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 474)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',474,0)">line 474</a>)] 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Please select peaks phase 1 
+<strong>		 ERROR: BC_001 at TIMEPOINT: T0 in FILENAME: ULIFT_R_003 
+ 		 Interrupted by figure deletion LINE: 84 
+</strong><strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+		 ULIFT_R_L-002.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R_L-002.mvnx: Please refine the borders of phase 1 
+<strong>		 ERROR: BC_001 at TIMEPOINT: T0 in FILENAME: ULIFT_R_L_002 
+ 		 Interrupted by figure deletion LINE: 84 
+</strong><strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_001 **********
+
+<strong>Processing: BC_002 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_002\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_002 **********
+
+<strong>Processing: BC_003 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_003\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 474)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',474,0)">line 474</a>)] 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 474)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',474,0)">line 474</a>)] 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+		 ULIFT_R-003.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R-003.mvnx: Please refine the borders of phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 474)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',474,0)">line 474</a>)] 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 474)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',474,0)">line 474</a>)] 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_003 **********
+
+<strong>Processing: BC_004 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_004\Xsens\T0\Reproces 
+*********Finished BC_004 **********
+
+<strong>Processing: BC_005 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_005\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 474)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',474,0)">line 474</a>)] 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+		 ULIFT_R_R-002.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R_R-002.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_005 **********
+
+<strong>Processing: BC_006 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_006\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+		 ULIFT_L-001.mvnx: more than 3 position peaks found in phase 1 
+	 	 ULIFT_L-001.mvnx: Please refine the borders of phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 474)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',474,0)">line 474</a>)] 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 622)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',622,0)">line 622</a>)] 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+<strong>		 ERROR: BC_006 at TIMEPOINT: T0 in FILENAME: ULIFT_L_002 
+ 		 Index exceeds the number of array elements. Index must not exceed 0. LINE: 146 
+</strong><strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+<strong>		 ERROR: BC_006 at TIMEPOINT: T0 in FILENAME: ULIFT_L_003 
+ 		 Index exceeds the number of array elements. Index must not exceed 0. LINE: 146 
+</strong><strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+<strong>		 ERROR: BC_006 at TIMEPOINT: T0 in FILENAME: ULIFT_R_001 
+ 		 Index exceeds the number of array elements. Index must not exceed 0. LINE: 146 
+</strong><strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+<strong>		 ERROR: BC_006 at TIMEPOINT: T0 in FILENAME: ULIFT_R_002 
+ 		 Index exceeds the number of array elements. Index must not exceed 0. LINE: 146 
+</strong><strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>getSegmentNodeData', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 215)" style="font-weight:bold">load_mvnx>getSegmentNodeData</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',215,0)">line 215</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseSegmentChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 65)" style="font-weight:bold">load_mvnx>parseSegmentChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',65,0)">line 65</a>)
+            [name,childs,Data] = getSegmentNodeData(theChild, Data, numChildNodes, myName, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>getSegmentNodeData', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 309)" style="font-weight:bold">load_mvnx>getSegmentNodeData</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',309,0)">line 309</a>)
+                [childs,Data] = parseSegmentChildNodes(theNode, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseSegmentChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 65)" style="font-weight:bold">load_mvnx>parseSegmentChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',65,0)">line 65</a>)
+            [name,childs,Data] = getSegmentNodeData(theChild, Data, numChildNodes, myName, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>getNodeData', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 329)" style="font-weight:bold">load_mvnx>getNodeData</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',329,0)">line 329</a>)
+        [~,Data] = parseSegmentChildNodes(theNode, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 40)" style="font-weight:bold">load_mvnx>parseChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',40,0)">line 40</a>)
+            [name,Data] = getNodeData(theChild, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>getNodeData', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 332)" style="font-weight:bold">load_mvnx>getNodeData</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',332,0)">line 332</a>)
+        [Data] = parseChildNodes(theNode, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 40)" style="font-weight:bold">load_mvnx>parseChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',40,0)">line 40</a>)
+            [name,Data] = getNodeData(theChild, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 28)" style="font-weight:bold">load_mvnx</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',28,0)">line 28</a>)
+    [mvnx] = parseChildNodes(xDoc, mvnx, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('MVN', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\MVN.m', 3)" style="font-weight:bold">MVN</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\MVN.m',3,0)">line 3</a>)
+tree = load_mvnx(file_ik);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 83)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',83,0)">line 83</a>)
+                    [sensorData, segmentData, jointData, tree]= MVN(file_ik);
+} 
+ULIFT_preprocessing_V2
+
+<strong>Processing: BC_006 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_006\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseSegmentChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 57)" style="font-weight:bold">load_mvnx>parseSegmentChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',57,0)">line 57</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>getSegmentNodeData', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 234)" style="font-weight:bold">load_mvnx>getSegmentNodeData</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',234,0)">line 234</a>)
+                [childs,Data] = parseSegmentChildNodes(theNode, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseSegmentChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 65)" style="font-weight:bold">load_mvnx>parseSegmentChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',65,0)">line 65</a>)
+            [name,childs,Data] = getSegmentNodeData(theChild, Data, numChildNodes, myName, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>getSegmentNodeData', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 133)" style="font-weight:bold">load_mvnx>getSegmentNodeData</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',133,0)">line 133</a>)
+            [childs,Data] = parseSegmentChildNodes(theNode, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseSegmentChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 65)" style="font-weight:bold">load_mvnx>parseSegmentChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',65,0)">line 65</a>)
+            [name,childs,Data] = getSegmentNodeData(theChild, Data, numChildNodes, myName, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>getSegmentNodeData', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 309)" style="font-weight:bold">load_mvnx>getSegmentNodeData</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',309,0)">line 309</a>)
+                [childs,Data] = parseSegmentChildNodes(theNode, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseSegmentChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 65)" style="font-weight:bold">load_mvnx>parseSegmentChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',65,0)">line 65</a>)
+            [name,childs,Data] = getSegmentNodeData(theChild, Data, numChildNodes, myName, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>getNodeData', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 329)" style="font-weight:bold">load_mvnx>getNodeData</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',329,0)">line 329</a>)
+        [~,Data] = parseSegmentChildNodes(theNode, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 40)" style="font-weight:bold">load_mvnx>parseChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',40,0)">line 40</a>)
+            [name,Data] = getNodeData(theChild, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>getNodeData', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 332)" style="font-weight:bold">load_mvnx>getNodeData</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',332,0)">line 332</a>)
+        [Data] = parseChildNodes(theNode, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx>parseChildNodes', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 40)" style="font-weight:bold">load_mvnx>parseChildNodes</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',40,0)">line 40</a>)
+            [name,Data] = getNodeData(theChild, Data, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('load_mvnx', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m', 28)" style="font-weight:bold">load_mvnx</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\load_mvnx.m',28,0)">line 28</a>)
+    [mvnx] = parseChildNodes(xDoc, mvnx, wb);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('MVN', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\MVN.m', 3)" style="font-weight:bold">MVN</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\MVN.m',3,0)">line 3</a>)
+tree = load_mvnx(file_ik);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 83)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',83,0)">line 83</a>)
+                    [sensorData, segmentData, jointData, tree]= MVN(file_ik);
+} 
+ULIFT_preprocessing_V2
+
+<strong>Processing: BC_006 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_006\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+<strong>		 ERROR: BC_006 at TIMEPOINT: T0 in FILENAME: ULIFT_L_001 
+ 		 Unrecognized function or variable 'nPositionPeaks'. LINE: 166 
+</strong><strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+		 ULIFT_L-002.mvnx: no change points were found 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+		 ULIFT_L-003.mvnx: no change points were found 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+		 ULIFT_R-001.mvnx: no change points were found 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+		 ULIFT_R-002.mvnx: no change points were found 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+<strong>		 ERROR: BC_006 at TIMEPOINT: T0 in FILENAME: ULIFT_R_003 
+ 		 Unrecognized function or variable 'nPositionPeaks'. LINE: 166 
+</strong>*********Finished BC_006 **********
+
+<strong>Processing: BC_006 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_006\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+<strong>		 ERROR: BC_006 at TIMEPOINT: T0 in FILENAME: ULIFT_L_001 
+ 		 Unrecognized function or variable 'nPositionPeaks'. LINE: 166 
+</strong><strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+		 ULIFT_L-002.mvnx: no change points were found 
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ginput>wfbp', 'C:\GBW_MyPrograms\MATLAB\R2021b\toolbox\matlab\uitools\ginput.m', 181)" style="font-weight:bold">ginput>wfbp</a> (<a href="matlab: opentoline('C:\GBW_MyPrograms\MATLAB\R2021b\toolbox\matlab\uitools\ginput.m',181,0)">line 181</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ginput', 'C:\GBW_MyPrograms\MATLAB\R2021b\toolbox\matlab\uitools\ginput.m', 74)" style="font-weight:bold">ginput</a> (<a href="matlab: opentoline('C:\GBW_MyPrograms\MATLAB\R2021b\toolbox\matlab\uitools\ginput.m',74,0)">line 74</a>)
+            keydown = wfbp;
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 153)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',153,0)">line 153</a>)
+                        [loc, ~  ] = ginput(2);
+} 
+ULIFT_preprocessing_V2
+
+<strong>Processing: BC_006 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_006\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+<strong>		 ERROR: BC_006 at TIMEPOINT: T0 in FILENAME: ULIFT_L_001 
+ 		 Unrecognized function or variable 'nPositionPeaks'. LINE: 166 
+</strong><strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+		 ULIFT_L-002.mvnx: no change points were found 
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ginput>wfbp', 'C:\GBW_MyPrograms\MATLAB\R2021b\toolbox\matlab\uitools\ginput.m', 181)" style="font-weight:bold">ginput>wfbp</a> (<a href="matlab: opentoline('C:\GBW_MyPrograms\MATLAB\R2021b\toolbox\matlab\uitools\ginput.m',181,0)">line 181</a>)
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ginput', 'C:\GBW_MyPrograms\MATLAB\R2021b\toolbox\matlab\uitools\ginput.m', 74)" style="font-weight:bold">ginput</a> (<a href="matlab: opentoline('C:\GBW_MyPrograms\MATLAB\R2021b\toolbox\matlab\uitools\ginput.m',74,0)">line 74</a>)
+            keydown = wfbp;
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 153)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',153,0)">line 153</a>)
+                        [loc, ~  ] = ginput(2);
+} 
+ULIFT_preprocessing_V2
+
+<strong>Processing: BC_006 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_006\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',163,1)">163 </a>                    else
 dbcont
-[Warning: Number of peaks found are less than 6 \n 2 peaks manually selected phase 1] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 430)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',430,0)">line 430</a>)] 
+		 ULIFT_L-001.mvnx: change points found 
+		 ULIFT_L-001.mvnx: more than 3 position peaks found in phase 1 
+	 	 ULIFT_L-001.mvnx: Please refine the borders of phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+		 ULIFT_L-002.mvnx: no change points were found 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+		 ULIFT_L-003.mvnx: no change points were found 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+		 ULIFT_R-001.mvnx: no change points were found 
+		 ULIFT_R-001.mvnx: more than 3 position peaks found in phase 4 
+	 	 ULIFT_R-001.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_R_001: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_R_002 
 </strong>		 Arm of interest: R 
 	 	 ULIFT_R-002.mvnx: read xsens file 
 	 	 ULIFT_R-002.mvnx: define start and end points 
+		 ULIFT_R-002.mvnx: no change points were found 
 	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_R_002: Extract relevant kinematics 
-<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_R_002 
- 		 Unable to perform assignment because the size of the left side is 101-by-1 and the size of the right side is 1-by-100. LINE: 640 
-</strong><strong>	 Analysing: ULIFT_R_003 
+<strong>	 Analysing: ULIFT_R_003 
 </strong>		 Arm of interest: R 
 	 	 ULIFT_R-003.mvnx: read xsens file 
 	 	 ULIFT_R-003.mvnx: define start and end points 
-	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
-	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
-      
-		 ULIFT_R_003: Extract relevant kinematics 
-<strong>	 Analysing: ULIFT_R_R_001 
-</strong>		 Arm of interest: R_SSS 
-	 	 ULIFT_R_R-001.mvnx: read xsens file 
-	 	 ULIFT_R_R-001.mvnx: define start and end points 
-	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
-	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
-      
-		 ULIFT_R_R_001: Extract relevant kinematics 
-<strong>	 Analysing: ULIFT_R_R_002 
-</strong>		 Arm of interest: R_SSS 
-	 	 ULIFT_R_R-002.mvnx: read xsens file 
-	 	 ULIFT_R_R-002.mvnx: define start and end points 
-	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
-	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
-      
-		 ULIFT_R_R_002: Extract relevant kinematics 
-<strong>	 Analysing: ULIFT_R_R_003 
-</strong>		 Arm of interest: R_SSS 
-	 	 ULIFT_R_R-003.mvnx: read xsens file 
-	 	 ULIFT_R_R-003.mvnx: define start and end points 
-	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
-	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
-      
-		 ULIFT_R_R_003: Extract relevant kinematics 
-*********Finished BC_007 **********
- 
+<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',163,1)">163 </a>                    else
+dbcont
+		 ULIFT_R-003.mvnx: change points found 
+<strong>		 ERROR: BC_006 at TIMEPOINT: T0 in FILENAME: ULIFT_R_003 
+ 		 Index exceeds the number of array elements. Index must not exceed 0. LINE: 322 
+</strong>*********Finished BC_006 **********
+
 <strong>Processing: BC_007 at Timepoint: T0....... 
 </strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_007\Xsens\T0\Reproces 
 <strong>	 Analysing: ULIFT_L_001 
 </strong>		 Arm of interest: L 
 	 	 ULIFT_L-001.mvnx: read xsens file 
 	 	 ULIFT_L-001.mvnx: define start and end points 
+		 ULIFT_L-001.mvnx: change points found 
 	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
-      
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
 		 ULIFT_L_001: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_L_002 
 </strong>		 Arm of interest: L 
 	 	 ULIFT_L-002.mvnx: read xsens file 
 	 	 ULIFT_L-002.mvnx: define start and end points 
+		 ULIFT_L-002.mvnx: change points found 
+		 ULIFT_L-002.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_L-002.mvnx: Please refine the borders of phase 1 
 	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
-<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_002 
- 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 306 
-</strong><strong>	 Analysing: ULIFT_L_003 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
 </strong>		 Arm of interest: L 
 	 	 ULIFT_L-003.mvnx: read xsens file 
 	 	 ULIFT_L-003.mvnx: define start and end points 
+		 ULIFT_L-003.mvnx: change points found 
+		 ULIFT_L-003.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_L-003.mvnx: Please refine the borders of phase 4 
 	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
-<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_003 
- 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 446 
-</strong><strong>	 Analysing: ULIFT_R_001 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
 </strong>		 Arm of interest: R 
 	 	 ULIFT_R-001.mvnx: read xsens file 
 	 	 ULIFT_R-001.mvnx: define start and end points 
+		 ULIFT_R-001.mvnx: change points found 
+		 ULIFT_R-001.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R-001.mvnx: Please refine the borders of phase 1 
 	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
-	 	 ULIFT_R-001.mvnx: Please select peaks phase 1 
-[Warning: Number of peaks found are less than 6 \n 2 peaks manually selected phase 1] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 430)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',430,0)">line 430</a>)] 
 	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_R_001: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_R_002 
 </strong>		 Arm of interest: R 
 	 	 ULIFT_R-002.mvnx: read xsens file 
 	 	 ULIFT_R-002.mvnx: define start and end points 
+		 ULIFT_R-002.mvnx: change points found 
 	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_R_002: Extract relevant kinematics 
-<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_R_002 
- 		 Unable to perform assignment because the size of the left side is 101-by-1 and the size of the right side is 1-by-100. LINE: 640 
-</strong><strong>	 Analysing: ULIFT_R_003 
+<strong>	 Analysing: ULIFT_R_003 
 </strong>		 Arm of interest: R 
 	 	 ULIFT_R-003.mvnx: read xsens file 
 	 	 ULIFT_R-003.mvnx: define start and end points 
+		 ULIFT_R-003.mvnx: change points found 
 	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_R_003: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_R_R_001 
 </strong>		 Arm of interest: R_SSS 
 	 	 ULIFT_R_R-001.mvnx: read xsens file 
 	 	 ULIFT_R_R-001.mvnx: define start and end points 
+		 ULIFT_R_R-001.mvnx: change points found 
 	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_R_R_001: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_R_R_002 
 </strong>		 Arm of interest: R_SSS 
 	 	 ULIFT_R_R-002.mvnx: read xsens file 
 	 	 ULIFT_R_R-002.mvnx: define start and end points 
+		 ULIFT_R_R-002.mvnx: change points found 
 	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_R_R_002: Extract relevant kinematics 
 <strong>	 Analysing: ULIFT_R_R_003 
 </strong>		 Arm of interest: R_SSS 
 	 	 ULIFT_R_R-003.mvnx: read xsens file 
 	 	 ULIFT_R_R-003.mvnx: define start and end points 
+		 ULIFT_R_R-003.mvnx: change points found 
 	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
 	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
-      
 		 ULIFT_R_R_003: Extract relevant kinematics 
 *********Finished BC_007 **********
+
+<strong>Processing: BC_008 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_008\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 	 Comment in file: Wilde meteen verder doen, gestopt 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+		 ULIFT_L-001.mvnx: change points found 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+		 ULIFT_L-002.mvnx: change points found 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 	 Comment in file: handen niet terug naar neutraal gedaan meteen 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+		 ULIFT_L-003.mvnx: change points found 
+		 ULIFT_L-003.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_L-003.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+		 ULIFT_R-001.mvnx: change points found 
+		 ULIFT_R-001.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R-001.mvnx: Please refine the borders of phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+		 ULIFT_R-002.mvnx: change points found 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+		 ULIFT_R-003.mvnx: change points found 
+		 ULIFT_R-003.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R-003.mvnx: Please refine the borders of phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+		 ULIFT_R_L-001.mvnx: change points found 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+		 ULIFT_R_L-002.mvnx: change points found 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+		 ULIFT_R_L-003.mvnx: change points found 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+		 ULIFT_R_R-001.mvnx: change points found 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+		 ULIFT_R_R-002.mvnx: change points found 
+		 ULIFT_R_R-002.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R_R-002.mvnx: Please refine the borders of phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+		 ULIFT_R_R-003.mvnx: change points found 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_008 **********
+
+<strong>Processing: BC_009 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_009\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+		 ULIFT_L-001.mvnx: change points found 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+		 ULIFT_L-002.mvnx: change points found 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+		 ULIFT_L-003.mvnx: change points found 
+		 ULIFT_L-003.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_L-003.mvnx: Please refine the borders of phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 	 Comment in file: Rechter voet naar achter geplaatst 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+		 ULIFT_R-001.mvnx: change points found 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+		 ULIFT_R-002.mvnx: change points found 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+		 ULIFT_R-003.mvnx: change points found 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+		 ULIFT_R_L-001.mvnx: change points found 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+		 ULIFT_R_L-002.mvnx: change points found 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+		 ULIFT_R_L-003.mvnx: change points found 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+		 ULIFT_R_R-001.mvnx: change points found 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+		 ULIFT_R_R-002.mvnx: change points found 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+		 ULIFT_R_R-003.mvnx: change points found 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_009 **********
+
+<strong>Processing: BC_010 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_010\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 	 Comment in file: even met rechts geholpen beneden 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+		 ULIFT_L-001.mvnx: change points found 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+		 ULIFT_L-002.mvnx: change points found 
+		 ULIFT_L-002.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_L-002.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+		 ULIFT_L-003.mvnx: change points found 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 	 Comment in file: geen eindarmbeweging, eerst 1 in fase 3 dan pas 3 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+		 ULIFT_R-001.mvnx: change points found 
+		 ULIFT_R-001.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R-001.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+		 ULIFT_R-002.mvnx: change points found 
+		 ULIFT_R-002.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R-002.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+		 ULIFT_R-003.mvnx: change points found 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+		 ULIFT_R_L-001.mvnx: change points found 
+		 ULIFT_R_L-001.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R_L-001.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+		 ULIFT_R_L-002.mvnx: change points found 
+		 ULIFT_R_L-002.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R_L-002.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+		 ULIFT_R_L-003.mvnx: change points found 
+		 ULIFT_R_L-003.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R_L-003.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 	 Comment in file: arm niet naast gebracht 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+		 ULIFT_R_R-001.mvnx: change points found 
+		 ULIFT_R_R-001.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R_R-001.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+		 ULIFT_R_R-002.mvnx: change points found 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+		 ULIFT_R_R-003.mvnx: change points found 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_010 **********
+
+<strong>Processing: BC_011 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_011\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+		 ULIFT_L-001.mvnx: change points found 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+		 ULIFT_L-002.mvnx: change points found 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+		 ULIFT_L-003.mvnx: change points found 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+		 ULIFT_R-001.mvnx: change points found 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+		 ULIFT_R-002.mvnx: change points found 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+		 ULIFT_R-003.mvnx: change points found 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+		 ULIFT_R_L-001.mvnx: change points found 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+		 ULIFT_R_L-002.mvnx: change points found 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+		 ULIFT_R_L-003.mvnx: change points found 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 	 Comment in file: geen neutrale houding op het einde 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+		 ULIFT_R_R-001.mvnx: change points found 
+		 ULIFT_R_R-001.mvnx: more than 3 position peaks found in phase 4 
+	 	 ULIFT_R_R-001.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+		 ULIFT_R_R-002.mvnx: change points found 
+		 ULIFT_R_R-002.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R_R-002.mvnx: Please refine the borders of phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+		 ULIFT_R_R-003.mvnx: change points found 
+		 ULIFT_R_R-003.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R_R-003.mvnx: Please refine the borders of phase 1 
+<strong>		 ERROR: BC_011 at TIMEPOINT: T0 in FILENAME: ULIFT_R_R_003 
+ 		 Interrupted by figure deletion LINE: 84 
+</strong>*********Finished BC_011 **********
+
+<strong>Processing: BC_012 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_012\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+		 ULIFT_L-001.mvnx: change points found 
+		 ULIFT_L-001.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_L-001.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+		 ULIFT_L-002.mvnx: change points found 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+		 ULIFT_L-003.mvnx: change points found 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+		 ULIFT_R-001.mvnx: change points found 
+		 ULIFT_R-001.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R-001.mvnx: Please refine the borders of phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+		 ULIFT_R-002.mvnx: change points found 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+		 ULIFT_R-003.mvnx: change points found 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+		 ULIFT_R_L-001.mvnx: change points found 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+		 ULIFT_R_L-002.mvnx: change points found 
+		 ULIFT_R_L-002.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R_L-002.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+		 ULIFT_R_L-003.mvnx: change points found 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 	 Comment in file: 1tje te veel gedaan 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+		 ULIFT_R_R-001.mvnx: change points found 
+		 ULIFT_R_R-001.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R_R-001.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+		 ULIFT_R_R-002.mvnx: change points found 
+		 ULIFT_R_R-002.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R_R-002.mvnx: Please refine the borders of phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+		 ULIFT_R_R-003.mvnx: change points found 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_012 **********
+
+<strong>Processing: BC_013 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_013\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+		 ULIFT_L-001.mvnx: change points found 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+		 ULIFT_L-002.mvnx: change points found 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+		 ULIFT_L-003.mvnx: change points found 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_004 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-004.mvnx: read xsens file 
+	 	 ULIFT_L-004.mvnx: define start and end points 
+		 ULIFT_L-004.mvnx: change points found 
+	 	 ULIFT_L-004.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-004.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-004.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_004: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_005 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-005.mvnx: read xsens file 
+	 	 ULIFT_L-005.mvnx: define start and end points 
+		 ULIFT_L-005.mvnx: change points found 
+	 	 ULIFT_L-005.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-005.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_005: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_006 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-006.mvnx: read xsens file 
+	 	 ULIFT_L-006.mvnx: define start and end points 
+		 ULIFT_L-006.mvnx: change points found 
+	 	 ULIFT_L-006.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-006.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-006.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_006: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+		 ULIFT_R-001.mvnx: change points found 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+		 ULIFT_R-002.mvnx: change points found 
+		 ULIFT_R-002.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R-002.mvnx: Please refine the borders of phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+		 ULIFT_R-003.mvnx: change points found 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_004 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-004.mvnx: read xsens file 
+	 	 ULIFT_R-004.mvnx: define start and end points 
+		 ULIFT_R-004.mvnx: change points found 
+	 	 ULIFT_R-004.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-004.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_004: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_005 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-005.mvnx: read xsens file 
+	 	 ULIFT_R-005.mvnx: define start and end points 
+		 ULIFT_R-005.mvnx: change points found 
+		 ULIFT_R-005.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R-005.mvnx: Please refine the borders of phase 4 
+<strong>		 ERROR: BC_013 at TIMEPOINT: T0 in FILENAME: ULIFT_R_005 
+ 		 Interrupted by figure deletion LINE: 84 
+</strong><strong>	 Analysing: ULIFT_R_006 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-006.mvnx: read xsens file 
+	 	 ULIFT_R-006.mvnx: define start and end points 
+		 ULIFT_R-006.mvnx: change points found 
+		 ULIFT_R-006.mvnx: more than 3 position peaks found in phase 4 
+	 	 ULIFT_R-006.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R-006.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-006.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-006.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_006: Extract relevant kinematics 
+*********Finished BC_013 **********
+
+<strong>Processing: BC_014 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_014\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+		 ULIFT_L-001.mvnx: change points found 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+		 ULIFT_L-002.mvnx: change points found 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+		 ULIFT_L-003.mvnx: change points found 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+		 ULIFT_R-001.mvnx: change points found 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+		 ULIFT_R-002.mvnx: change points found 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+		 ULIFT_R-003.mvnx: change points found 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+		 ULIFT_R_L-001.mvnx: change points found 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+		 ULIFT_R_L-002.mvnx: change points found 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-002.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R_L-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-002.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+		 ULIFT_R_L-003.mvnx: change points found 
+		 ULIFT_R_L-003.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R_L-003.mvnx: Please refine the borders of phase 1 
+		 ULIFT_R_L-003.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R_L-003.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+		 ULIFT_R_R-001.mvnx: change points found 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+		 ULIFT_R_R-002.mvnx: change points found 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+		 ULIFT_R_R-003.mvnx: change points found 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_014 **********
+
+<strong>Processing: BC_015 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_015\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+		 ULIFT_L-001.mvnx: change points found 
+		 ULIFT_L-001.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_L-001.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+		 ULIFT_L-002.mvnx: change points found 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+		 ULIFT_L-003.mvnx: change points found 
+		 ULIFT_L-003.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_L-003.mvnx: Please refine the borders of phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+		 ULIFT_R-001.mvnx: change points found 
+		 ULIFT_R-001.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R-001.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+		 ULIFT_R-002.mvnx: change points found 
+		 ULIFT_R-002.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R-002.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+		 ULIFT_R-003.mvnx: change points found 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+		 ULIFT_R_L-001.mvnx: change points found 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-001.mvnx: Please select peaks phase 4 
+<strong>		 ERROR: BC_015 at TIMEPOINT: T0 in FILENAME: ULIFT_R_L_001 
+ 		 Interrupted by figure deletion LINE: 84 
+</strong><strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+		 ULIFT_R_L-002.mvnx: change points found 
+<strong>		 ERROR: BC_015 at TIMEPOINT: T0 in FILENAME: ULIFT_R_L_002 
+ 		 Index exceeds the number of array elements. Index must not exceed 0. LINE: 322 
+</strong><strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+		 ULIFT_R_L-003.mvnx: change points found 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_L-003.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+		 ULIFT_R_R-001.mvnx: change points found 
+		 ULIFT_R_R-001.mvnx: less than 3 position peaks found in phase 4 
+	 	 ULIFT_R_R-001.mvnx: Please refine the borders of phase 4 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R_R-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found ~= 6 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 649)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',649,0)">line 649</a>)] 
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+		 ULIFT_R_R-002.mvnx: change points found 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+		 ULIFT_R_R-003.mvnx: change points found 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 501)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',501,0)">line 501</a>)] 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_015 **********

@@ -7,16 +7,17 @@ else
 end
 
 
-if size(input_data, 1) < 100
+if size(input_data, 1) <= 100
     nf = 102;
 else
     nf = 101;
 end
 
 
- % Time normalised phases; phase 1
- %--------------------------------
+% Time normalised phases; phase 1
+%--------------------------------
 norm_data = interp1([1:size(input_data,1)],...
-     input_data', [1:(size(input_data,1))/nf:size(input_data,1)], 'spline');
+    input_data', [1:(size(input_data,1))/nf:size(input_data,1)], 'spline');
 
 
+end
