@@ -1,0 +1,481 @@
+ 
+<strong>Processing: BC_001 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_001\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 4 
+[Warning: Number of peaks found exceeds 7 \n peaks manually selected] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 507)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',507,0)">line 507</a>)] 
+      
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_L_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Please select peaks phase 1 
+<strong>		 ERROR: BC_001 at TIMEPOINT: T0 in FILENAME: ULIFT_R_003 
+ 		 Interrupted by figure deletion LINE: 84 
+</strong><strong>	 Analysing: ULIFT_R_L_001 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-001.mvnx: read xsens file 
+	 	 ULIFT_R_L-001.mvnx: define start and end points 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_L_002 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-002.mvnx: read xsens file 
+	 	 ULIFT_R_L-002.mvnx: define start and end points 
+<strong>	 Analysing: ULIFT_R_L_003 
+</strong>		 Arm of interest: L_SSS 
+	 	 ULIFT_R_L-003.mvnx: read xsens file 
+	 	 ULIFT_R_L-003.mvnx: define start and end points 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_L_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_001 **********
+ 
+<strong>Processing: BC_007 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_007\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',300,1)">300 </a>                        [peakLoc.phase1, peakMag.phase1] = peakfinder(df.SenAcc.SensorFreeX(T_phase1), [],[],-1);
+peakfinder(df.SenAcc.SensorFreeX(T_phase1), [],[],-1)
+ [peakLoc.phase1, peakMag.phase1] = peakfinder(df.SenAcc.SensorFreeX(T_phase1), [],[],-1);
+                        grab_idx.phase1 = peakLoc.phase1(1:2:end)+startPhase1;
+                        release_idx.phase1 = peakLoc.phase1(2:2:end)+startPhase1;
+
+                        T_middle_phase1 = grab_idx.phase1(2):grab_idx.phase1(3);
+if system_dependent('IsDebugMode')==1, dbquit all; end
+ULIFT_preprocessing_V2
+ 
+<strong>Processing: BC_007 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_007\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_002 
+ 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 304 
+</strong><strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_003 
+ 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 443 
+</strong><strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 1 
+<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_R_001 
+ 		 Array indices must be positive integers or logical values. LINE: 423 
+</strong><strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_R_003 
+ 		 Unable to perform assignment because the size of the left side is 100-by-1 and the size of the right side is 1-by-101. LINE: 637 
+</strong><strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_007 **********
+ 
+<strong>Processing: BC_007 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_007\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_002 
+ 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 304 
+</strong><strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_003 
+ 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 443 
+</strong><strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 1 
+<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',420,1)">420 </a>                               ind(1) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1) ,loc(1),'nearest');
+loc
+
+loc =
+
+  206.9892
+  302.6882
+
+interp1(peakLoc.phase1, 1:length(peakLoc.phase1) ,loc(1),'nearest')
+
+ans =
+
+   NaN
+
+loc(1)
+
+ans =
+
+  206.9892
+
+peakLoc.phase1
+
+ans =
+
+     1
+    32
+    90
+   126
+   192
+
+startPhase1
+
+startPhase1 =
+
+   176
+
+peakLoc.phase1
+
+ans =
+
+     1
+    32
+    90
+   126
+   192
+
+                        peakLoc.phase1 = peakLoc.phase1 + startPhase1
+
+peakLoc = 
+
+  <a href="matlab:helpPopup struct" style="font-weight:bold">struct</a> with fields:
+
+    phase1: [5×1 double]
+
+peakLoc.phase1
+
+ans =
+
+   177
+   208
+   266
+   302
+   368
+
+ind(1) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1) ,loc(1),'nearest')
+
+ind =
+
+     2
+
+ind(2) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1), loc(2), 'nearest')
+
+ind =
+
+     2     4
+
+T_middle_phase1 = peakLoc.phase1(ind(1)):peakLoc.phase1(ind(2))
+
+T_middle_phase1 =
+
+  Columns 1 through 38
+
+   208   209   210   211   212   213   214   215   216   217   218   219   220   221   222   223   224   225   226   227   228   229   230   231   232   233   234   235   236   237   238   239   240   241   242   243   244   245
+
+  Columns 39 through 76
+
+   246   247   248   249   250   251   252   253   254   255   256   257   258   259   260   261   262   263   264   265   266   267   268   269   270   271   272   273   274   275   276   277   278   279   280   281   282   283
+
+  Columns 77 through 95
+
+   284   285   286   287   288   289   290   291   292   293   294   295   296   297   298   299   300   301   302
+
+if system_dependent('IsDebugMode')==1, dbquit all; end
+ULIFT_preprocessing_V2
+ 
+<strong>Processing: BC_007 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_007\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_002 
+ 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 306 
+</strong><strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_003 
+ 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 446 
+</strong><strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 1 
+<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',422,1)">422 </a>                               ind(1) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1) ,loc(1),'nearest');
+dbcont
+[Warning: Number of peaks found are less than 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 430)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',430,0)">line 430</a>)] 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_R_002 
+ 		 Unable to perform assignment because the size of the left side is 101-by-1 and the size of the right side is 1-by-100. LINE: 640 
+</strong><strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_007 **********
+ 
+<strong>Processing: BC_007 at Timepoint: T0....... 
+</strong>	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_007\Xsens\T0\Reproces 
+<strong>	 Analysing: ULIFT_L_001 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-001.mvnx: read xsens file 
+	 	 ULIFT_L-001.mvnx: define start and end points 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_L_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_L_002 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-002.mvnx: read xsens file 
+	 	 ULIFT_L-002.mvnx: define start and end points 
+	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_002 
+ 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 306 
+</strong><strong>	 Analysing: ULIFT_L_003 
+</strong>		 Arm of interest: L 
+	 	 ULIFT_L-003.mvnx: read xsens file 
+	 	 ULIFT_L-003.mvnx: define start and end points 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_L_003 
+ 		 Index exceeds the number of array elements. Index must not exceed 2. LINE: 446 
+</strong><strong>	 Analysing: ULIFT_R_001 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-001.mvnx: read xsens file 
+	 	 ULIFT_R-001.mvnx: define start and end points 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 1 
+[Warning: Number of peaks found are less than 6 \n 2 peaks manually selected phase 1] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ULIFT_preprocessing_V2', 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m', 430)" style="font-weight:bold">ULIFT_preprocessing_V2</a> (<a href="matlab: opentoline('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT_preprocessing_V2.m',430,0)">line 430</a>)] 
+	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_002 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-002.mvnx: read xsens file 
+	 	 ULIFT_R-002.mvnx: define start and end points 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_002: Extract relevant kinematics 
+<strong>		 ERROR: BC_007 at TIMEPOINT: T0 in FILENAME: ULIFT_R_002 
+ 		 Unable to perform assignment because the size of the left side is 101-by-1 and the size of the right side is 1-by-100. LINE: 640 
+</strong><strong>	 Analysing: ULIFT_R_003 
+</strong>		 Arm of interest: R 
+	 	 ULIFT_R-003.mvnx: read xsens file 
+	 	 ULIFT_R-003.mvnx: define start and end points 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_003: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_001 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-001.mvnx: read xsens file 
+	 	 ULIFT_R_R-001.mvnx: define start and end points 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_R_001: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_002 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-002.mvnx: read xsens file 
+	 	 ULIFT_R_R-002.mvnx: define start and end points 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_R_002: Extract relevant kinematics 
+<strong>	 Analysing: ULIFT_R_R_003 
+</strong>		 Arm of interest: R_SSS 
+	 	 ULIFT_R_R-003.mvnx: read xsens file 
+	 	 ULIFT_R_R-003.mvnx: define start and end points 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+      
+		 ULIFT_R_R_003: Extract relevant kinematics 
+*********Finished BC_007 **********

@@ -19,7 +19,7 @@ Affected_table = readtable(fullfile(path.root,"Aangedane zijde.xlsx"));
 
 
 %% 2. load data
-for subj = 1:20
+for subj = 1:30
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -310,93 +310,104 @@ for subj = 1:20
 %                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.z(reps(1):reps(end)));
 %                     lyapExp_z2 = lyapunovExponent(acc.z(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
 
+%                     %% Lyapunov exponent matlab function
+%                     % dominant period based on the frequency analysis
+%                     % of each acceleration axis seperatly
+%                   
+%                     % x axis
+%                     %-------
+%                     temp = acc.x(reps(1):reps(end));
+%                     
+%                     Y = fft(temp);
+%                     N = length(temp);
+% 
+%                     k = [0:N-1];
+%                     dt = 1/fs;
+%                     Power = abs(Y)/N;%% absolute value of the fft
+%                     f = k*(1/(N*dt));
+% 
+%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);                  
+%                     T2 = f(tf);
+% 
+%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle
+%                     eRange=[0, L1];
+%                   
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.x(reps(1):reps(end)));
+%                     lyapExp_x = lyapunovExponent(acc.x(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
+% 
+%                     % y-axis
+%                     %-------
+%                     temp = acc.y(reps(1):reps(end));
+%                     
+%                     Y = fft(temp);
+%                     N = length(temp);
+% 
+%                     k = [0:N-1];
+%                     dt = 1/fs;
+%                     Power = abs(fft(temp))/(N); %% absolute value of the fft
+%                     f = k*(1/(N*dt));
+% 
+%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);                  
+%                     T2 = f(tf);
+% 
+%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle
+%                     eRange=[0, L1];
+% 
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.y(reps(1):reps(end)));
+%                     lyapExp_y = lyapunovExponent(acc.y(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
+% 
+%                     % z-axis
+%                     %-------
+%                     temp = acc.z(reps(1):reps(end));
+% 
+%                     Y = fft(temp);
+%                     N = length(temp);
+% 
+%                     k = [0:N-1];
+%                     dt = 1/fs;
+%                     Power = abs(fft(temp))/(N); %% absolute value of the fft
+%                     f = k*(1/(N*dt));
+% 
+%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);                  
+%                     T2 = f(tf);
+% 
+%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle
+%                     eRange=[0, L1];
+% 
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.z(reps(1):reps(end)));
+%                     lyapExp_z = lyapunovExponent(acc.z(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
+% 
+%                     % resultant
+%                     %----------
+%                     temp = acc.res(reps(1):reps(end));
+% 
+%                     Y = fft(temp);
+%                     N = length(temp);
+% 
+%                     k = [0:N-1];
+%                     dt = 1/fs;
+%                     Power = abs(fft(temp))/(N); %% absolute value of the fft
+%                     f = k*(1/(N*dt));
+% 
+%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);                  
+%                     T2 = f(tf);
+% 
+%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle
+%                     eRange=[0, L1];
+% 
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.z(reps(1):reps(end)));
+%                     lyapExp_res = lyapunovExponent(acc.res(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
+
+
                     %% Lyapunov exponent matlab function
                     % dominant period based on the frequency analysis
-                    % of each acceleration axis seperatly
-                  
-                    % x axis
-                    %-------
-                    temp = acc.x(reps(1):reps(end));
-                    
-                    Y = fft(temp);
-                    N = length(temp);
+                    % of each acceleration axis seperatly.
 
-                    k = [0:N-1];
-                    dt = 1/fs;
-                    Power = abs(Y)/N;%% absolute value of the fft
-                    f = k*(1/(N*dt));
+                    [lyapExp_x ,eLag(1), eDim(1)] = DivergenceExponent(acc.x(reps(1):reps(end)), fs);
+                    [lyapExp_y, eLag(2), eDim(2)] = DivergenceExponent(acc.y(reps(1):reps(end)), fs);
+                    [lyapExp_z, eLag(3), eDim(3)] = DivergenceExponent(acc.z(reps(1):reps(end)), fs);
+                    [lyapExp_res, eLag(4), eDim(4)] = DivergenceExponent(acc.res(reps(1):reps(end)), fs);
 
-                    tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);                  
-                    T2 = f(tf);
-
-                    L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle
-                    eRange=[0, L1];
-                  
-                    [~,eLag,eDim] = phaseSpaceReconstruction(acc.x(reps(1):reps(end)));
-                    lyapExp_x = lyapunovExponent(acc.x(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
-
-                    % y-axis
-                    %-------
-                    temp = acc.y(reps(1):reps(end));
-                    
-                    Y = fft(temp);
-                    N = length(temp);
-
-                    k = [0:N-1];
-                    dt = 1/fs;
-                    Power = abs(fft(temp))/(N); %% absolute value of the fft
-                    f = k*(1/(N*dt));
-
-                    tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);                  
-                    T2 = f(tf);
-
-                    L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle
-                    eRange=[0, L1];
-
-                    [~,eLag,eDim] = phaseSpaceReconstruction(acc.y(reps(1):reps(end)));
-                    lyapExp_y = lyapunovExponent(acc.y(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
-
-                    % z-axis
-                    %-------
-                    temp = acc.z(reps(1):reps(end));
-
-                    Y = fft(temp);
-                    N = length(temp);
-
-                    k = [0:N-1];
-                    dt = 1/fs;
-                    Power = abs(fft(temp))/(N); %% absolute value of the fft
-                    f = k*(1/(N*dt));
-
-                    tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);                  
-                    T2 = f(tf);
-
-                    L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle
-                    eRange=[0, L1];
-
-                    [~,eLag,eDim] = phaseSpaceReconstruction(acc.z(reps(1):reps(end)));
-                    lyapExp_z = lyapunovExponent(acc.z(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
-
-                    % resultant
-                    %----------
-                    temp = acc.res(reps(1):reps(end));
-
-                    Y = fft(temp);
-                    N = length(temp);
-
-                    k = [0:N-1];
-                    dt = 1/fs;
-                    Power = abs(fft(temp))/(N); %% absolute value of the fft
-                    f = k*(1/(N*dt));
-
-                    tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);                  
-                    T2 = f(tf);
-
-                    L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle
-                    eRange=[0, L1];
-
-                    [~,eLag,eDim] = phaseSpaceReconstruction(acc.z(reps(1):reps(end)));
-                    lyapExp_res = lyapunovExponent(acc.z(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
 
                     %% LDLJ_A --> LOG DIMENSIONLESS JERK ON RAW ACCELERATION
                     for idx = 1:size(reps,1)-1
@@ -413,29 +424,36 @@ for subj = 1:20
                         sparc_z(:,idx) = SpectralArcLength(avel.z(reps(idx):reps(idx+1)), fs, params);
                         sparc_res(:,idx) = SpectralArcLength(avel.res(reps(idx):reps(idx+1)), fs, params);
                     end
-                    %% sample entropy --> tolerance based on 0.2 * std(signal)
-                    %---------------------------------------------------------
-                    r = 0.2;
-                    m = 2;
-                    SampleEntropy_x     = sampen(acc.x(reps(1):reps(end)), m, r);
-                    SampleEntropy_y     = sampen(acc.y(reps(1):reps(end)), m, r);
-                    SampleEntropy_z     = sampen(acc.z(reps(1):reps(end)), m, r);
-                    SampleEntropy_res   = sampen(acc.res(reps(1):reps(end)), m, r);
-
-                    %% sample entropy Jill --> fixed tolerance
-                    %-----------------------------------------
-                    r = 0.2;
-                    m = 2;
-                    sampen_x = sampen_Jill(acc.x(reps(1):reps(end)), m, r);
-                    sampen_y = sampen_Jill(acc.y(reps(1):reps(end)), m, r);
-                    sampen_z = sampen_Jill(acc.z(reps(1):reps(end)), m, r);
-                    sampen_res = sampen_Jill(acc.res(reps(1):reps(end)), m, r);
+%                     %% sample entropy --> tolerance based on 0.2 * std(signal)
+%                     %---------------------------------------------------------
+%                     r = 0.2;
+%                     m = 2;
+%                     SampleEntropy_x     = sampen(acc.x(reps(1):reps(end)), m, r);
+%                     SampleEntropy_y     = sampen(acc.y(reps(1):reps(end)), m, r);
+%                     SampleEntropy_z     = sampen(acc.z(reps(1):reps(end)), m, r);
+%                     SampleEntropy_res   = sampen(acc.res(reps(1):reps(end)), m, r);
+% 
+%                     %% sample entropy Jill --> fixed tolerance
+%                     %-----------------------------------------
+%                     r = 0.2;
+%                     m = 2;
+%                     sampen_x = sampen_Jill(acc.x(reps(1):reps(end)), m, r);
+%                     sampen_y = sampen_Jill(acc.y(reps(1):reps(end)), m, r);
+%                     sampen_z = sampen_Jill(acc.z(reps(1):reps(end)), m, r);
+%                     sampen_res = sampen_Jill(acc.res(reps(1):reps(end)), m, r);
 
                     %% sample entropy Jill --> TO defines tollerance
                     %----------------------------------------------- 
                     if strcmp(Timepoint, 'T0')
                         % calculate personalised tollerance based on pre-op
                         % "healthy" data
+
+
+                        if exist('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat', 'file') == 2
+                            load('tollarance_table.mat')
+                        end
+
+
                         sigma = std(acc{reps(1):reps(end), :}, [], 1);
                         r = 0.2 * sigma;
                         m=2;
@@ -444,17 +462,17 @@ for subj = 1:20
                         
                     else                   
                         m = 2;
-                        load tollarance_table.mat
+                        load C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat
                         r = tollarance_table.(arm).r( strcmp(tollarance_table.(arm).ppID, subj_name),:);
 
                         
                     end
 
 
-                    sampen_x_var = sampen_Jill(acc.x(reps(1):reps(end), :), m, r(1));
-                    sampen_y_var = sampen_Jill(acc.y(reps(1):reps(end), :), m, r(2));
-                    sampen_z_var = sampen_Jill(acc.z(reps(1):reps(end), :), m, r(3));
-                    sampen_res_var = sampen_Jill(acc.res(reps(1):reps(end), :), m, r(4));
+                    sampen_x = sampen_Jill(acc.x(reps(1):reps(end), :), m, r(1));
+                    sampen_y = sampen_Jill(acc.y(reps(1):reps(end), :), m, r(2));
+                    sampen_z = sampen_Jill(acc.z(reps(1):reps(end), :), m, r(3));
+                    sampen_res = sampen_Jill(acc.res(reps(1):reps(end), :), m, r(4));
 
 
                     
@@ -486,7 +504,7 @@ for subj = 1:20
 
                     %% save raw acc and avel data to struct
                     if strcmp(side, 'affected')
-                        MoveQual.raw.affected.(ppID).(Timepoint).(trial).acc = acc;
+                        MoveQual.raw.affected.(ppID).(Timepoint).(trial).acc = acc(reps(1):reps(end), :);
                         MoveQual.raw.affected.(ppID).(Timepoint).(trial).avel = avel;
                     elseif strcmp(side, 'unaffected')
                         MoveQual.raw.unaffected.(ppID).(Timepoint).(trial).acc = acc;
@@ -517,9 +535,9 @@ for subj = 1:20
 
                                               
                         %predictability || Sample Entropy
-                        aff.SampEn_aff(subj, :) = table(ppID, SampleEntropy_x, SampleEntropy_y, SampleEntropy_z, SampleEntropy_res);
+                        %aff.SampEn_aff(subj, :) = table(ppID, SampleEntropy_x, SampleEntropy_y, SampleEntropy_z, SampleEntropy_res);
                         aff.Entropy_aff(subj,:) = table(ppID, sampen_x, sampen_y, sampen_z, sampen_res);
-                        aff.Entropy_var(subj,:) = table(ppID, sampen_x_var,sampen_y_var, sampen_z_var, sampen_res_var);
+                        %aff.Entropy_var(subj,:) = table(ppID, sampen_x_var,sampen_y_var, sampen_z_var, sampen_res_var);
 
 
                         %movement time || average
@@ -571,9 +589,9 @@ for subj = 1:20
                         unaff.lyapExp(subj,:) = table(ppID, lyapExp_x, lyapExp_y, lyapExp_z, lyapExp_res);
                         
                         %predictability || sample entropy
-                        unaff.SampEn_unaff(subj, :) = table(ppID, SampleEntropy_x, SampleEntropy_y, SampleEntropy_z, SampleEntropy_res);
+                        %unaff.SampEn_unaff(subj, :) = table(ppID, SampleEntropy_x, SampleEntropy_y, SampleEntropy_z, SampleEntropy_res);
                         unaff.Entropy_unaff(subj,:) = table(ppID, sampen_x, sampen_y, sampen_z, sampen_res);
-                        unaff.Entropy_var(subj,:) = table(ppID, sampen_x_var,sampen_y_var, sampen_z_var, sampen_res_var);
+                        %unaff.Entropy_var(subj,:) = table(ppID, sampen_x_var,sampen_y_var, sampen_z_var, sampen_res_var);
 
                         %movement time || average
                         unaff.avg_move_time_unaff(subj,:) = table(ppID, mean(movement_time));
@@ -629,11 +647,11 @@ end
 
 clear fields fld
 
-writetable(MovementQual.unaff,'MoveQual_unaff.xlsx', 'FileType', 'spreadsheet',  ...
+writetable(MovementQual.unaff,'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\MoveQual_unaff.xlsx', 'FileType', 'spreadsheet',  ...
     "WriteMode", "append", "Sheet", Timepoint)
 
-writetable(MovementQual.aff, 'MoveQual_aff.xlsx', 'FileType', 'spreadsheet', ...
+writetable(MovementQual.aff, 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\MoveQual_aff.xlsx', 'FileType', 'spreadsheet', ...
     'WriteMode', 'append', 'sheet', Timepoint)
 
-save('tollarance_table.mat','tollarance_table')
+save('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\tollarance_table.mat','tollarance_table')
 

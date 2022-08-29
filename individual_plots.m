@@ -1,10 +1,10 @@
 %individual plots
-clear all; close all; clc
+%clear all; close all; clc
 
-subj_id = 'BCT_004';
+subj_id = 'BC_002';
 Timepoint   = 'T0';
 movement    = "ULIFT";
-path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - 5. Data';
+path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA\Output';
 path.out    = fullfile(path.root,'Output','Database_ULIFT.mat');
 if exist(path.out,'file')
     load(path.out)

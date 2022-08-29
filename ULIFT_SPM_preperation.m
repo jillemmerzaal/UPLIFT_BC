@@ -12,11 +12,13 @@
 % trial will be flagged and removed.
 % 3) data will be saved and stored in a seperate struct to be used in
 % python.
-clear all; close all; clc
-cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 
-path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
-load(fullfile(path.root,'Output','Database_ULIFT.mat'));
+
+%clear all; close all; clc
+% cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
+% 
+ path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
+% load(fullfile(path.root,'Output','Database_ULIFT.mat'));
 
 timepoint = 'T0';
 

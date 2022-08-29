@@ -20,10 +20,10 @@ function [mvnx] = load_mvnx(file)
         close(wb);
     end
 
-    %read the mvnx file
+%     read the mvnx file
     xDoc = xmlread(file);
 
-    %parse xDoc into a MATLAB structure
+%     parse xDoc into a MATLAB structure
     mvnx = struct;
     [mvnx] = parseChildNodes(xDoc, mvnx, wb);
 end
