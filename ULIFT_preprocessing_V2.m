@@ -6,7 +6,7 @@ clear all; close all; clc
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 addpath("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
-Timepoint   = 'T0';
+Timepoint   = 'T1';
 movement    = "ULIFT";
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 path.out    = fullfile(path.root,'Output','Database_ULIFT.mat');
@@ -16,7 +16,7 @@ plot_or_not = 1;
 diary myDiaryFile
 
 %% 2. load data
-for subj = 7:15%1:20
+for subj = 1:20%1:20
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -871,29 +871,29 @@ cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 
 
 %% plot joint angle data
-subj_name = 'BC_009';
-arm = 'L'
-JointAngles = fieldnames(Data.(subj_name).T0.(subj_name).phase1.L);
-
-figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
-p = tiledlayout('flow', 'TileSpacing','compact');
-title(p,['Phase 1 Average left and right ', (Timepoint)])
-xlabel(p,'% movement')
-ylabel(p,['Joint angle', char(176)])
-
-for jnt = 1:length(JointAngles)
-    L.Phase1.(JointAngles{jnt}) = Data.(subj_name).T0.(subj_name).phase1.L.(JointAngles{jnt});
-    R.Phase1.(JointAngles{jnt}) = Data.(subj_name).T0.(subj_name).phase1.R.(JointAngles{jnt});
-
-    nexttile
-    plot(L.Phase1.(JointAngles{jnt}), 'DisplayName', "Avg Left")
-    hold on
-    plot(R.Phase1.(JointAngles{jnt}), 'DisplayName', "Avg Right")
-    xlim([0, 100])
-
-    [PlotTitle] = regexprep(JointAngles{jnt}, '_', ' ');
-    title(PlotTitle)
-end
+% subj_name = 'BC_020';
+% arm = 'L'
+% JointAngles = fieldnames(Data.(subj_name).T1.phase1.L);
+% 
+% figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
+% p = tiledlayout('flow', 'TileSpacing','compact');
+% title(p,['Phase 1 Average left and right ', (Timepoint)])
+% xlabel(p,'% movement')
+% ylabel(p,['Joint angle', char(176)])
+% 
+% for jnt = 1:length(JointAngles)
+%     L.Phase1.(JointAngles{jnt}) = Data.(subj_name).T1.phase1.L.(JointAngles{jnt});
+%     R.Phase1.(JointAngles{jnt}) = Data.(subj_name).T1.phase1.R.(JointAngles{jnt});
+% 
+%     nexttile
+%     plot(L.Phase1.(JointAngles{jnt}), 'DisplayName', "Avg Left")
+%     hold on
+%     plot(R.Phase1.(JointAngles{jnt}), 'DisplayName', "Avg Right")
+%     xlim([0, 100])
+% 
+%     [PlotTitle] = regexprep(JointAngles{jnt}, '_', ' ');
+%     title(PlotTitle)
+% end
 
 
 diary off
