@@ -16,7 +16,7 @@ plot_or_not = 1;
 diary myDiaryFile
 
 %% 2. load data
-for subj = 1:20%1:20
+for subj = 14%20:27
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -318,11 +318,15 @@ for subj = 1:20%1:20
                     T_phase1 = startPhase1:endPhase1;
 
                     %                         nPositionPeaks = sum(maxIndices_pos1(:) > T_phase1(1)) + sum(maxIndices_pos1(:) < T_phase1(end));
+                    if ~isempty(T_phase1)
+                        nPositionPeaks = sum(maxIndices_pos1(:) >= T_phase1(1) & maxIndices_pos1(:) < T_phase1(end));
+                    else
+                        fprintf('\t\t %s no data find for phase 1 \n', content(file).name)
+                        nPositionPeaks = 0;
+                    end
 
-                    nPositionPeaks = sum(maxIndices_pos1(:) >= T_phase1(1) & maxIndices_pos1(:) < T_phase1(end));
 
-
-                    if nPositionPeaks ~= 3
+                    if nPositionPeaks ~= 3 || isempty(T_phase1)
                         if nPositionPeaks < 3
                             fprintf('\t\t %s: less than 3 position peaks found in phase 1 \n', content(file).name)
                         elseif nPositionPeaks > 3
@@ -584,7 +588,7 @@ for subj = 1:20%1:20
                     % throw error if the number of acceleration peaks
                     % exceeds 7
                     %================================================
-                    if size(peakLoc.phase4, 1) ~= 6
+                    if size(peakLoc.phase4, 1) ~= 6 || strcmp(subj_name, 'BC_010')
                         fprintf('\t \t %s: Please select peaks phase 4 \n', content(file).name)
 
                         figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
@@ -740,9 +744,13 @@ for subj = 1:20%1:20
 
                         xline(T_phase1(1), "Color", '#A2142F', "DisplayName",'StrPh1')
                         xline(T_phase1(end), "Color", '#A2142F', "DisplayName",'EndPh1')
+                        yline = segmentMean(T_middle_phase1(1):T_middle_phase1(end));
+                        plot(T_middle_phase1, yline, 'LineWidth',7.5, 'Color','#83B4B3')
 
                         xline(T_phase4(1), "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
                         xline(T_phase4(end), "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
+                        yline = segmentMean(T_middle_phase4(1):T_middle_phase4(end));
+                        plot(T_middle_phase4, yline, 'LineWidth',7.5, 'Color','#83B4B3')
                         hold off
 
                         %phase 1
@@ -863,7 +871,7 @@ for subj = 1:20%1:20
         end
 
     fprintf('*********Finished %s **********\n', subj_name)
-    close all
+    %close all
 
 end %end subjects
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")

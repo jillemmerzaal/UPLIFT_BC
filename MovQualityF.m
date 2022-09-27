@@ -1,7 +1,26 @@
 %% movement quality functional activity
+% 
+%  TO DO
+%  selecteer de "rust fases" voor en na de gesegmenteerde herhalingen en
+%  verwijder deze. Plak daarna de signalen weer aan elkaar.
+% 
 
-clear all; close all; clc
+%%
+% 
+%  I need to run this file using publish en use that as a help function.
+%  Which means I need to explain everyting in more detail. When the code is
+%  finished :) 
+% 
+
+
+
+clear all; clc; %close all;
 %% 1. input data
+%%
+% 
+%  Change the U-number and path to match where the data is located. Change
+%  the timepoint that you want to analyse
+
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 
@@ -10,16 +29,12 @@ movement    = "F";
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 path.out    = fullfile(path.root,'Output','Database_MovQual.mat');
 fs          = 60;
-plot_or_not = 0;
+plot_or_not = 1;
 
 Affected_table = readtable(fullfile(path.root,"Aangedane zijde.xlsx"));
 
-% figure;
-% tiledlayout('flow')
-
-
 %% 2. load data
-for subj = 1:30
+for subj = [8]% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 21] == proefpersonen zonder "rust" data. 
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -119,7 +134,13 @@ for subj = 1:30
                     vel = table(x, y, z, res);
                     clear x y z res
 
-                    %% event detection || seperation of the different repetitions
+                    %% ||event detection | 
+                    %%
+                    % 
+                    %  seperation of the different repetitions| 
+                    %  TEXT
+                    % 
+
                     disp(['    ' content(file).name ': define seperate repetitions'])
 
                     %filtered velocity data for segmentation
@@ -158,30 +179,63 @@ for subj = 1:30
 
                     % validation process
                     %====================
-                    temp = readtable("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ValidationStartEnd.xlsx","Sheet","Functional");
-                    temp = temp(strcmp(temp.subj_id, subj_name),:);
-                    temp = temp(strcmp(temp.Timpoint, Timepoint),:);
-                    interest = temp(strcmp(temp.Trial, fileName),:);
+%                     temp = readtable("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ValidationStartEnd.xlsx","Sheet","Functional");
+%                     temp = temp(strcmp(temp.subj_id, subj_name),:);
+%                     temp = temp(strcmp(temp.Timpoint, Timepoint),:);
+%                     interest = temp(strcmp(temp.Trial, fileName),:);
                     %====================
 
                     [peakLocMax, peakMagMax] =  peakfinder(vel_filtered.velocityVec, [],[],1, false);
                     [peakLocMin, peakMagMin] =  peakfinder(vel_filtered.velocityVec, [],[],-1, false);
+                    
+                    if strcmp(side, 'affected')
+%                         nexttile
+%                         plottitle = {['velocity data ' fileName]};
+%                         title(plottitle)
+%                         plot(vel_filtered.velocityVec)
+%                         hold on
+%                         plot(peakLocMin, peakMagMin, 'ko')
+%                         plot(peakLocMax, peakMagMax, 'ko')
+                        % the first rep should start after a local maximum
+                        if peakLocMin(1) - peakLocMax(1) < 0
+                            startpeak = 2;
+%                             plot(peakLocMin(startpeak:2:end), peakMagMin(startpeak:2:end), 'r*')
+%                             xline(peakLocMin(startpeak:2:end), 'r')
+                            reps = peakLocMin(startpeak:2:end);
+                        elseif peakLocMin(1) - peakLocMax(1) > 0
+                            startpeak = 1;
+%                             plot(peakLocMin(startpeak:2:end), peakMagMin(startpeak:2:end), 'r*')
+%                             xline(peakLocMin(startpeak:2:end), 'r')
+                            reps = peakLocMin(startpeak:2:end);
+                        end
+                    end
 
-%                     nexttile
-%                     plottitle = {['velocity data ' fileName]};
-%                     title(plottitle)
-%                     plot(vel_filtered.velocityVec)
-%                     hold on
-%                     plot(peakLocMin, peakMagMin, 'ko')
-%                     plot(peakLocMax, peakMagMax, 'ko')
-
-                    % the first rep should start after a local maximum
                     if peakLocMin(1) - peakLocMax(1) < 0
-%                         plot(peakLocMin(2:2:end), peakMagMin(2:2:end), 'r*')
+                        %                             plot(peakLocMin(2:2:end), peakMagMin(2:2:end), 'r*')
+                        %                             xline(peakLocMin(2:2:end), 'r')
                         reps = peakLocMin(2:2:end);
                     elseif peakLocMin(1) - peakLocMax(1) > 0
-%                         plot(peakLocMin(1:2:end), peakMagMin(1:2:end), 'r*')
+                        %                             plot(peakLocMin(1:2:end), peakMagMin(1:2:end), 'r*')
+                        %                             xline(peakLocMin(1:2:end), 'r')
                         reps = peakLocMin(1:2:end);
+                    end
+
+
+                  
+
+
+                    % plot individual velocity vectors 
+                    if plot_or_not
+                        if strcmp(side, 'affected')
+                            nexttile
+                            for idx = 1:length(reps)-1
+                                plot(vel.z(reps(idx):reps(idx+1)))
+                                hold on;
+                                hline(0)
+                            end
+                            plottitle = {[subj_name, ' number of reps ', num2str(length(reps))]};
+                            title(plottitle)
+                        end
                     end
 
                     %====================
@@ -450,9 +504,8 @@ for subj = 1:30
 
 
                         if exist('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat', 'file') == 2
-                            load('tollarance_table.mat')
+                            load('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat')
                         end
-
 
                         sigma = std(acc{reps(1):reps(end), :}, [], 1);
                         r = 0.2 * sigma;
@@ -460,10 +513,11 @@ for subj = 1:30
 
                         tollarance_table.(arm)(subj, :) = table(ppID, r);
                         
+                        
                     else                   
                         m = 2;
                         load C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat
-                        r = tollarance_table.(arm).r( strcmp(tollarance_table.(arm).ppID, subj_name),:);
+                        r = tollarance_table.(arm).r(strcmp(tollarance_table.(arm).ppID, subj_name),:);
 
                         
                     end
@@ -626,7 +680,7 @@ for subj = 1:30
 end% loop through number of subjects
 
 
-
+return
 %% everything in one gigantic table.
 % every timepoint has an individual tab
 % unaffected
@@ -647,6 +701,8 @@ end
 
 clear fields fld
 
+
+return
 writetable(MovementQual.unaff,'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\MoveQual_unaff.xlsx', 'FileType', 'spreadsheet',  ...
     "WriteMode", "append", "Sheet", Timepoint)
 

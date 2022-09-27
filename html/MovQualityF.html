@@ -1,0 +1,1463 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>movement quality functional activity</title><meta name="generator" content="MATLAB 9.11"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2022-09-26"><meta name="DC.source" content="MovQualityF.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>movement quality functional activity</h1><!--introduction--><pre>TO DO
+selecteer de "rust fases" voor en na de gesegmenteerde herhalingen en
+verwijder deze. Plak daarna de signalen weer aan elkaar.</pre><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#2">1. input data</a></li><li><a href="#4">2. load data</a></li><li><a href="#6">2.1 Load xsens data</a></li><li><a href="#7">||event detection |</a></li><li><a href="#9">table stetup</a></li><li><a href="#10">Lyapunov exponent matlab function</a></li><li><a href="#11">LDLJ_A --&gt; LOG DIMENSIONLESS JERK ON RAW ACCELERATION</a></li><li><a href="#12">SPARC --&gt; SPECTRAL ARC LENGTH ON RAW ANGULAR VELOCITY</a></li><li><a href="#13">sample entropy Jill --&gt; TO defines tollerance</a></li><li><a href="#14">Autocorrelation</a></li><li><a href="#15">movement speed based on the repetitions</a></li><li><a href="#16">RMS</a></li><li><a href="#17">save raw acc and avel data to struct</a></li><li><a href="#18">save movement quality to table</a></li><li><a href="#20">everything in one gigantic table.</a></li></ul></div><pre>I need to run this file using publish en use that as a help function.
+Which means I need to explain everyting in more detail. When the code is
+finished :)</pre><pre class="codeinput">clear <span class="string">all</span>; clc; <span class="comment">%close all;</span>
+</pre><h2 id="2">1. input data</h2><pre class="codeinput">cd(<span class="string">"C:\Users\u0117545\Documents\GitHub\ULIFT_BC"</span>)
+addpath(<span class="string">"C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons"</span>)
+</pre><pre>Change the U-number and path to match where the data is located</pre><pre class="codeinput">Timepoint   = <span class="string">'T1'</span>;
+movement    = <span class="string">"F"</span>;
+path.root   = <span class="string">'C:\Users\u0117545\KU Leuven\An De Groef - DATA'</span>;
+path.out    = fullfile(path.root,<span class="string">'Output'</span>,<span class="string">'Database_MovQual.mat'</span>);
+fs          = 60;
+plot_or_not = 1;
+
+Affected_table = readtable(fullfile(path.root,<span class="string">"Aangedane zijde.xlsx"</span>));
+</pre><h2 id="4">2. load data</h2><pre class="codeinput"><span class="keyword">for</span> subj = [8]<span class="comment">% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 21] == proefpersonen zonder "rust" data.</span>
+    <span class="keyword">if</span> subj &lt; 10
+        subj_name   = [<span class="string">'BC_00'</span> num2str(subj)];
+    <span class="keyword">elseif</span> subj &lt; 100
+        subj_name   = [<span class="string">'BC_0'</span> num2str(subj)];
+    <span class="keyword">else</span>
+        subj_name   = [<span class="string">'BC_'</span>, num2str(subj)];
+    <span class="keyword">end</span>
+
+    affected = Affected_table(strcmp(Affected_table.ppID, subj_name), <span class="string">"involved"</span>);
+
+
+    disp(<span class="string">' '</span>)
+    disp([<span class="string">'Processing '</span> subj_name <span class="string">': '</span> Timepoint <span class="string">'.....'</span>])
+
+    path.subj   = fullfile(path.root, subj_name, <span class="string">'Xsens'</span>, Timepoint, <span class="string">'Reproces'</span>);
+    check_subj  = exist(path.subj);
+
+    <span class="keyword">if</span> check_subj == 7
+        <span class="comment">%initialize counters</span>
+        counterR        = 0;
+        counterR_SSS    = 0;
+        counterL        = 0;
+        counterL_SSS    = 0;
+
+        content = dir(path.subj);
+        nfiles = size(content,1);
+
+        <span class="comment">% Start loop through ULIFT files per subject</span>
+        <span class="keyword">for</span> file = 1:nfiles
+            <span class="keyword">if</span> contains(content(file).name, movement) &amp;&amp; contains(content(file).name, <span class="string">'.mvnx'</span>) &amp;&amp; ~contains(content(file).name, <span class="string">'AF'</span>) &amp;&amp; ~contains(content(file).name, <span class="string">'ULIFT'</span>)
+                file_ik = fullfile(path.subj, content(file).name);
+
+                [~,name, ~] = fileparts(content(file).name);
+                [fileName] = regexprep(name, <span class="string">'-'</span>, <span class="string">'_'</span>);
+
+                d = strfind(name,<span class="string">'_'</span>);
+                arm = content(file).name(d+1);
+
+                <span class="keyword">if</span> ~isempty(Affected_table{strcmp(Affected_table.ppID, subj_name), <span class="string">"involved"</span>})
+</pre><pre class="codeinput">                    <span class="keyword">if</span> strcmp(arm, <span class="string">'L'</span>)
+                        sensorno    = 10;
+                        segmentno   = 14;
+                        jointno     = 12;
+
+                        <span class="keyword">if</span> strcmp(Affected_table{strcmp(Affected_table.ppID, subj_name), <span class="string">"involved"</span>}, <span class="string">'L'</span>)
+                            side = <span class="string">'affected'</span>;
+                        <span class="keyword">else</span>
+                            side = <span class="string">'unaffected'</span>;
+
+                        <span class="keyword">end</span>
+
+                    <span class="keyword">elseif</span> strcmp(arm, <span class="string">'R'</span>)
+                        sensorno    = 6;
+                        segmentno   = 10;
+                        jointno     = 8;
+
+                        <span class="keyword">if</span> strcmp(Affected_table{strcmp(Affected_table.ppID, subj_name), <span class="string">"involved"</span>}, <span class="string">'R'</span>)
+                            side = <span class="string">'affected'</span>;
+                        <span class="keyword">else</span>
+                            side = <span class="string">'unaffected'</span>;
+                        <span class="keyword">end</span>
+                    <span class="keyword">end</span>
+
+                    disp([<span class="string">'     '</span> <span class="string">'Analysing: '</span> fileName <span class="string">'.....'</span>])
+                    disp([<span class="string">'   '</span> <span class="string">'Arm of interst: '</span> arm <span class="string">'.....'</span>])
+</pre><pre class="codeoutput">     Analysing: F_L_001.....
+   Arm of interst: L.....
+</pre><pre class="codeoutput">     Analysing: F_R_001.....
+   Arm of interst: R.....
+</pre><h2 id="6">2.1 Load xsens data</h2><p>Change the filename here to the name of the file you would like to import</p><pre class="codeinput">                    disp([<span class="string">'    '</span> content(file).name <span class="string">': read xsens file'</span>])
+                    [sensorData, segmentData, jointData]= MVN(file_ik);
+
+                    <span class="comment">% extract unflitered acceleration data</span>
+                    x = sensorData(sensorno).sensorFreeAcceleration(:,1);
+                    y = sensorData(sensorno).sensorFreeAcceleration(:,2);
+                    z = sensorData(sensorno).sensorFreeAcceleration(:,3);
+                    res = vecnorm(sensorData(sensorno).sensorFreeAcceleration,2,2);
+                    acc = table(x, y, z, res); <span class="comment">% table of unfiltered acceleration data</span>
+                    clear <span class="string">x</span> <span class="string">y</span> <span class="string">z</span> <span class="string">res</span>
+
+
+                    <span class="comment">% extract unfiltered angular velocity data</span>
+                    x = segmentData(segmentno).angularVelocity(:,1);
+                    y = segmentData(segmentno).angularVelocity(:,2);
+                    z = segmentData(segmentno).angularVelocity(:,3);
+                    res = vecnorm(segmentData(segmentno).angularVelocity,2,2);
+
+                    avel = table(x, y, z, res);
+                    clear <span class="string">x</span> <span class="string">y</span> <span class="string">z</span> <span class="string">res</span>
+
+                    <span class="comment">% extract unfiltered sement velocity data</span>
+                    x = segmentData(segmentno).velocity(:,1);
+                    y = segmentData(segmentno).velocity(:,2);
+                    z = segmentData(segmentno).velocity(:,3);
+                    res = vecnorm(segmentData(segmentno).velocity, 2, 2);
+
+                    vel = table(x, y, z, res);
+                    clear <span class="string">x</span> <span class="string">y</span> <span class="string">z</span> <span class="string">res</span>
+</pre><pre class="codeoutput">    F_L-001.mvnx: read xsens file
+Warning: Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax:
+Loading file C:\Users\u0117545\KU Leuven\An De Groef -
+DATA\BC_008\Xsens\T1\Reproces\F_L-001.mvnx
+ 
+</pre><pre class="codeoutput">    F_R-001.mvnx: read xsens file
+Warning: Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax:
+Loading file C:\Users\u0117545\KU Leuven\An De Groef -
+DATA\BC_008\Xsens\T1\Reproces\F_R-001.mvnx
+ 
+</pre><h2 id="7">||event detection |</h2><pre>seperation of the different repetitions|
+TEXT</pre><pre class="codeinput">                    disp([<span class="string">'    '</span> content(file).name <span class="string">': define seperate repetitions'</span>])
+
+                    <span class="comment">%filtered velocity data for segmentation</span>
+                    fc = 2;  <span class="comment">%cutoff freq</span>
+                    fs = 60; <span class="comment">%sample freq</span>
+                    [b,a] = butter(4, fc/(fs/2));
+
+                    velocity = filtfilt(b,a, segmentData(segmentno).velocity);
+                    velocityX = velocity(:,1);
+                    velocityY = velocity(:,2);
+                    velocityZ = velocity(:,3);
+                    velocityVec = vecnorm(velocity, 2,2);
+
+                    <span class="comment">%                 SensorFree = filtfilt(b,a, sensorData(sensorno).sensorFreeAcceleration);</span>
+                    <span class="comment">%                 SensorFreeX = SensorFree(:,1);</span>
+                    <span class="comment">%                 SensorFreeY = SensorFree(:,2);</span>
+                    <span class="comment">%                 SensorFreeZ = SensorFree(:,3);</span>
+                    <span class="comment">%                 SensorFreeVec = vecnorm(SensorFree,2,2);</span>
+                    <span class="comment">%                 SensorFreeDiff = [diff(SensorFreeVec); 0];</span>
+
+                    <span class="comment">%                 angularVel_LA = filtfilt(b,a, segmentData(segmentno).angularVelocity);</span>
+                    <span class="comment">%                 angularVelX = angularVel_LA(:,1);</span>
+                    <span class="comment">%                 angularVelY = angularVel_LA(:,2);</span>
+                    <span class="comment">%                 angularVelZ = angularVel_LA(:,3);</span>
+                    <span class="comment">%                 angularVelVec = vecnorm(angularVel_LA, 2, 2);</span>
+                    <span class="comment">%                 angularVelDiff = [diff(angularVelVec); 0];</span>
+
+                    <span class="comment">% dataframes</span>
+                    vel_filtered     = table(velocityX, velocityY, velocityZ, velocityVec);
+                    <span class="comment">%                 df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec, SensorFreeDiff);</span>
+                    <span class="comment">%                 df.Avel     = table(angularVelX, angularVelY, angularVelZ, angularVelVec, angularVelDiff);</span>
+
+                    clear <span class="string">velocity</span> <span class="string">velocityX</span> <span class="string">velocityY</span> <span class="string">velocityZ</span> <span class="string">velocityVec</span>
+                    <span class="comment">%                 clear sensorFree sensorFreeX sensorFreeY SensorFreeZ sensorFreeVec SensorFreeDiff</span>
+                    <span class="comment">%                 clear angularVel_X angularVelY angularVelZ angularVelVec angularVelDiff</span>
+
+                    <span class="comment">% validation process</span>
+                    <span class="comment">%====================</span>
+<span class="comment">%                     temp = readtable("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ValidationStartEnd.xlsx","Sheet","Functional");</span>
+<span class="comment">%                     temp = temp(strcmp(temp.subj_id, subj_name),:);</span>
+<span class="comment">%                     temp = temp(strcmp(temp.Timpoint, Timepoint),:);</span>
+<span class="comment">%                     interest = temp(strcmp(temp.Trial, fileName),:);</span>
+                    <span class="comment">%====================</span>
+
+                    [peakLocMax, peakMagMax] =  peakfinder(vel_filtered.velocityVec, [],[],1, false);
+                    [peakLocMin, peakMagMin] =  peakfinder(vel_filtered.velocityVec, [],[],-1, false);
+
+                    <span class="keyword">if</span> strcmp(side, <span class="string">'affected'</span>)
+<span class="comment">%                         nexttile</span>
+<span class="comment">%                         plottitle = {['velocity data ' fileName]};</span>
+<span class="comment">%                         title(plottitle)</span>
+<span class="comment">%                         plot(vel_filtered.velocityVec)</span>
+<span class="comment">%                         hold on</span>
+<span class="comment">%                         plot(peakLocMin, peakMagMin, 'ko')</span>
+<span class="comment">%                         plot(peakLocMax, peakMagMax, 'ko')</span>
+                        <span class="comment">% the first rep should start after a local maximum</span>
+                        <span class="keyword">if</span> peakLocMin(1) - peakLocMax(1) &lt; 0
+                            startpeak = 2;
+<span class="comment">%                             plot(peakLocMin(startpeak:2:end), peakMagMin(startpeak:2:end), 'r*')</span>
+<span class="comment">%                             xline(peakLocMin(startpeak:2:end), 'r')</span>
+                            reps = peakLocMin(startpeak:2:end);
+                        <span class="keyword">elseif</span> peakLocMin(1) - peakLocMax(1) &gt; 0
+                            startpeak = 1;
+<span class="comment">%                             plot(peakLocMin(startpeak:2:end), peakMagMin(startpeak:2:end), 'r*')</span>
+<span class="comment">%                             xline(peakLocMin(startpeak:2:end), 'r')</span>
+                            reps = peakLocMin(startpeak:2:end);
+                        <span class="keyword">end</span>
+                    <span class="keyword">end</span>
+
+                    <span class="keyword">if</span> peakLocMin(1) - peakLocMax(1) &lt; 0
+                        <span class="comment">%                             plot(peakLocMin(2:2:end), peakMagMin(2:2:end), 'r*')</span>
+                        <span class="comment">%                             xline(peakLocMin(2:2:end), 'r')</span>
+                        reps = peakLocMin(2:2:end);
+                    <span class="keyword">elseif</span> peakLocMin(1) - peakLocMax(1) &gt; 0
+                        <span class="comment">%                             plot(peakLocMin(1:2:end), peakMagMin(1:2:end), 'r*')</span>
+                        <span class="comment">%                             xline(peakLocMin(1:2:end), 'r')</span>
+                        reps = peakLocMin(1:2:end);
+                    <span class="keyword">end</span>
+
+
+
+
+
+                    <span class="comment">% plot individual velocity vectors</span>
+                    <span class="keyword">if</span> plot_or_not
+                        <span class="keyword">if</span> strcmp(side, <span class="string">'affected'</span>)
+                            nexttile
+                            <span class="keyword">for</span> idx = 1:length(reps)-1
+                                plot(vel.z(reps(idx):reps(idx+1)))
+                                hold <span class="string">on</span>;
+                                hline(0)
+                            <span class="keyword">end</span>
+                            plottitle = {[subj_name, <span class="string">' number of reps '</span>, num2str(length(reps))]};
+                            title(plottitle)
+                        <span class="keyword">end</span>
+                    <span class="keyword">end</span>
+
+                    <span class="comment">%====================</span>
+<span class="comment">%                     if ~isempty(interest)</span>
+<span class="comment">%                         interest = interest(:,~ismissing(interest));</span>
+<span class="comment">%                         xline(interest{1,4:end}, 'LineWidth', 1.5, 'Color','#A2142F')</span>
+<span class="comment">%                     end</span>
+                    <span class="comment">%====================</span>
+</pre><pre class="codeoutput">    F_L-001.mvnx: define seperate repetitions
+</pre><pre class="codeoutput">    F_R-001.mvnx: define seperate repetitions
+</pre><img vspace="5" hspace="5" src="MovQualityF_01.png" alt=""> <h2 id="9">table stetup</h2><pre class="codeinput">                    ppID    = string(subj_name);
+                    trial   = string(fileName);
+                    time    = string(Timepoint);
+
+<span class="comment">%                     %% stability measures</span>
+<span class="comment">%                     % Local Dynamic stability | Lyapunov exponent</span>
+<span class="comment">%                     % based on Rossenstein's algorithm</span>
+<span class="comment">%                     n_dim       = 5;</span>
+<span class="comment">%                     ws          = 10;</span>
+<span class="comment">%</span>
+                    <span class="comment">% calculate the delay based on the paper of rosenstein:</span>
+                    <span class="comment">% drop in the autocorrelation of 1-1/e</span>
+<span class="comment">%                     acorr = xcov(acc.res, 'unbiased');</span>
+<span class="comment">%                     [pks,locs] = findpeaks(acorr, 'MinPeakHeight', 0);</span>
+<span class="comment">%                     nPeaks = numel(locs);</span>
+<span class="comment">%                     TT = table(locs,pks);</span>
+<span class="comment">%                     [~,I] = max(TT.pks(10:height(TT)-10));</span>
+<span class="comment">%                     I = I + 9;</span>
+<span class="comment">%                     zerophase_i = TT.locs(I);</span>
+<span class="comment">%</span>
+<span class="comment">%                     acorr_norm = acorr./acorr(zerophase_i);</span>
+<span class="comment">%</span>
+<span class="comment">%                     for j = 1:height(TT)</span>
+<span class="comment">%                         TT.pks_norm(j) =  acorr_norm(TT.locs(j));</span>
+<span class="comment">%                     end</span>
+<span class="comment">%</span>
+<span class="comment">%</span>
+<span class="comment">%                     drop_value = (1/exp(1));</span>
+<span class="comment">%                     temp = acorr_norm(zerophase_i:TT.locs(I+2),1);</span>
+<span class="comment">%</span>
+<span class="comment">%                     delay = find(temp &lt; 1 -drop_value, 1, 'first'); % the delay</span>
+<span class="comment">%</span>
+<span class="comment">%                     T = (TT.locs(I+1) - zerophase_i)/fs; % dominant period in the signal(in seconds/cycles)</span>
+<span class="comment">%</span>
+<span class="comment">%                     % calculate the maximum lyapunov exponent based on</span>
+<span class="comment">%                     % personalised Time delay</span>
+<span class="comment">%                     states_x = makestatelocal(acc.x, reps, n_dim, delay);</span>
+<span class="comment">%                     states_y = makestatelocal(acc.y, reps, n_dim, delay);</span>
+<span class="comment">%                     states_z = makestatelocal(acc.z, reps, n_dim, delay);</span>
+<span class="comment">%                     states_res = makestatelocal(acc.res, reps, n_dim, delay);</span>
+<span class="comment">%</span>
+<span class="comment">%                     [divergence_x, lds_x] = lds_calc(states_x, ws, fs, T, plot_or_not);</span>
+<span class="comment">%                     [divergence_y, lds_y] = lds_calc(states_y, ws, fs, T, plot_or_not);</span>
+<span class="comment">%                     [divergence_z, lds_z] = lds_calc(states_z, ws, fs, T, plot_or_not);</span>
+<span class="comment">%                     [divergence_res, lds_res] = lds_calc(states_res, ws, fs, T, plot_or_not);</span>
+<span class="comment">%</span>
+<span class="comment">%                     % calculate the maximum lyapunov exponent based on</span>
+<span class="comment">%                     % standardised Time delay</span>
+<span class="comment">%                     delay_st = 10;</span>
+<span class="comment">%                     states_x_st = makestatelocal(acc.x, reps, n_dim, delay_st);</span>
+<span class="comment">%                     states_y_st = makestatelocal(acc.y, reps, n_dim, delay_st);</span>
+<span class="comment">%                     states_z_st = makestatelocal(acc.z, reps, n_dim, delay_st);</span>
+<span class="comment">%                     states_res_st = makestatelocal(acc.res, reps, n_dim, delay_st);</span>
+<span class="comment">%</span>
+<span class="comment">%                     [divergence_x_st, lds_x_st] = lds_calc(states_x_st, ws, fs, T, plot_or_not);</span>
+<span class="comment">%                     [divergence_y_st, lds_y_st] = lds_calc(states_y_st, ws, fs, T, plot_or_not);</span>
+<span class="comment">%                     [divergence_z_st, lds_z_st] = lds_calc(states_z_st, ws, fs, T, plot_or_not);</span>
+<span class="comment">%                     [divergence_res_st, lds_res_st] = lds_calc(states_res_st, ws, fs, T, plot_or_not);</span>
+
+
+<span class="comment">%                     %% Lyapunov exponent matlab function</span>
+<span class="comment">%                     % standard dominant frequency based on the autocorrelation i.e. full cycles</span>
+<span class="comment">%                     % calcualte the dominent period of the signal</span>
+<span class="comment">%                     acorr = xcov(acc.res, 'unbiased');</span>
+<span class="comment">%                     [pks,locs] = findpeaks(acorr, 'MinPeakHeight', 0);</span>
+<span class="comment">%                     nPeaks = numel(locs);</span>
+<span class="comment">%                     TT = table(locs,pks);</span>
+<span class="comment">%                     [~,I] = max(TT.pks(10:height(TT)-10));</span>
+<span class="comment">%                     I = I + 9;</span>
+<span class="comment">%                     zerophase_i = TT.locs(I);</span>
+<span class="comment">%</span>
+<span class="comment">%                     acorr_norm = acorr./acorr(zerophase_i);</span>
+<span class="comment">%</span>
+<span class="comment">%                     for j = 1:height(TT)</span>
+<span class="comment">%                         TT.pks_norm(j) =  acorr_norm(TT.locs(j));</span>
+<span class="comment">%                     end</span>
+<span class="comment">%                     T = (TT.locs(I+1) - zerophase_i)/fs; % dominant period in the signal(in seconds/cycles)</span>
+<span class="comment">%                     L1 = round(0.5*T*fs); %to calculate the Lyapunov Exponent over half a cycle</span>
+<span class="comment">%                     eRange=[0, L1];</span>
+<span class="comment">%</span>
+<span class="comment">%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.x(reps(1):reps(end)));</span>
+<span class="comment">%                     lyapExp_x = lyapunovExponent(acc.x(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T), 'ExpansionRange',eRange);</span>
+<span class="comment">%</span>
+<span class="comment">%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.y(reps(1):reps(end)));</span>
+<span class="comment">%                     lyapExp_y = lyapunovExponent(acc.y(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T), 'ExpansionRange',eRange);</span>
+<span class="comment">%</span>
+<span class="comment">%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.z(reps(1):reps(end)));</span>
+<span class="comment">%                     lyapExp_z = lyapunovExponent(acc.z(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T), 'ExpansionRange',eRange);</span>
+<span class="comment">%</span>
+<span class="comment">%</span>
+<span class="comment">%                     %% Lyapunov exponent matlab function</span>
+<span class="comment">%                     % dominant period based on a single frequency analysis</span>
+<span class="comment">%                     % of acceleration in z direction</span>
+<span class="comment">%                     temp = acc.z(reps(1):reps(end));</span>
+<span class="comment">%</span>
+<span class="comment">%                     Y = fft(temp);</span>
+<span class="comment">%                     N = length(temp);</span>
+<span class="comment">%</span>
+<span class="comment">%                     k = [0:N-1];</span>
+<span class="comment">%                     dt = 1/fs;</span>
+<span class="comment">%                     Power = abs(fft(temp))/(N); %% absolute value of the fft</span>
+<span class="comment">%                     f = k*(1/(N*dt));</span>
+<span class="comment">%                     figure;plot(f(1:(N/2)), Power(1:(N/2)));</span>
+<span class="comment">%</span>
+<span class="comment">%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);</span>
+<span class="comment">%                     T2 = f(tf);</span>
+<span class="comment">%</span>
+<span class="comment">%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle</span>
+<span class="comment">%                     eRange=[0, L1];</span>
+<span class="comment">%</span>
+<span class="comment">%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.x(reps(1):reps(end)));</span>
+<span class="comment">%                     lyapExp_x2 = lyapunovExponent(acc.x(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);</span>
+<span class="comment">%</span>
+<span class="comment">%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.y(reps(1):reps(end)));</span>
+<span class="comment">%                     lyapExp_y2 = lyapunovExponent(acc.y(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);</span>
+<span class="comment">%</span>
+<span class="comment">%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.z(reps(1):reps(end)));</span>
+<span class="comment">%                     lyapExp_z2 = lyapunovExponent(acc.z(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);</span>
+
+<span class="comment">%                     %% Lyapunov exponent matlab function</span>
+<span class="comment">%                     % dominant period based on the frequency analysis</span>
+<span class="comment">%                     % of each acceleration axis seperatly</span>
+<span class="comment">%</span>
+<span class="comment">%                     % x axis</span>
+<span class="comment">%                     %-------</span>
+<span class="comment">%                     temp = acc.x(reps(1):reps(end));</span>
+<span class="comment">%</span>
+<span class="comment">%                     Y = fft(temp);</span>
+<span class="comment">%                     N = length(temp);</span>
+<span class="comment">%</span>
+<span class="comment">%                     k = [0:N-1];</span>
+<span class="comment">%                     dt = 1/fs;</span>
+<span class="comment">%                     Power = abs(Y)/N;%% absolute value of the fft</span>
+<span class="comment">%                     f = k*(1/(N*dt));</span>
+<span class="comment">%</span>
+<span class="comment">%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);</span>
+<span class="comment">%                     T2 = f(tf);</span>
+<span class="comment">%</span>
+<span class="comment">%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle</span>
+<span class="comment">%                     eRange=[0, L1];</span>
+<span class="comment">%</span>
+<span class="comment">%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.x(reps(1):reps(end)));</span>
+<span class="comment">%                     lyapExp_x = lyapunovExponent(acc.x(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);</span>
+<span class="comment">%</span>
+<span class="comment">%                     % y-axis</span>
+<span class="comment">%                     %-------</span>
+<span class="comment">%                     temp = acc.y(reps(1):reps(end));</span>
+<span class="comment">%</span>
+<span class="comment">%                     Y = fft(temp);</span>
+<span class="comment">%                     N = length(temp);</span>
+<span class="comment">%</span>
+<span class="comment">%                     k = [0:N-1];</span>
+<span class="comment">%                     dt = 1/fs;</span>
+<span class="comment">%                     Power = abs(fft(temp))/(N); %% absolute value of the fft</span>
+<span class="comment">%                     f = k*(1/(N*dt));</span>
+<span class="comment">%</span>
+<span class="comment">%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);</span>
+<span class="comment">%                     T2 = f(tf);</span>
+<span class="comment">%</span>
+<span class="comment">%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle</span>
+<span class="comment">%                     eRange=[0, L1];</span>
+<span class="comment">%</span>
+<span class="comment">%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.y(reps(1):reps(end)));</span>
+<span class="comment">%                     lyapExp_y = lyapunovExponent(acc.y(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);</span>
+<span class="comment">%</span>
+<span class="comment">%                     % z-axis</span>
+<span class="comment">%                     %-------</span>
+<span class="comment">%                     temp = acc.z(reps(1):reps(end));</span>
+<span class="comment">%</span>
+<span class="comment">%                     Y = fft(temp);</span>
+<span class="comment">%                     N = length(temp);</span>
+<span class="comment">%</span>
+<span class="comment">%                     k = [0:N-1];</span>
+<span class="comment">%                     dt = 1/fs;</span>
+<span class="comment">%                     Power = abs(fft(temp))/(N); %% absolute value of the fft</span>
+<span class="comment">%                     f = k*(1/(N*dt));</span>
+<span class="comment">%</span>
+<span class="comment">%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);</span>
+<span class="comment">%                     T2 = f(tf);</span>
+<span class="comment">%</span>
+<span class="comment">%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle</span>
+<span class="comment">%                     eRange=[0, L1];</span>
+<span class="comment">%</span>
+<span class="comment">%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.z(reps(1):reps(end)));</span>
+<span class="comment">%                     lyapExp_z = lyapunovExponent(acc.z(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);</span>
+<span class="comment">%</span>
+<span class="comment">%                     % resultant</span>
+<span class="comment">%                     %----------</span>
+<span class="comment">%                     temp = acc.res(reps(1):reps(end));</span>
+<span class="comment">%</span>
+<span class="comment">%                     Y = fft(temp);</span>
+<span class="comment">%                     N = length(temp);</span>
+<span class="comment">%</span>
+<span class="comment">%                     k = [0:N-1];</span>
+<span class="comment">%                     dt = 1/fs;</span>
+<span class="comment">%                     Power = abs(fft(temp))/(N); %% absolute value of the fft</span>
+<span class="comment">%                     f = k*(1/(N*dt));</span>
+<span class="comment">%</span>
+<span class="comment">%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);</span>
+<span class="comment">%                     T2 = f(tf);</span>
+<span class="comment">%</span>
+<span class="comment">%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle</span>
+<span class="comment">%                     eRange=[0, L1];</span>
+<span class="comment">%</span>
+<span class="comment">%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.z(reps(1):reps(end)));</span>
+<span class="comment">%                     lyapExp_res = lyapunovExponent(acc.res(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);</span>
+</pre><h2 id="10">Lyapunov exponent matlab function</h2><p>dominant period based on the frequency analysis of each acceleration axis seperatly.</p><pre class="codeinput">                    [lyapExp_x ,eLag(1), eDim(1)] = DivergenceExponent(acc.x(reps(1):reps(end)), fs);
+                    [lyapExp_y, eLag(2), eDim(2)] = DivergenceExponent(acc.y(reps(1):reps(end)), fs);
+                    [lyapExp_z, eLag(3), eDim(3)] = DivergenceExponent(acc.z(reps(1):reps(end)), fs);
+                    [lyapExp_res, eLag(4), eDim(4)] = DivergenceExponent(acc.res(reps(1):reps(end)), fs);
+</pre><pre class="codeoutput">Warning: Integer operands are required for colon operator when used as index. 
+Warning: Integer operands are required for colon operator when used as index. 
+Warning: Integer operands are required for colon operator when used as index. 
+Warning: Integer operands are required for colon operator when used as index. 
+</pre><h2 id="11">LDLJ_A --&gt; LOG DIMENSIONLESS JERK ON RAW ACCELERATION</h2><pre class="codeinput">                    <span class="keyword">for</span> idx = 1:size(reps,1)-1
+                        t = [reps(idx),reps(idx+1)];
+                        ldlj_a(:, idx) = log_dimensionless_jerk_IMU(acc{:,1:3},t, fs);
+                    <span class="keyword">end</span>
+</pre><h2 id="12">SPARC --&gt; SPECTRAL ARC LENGTH ON RAW ANGULAR VELOCITY</h2><pre class="codeinput">                    params = [0.05, 20, 4];
+
+                    <span class="keyword">for</span> idx = 1:size(reps)-1
+                        sparc_x(:,idx) = SpectralArcLength(avel.x(reps(idx):reps(idx+1)), fs, params);
+                        sparc_y(:,idx) = SpectralArcLength(avel.y(reps(idx):reps(idx+1)), fs, params);
+                        sparc_z(:,idx) = SpectralArcLength(avel.z(reps(idx):reps(idx+1)), fs, params);
+                        sparc_res(:,idx) = SpectralArcLength(avel.res(reps(idx):reps(idx+1)), fs, params);
+                    <span class="keyword">end</span>
+<span class="comment">%                     %% sample entropy --&gt; tolerance based on 0.2 * std(signal)</span>
+<span class="comment">%                     %---------------------------------------------------------</span>
+<span class="comment">%                     r = 0.2;</span>
+<span class="comment">%                     m = 2;</span>
+<span class="comment">%                     SampleEntropy_x     = sampen(acc.x(reps(1):reps(end)), m, r);</span>
+<span class="comment">%                     SampleEntropy_y     = sampen(acc.y(reps(1):reps(end)), m, r);</span>
+<span class="comment">%                     SampleEntropy_z     = sampen(acc.z(reps(1):reps(end)), m, r);</span>
+<span class="comment">%                     SampleEntropy_res   = sampen(acc.res(reps(1):reps(end)), m, r);</span>
+<span class="comment">%</span>
+<span class="comment">%                     %% sample entropy Jill --&gt; fixed tolerance</span>
+<span class="comment">%                     %-----------------------------------------</span>
+<span class="comment">%                     r = 0.2;</span>
+<span class="comment">%                     m = 2;</span>
+<span class="comment">%                     sampen_x = sampen_Jill(acc.x(reps(1):reps(end)), m, r);</span>
+<span class="comment">%                     sampen_y = sampen_Jill(acc.y(reps(1):reps(end)), m, r);</span>
+<span class="comment">%                     sampen_z = sampen_Jill(acc.z(reps(1):reps(end)), m, r);</span>
+<span class="comment">%                     sampen_res = sampen_Jill(acc.res(reps(1):reps(end)), m, r);</span>
+</pre><h2 id="13">sample entropy Jill --&gt; TO defines tollerance</h2><pre class="codeinput">                    <span class="comment">%-----------------------------------------------</span>
+                    <span class="keyword">if</span> strcmp(Timepoint, <span class="string">'T0'</span>)
+                        <span class="comment">% calculate personalised tollerance based on pre-op</span>
+                        <span class="comment">% "healthy" data</span>
+
+
+                        <span class="keyword">if</span> exist(<span class="string">'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat'</span>, <span class="string">'file'</span>) == 2
+                            load(<span class="string">'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat'</span>)
+                        <span class="keyword">end</span>
+
+                        sigma = std(acc{reps(1):reps(end), :}, [], 1);
+                        r = 0.2 * sigma;
+                        m=2;
+
+                        tollarance_table.(arm)(subj, :) = table(ppID, r);
+
+
+                    <span class="keyword">else</span>
+                        m = 2;
+                        load <span class="string">C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat</span>
+                        r = tollarance_table.(arm).r(strcmp(tollarance_table.(arm).ppID, subj_name),:);
+
+
+                    <span class="keyword">end</span>
+
+
+                    sampen_x = sampen_Jill(acc.x(reps(1):reps(end), :), m, r(1));
+                    sampen_y = sampen_Jill(acc.y(reps(1):reps(end), :), m, r(2));
+                    sampen_z = sampen_Jill(acc.z(reps(1):reps(end), :), m, r(3));
+                    sampen_res = sampen_Jill(acc.res(reps(1):reps(end), :), m, r(4));
+</pre><h2 id="14">Autocorrelation</h2><pre class="codeinput">                    <span class="comment">%-----------------</span>
+                    [acorr_x, reg_x] = Symmetry(vel.x(reps(1):reps(end)));
+                    [acorr_y, reg_y] = Symmetry(vel.y(reps(1):reps(end)));
+                    [acorr_z, reg_z] = Symmetry(vel.z(reps(1):reps(end)));
+                    [acorr_res, reg_res] = Symmetry(vel.res(reps(1):reps(end)));
+</pre><h2 id="15">movement speed based on the repetitions</h2><pre class="codeinput">                    <span class="keyword">for</span> idx = 1:size(reps,1) - 1
+                        movement_time(idx,1) = 1/fs * (reps(idx+1)-reps(idx));
+                    <span class="keyword">end</span>
+</pre><h2 id="16">RMS</h2><pre class="codeinput">                    rms_x = rms(acc.x(reps(1):reps(end)));
+                    rms_y = rms(acc.y(reps(1):reps(end)));
+                    rms_z = rms(acc.z(reps(1):reps(end)));
+                    rms_res = rms(acc.res(reps(1):reps(end)));
+
+                    rms_T = sqrt(rms_x.^2 + rms_y.^2 + rms_z.^2);
+
+                    rmsr_x = rms_x/rms_T;
+                    rmsr_y = rms_y/rms_T;
+                    rmsr_z = rms_z/rms_T;
+</pre><h2 id="17">save raw acc and avel data to struct</h2><pre class="codeinput">                    <span class="keyword">if</span> strcmp(side, <span class="string">'affected'</span>)
+                        MoveQual.raw.affected.(ppID).(Timepoint).(trial).acc = acc(reps(1):reps(end), :);
+                        MoveQual.raw.affected.(ppID).(Timepoint).(trial).avel = avel;
+                    <span class="keyword">elseif</span> strcmp(side, <span class="string">'unaffected'</span>)
+                        MoveQual.raw.unaffected.(ppID).(Timepoint).(trial).acc = acc;
+                        MoveQual.raw.unaffected.(ppID).(Timepoint).(trial).avel = acc;
+                    <span class="keyword">end</span>
+</pre><h2 id="18">save movement quality to table</h2><pre class="codeinput">                    <span class="keyword">if</span> strcmp(side, <span class="string">'affected'</span>)
+                        aff.key(subj,:) = table(ppID, trial,time);
+
+<span class="comment">%                         %stability || lyapunov exponent || personalised time</span>
+<span class="comment">%                         %delay</span>
+<span class="comment">%                         aff.LyEs_aff(subj, :) = table(ppID, lds_x(1), lds_y(1), lds_z(1), lds_res(1));</span>
+<span class="comment">%                         aff.LyEl_aff(subj, :) = table(ppID, lds_x(2), lds_y(2), lds_z(2), lds_res(2));</span>
+<span class="comment">%                         aff.LyEs_aff.Properties.VariableNames = {'ppID', 'LyEs_x', 'LyEs_y', 'LyEs_z', 'LyEs_res'};</span>
+<span class="comment">%                         aff.LyEl_aff.Properties.VariableNames = {'ppID', 'LyEl_x', 'LyEl_y', 'LyEl_z', 'LyEl_res'};</span>
+<span class="comment">%</span>
+<span class="comment">%                         %stability || lyapunov exponent || standardised time</span>
+<span class="comment">%                         %delay</span>
+<span class="comment">%                         aff.LyEs_st_aff(subj, :) = table(ppID, lds_x_st(1), lds_y_st(1), lds_z_st(1), lds_res_st(1));</span>
+<span class="comment">%                         aff.LyEl_st_aff(subj, :) = table(ppID, lds_x_st(2), lds_y_st(2), lds_z_st(2), lds_res_st(2));</span>
+<span class="comment">%                         aff.LyEs_st_aff.Properties.VariableNames = {'ppID', 'LyEs_x_st', 'LyEs_y_st', 'LyEs_z_st', 'LyEs_res_st'};</span>
+<span class="comment">%                         aff.LyEl_st_aff.Properties.VariableNames = {'ppID', 'LyEl_x_st', 'LyEl_y_st', 'LyEl_z_st', 'LyEl_res_st'};</span>
+
+                        <span class="comment">%stability || lyapunov exponent || using builed in</span>
+                        <span class="comment">%matlab function</span>
+                        aff.lyapExp(subj,:) = table(ppID, lyapExp_x, lyapExp_y, lyapExp_z, lyapExp_res);
+
+
+                        <span class="comment">%predictability || Sample Entropy</span>
+                        <span class="comment">%aff.SampEn_aff(subj, :) = table(ppID, SampleEntropy_x, SampleEntropy_y, SampleEntropy_z, SampleEntropy_res);</span>
+                        aff.Entropy_aff(subj,:) = table(ppID, sampen_x, sampen_y, sampen_z, sampen_res);
+                        <span class="comment">%aff.Entropy_var(subj,:) = table(ppID, sampen_x_var,sampen_y_var, sampen_z_var, sampen_res_var);</span>
+
+
+                        <span class="comment">%movement time || average</span>
+                        aff.avg_move_time_aff(subj,:) = table(ppID, mean(movement_time));
+                        aff.avg_move_time_aff.Properties.VariableNames = {<span class="string">'ppID'</span>, <span class="string">'avg_movement_time'</span>};
+
+                        <span class="comment">%movement time || variability</span>
+                        aff.var_move_time_aff(subj,:) = table(ppID, std(movement_time));
+                        aff.var_move_time_aff.Properties.VariableNames = {<span class="string">'ppID'</span>, <span class="string">'var_movement_time'</span>};
+
+                        <span class="comment">%regularity || autocorrelation</span>
+                        aff.regularity(subj,:) = table(ppID, reg_x, reg_y, reg_z, reg_res);
+
+
+                        <span class="comment">%variability || root mean square</span>
+                        aff.RMS_x(subj,:) = table(ppID, rms_x, rms_y, rms_z, rms_res);
+
+
+                        <span class="comment">%variability || root mean square ratio</span>
+                        aff.RMSR_x(subj,:) = table(ppID, rmsr_x, rmsr_y, rmsr_z);
+
+                        <span class="comment">%smoothness || SPARC</span>
+                        aff.SPARC_aff(subj,:) = table(ppID, mean(sparc_x), mean(sparc_y), mean(sparc_z), mean(sparc_res));
+                        aff.SPARC_aff.Properties.VariableNames = {<span class="string">'ppID'</span>, <span class="string">'sparc_x'</span>, <span class="string">'sparc_y'</span>, <span class="string">'sparc_z'</span>, <span class="string">'sparc_res'</span>};
+
+                        <span class="comment">%smoothness || LDLJ</span>
+                        aff.LDLJ_A_aff (subj, :) = table(ppID, mean(ldlj_a));
+                        aff.LDLJ_A_aff.Properties.VariableNames = {<span class="string">'ppID'</span>, <span class="string">'LDLJ_A'</span>};
+
+                    <span class="keyword">elseif</span> strcmp(side, <span class="string">'unaffected'</span>)
+                        unaff.key(subj,:) = table(ppID, trial, time);
+
+<span class="comment">%                         %stability || Lyapunov Exponent || personilised time</span>
+<span class="comment">%                         %delay</span>
+<span class="comment">%                         unaff.LyEs_unaff(subj, :) = table(ppID, lds_x(1), lds_y(1), lds_z(1), lds_res(1));</span>
+<span class="comment">%                         unaff.LyEl_unaff(subj, :) = table(ppID, lds_x(2), lds_y(2), lds_z(2), lds_res(2));</span>
+<span class="comment">%                         unaff.LyEs_unaff.Properties.VariableNames = {'ppID', 'LyEs_x', 'LyEs_y', 'LyEs_z', 'LyEs_res'};</span>
+<span class="comment">%                         unaff.LyEl_unaff.Properties.VariableNames = {'ppID', 'LyEl_x', 'LyEl_y', 'LyEl_z', 'LyEl_res'};</span>
+<span class="comment">%</span>
+<span class="comment">%                         %stability || lyapunov exponent || standardised time</span>
+<span class="comment">%                         %delay</span>
+<span class="comment">%                         unaff.LyEs_st_aff(subj, :) = table(ppID, lds_x_st(1), lds_y_st(1), lds_z_st(1), lds_res_st(1));</span>
+<span class="comment">%                         unaff.LyEl_st_aff(subj, :) = table(ppID, lds_x_st(2), lds_y_st(2), lds_z_st(2), lds_res_st(2));</span>
+<span class="comment">%                         unaff.LyEs_st_aff.Properties.VariableNames = {'ppID', 'LyEs_x_st', 'LyEs_y_st', 'LyEs_z_st', 'LyEs_res_st'};</span>
+<span class="comment">%                         unaff.LyEl_st_aff.Properties.VariableNames = {'ppID', 'LyEl_x_st', 'LyEl_y_st', 'LyEl_z_st', 'LyEl_res_st'};</span>
+
+                        <span class="comment">%stability || lyapunov exponent || using builed in</span>
+                        <span class="comment">%matlab function</span>
+                        unaff.lyapExp(subj,:) = table(ppID, lyapExp_x, lyapExp_y, lyapExp_z, lyapExp_res);
+
+                        <span class="comment">%predictability || sample entropy</span>
+                        <span class="comment">%unaff.SampEn_unaff(subj, :) = table(ppID, SampleEntropy_x, SampleEntropy_y, SampleEntropy_z, SampleEntropy_res);</span>
+                        unaff.Entropy_unaff(subj,:) = table(ppID, sampen_x, sampen_y, sampen_z, sampen_res);
+                        <span class="comment">%unaff.Entropy_var(subj,:) = table(ppID, sampen_x_var,sampen_y_var, sampen_z_var, sampen_res_var);</span>
+
+                        <span class="comment">%movement time || average</span>
+                        unaff.avg_move_time_unaff(subj,:) = table(ppID, mean(movement_time));
+                        unaff.avg_move_time_unaff.Properties.VariableNames = {<span class="string">'ppID'</span>, <span class="string">'avg_movement_time'</span>};
+
+                        <span class="comment">%movement time || varibility</span>
+                        unaff.var_move_time_unaff(subj,:) = table(ppID, std(movement_time));
+                        unaff.var_move_time_unaff.Properties.VariableNames = {<span class="string">'ppID'</span>, <span class="string">'var_movement_time'</span>};
+
+                        <span class="comment">%regularity || autocorrelation</span>
+                        unaff.regularity_x(subj,:) = table(ppID, reg_x, reg_y, reg_z, reg_res);
+
+                        <span class="comment">%variability || root mean square</span>
+                        unaff.RMS_x(subj,:) = table(ppID, rms_x, rms_y, rms_z, rms_res);
+
+                        <span class="comment">%variability || root mean square ratio</span>
+                        unaff.RMSR_x(subj,:) = table(ppID, rmsr_x, rmsr_y, rmsr_z);
+
+                        <span class="comment">%smoothness || SPARC</span>
+                        unaff.SPARC_unaff(subj,:) = table(ppID, mean(sparc_x), mean(sparc_y), mean(sparc_z), mean(sparc_res));
+                        unaff.SPARC_unaff.Properties.VariableNames = {<span class="string">'ppID'</span>, <span class="string">'sparc_x'</span>, <span class="string">'sparc_y'</span>, <span class="string">'sparc_z'</span>, <span class="string">'sparc_res'</span>};
+
+                        <span class="comment">%smoothness ||LDLJ</span>
+                        unaff.LDLJ_A_unaff(subj, :) = table(ppID, mean(ldlj_a));
+                        unaff.LDLJ_A_unaff.Properties.VariableNames = {<span class="string">'ppID'</span>, <span class="string">'LDLJ_A'</span>};
+
+                    <span class="keyword">end</span>
+</pre><pre class="codeinput">                <span class="keyword">end</span><span class="comment">% if information about the affected side is availible</span>
+            <span class="keyword">end</span><span class="comment">% file name contains movement and .mvnx</span>
+        <span class="keyword">end</span><span class="comment">% loop though the number of files</span>
+    <span class="keyword">end</span><span class="comment">% check if data folder exists</span>
+<span class="keyword">end</span><span class="comment">% loop through number of subjects</span>
+
+
+<span class="keyword">return</span>
+</pre><pre class="codeoutput"> 
+Processing BC_008: T1.....
+</pre><h2 id="20">everything in one gigantic table.</h2><p>every timepoint has an individual tab unaffected</p><pre class="codeinput">fields = fieldnames(unaff);
+MovementQual.unaff = rmmissing(unaff.key);
+<span class="keyword">for</span> fld = 2:size(fields, 1)
+    MovementQual.unaff = join(MovementQual.unaff, unaff.(fields{fld}));
+<span class="keyword">end</span>
+
+clear <span class="string">fields</span> <span class="string">fld</span>
+
+<span class="comment">%affected</span>
+fields = fieldnames(aff);
+MovementQual.aff = rmmissing(aff.key);
+<span class="keyword">for</span> fld = 1:size(fields,1)
+    MovementQual.aff = join(MovementQual.aff, aff.(fields{fld}));
+<span class="keyword">end</span>
+
+clear <span class="string">fields</span> <span class="string">fld</span>
+
+
+<span class="keyword">return</span>
+writetable(MovementQual.unaff,<span class="string">'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\MoveQual_unaff.xlsx'</span>, <span class="string">'FileType'</span>, <span class="string">'spreadsheet'</span>,  <span class="keyword">...</span>
+    <span class="string">"WriteMode"</span>, <span class="string">"append"</span>, <span class="string">"Sheet"</span>, Timepoint)
+
+writetable(MovementQual.aff, <span class="string">'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\MoveQual_aff.xlsx'</span>, <span class="string">'FileType'</span>, <span class="string">'spreadsheet'</span>, <span class="keyword">...</span>
+    <span class="string">'WriteMode'</span>, <span class="string">'append'</span>, <span class="string">'sheet'</span>, Timepoint)
+
+save(<span class="string">'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\tollarance_table.mat'</span>,<span class="string">'tollarance_table'</span>)
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2021b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% movement quality functional activity
+% 
+%  TO DO
+%  selecteer de "rust fases" voor en na de gesegmenteerde herhalingen en
+%  verwijder deze. Plak daarna de signalen weer aan elkaar.
+% 
+
+%%
+% 
+%  I need to run this file using publish en use that as a help function.
+%  Which means I need to explain everyting in more detail. When the code is
+%  finished :) 
+% 
+
+
+
+clear all; clc; %close all;
+%% 1. input data
+cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
+addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
+
+%%
+% 
+%  Change the U-number and path to match where the data is located
+% 
+
+
+Timepoint   = 'T1';
+movement    = "F";
+path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
+path.out    = fullfile(path.root,'Output','Database_MovQual.mat');
+fs          = 60;
+plot_or_not = 1;
+
+Affected_table = readtable(fullfile(path.root,"Aangedane zijde.xlsx"));
+
+%% 2. load data
+for subj = [8]% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 21] == proefpersonen zonder "rust" data. 
+    if subj < 10
+        subj_name   = ['BC_00' num2str(subj)];
+    elseif subj < 100
+        subj_name   = ['BC_0' num2str(subj)];
+    else
+        subj_name   = ['BC_', num2str(subj)];
+    end
+
+    affected = Affected_table(strcmp(Affected_table.ppID, subj_name), "involved");
+
+
+    disp(' ')
+    disp(['Processing ' subj_name ': ' Timepoint '.....'])
+
+    path.subj   = fullfile(path.root, subj_name, 'Xsens', Timepoint, 'Reproces');
+    check_subj  = exist(path.subj);
+
+    if check_subj == 7
+        %initialize counters
+        counterR        = 0;
+        counterR_SSS    = 0;
+        counterL        = 0;
+        counterL_SSS    = 0;
+
+        content = dir(path.subj);
+        nfiles = size(content,1);
+
+        % Start loop through ULIFT files per subject
+        for file = 1:nfiles
+            if contains(content(file).name, movement) && contains(content(file).name, '.mvnx') && ~contains(content(file).name, 'AF') && ~contains(content(file).name, 'ULIFT')
+                file_ik = fullfile(path.subj, content(file).name);
+
+                [~,name, ~] = fileparts(content(file).name);
+                [fileName] = regexprep(name, '-', '_');
+
+                d = strfind(name,'_');
+                arm = content(file).name(d+1);
+
+                if ~isempty(Affected_table{strcmp(Affected_table.ppID, subj_name), "involved"})
+                    if strcmp(arm, 'L')
+                        sensorno    = 10;
+                        segmentno   = 14;
+                        jointno     = 12;
+
+                        if strcmp(Affected_table{strcmp(Affected_table.ppID, subj_name), "involved"}, 'L')
+                            side = 'affected';
+                        else
+                            side = 'unaffected';
+
+                        end
+
+                    elseif strcmp(arm, 'R')
+                        sensorno    = 6;
+                        segmentno   = 10;
+                        jointno     = 8;
+
+                        if strcmp(Affected_table{strcmp(Affected_table.ppID, subj_name), "involved"}, 'R')
+                            side = 'affected';
+                        else
+                            side = 'unaffected';
+                        end
+                    end
+
+                    disp(['     ' 'Analysing: ' fileName '.....'])
+                    disp(['   ' 'Arm of interst: ' arm '.....'])
+
+
+                    %% 2.1 Load xsens data
+                    % Change the filename here to the name of the file you would like to import
+                    disp(['    ' content(file).name ': read xsens file'])
+                    [sensorData, segmentData, jointData]= MVN(file_ik);
+
+                    % extract unflitered acceleration data
+                    x = sensorData(sensorno).sensorFreeAcceleration(:,1);
+                    y = sensorData(sensorno).sensorFreeAcceleration(:,2);
+                    z = sensorData(sensorno).sensorFreeAcceleration(:,3);
+                    res = vecnorm(sensorData(sensorno).sensorFreeAcceleration,2,2);
+                    acc = table(x, y, z, res); % table of unfiltered acceleration data
+                    clear x y z res
+
+
+                    % extract unfiltered angular velocity data
+                    x = segmentData(segmentno).angularVelocity(:,1);
+                    y = segmentData(segmentno).angularVelocity(:,2);
+                    z = segmentData(segmentno).angularVelocity(:,3);
+                    res = vecnorm(segmentData(segmentno).angularVelocity,2,2);
+
+                    avel = table(x, y, z, res);
+                    clear x y z res
+
+                    % extract unfiltered sement velocity data
+                    x = segmentData(segmentno).velocity(:,1);
+                    y = segmentData(segmentno).velocity(:,2);
+                    z = segmentData(segmentno).velocity(:,3);
+                    res = vecnorm(segmentData(segmentno).velocity, 2, 2);
+
+                    vel = table(x, y, z, res);
+                    clear x y z res
+
+                    %% ||event detection | 
+                    %%
+                    % 
+                    %  seperation of the different repetitions| 
+                    %  TEXT
+                    % 
+
+                    disp(['    ' content(file).name ': define seperate repetitions'])
+
+                    %filtered velocity data for segmentation
+                    fc = 2;  %cutoff freq
+                    fs = 60; %sample freq
+                    [b,a] = butter(4, fc/(fs/2));
+
+                    velocity = filtfilt(b,a, segmentData(segmentno).velocity);
+                    velocityX = velocity(:,1);
+                    velocityY = velocity(:,2);
+                    velocityZ = velocity(:,3);
+                    velocityVec = vecnorm(velocity, 2,2);
+
+                    %                 SensorFree = filtfilt(b,a, sensorData(sensorno).sensorFreeAcceleration);
+                    %                 SensorFreeX = SensorFree(:,1);
+                    %                 SensorFreeY = SensorFree(:,2);
+                    %                 SensorFreeZ = SensorFree(:,3);
+                    %                 SensorFreeVec = vecnorm(SensorFree,2,2);
+                    %                 SensorFreeDiff = [diff(SensorFreeVec); 0];
+
+                    %                 angularVel_LA = filtfilt(b,a, segmentData(segmentno).angularVelocity);
+                    %                 angularVelX = angularVel_LA(:,1);
+                    %                 angularVelY = angularVel_LA(:,2);
+                    %                 angularVelZ = angularVel_LA(:,3);
+                    %                 angularVelVec = vecnorm(angularVel_LA, 2, 2);
+                    %                 angularVelDiff = [diff(angularVelVec); 0];
+
+                    % dataframes
+                    vel_filtered     = table(velocityX, velocityY, velocityZ, velocityVec);
+                    %                 df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec, SensorFreeDiff);
+                    %                 df.Avel     = table(angularVelX, angularVelY, angularVelZ, angularVelVec, angularVelDiff);
+
+                    clear velocity velocityX velocityY velocityZ velocityVec
+                    %                 clear sensorFree sensorFreeX sensorFreeY SensorFreeZ sensorFreeVec SensorFreeDiff
+                    %                 clear angularVel_X angularVelY angularVelZ angularVelVec angularVelDiff
+
+                    % validation process
+                    %====================
+%                     temp = readtable("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ValidationStartEnd.xlsx","Sheet","Functional");
+%                     temp = temp(strcmp(temp.subj_id, subj_name),:);
+%                     temp = temp(strcmp(temp.Timpoint, Timepoint),:);
+%                     interest = temp(strcmp(temp.Trial, fileName),:);
+                    %====================
+
+                    [peakLocMax, peakMagMax] =  peakfinder(vel_filtered.velocityVec, [],[],1, false);
+                    [peakLocMin, peakMagMin] =  peakfinder(vel_filtered.velocityVec, [],[],-1, false);
+                    
+                    if strcmp(side, 'affected')
+%                         nexttile
+%                         plottitle = {['velocity data ' fileName]};
+%                         title(plottitle)
+%                         plot(vel_filtered.velocityVec)
+%                         hold on
+%                         plot(peakLocMin, peakMagMin, 'ko')
+%                         plot(peakLocMax, peakMagMax, 'ko')
+                        % the first rep should start after a local maximum
+                        if peakLocMin(1) - peakLocMax(1) < 0
+                            startpeak = 2;
+%                             plot(peakLocMin(startpeak:2:end), peakMagMin(startpeak:2:end), 'r*')
+%                             xline(peakLocMin(startpeak:2:end), 'r')
+                            reps = peakLocMin(startpeak:2:end);
+                        elseif peakLocMin(1) - peakLocMax(1) > 0
+                            startpeak = 1;
+%                             plot(peakLocMin(startpeak:2:end), peakMagMin(startpeak:2:end), 'r*')
+%                             xline(peakLocMin(startpeak:2:end), 'r')
+                            reps = peakLocMin(startpeak:2:end);
+                        end
+                    end
+
+                    if peakLocMin(1) - peakLocMax(1) < 0
+                        %                             plot(peakLocMin(2:2:end), peakMagMin(2:2:end), 'r*')
+                        %                             xline(peakLocMin(2:2:end), 'r')
+                        reps = peakLocMin(2:2:end);
+                    elseif peakLocMin(1) - peakLocMax(1) > 0
+                        %                             plot(peakLocMin(1:2:end), peakMagMin(1:2:end), 'r*')
+                        %                             xline(peakLocMin(1:2:end), 'r')
+                        reps = peakLocMin(1:2:end);
+                    end
+
+
+                  
+
+
+                    % plot individual velocity vectors 
+                    if plot_or_not
+                        if strcmp(side, 'affected')
+                            nexttile
+                            for idx = 1:length(reps)-1
+                                plot(vel.z(reps(idx):reps(idx+1)))
+                                hold on;
+                                hline(0)
+                            end
+                            plottitle = {[subj_name, ' number of reps ', num2str(length(reps))]};
+                            title(plottitle)
+                        end
+                    end
+
+                    %====================
+%                     if ~isempty(interest)
+%                         interest = interest(:,~ismissing(interest));
+%                         xline(interest{1,4:end}, 'LineWidth', 1.5, 'Color','#A2142F')
+%                     end
+                    %====================
+                    %% table stetup
+                    ppID    = string(subj_name);
+                    trial   = string(fileName);
+                    time    = string(Timepoint);
+
+%                     %% stability measures
+%                     % Local Dynamic stability | Lyapunov exponent
+%                     % based on Rossenstein's algorithm
+%                     n_dim       = 5;
+%                     ws          = 10;
+% 
+                    % calculate the delay based on the paper of rosenstein:
+                    % drop in the autocorrelation of 1-1/e
+%                     acorr = xcov(acc.res, 'unbiased');
+%                     [pks,locs] = findpeaks(acorr, 'MinPeakHeight', 0);
+%                     nPeaks = numel(locs);
+%                     TT = table(locs,pks);
+%                     [~,I] = max(TT.pks(10:height(TT)-10));
+%                     I = I + 9;
+%                     zerophase_i = TT.locs(I);
+% 
+%                     acorr_norm = acorr./acorr(zerophase_i);
+% 
+%                     for j = 1:height(TT)
+%                         TT.pks_norm(j) =  acorr_norm(TT.locs(j));
+%                     end
+% 
+% 
+%                     drop_value = (1/exp(1));
+%                     temp = acorr_norm(zerophase_i:TT.locs(I+2),1);
+% 
+%                     delay = find(temp < 1 -drop_value, 1, 'first'); % the delay
+% 
+%                     T = (TT.locs(I+1) - zerophase_i)/fs; % dominant period in the signal(in seconds/cycles)
+% 
+%                     % calculate the maximum lyapunov exponent based on
+%                     % personalised Time delay
+%                     states_x = makestatelocal(acc.x, reps, n_dim, delay);
+%                     states_y = makestatelocal(acc.y, reps, n_dim, delay);
+%                     states_z = makestatelocal(acc.z, reps, n_dim, delay);
+%                     states_res = makestatelocal(acc.res, reps, n_dim, delay);
+% 
+%                     [divergence_x, lds_x] = lds_calc(states_x, ws, fs, T, plot_or_not);
+%                     [divergence_y, lds_y] = lds_calc(states_y, ws, fs, T, plot_or_not);
+%                     [divergence_z, lds_z] = lds_calc(states_z, ws, fs, T, plot_or_not);
+%                     [divergence_res, lds_res] = lds_calc(states_res, ws, fs, T, plot_or_not);
+% 
+%                     % calculate the maximum lyapunov exponent based on
+%                     % standardised Time delay
+%                     delay_st = 10;
+%                     states_x_st = makestatelocal(acc.x, reps, n_dim, delay_st);
+%                     states_y_st = makestatelocal(acc.y, reps, n_dim, delay_st);
+%                     states_z_st = makestatelocal(acc.z, reps, n_dim, delay_st);
+%                     states_res_st = makestatelocal(acc.res, reps, n_dim, delay_st);
+% 
+%                     [divergence_x_st, lds_x_st] = lds_calc(states_x_st, ws, fs, T, plot_or_not);
+%                     [divergence_y_st, lds_y_st] = lds_calc(states_y_st, ws, fs, T, plot_or_not);
+%                     [divergence_z_st, lds_z_st] = lds_calc(states_z_st, ws, fs, T, plot_or_not);
+%                     [divergence_res_st, lds_res_st] = lds_calc(states_res_st, ws, fs, T, plot_or_not);
+            
+                                      
+%                     %% Lyapunov exponent matlab function
+%                     % standard dominant frequency based on the autocorrelation i.e. full cycles
+%                     % calcualte the dominent period of the signal
+%                     acorr = xcov(acc.res, 'unbiased');
+%                     [pks,locs] = findpeaks(acorr, 'MinPeakHeight', 0);
+%                     nPeaks = numel(locs);
+%                     TT = table(locs,pks);
+%                     [~,I] = max(TT.pks(10:height(TT)-10));
+%                     I = I + 9;
+%                     zerophase_i = TT.locs(I);
+% 
+%                     acorr_norm = acorr./acorr(zerophase_i);
+% 
+%                     for j = 1:height(TT)
+%                         TT.pks_norm(j) =  acorr_norm(TT.locs(j));
+%                     end
+%                     T = (TT.locs(I+1) - zerophase_i)/fs; % dominant period in the signal(in seconds/cycles)
+%                     L1 = round(0.5*T*fs); %to calculate the Lyapunov Exponent over half a cycle
+%                     eRange=[0, L1];
+% 
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.x(reps(1):reps(end)));
+%                     lyapExp_x = lyapunovExponent(acc.x(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T), 'ExpansionRange',eRange);
+% 
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.y(reps(1):reps(end)));
+%                     lyapExp_y = lyapunovExponent(acc.y(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T), 'ExpansionRange',eRange);
+% 
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.z(reps(1):reps(end)));
+%                     lyapExp_z = lyapunovExponent(acc.z(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T), 'ExpansionRange',eRange);
+% 
+%                     
+%                     %% Lyapunov exponent matlab function
+%                     % dominant period based on a single frequency analysis
+%                     % of acceleration in z direction
+%                     temp = acc.z(reps(1):reps(end));
+%                     
+%                     Y = fft(temp);
+%                     N = length(temp);
+% 
+%                     k = [0:N-1];
+%                     dt = 1/fs;
+%                     Power = abs(fft(temp))/(N); %% absolute value of the fft
+%                     f = k*(1/(N*dt));
+%                     figure;plot(f(1:(N/2)), Power(1:(N/2)));
+% 
+%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);                  
+%                     T2 = f(tf);
+% 
+%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle
+%                     eRange=[0, L1];
+%                   
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.x(reps(1):reps(end)));
+%                     lyapExp_x2 = lyapunovExponent(acc.x(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
+% 
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.y(reps(1):reps(end)));
+%                     lyapExp_y2 = lyapunovExponent(acc.y(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
+% 
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.z(reps(1):reps(end)));
+%                     lyapExp_z2 = lyapunovExponent(acc.z(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
+
+%                     %% Lyapunov exponent matlab function
+%                     % dominant period based on the frequency analysis
+%                     % of each acceleration axis seperatly
+%                   
+%                     % x axis
+%                     %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+%                     temp = acc.x(reps(1):reps(end));
+%                     
+%                     Y = fft(temp);
+%                     N = length(temp);
+% 
+%                     k = [0:N-1];
+%                     dt = 1/fs;
+%                     Power = abs(Y)/N;%% absolute value of the fft
+%                     f = k*(1/(N*dt));
+% 
+%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);                  
+%                     T2 = f(tf);
+% 
+%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle
+%                     eRange=[0, L1];
+%                   
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.x(reps(1):reps(end)));
+%                     lyapExp_x = lyapunovExponent(acc.x(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
+% 
+%                     % y-axis
+%                     %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+%                     temp = acc.y(reps(1):reps(end));
+%                     
+%                     Y = fft(temp);
+%                     N = length(temp);
+% 
+%                     k = [0:N-1];
+%                     dt = 1/fs;
+%                     Power = abs(fft(temp))/(N); %% absolute value of the fft
+%                     f = k*(1/(N*dt));
+% 
+%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);                  
+%                     T2 = f(tf);
+% 
+%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle
+%                     eRange=[0, L1];
+% 
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.y(reps(1):reps(end)));
+%                     lyapExp_y = lyapunovExponent(acc.y(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
+% 
+%                     % z-axis
+%                     %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+%                     temp = acc.z(reps(1):reps(end));
+% 
+%                     Y = fft(temp);
+%                     N = length(temp);
+% 
+%                     k = [0:N-1];
+%                     dt = 1/fs;
+%                     Power = abs(fft(temp))/(N); %% absolute value of the fft
+%                     f = k*(1/(N*dt));
+% 
+%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);                  
+%                     T2 = f(tf);
+% 
+%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle
+%                     eRange=[0, L1];
+% 
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.z(reps(1):reps(end)));
+%                     lyapExp_z = lyapunovExponent(acc.z(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
+% 
+%                     % resultant
+%                     %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+%                     temp = acc.res(reps(1):reps(end));
+% 
+%                     Y = fft(temp);
+%                     N = length(temp);
+% 
+%                     k = [0:N-1];
+%                     dt = 1/fs;
+%                     Power = abs(fft(temp))/(N); %% absolute value of the fft
+%                     f = k*(1/(N*dt));
+% 
+%                     tf = islocalmax(Power(1:(N/2)), 'MaxNumExtrema',1);                  
+%                     T2 = f(tf);
+% 
+%                     L1 = round(0.5*T2*fs); %to calculate the Lyapunov Exponent over half a cycle
+%                     eRange=[0, L1];
+% 
+%                     [~,eLag,eDim] = phaseSpaceReconstruction(acc.z(reps(1):reps(end)));
+%                     lyapExp_res = lyapunovExponent(acc.res(reps(1):reps(end)),fs, eLag, eDim, 'MinSeparation', ceil(T2), 'ExpansionRange',eRange);
+
+
+                    %% Lyapunov exponent matlab function
+                    % dominant period based on the frequency analysis
+                    % of each acceleration axis seperatly.
+
+                    [lyapExp_x ,eLag(1), eDim(1)] = DivergenceExponent(acc.x(reps(1):reps(end)), fs);
+                    [lyapExp_y, eLag(2), eDim(2)] = DivergenceExponent(acc.y(reps(1):reps(end)), fs);
+                    [lyapExp_z, eLag(3), eDim(3)] = DivergenceExponent(acc.z(reps(1):reps(end)), fs);
+                    [lyapExp_res, eLag(4), eDim(4)] = DivergenceExponent(acc.res(reps(1):reps(end)), fs);
+
+
+                    %% LDLJ_A REPLACE_WITH_DASH_DASH> LOG DIMENSIONLESS JERK ON RAW ACCELERATION
+                    for idx = 1:size(reps,1)-1
+                        t = [reps(idx),reps(idx+1)];
+                        ldlj_a(:, idx) = log_dimensionless_jerk_IMU(acc{:,1:3},t, fs);
+                    end
+
+                    %% SPARC REPLACE_WITH_DASH_DASH> SPECTRAL ARC LENGTH ON RAW ANGULAR VELOCITY
+                    params = [0.05, 20, 4];
+
+                    for idx = 1:size(reps)-1
+                        sparc_x(:,idx) = SpectralArcLength(avel.x(reps(idx):reps(idx+1)), fs, params);
+                        sparc_y(:,idx) = SpectralArcLength(avel.y(reps(idx):reps(idx+1)), fs, params);
+                        sparc_z(:,idx) = SpectralArcLength(avel.z(reps(idx):reps(idx+1)), fs, params);
+                        sparc_res(:,idx) = SpectralArcLength(avel.res(reps(idx):reps(idx+1)), fs, params);
+                    end
+%                     %% sample entropy REPLACE_WITH_DASH_DASH> tolerance based on 0.2 * std(signal)
+%                     %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+%                     r = 0.2;
+%                     m = 2;
+%                     SampleEntropy_x     = sampen(acc.x(reps(1):reps(end)), m, r);
+%                     SampleEntropy_y     = sampen(acc.y(reps(1):reps(end)), m, r);
+%                     SampleEntropy_z     = sampen(acc.z(reps(1):reps(end)), m, r);
+%                     SampleEntropy_res   = sampen(acc.res(reps(1):reps(end)), m, r);
+% 
+%                     %% sample entropy Jill REPLACE_WITH_DASH_DASH> fixed tolerance
+%                     %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+%                     r = 0.2;
+%                     m = 2;
+%                     sampen_x = sampen_Jill(acc.x(reps(1):reps(end)), m, r);
+%                     sampen_y = sampen_Jill(acc.y(reps(1):reps(end)), m, r);
+%                     sampen_z = sampen_Jill(acc.z(reps(1):reps(end)), m, r);
+%                     sampen_res = sampen_Jill(acc.res(reps(1):reps(end)), m, r);
+
+                    %% sample entropy Jill REPLACE_WITH_DASH_DASH> TO defines tollerance
+                    %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH- 
+                    if strcmp(Timepoint, 'T0')
+                        % calculate personalised tollerance based on pre-op
+                        % "healthy" data
+
+
+                        if exist('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat', 'file') == 2
+                            load('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat')
+                        end
+
+                        sigma = std(acc{reps(1):reps(end), :}, [], 1);
+                        r = 0.2 * sigma;
+                        m=2;
+
+                        tollarance_table.(arm)(subj, :) = table(ppID, r);
+                        
+                        
+                    else                   
+                        m = 2;
+                        load C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat
+                        r = tollarance_table.(arm).r(strcmp(tollarance_table.(arm).ppID, subj_name),:);
+
+                        
+                    end
+
+
+                    sampen_x = sampen_Jill(acc.x(reps(1):reps(end), :), m, r(1));
+                    sampen_y = sampen_Jill(acc.y(reps(1):reps(end), :), m, r(2));
+                    sampen_z = sampen_Jill(acc.z(reps(1):reps(end), :), m, r(3));
+                    sampen_res = sampen_Jill(acc.res(reps(1):reps(end), :), m, r(4));
+
+
+                    
+                    %% Autocorrelation
+                    %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+                    [acorr_x, reg_x] = Symmetry(vel.x(reps(1):reps(end)));
+                    [acorr_y, reg_y] = Symmetry(vel.y(reps(1):reps(end)));
+                    [acorr_z, reg_z] = Symmetry(vel.z(reps(1):reps(end)));
+                    [acorr_res, reg_res] = Symmetry(vel.res(reps(1):reps(end)));
+
+
+
+                    %% movement speed based on the repetitions
+                    for idx = 1:size(reps,1) - 1
+                        movement_time(idx,1) = 1/fs * (reps(idx+1)-reps(idx));
+                    end
+
+                    %% RMS
+                    rms_x = rms(acc.x(reps(1):reps(end)));
+                    rms_y = rms(acc.y(reps(1):reps(end)));
+                    rms_z = rms(acc.z(reps(1):reps(end)));
+                    rms_res = rms(acc.res(reps(1):reps(end)));
+
+                    rms_T = sqrt(rms_x.^2 + rms_y.^2 + rms_z.^2);
+
+                    rmsr_x = rms_x/rms_T;
+                    rmsr_y = rms_y/rms_T;
+                    rmsr_z = rms_z/rms_T;
+
+                    %% save raw acc and avel data to struct
+                    if strcmp(side, 'affected')
+                        MoveQual.raw.affected.(ppID).(Timepoint).(trial).acc = acc(reps(1):reps(end), :);
+                        MoveQual.raw.affected.(ppID).(Timepoint).(trial).avel = avel;
+                    elseif strcmp(side, 'unaffected')
+                        MoveQual.raw.unaffected.(ppID).(Timepoint).(trial).acc = acc;
+                        MoveQual.raw.unaffected.(ppID).(Timepoint).(trial).avel = acc;
+                    end
+
+                    %% save movement quality to table
+                    if strcmp(side, 'affected')
+                        aff.key(subj,:) = table(ppID, trial,time);
+
+%                         %stability || lyapunov exponent || personalised time
+%                         %delay
+%                         aff.LyEs_aff(subj, :) = table(ppID, lds_x(1), lds_y(1), lds_z(1), lds_res(1));
+%                         aff.LyEl_aff(subj, :) = table(ppID, lds_x(2), lds_y(2), lds_z(2), lds_res(2));
+%                         aff.LyEs_aff.Properties.VariableNames = {'ppID', 'LyEs_x', 'LyEs_y', 'LyEs_z', 'LyEs_res'};
+%                         aff.LyEl_aff.Properties.VariableNames = {'ppID', 'LyEl_x', 'LyEl_y', 'LyEl_z', 'LyEl_res'};
+% 
+%                         %stability || lyapunov exponent || standardised time
+%                         %delay
+%                         aff.LyEs_st_aff(subj, :) = table(ppID, lds_x_st(1), lds_y_st(1), lds_z_st(1), lds_res_st(1));
+%                         aff.LyEl_st_aff(subj, :) = table(ppID, lds_x_st(2), lds_y_st(2), lds_z_st(2), lds_res_st(2));
+%                         aff.LyEs_st_aff.Properties.VariableNames = {'ppID', 'LyEs_x_st', 'LyEs_y_st', 'LyEs_z_st', 'LyEs_res_st'};
+%                         aff.LyEl_st_aff.Properties.VariableNames = {'ppID', 'LyEl_x_st', 'LyEl_y_st', 'LyEl_z_st', 'LyEl_res_st'};
+
+                        %stability || lyapunov exponent || using builed in
+                        %matlab function
+                        aff.lyapExp(subj,:) = table(ppID, lyapExp_x, lyapExp_y, lyapExp_z, lyapExp_res);
+
+                                              
+                        %predictability || Sample Entropy
+                        %aff.SampEn_aff(subj, :) = table(ppID, SampleEntropy_x, SampleEntropy_y, SampleEntropy_z, SampleEntropy_res);
+                        aff.Entropy_aff(subj,:) = table(ppID, sampen_x, sampen_y, sampen_z, sampen_res);
+                        %aff.Entropy_var(subj,:) = table(ppID, sampen_x_var,sampen_y_var, sampen_z_var, sampen_res_var);
+
+
+                        %movement time || average
+                        aff.avg_move_time_aff(subj,:) = table(ppID, mean(movement_time));
+                        aff.avg_move_time_aff.Properties.VariableNames = {'ppID', 'avg_movement_time'};
+
+                        %movement time || variability
+                        aff.var_move_time_aff(subj,:) = table(ppID, std(movement_time));
+                        aff.var_move_time_aff.Properties.VariableNames = {'ppID', 'var_movement_time'};
+
+                        %regularity || autocorrelation
+                        aff.regularity(subj,:) = table(ppID, reg_x, reg_y, reg_z, reg_res);
+
+
+                        %variability || root mean square
+                        aff.RMS_x(subj,:) = table(ppID, rms_x, rms_y, rms_z, rms_res);
+
+
+                        %variability || root mean square ratio
+                        aff.RMSR_x(subj,:) = table(ppID, rmsr_x, rmsr_y, rmsr_z);
+
+                        %smoothness || SPARC
+                        aff.SPARC_aff(subj,:) = table(ppID, mean(sparc_x), mean(sparc_y), mean(sparc_z), mean(sparc_res));
+                        aff.SPARC_aff.Properties.VariableNames = {'ppID', 'sparc_x', 'sparc_y', 'sparc_z', 'sparc_res'};
+
+                        %smoothness || LDLJ
+                        aff.LDLJ_A_aff (subj, :) = table(ppID, mean(ldlj_a));
+                        aff.LDLJ_A_aff.Properties.VariableNames = {'ppID', 'LDLJ_A'};
+
+                    elseif strcmp(side, 'unaffected')
+                        unaff.key(subj,:) = table(ppID, trial, time);
+
+%                         %stability || Lyapunov Exponent || personilised time
+%                         %delay
+%                         unaff.LyEs_unaff(subj, :) = table(ppID, lds_x(1), lds_y(1), lds_z(1), lds_res(1));
+%                         unaff.LyEl_unaff(subj, :) = table(ppID, lds_x(2), lds_y(2), lds_z(2), lds_res(2));
+%                         unaff.LyEs_unaff.Properties.VariableNames = {'ppID', 'LyEs_x', 'LyEs_y', 'LyEs_z', 'LyEs_res'};
+%                         unaff.LyEl_unaff.Properties.VariableNames = {'ppID', 'LyEl_x', 'LyEl_y', 'LyEl_z', 'LyEl_res'};
+% 
+%                         %stability || lyapunov exponent || standardised time
+%                         %delay
+%                         unaff.LyEs_st_aff(subj, :) = table(ppID, lds_x_st(1), lds_y_st(1), lds_z_st(1), lds_res_st(1));
+%                         unaff.LyEl_st_aff(subj, :) = table(ppID, lds_x_st(2), lds_y_st(2), lds_z_st(2), lds_res_st(2));
+%                         unaff.LyEs_st_aff.Properties.VariableNames = {'ppID', 'LyEs_x_st', 'LyEs_y_st', 'LyEs_z_st', 'LyEs_res_st'};
+%                         unaff.LyEl_st_aff.Properties.VariableNames = {'ppID', 'LyEl_x_st', 'LyEl_y_st', 'LyEl_z_st', 'LyEl_res_st'};
+
+                        %stability || lyapunov exponent || using builed in
+                        %matlab function
+                        unaff.lyapExp(subj,:) = table(ppID, lyapExp_x, lyapExp_y, lyapExp_z, lyapExp_res);
+                        
+                        %predictability || sample entropy
+                        %unaff.SampEn_unaff(subj, :) = table(ppID, SampleEntropy_x, SampleEntropy_y, SampleEntropy_z, SampleEntropy_res);
+                        unaff.Entropy_unaff(subj,:) = table(ppID, sampen_x, sampen_y, sampen_z, sampen_res);
+                        %unaff.Entropy_var(subj,:) = table(ppID, sampen_x_var,sampen_y_var, sampen_z_var, sampen_res_var);
+
+                        %movement time || average
+                        unaff.avg_move_time_unaff(subj,:) = table(ppID, mean(movement_time));
+                        unaff.avg_move_time_unaff.Properties.VariableNames = {'ppID', 'avg_movement_time'};
+
+                        %movement time || varibility
+                        unaff.var_move_time_unaff(subj,:) = table(ppID, std(movement_time));
+                        unaff.var_move_time_unaff.Properties.VariableNames = {'ppID', 'var_movement_time'};
+
+                        %regularity || autocorrelation
+                        unaff.regularity_x(subj,:) = table(ppID, reg_x, reg_y, reg_z, reg_res);
+
+                        %variability || root mean square
+                        unaff.RMS_x(subj,:) = table(ppID, rms_x, rms_y, rms_z, rms_res);
+
+                        %variability || root mean square ratio
+                        unaff.RMSR_x(subj,:) = table(ppID, rmsr_x, rmsr_y, rmsr_z);
+
+                        %smoothness || SPARC
+                        unaff.SPARC_unaff(subj,:) = table(ppID, mean(sparc_x), mean(sparc_y), mean(sparc_z), mean(sparc_res));
+                        unaff.SPARC_unaff.Properties.VariableNames = {'ppID', 'sparc_x', 'sparc_y', 'sparc_z', 'sparc_res'};
+
+                        %smoothness ||LDLJ
+                        unaff.LDLJ_A_unaff(subj, :) = table(ppID, mean(ldlj_a));
+                        unaff.LDLJ_A_unaff.Properties.VariableNames = {'ppID', 'LDLJ_A'};
+
+                    end
+                end% if information about the affected side is availible
+            end% file name contains movement and .mvnx
+        end% loop though the number of files
+    end% check if data folder exists
+end% loop through number of subjects
+
+
+return
+%% everything in one gigantic table.
+% every timepoint has an individual tab
+% unaffected
+fields = fieldnames(unaff);
+MovementQual.unaff = rmmissing(unaff.key);
+for fld = 2:size(fields, 1)
+    MovementQual.unaff = join(MovementQual.unaff, unaff.(fields{fld}));
+end
+
+clear fields fld
+
+%affected
+fields = fieldnames(aff);
+MovementQual.aff = rmmissing(aff.key);
+for fld = 1:size(fields,1)
+    MovementQual.aff = join(MovementQual.aff, aff.(fields{fld}));
+end
+
+clear fields fld
+
+
+return
+writetable(MovementQual.unaff,'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\MoveQual_unaff.xlsx', 'FileType', 'spreadsheet',  ...
+    "WriteMode", "append", "Sheet", Timepoint)
+
+writetable(MovementQual.aff, 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\MoveQual_aff.xlsx', 'FileType', 'spreadsheet', ...
+    'WriteMode', 'append', 'sheet', Timepoint)
+
+save('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\tollarance_table.mat','tollarance_table')
+
+
+##### SOURCE END #####
+--></body></html>
