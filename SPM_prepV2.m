@@ -1,4 +1,4 @@
-clear all; clc; close all
+clearvars; clc; close all
 %% 1. load data
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")

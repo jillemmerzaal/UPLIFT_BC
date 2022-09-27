@@ -1,7 +1,7 @@
 %% Extract the results of the ULIFT task
 %
 
-clear all; close all; clc
+clearvars; close all; clc
 %% 1. input data
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")

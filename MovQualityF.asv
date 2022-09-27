@@ -328,7 +328,8 @@ for subj = [8]% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 
 
                         tollarance_table.(arm)(subj, :) = table(ppID, r);
                         
-                    % if timepoint ~= T0, load the previously saved tollerance    
+                    % if timepoint  T0, calculate the tollerance and save
+                    % this to file     
                     else                   
                         m = 2;
                         load C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat
@@ -337,11 +338,14 @@ for subj = [8]% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 
                         
                     end
 
+
                     sampen_x = sampen_Jill(acc.x(reps(1):reps(end), :), m, r(1));
                     sampen_y = sampen_Jill(acc.y(reps(1):reps(end), :), m, r(2));
                     sampen_z = sampen_Jill(acc.z(reps(1):reps(end), :), m, r(3));
                     sampen_res = sampen_Jill(acc.res(reps(1):reps(end), :), m, r(4));
 
+
+                    
                     %% Autocorrelation
                     %-----------------
                     [acorr_x, reg_x] = Symmetry(vel.x(reps(1):reps(end)));
@@ -352,7 +356,6 @@ for subj = [8]% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 
 
 
                     %% movement speed based on the repetitions
-                    movement_time = zeros(size(reps,1) - 1, 1);
                     for idx = 1:size(reps,1) - 1
                         movement_time(idx,1) = 1/fs * (reps(idx+1)-reps(idx));
                     end
@@ -382,12 +385,29 @@ for subj = [8]% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 
                     if strcmp(side, 'affected')
                         aff.key(subj,:) = table(ppID, trial,time);
 
-                        %stability || lyapunov exponent 
+%                         %stability || lyapunov exponent || personalised time
+%                         %delay
+%                         aff.LyEs_aff(subj, :) = table(ppID, lds_x(1), lds_y(1), lds_z(1), lds_res(1));
+%                         aff.LyEl_aff(subj, :) = table(ppID, lds_x(2), lds_y(2), lds_z(2), lds_res(2));
+%                         aff.LyEs_aff.Properties.VariableNames = {'ppID', 'LyEs_x', 'LyEs_y', 'LyEs_z', 'LyEs_res'};
+%                         aff.LyEl_aff.Properties.VariableNames = {'ppID', 'LyEl_x', 'LyEl_y', 'LyEl_z', 'LyEl_res'};
+% 
+%                         %stability || lyapunov exponent || standardised time
+%                         %delay
+%                         aff.LyEs_st_aff(subj, :) = table(ppID, lds_x_st(1), lds_y_st(1), lds_z_st(1), lds_res_st(1));
+%                         aff.LyEl_st_aff(subj, :) = table(ppID, lds_x_st(2), lds_y_st(2), lds_z_st(2), lds_res_st(2));
+%                         aff.LyEs_st_aff.Properties.VariableNames = {'ppID', 'LyEs_x_st', 'LyEs_y_st', 'LyEs_z_st', 'LyEs_res_st'};
+%                         aff.LyEl_st_aff.Properties.VariableNames = {'ppID', 'LyEl_x_st', 'LyEl_y_st', 'LyEl_z_st', 'LyEl_res_st'};
+
+                        %stability || lyapunov exponent || using builed in
+                        %matlab function
                         aff.lyapExp(subj,:) = table(ppID, lyapExp_x, lyapExp_y, lyapExp_z, lyapExp_res);
 
                                               
                         %predictability || Sample Entropy
+                        %aff.SampEn_aff(subj, :) = table(ppID, SampleEntropy_x, SampleEntropy_y, SampleEntropy_z, SampleEntropy_res);
                         aff.Entropy_aff(subj,:) = table(ppID, sampen_x, sampen_y, sampen_z, sampen_res);
+                        %aff.Entropy_var(subj,:) = table(ppID, sampen_x_var,sampen_y_var, sampen_z_var, sampen_res_var);
 
 
                         %movement time || average
@@ -401,8 +421,10 @@ for subj = [8]% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 
                         %regularity || autocorrelation
                         aff.regularity(subj,:) = table(ppID, reg_x, reg_y, reg_z, reg_res);
 
+
                         %variability || root mean square
                         aff.RMS_x(subj,:) = table(ppID, rms_x, rms_y, rms_z, rms_res);
+
 
                         %variability || root mean square ratio
                         aff.RMSR_x(subj,:) = table(ppID, rmsr_x, rmsr_y, rmsr_z);
@@ -418,11 +440,28 @@ for subj = [8]% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 
                     elseif strcmp(side, 'unaffected')
                         unaff.key(subj,:) = table(ppID, trial, time);
 
-                        %stability || lyapunov exponent 
+%                         %stability || Lyapunov Exponent || personilised time
+%                         %delay
+%                         unaff.LyEs_unaff(subj, :) = table(ppID, lds_x(1), lds_y(1), lds_z(1), lds_res(1));
+%                         unaff.LyEl_unaff(subj, :) = table(ppID, lds_x(2), lds_y(2), lds_z(2), lds_res(2));
+%                         unaff.LyEs_unaff.Properties.VariableNames = {'ppID', 'LyEs_x', 'LyEs_y', 'LyEs_z', 'LyEs_res'};
+%                         unaff.LyEl_unaff.Properties.VariableNames = {'ppID', 'LyEl_x', 'LyEl_y', 'LyEl_z', 'LyEl_res'};
+% 
+%                         %stability || lyapunov exponent || standardised time
+%                         %delay
+%                         unaff.LyEs_st_aff(subj, :) = table(ppID, lds_x_st(1), lds_y_st(1), lds_z_st(1), lds_res_st(1));
+%                         unaff.LyEl_st_aff(subj, :) = table(ppID, lds_x_st(2), lds_y_st(2), lds_z_st(2), lds_res_st(2));
+%                         unaff.LyEs_st_aff.Properties.VariableNames = {'ppID', 'LyEs_x_st', 'LyEs_y_st', 'LyEs_z_st', 'LyEs_res_st'};
+%                         unaff.LyEl_st_aff.Properties.VariableNames = {'ppID', 'LyEl_x_st', 'LyEl_y_st', 'LyEl_z_st', 'LyEl_res_st'};
+
+                        %stability || lyapunov exponent || using builed in
+                        %matlab function
                         unaff.lyapExp(subj,:) = table(ppID, lyapExp_x, lyapExp_y, lyapExp_z, lyapExp_res);
                         
                         %predictability || sample entropy
+                        %unaff.SampEn_unaff(subj, :) = table(ppID, SampleEntropy_x, SampleEntropy_y, SampleEntropy_z, SampleEntropy_res);
                         unaff.Entropy_unaff(subj,:) = table(ppID, sampen_x, sampen_y, sampen_z, sampen_res);
+                        %unaff.Entropy_var(subj,:) = table(ppID, sampen_x_var,sampen_y_var, sampen_z_var, sampen_res_var);
 
                         %movement time || average
                         unaff.avg_move_time_unaff(subj,:) = table(ppID, mean(movement_time));
@@ -457,7 +496,7 @@ for subj = [8]% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 
 end% loop through number of subjects
 
 
-
+return
 %% everything in one gigantic table.
 % every timepoint has an individual tab
 % unaffected
@@ -479,6 +518,7 @@ end
 clear fields fld
 
 
+return
 writetable(MovementQual.unaff,'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\MoveQual_unaff.xlsx', 'FileType', 'spreadsheet',  ...
     "WriteMode", "append", "Sheet", Timepoint)
 
