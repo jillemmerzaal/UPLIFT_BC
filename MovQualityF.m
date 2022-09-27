@@ -24,7 +24,7 @@ clearvars; clc; %close all;
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 
-Timepoint   = 'T1';
+Timepoint   = 'T2';
 movement    = "F";
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 path.out    = fullfile(path.root,'Output','Database_MovQual.mat');
@@ -34,7 +34,7 @@ plot_or_not = 1;
 Affected_table = readtable(fullfile(path.root,"Aangedane zijde.xlsx"));
 
 %% 2. load data
-for subj = [8]% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 21] == proefpersonen zonder "rust" data. 
+for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 21) == proefpersonen zonder "rust" data. 
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -50,7 +50,7 @@ for subj = [8]% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 
     disp(['Processing ' subj_name ': ' Timepoint '.....'])
 
     path.subj   = fullfile(path.root, subj_name, 'Xsens', Timepoint, 'Reproces');
-    check_subj  = exist(path.subj);
+    check_subj  = exist(path.subj, "dir");
 
     if check_subj == 7
         %initialize counters
@@ -177,13 +177,7 @@ for subj = [8]% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 
                     %                 clear sensorFree sensorFreeX sensorFreeY SensorFreeZ sensorFreeVec SensorFreeDiff
                     %                 clear angularVel_X angularVelY angularVelZ angularVelVec angularVelDiff
 
-                    % validation process
-                    %====================
-%                     temp = readtable("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ValidationStartEnd.xlsx","Sheet","Functional");
-%                     temp = temp(strcmp(temp.subj_id, subj_name),:);
-%                     temp = temp(strcmp(temp.Timpoint, Timepoint),:);
-%                     interest = temp(strcmp(temp.Trial, fileName),:);
-                    %====================
+                  
 
                     [peakLocMax, peakMagMax] =  peakfinder(vel_filtered.velocityVec, [],[],1, false);
                     [peakLocMin, peakMagMin] =  peakfinder(vel_filtered.velocityVec, [],[],-1, false);
@@ -219,10 +213,6 @@ for subj = [8]% 9 10 11 12 14 16 17 19 21]  % 1:21%21 [8 9 10 11 12 14 16 17 19 
                         %                             xline(peakLocMin(1:2:end), 'r')
                         reps = peakLocMin(1:2:end);
                     end
-
-
-                  
-
 
                     % plot individual velocity vectors 
                     if plot_or_not

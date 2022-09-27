@@ -47,10 +47,9 @@ for t = 1:ntime
         % check if participant and timepoint are in struct
         if isfield(Data, subj_name)
             if isfield(Data.(subj_name), Timepoints{t})
-
-
                 % find the affected side
-                involved = affected_table(find(strcmp(affected_table.ppID, subj_name)),:).involved;
+                idx = find(strcmp(affected_table.ppID, subj_name));
+                involved = affected_table(idx,:).involved;
 
                 % setup row number for exporting the data
                 d = strfind(subj_name,'_');
@@ -118,5 +117,4 @@ for ang = 1:nangles
     %  write the table to an excel file
     writetable(temp.table, fileName, Sheet=jointsOfInterst{ang}) 
 
- 
 end

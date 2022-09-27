@@ -1,7 +1,9 @@
 function [SampEn] = sampen_Jill(df, m, r)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-
+%   Expample dataset 
+%   df = [9 4 8 1 2 4 5 8 7 7 0 2 1 5 9 8 8 0 1 0 4 2 10 0 0 1]; 
+%   SampEn = 0.9130
 
 % figure; plot(df)
 N = length(df);

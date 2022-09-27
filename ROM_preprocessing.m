@@ -9,13 +9,13 @@
 %       KU Leuven, Tervuursevest 101, box 1501
 %       Research Group for Rehabilitation in Internal Disorders
 
-clear all; %close all; clc
+clearvars; %close all; clc
 %% 1. input data
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 
 Timepoint   = 'T0';
-activities  =  {'ABD'}%, 'AF', 'EXO'}; %Abductie'; %Abductie Anteflexie Exorotatie
+activities  =  {'ABD'};%, 'AF', 'EXO'}; %Abductie'; %Abductie Anteflexie Exorotatie
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 path.out    = fullfile(path.root,'Output','Database_ROM.mat');
 plot_or_not = 1;
@@ -34,7 +34,7 @@ for subj = 1%:8
     disp(['Processing ' subj_name ': ' Timepoint '.....'])
 
     path.subj   = fullfile(path.root, subj_name, 'Xsens', Timepoint, 'Reproces');
-    check_subj  = exist(path.subj);
+    check_subj  = exist(path.subj, 'dir');
 
     if check_subj == 7
         %initialize counters

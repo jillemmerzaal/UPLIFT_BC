@@ -11,7 +11,7 @@ function [acorr_norm, symm] = Symmetry(df)
 acorr_df = xcov(df, 'unbiased');
 
 [pos_pks, pos_locs] = findpeaks(acorr_df, 'MinPeakHeight', 0, 'MinPeakDistance',99);
-nPeaks = numel(pos_locs);
+%nPeaks = numel(pos_locs);
 TT = table(pos_locs,pos_pks);
 [~,I] = max(TT.pos_pks(10:height(TT)-10));
 I = I + 9;
