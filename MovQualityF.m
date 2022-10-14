@@ -1,30 +1,36 @@
 %% movement quality functional activity
-% 
+%
 %  TO DO
 %  selecteer de "rust fases" voor en na de gesegmenteerde herhalingen en
 %  verwijder deze. Plak daarna de signalen weer aan elkaar.
-% 
+%
+
+%%
+%
+%  I need to run this file using publish en use that as a help function.
+%  Which means I need to explain everyting in more detail. When the code is
+%  finished :)
+%
+
 
 %%
 % 
-%  I need to run this file using publish en use that as a help function.
-%  Which means I need to explain everyting in more detail. When the code is
-%  finished :) 
+%  BC_014 T2 --> heeft veel last. Dus misschien interessant om die data te
+%  bekijken. 
 % 
-
 
 
 clearvars; clc; %close all;
 %% 1. input data
 %%
-% 
+%
 %  Change the U-number and path to match where the data is located. Change
 %  the timepoint that you want to analyse
 
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 
-Timepoint   = 'T2';
+Timepoint   = 'T0';
 movement    = "F";
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 path.out    = fullfile(path.root,'Output','Database_MovQual.mat');
@@ -34,7 +40,7 @@ plot_or_not = 1;
 Affected_table = readtable(fullfile(path.root,"Aangedane zijde.xlsx"));
 
 %% 2. load data
-for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 21) == proefpersonen zonder "rust" data. 
+for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 21) == proefpersonen zonder "rust" data.
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -134,12 +140,12 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     vel = table(x, y, z, res);
                     clear x y z res
 
-                    %% ||event detection | 
+                    %% ||event detection |
                     %%
-                    % 
-                    %  seperation of the different repetitions| 
-                    %  TEXT
-                    % 
+                    %
+                    %  seperation of the different repetitions
+                    %
+                    %
 
                     disp(['    ' content(file).name ': define seperate repetitions'])
 
@@ -148,11 +154,11 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     fs = 60; %sample freq
                     [b,a] = butter(4, fc/(fs/2));
 
-                    velocity = filtfilt(b,a, segmentData(segmentno).velocity);
-                    velocityX = velocity(:,1);
-                    velocityY = velocity(:,2);
-                    velocityZ = velocity(:,3);
-                    velocityVec = vecnorm(velocity, 2,2);
+                    velocity2 = filtfilt(b,a, segmentData(segmentno).velocity);
+                    velocityX = velocity2(:,1);
+                    velocityY = velocity2(:,2);
+                    velocityZ = velocity2(:,3);
+                    velocityVec = vecnorm(velocity2, 2,2);
 
                     %                 SensorFree = filtfilt(b,a, sensorData(sensorno).sensorFreeAcceleration);
                     %                 SensorFreeX = SensorFree(:,1);
@@ -173,33 +179,33 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     %                 df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec, SensorFreeDiff);
                     %                 df.Avel     = table(angularVelX, angularVelY, angularVelZ, angularVelVec, angularVelDiff);
 
-                    clear velocity velocityX velocityY velocityZ velocityVec
+                    clear velocity2 velocityX velocityY velocityZ velocityVec
                     %                 clear sensorFree sensorFreeX sensorFreeY SensorFreeZ sensorFreeVec SensorFreeDiff
                     %                 clear angularVel_X angularVelY angularVelZ angularVelVec angularVelDiff
 
-                  
+
 
                     [peakLocMax, peakMagMax] =  peakfinder(vel_filtered.velocityVec, [],[],1, false);
                     [peakLocMin, peakMagMin] =  peakfinder(vel_filtered.velocityVec, [],[],-1, false);
-                    
+
                     if strcmp(side, 'affected')
-%                         nexttile
-%                         plottitle = {['velocity data ' fileName]};
-%                         title(plottitle)
-%                         plot(vel_filtered.velocityVec)
-%                         hold on
-%                         plot(peakLocMin, peakMagMin, 'ko')
-%                         plot(peakLocMax, peakMagMax, 'ko')
+                        %                         nexttile
+                        %                         plottitle = {['velocity data ' fileName]};
+                        %                         title(plottitle)
+                        %                         plot(vel_filtered.velocityVec)
+                        %                         hold on
+                        %                         plot(peakLocMin, peakMagMin, 'ko')
+                        %                         plot(peakLocMax, peakMagMax, 'ko')
                         % the first rep should start after a local maximum
                         if peakLocMin(1) - peakLocMax(1) < 0
                             startpeak = 2;
-%                             plot(peakLocMin(startpeak:2:end), peakMagMin(startpeak:2:end), 'r*')
-%                             xline(peakLocMin(startpeak:2:end), 'r')
+                            %                             plot(peakLocMin(startpeak:2:end), peakMagMin(startpeak:2:end), 'r*')
+                            %                             xline(peakLocMin(startpeak:2:end), 'r')
                             reps = peakLocMin(startpeak:2:end);
                         elseif peakLocMin(1) - peakLocMax(1) > 0
                             startpeak = 1;
-%                             plot(peakLocMin(startpeak:2:end), peakMagMin(startpeak:2:end), 'r*')
-%                             xline(peakLocMin(startpeak:2:end), 'r')
+                            %                             plot(peakLocMin(startpeak:2:end), peakMagMin(startpeak:2:end), 'r*')
+                            %                             xline(peakLocMin(startpeak:2:end), 'r')
                             reps = peakLocMin(startpeak:2:end);
                         end
                     end
@@ -214,7 +220,125 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                         reps = peakLocMin(1:2:end);
                     end
 
-                    % plot individual velocity vectors 
+
+
+                    %====================
+                    %                     if ~isempty(interest)
+                    %                         interest = interest(:,~ismissing(interest));
+                    %                         xline(interest{1,4:end}, 'LineWidth', 1.5, 'Color','#A2142F')
+                    %                     end
+                    %====================
+
+                    %% find out if there are excessive "rest" periods
+                    %%
+                    %
+                    %  Extensive rest periods in the data influence the
+                    %  calculation of the movement qality parameters.
+                    %  Therefore we need to remove those rest periods and
+                    %  only retain the moving data.
+
+                    %%
+                    %
+                    %  OPTION 1
+                    %  THE DATA IS CAPTURED COMPARED TO A REFERENCE SIGNAL
+                    %  IN THIS CASE A SIMPLE INVERTED SINE WAVE in case of
+                    %  the velocity in z-rection and the absolute of a sine
+                    %  wave for the velocity vector
+                    %
+
+
+                    % further segmentation on velocity in z-direction?
+                    t=0:0.001:1;
+                    f=1;
+                    x=sin(2*pi*f*t)*-1;
+
+                    for idx = 1:length(reps)-1
+                        [istart.Z(idx),istop.Z(idx),dist.Z(idx)] = findsignal(vel_filtered.velocityZ(reps(idx):reps(idx+1)), x,'TimeAlignment','dtw','Metric','absolute');
+                    end
+
+                    % segmentation again on velocity vector?
+                    t=0:0.001:1;
+                    f=1;
+                    x=abs(sin(2*pi*f*t));
+                    for idx = 1:length(reps)-1
+                        [istart.vec(idx),istop.vec(idx),dist.vec(idx)] = findsignal(vel_filtered.velocityVec(reps(idx):reps(idx+1),:), x,'TimeAlignment','dtw','Metric','absolute');
+                    end
+
+
+                    if strcmp(side, 'affected')
+                        % vector segmentation
+                        figure;
+                        ax1 = subplot(2,2,1);
+                        plot(vel_filtered.velocityX); hold on;
+
+
+                        for idx = 1:length(reps)-1
+                            temp_df = vel_filtered.velocityX(reps(idx):reps(idx+1));
+                            x_as = reps(idx):reps(idx+1);
+                            temp_istart = reps(idx) + istart.vec(idx);
+                            temp_istop = reps(idx) + istop.vec(idx);
+
+                            plot(x_as, temp_df)
+                            xline(temp_istart, 'LineWidth', 1.5)
+                            xline(temp_istop, ':')
+                            clear temp_df
+                        end
+
+                        ax2 = subplot(2,2,2);
+                        plot(vel_filtered.velocityY); hold on;
+
+
+                        for idx = 1:length(reps)-1
+                            temp_df = vel_filtered.velocityY(reps(idx):reps(idx+1));
+                            x_as = reps(idx):reps(idx+1);
+                            temp_istart = reps(idx) + istart.vec(idx);
+                            temp_istop = reps(idx) + istop.vec(idx);
+
+                            plot(x_as, temp_df)
+                            xline(temp_istart, 'LineWidth', 1.5)
+                            xline(temp_istop, ':')
+                            clear temp_df
+                        end
+
+
+                        ax3 = subplot(2,2,3);
+                        plot(vel_filtered.velocityZ); hold on;
+
+
+                        for idx = 1:length(reps)-1
+                            temp_df = vel_filtered.velocityZ(reps(idx):reps(idx+1));
+                            x_as = reps(idx):reps(idx+1);
+                            temp_istart = reps(idx) + istart.vec(idx);
+                            temp_istop = reps(idx) + istop.vec(idx);
+
+                            plot(x_as, temp_df)
+                            xline(temp_istart, 'LineWidth', 1.5)
+                            xline(temp_istop, ':')
+                            clear temp_df
+                        end
+
+                        ax4 = subplot(2,2,4);
+                        plot(vel_filtered.velocityVec); hold on;
+
+                        for idx = 1:length(reps)-1
+                            temp_df = vel_filtered.velocityVec(reps(idx):reps(idx+1));
+                            x_as = reps(idx):reps(idx+1);
+                            temp_istart = reps(idx) + istart.vec(idx);
+                            temp_istop = reps(idx) + istop.vec(idx);
+
+                            plot(x_as, temp_df)
+                            xline(temp_istart, 'LineWidth', 1.5)
+                            xline(temp_istop, ':')
+                            clear temp_df
+                        end
+                        plottitle = {[subj_name, ' number of reps ', num2str(length(reps)), 'segmentation on Vector']};
+                        sgtitle(plottitle)
+
+                        linkaxes([ax1,ax2,ax3,ax4], 'xy')
+                    end
+                    %% continue with segmentation on vector
+
+                    %plot individual velocity vectors
                     if plot_or_not
                         if strcmp(side, 'affected')
                             nexttile
@@ -223,17 +347,46 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                                 hold on;
                                 hline(0)
                             end
-                            plottitle = {[subj_name, ' number of reps ', num2str(length(reps))]};
+                            plottitle = {[subj_name, ' individual reps']};
+                            title(plottitle)
+
+                            nexttile
+                            for idx = 1:length(reps)-1
+                                temp_istart = reps(idx) + istart.Z(idx);
+                                temp_istop = reps(idx) + istop.Z(idx);
+                                temp_df.rep{:,idx} = vel.z(temp_istart:temp_istop);
+
+
+                                plot(temp_df.rep{:,idx}); hold on
+                            end
+                            plottitle = {[subj_name, ' individual reps trimmed']};
                             title(plottitle)
                         end
                     end
 
-                    %====================
-%                     if ~isempty(interest)
-%                         interest = interest(:,~ismissing(interest));
-%                         xline(interest{1,4:end}, 'LineWidth', 1.5, 'Color','#A2142F')
-%                     end
-                    %====================
+
+                    % trim the repetitions and save them in a temporary
+                    % variable.
+                    for idx = 1:length(reps)-1
+                        temp_istart = reps(idx) + istart.Z(idx);
+                        temp_istop = reps(idx) + istop.Z(idx);
+                        temp_df.rep{:,idx} = vel.z(temp_istart:temp_istop);  
+                    end
+
+
+                    for idx = 1:size(temp_df.rep,2)
+                        if idx == 1
+                            concat = temp_df.rep{:,idx};
+                            fprintf('concatinate repetition: %d \n', idx)
+                        else
+                            concat = cat(1, concat, temp_df.rep{:,idx});
+                            fprintf('concatinate repetition: %d \n', idx)
+
+                        end
+                    end
+                    plot(concat)
+                    nexttile 
+                    plot(vel.z(reps(1):reps(end)))
                     %% table stetup
                     ppID    = string(subj_name);
                     trial   = string(fileName);
@@ -242,8 +395,8 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
 
                     %% Lyapunov exponent matlab function
                     %%
-                    % 
-                    %DIVERGENCEEXPONENT FUNCTION CALCULATES THE LYAPUNOV EXPONENT 
+                    %
+                    %DIVERGENCEEXPONENT FUNCTION CALCULATES THE LYAPUNOV EXPONENT
                     %   1) it selects the relevant parameters signal and
                     %   creates a time axis. 2) it will calculate the power
                     %   spectrum to 3) determine the dominant frequency of
@@ -253,14 +406,14 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     %   and timelag that fully capture the signal. And
                     %   finaly 6) Calculates the Lyapunov Exponent with the
                     %   predetermined parameters.
-                   
+
                     [lyapExp_x ,eLag(1), eDim(1)] = DivergenceExponent(acc.x(reps(1):reps(end)), fs);
                     [lyapExp_y, eLag(2), eDim(2)] = DivergenceExponent(acc.y(reps(1):reps(end)), fs);
                     [lyapExp_z, eLag(3), eDim(3)] = DivergenceExponent(acc.z(reps(1):reps(end)), fs);
                     [lyapExp_res, eLag(4), eDim(4)] = DivergenceExponent(acc.res(reps(1):reps(end)), fs);
 
 
-                    %% LDLJ_A 
+                    %% LDLJ_A
                     %%
                     %
                     %  log_dimensionless_jerk_IMU calculates the smoothness of movement directly
@@ -268,7 +421,7 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     %  Reference:
                     %   Melendez-Calderon, A., Shirota, C., & Balasubramanian, S. (2020).
                     %   Estimating Movement Smoothness from Inertial Measurement Units.
-                    % 
+                    %
 
                     ldlj_a = zeros(1,size(reps,1)-1);
 
@@ -280,10 +433,10 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     %% SPARC --> SPECTRAL ARC LENGTH ON RAW ANGULAR VELOCITY
                     params = [0.05, 20, 4];
 
-                    sparc_x = zeros(1,size(reps)-1);
-                    sparc_y = zeros(1,size(reps)-1);
-                    sparc_z = zeros(1,size(reps)-1);
-                    sparc_res = zeros(1,size(reps)-1);
+                    sparc_x = zeros(1,size(reps,1)-1);
+                    sparc_y = zeros(1,size(reps,1)-1);
+                    sparc_z = zeros(1,size(reps,1)-1);
+                    sparc_res = zeros(1,size(reps,1)-1);
 
                     for idx = 1:size(reps)-1
                         sparc_x(:,idx) = SpectralArcLength(avel.x(reps(idx):reps(idx+1)), fs, params);
@@ -304,7 +457,7 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     %  the subsequent timepoint that personalised
                     %  tollerance is used
                     %
-                    
+
                     % if timepoint == T0, calculate the tollerance and save
                     % this to file
                     if strcmp(Timepoint, 'T0')
@@ -317,14 +470,14 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                         m=2;
 
                         tollarance_table.(arm)(subj, :) = table(ppID, r);
-                        
-                    % if timepoint ~= T0, load the previously saved tollerance    
-                    else                   
+
+                        % if timepoint ~= T0, load the previously saved tollerance
+                    else
                         m = 2;
                         load C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat
                         r = tollarance_table.(arm).r(strcmp(tollarance_table.(arm).ppID, subj_name),:);
 
-                        
+
                     end
 
                     sampen_x = sampen_Jill(acc.x(reps(1):reps(end), :), m, r(1));
@@ -348,6 +501,7 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     end
 
                     %% RMS
+                    % --> moet in windows!!!! FIX THIS
                     rms_x = rms(acc.x(reps(1):reps(end)));
                     rms_y = rms(acc.y(reps(1):reps(end)));
                     rms_z = rms(acc.z(reps(1):reps(end)));
@@ -372,10 +526,10 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     if strcmp(side, 'affected')
                         aff.key(subj,:) = table(ppID, trial,time);
 
-                        %stability || lyapunov exponent 
+                        %stability || lyapunov exponent
                         aff.lyapExp(subj,:) = table(ppID, lyapExp_x, lyapExp_y, lyapExp_z, lyapExp_res);
 
-                                              
+
                         %predictability || Sample Entropy
                         aff.Entropy_aff(subj,:) = table(ppID, sampen_x, sampen_y, sampen_z, sampen_res);
 
@@ -408,9 +562,9 @@ for subj = (8)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     elseif strcmp(side, 'unaffected')
                         unaff.key(subj,:) = table(ppID, trial, time);
 
-                        %stability || lyapunov exponent 
+                        %stability || lyapunov exponent
                         unaff.lyapExp(subj,:) = table(ppID, lyapExp_x, lyapExp_y, lyapExp_z, lyapExp_res);
-                        
+
                         %predictability || sample entropy
                         unaff.Entropy_unaff(subj,:) = table(ppID, sampen_x, sampen_y, sampen_z, sampen_res);
 
