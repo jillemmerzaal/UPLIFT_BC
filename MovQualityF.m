@@ -21,7 +21,7 @@
 
 
 clearvars; clc; close all;
-%% 1. input data
+%% 1) Input
 %%
 %
 %  Change the U-number and path to match where the data is located. Change
@@ -39,8 +39,8 @@ plot_or_not = 1;
 
 Affected_table = readtable(fullfile(path.root,"Aangedane zijde.xlsx"));
 
-%% 2. load data
-for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 21) == proefpersonen zonder "rust" data.
+%% 2) Load data
+for subj = (1:21)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 21) == proefpersonen zonder "rust" data.
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -107,9 +107,7 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     disp(['     ' 'Analysing: ' fileName '.....'])
                     disp(['   ' 'Arm of interst: ' arm '.....'])
 
-
-                    %% 2.1 Load xsens data
-                    % Change the filename here to the name of the file you would like to import
+                    %% 2.1) Load xsens data
                     disp(['    ' content(file).name ': read xsens file'])
                     [sensorData, segmentData, jointData]= MVN(file_ik);
 
@@ -140,11 +138,19 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     vel = table(x, y, z, res);
                     clear x y z res
 
-                    %% ||event detection |
+                    %% 3) Event detection
                     %%
                     %
-                    %  seperation of the different repetitions
-                    %
+                    %  Seperation of the different repetitions using
+                    %  filtered velocity data. Filter properties: 4th
+                    %  order Butterwoth filter at 2 Hz. Peak detection of local maxima and minima is
+                    %  applied on the velocity vector. 
+                    %  Local minima-- vector approximates zero-- means a
+                    %  change in direction. We use a priori knowledge that
+                    %  the the first rep should start after a local
+                    %  maximum. This to remove the first and last
+                    %  initiation where the intentd of movement is
+                    %  different.
                     %
 
                     disp(['    ' content(file).name ': define seperate repetitions'])
@@ -160,87 +166,38 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     velocityZ = velocity2(:,3);
                     velocityVec = vecnorm(velocity2, 2,2);
 
-                    %                 SensorFree = filtfilt(b,a, sensorData(sensorno).sensorFreeAcceleration);
-                    %                 SensorFreeX = SensorFree(:,1);
-                    %                 SensorFreeY = SensorFree(:,2);
-                    %                 SensorFreeZ = SensorFree(:,3);
-                    %                 SensorFreeVec = vecnorm(SensorFree,2,2);
-                    %                 SensorFreeDiff = [diff(SensorFreeVec); 0];
-
-                    %                 angularVel_LA = filtfilt(b,a, segmentData(segmentno).angularVelocity);
-                    %                 angularVelX = angularVel_LA(:,1);
-                    %                 angularVelY = angularVel_LA(:,2);
-                    %                 angularVelZ = angularVel_LA(:,3);
-                    %                 angularVelVec = vecnorm(angularVel_LA, 2, 2);
-                    %                 angularVelDiff = [diff(angularVelVec); 0];
-
-                    % dataframes
                     vel_filtered     = table(velocityX, velocityY, velocityZ, velocityVec);
-                    %                 df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec, SensorFreeDiff);
-                    %                 df.Avel     = table(angularVelX, angularVelY, angularVelZ, angularVelVec, angularVelDiff);
 
                     clear velocity2 velocityX velocityY velocityZ velocityVec
-                    %                 clear sensorFree sensorFreeX sensorFreeY SensorFreeZ sensorFreeVec SensorFreeDiff
-                    %                 clear angularVel_X angularVelY angularVelZ angularVelVec angularVelDiff
-
-
-
+              
                     [peakLocMax, peakMagMax] =  peakfinder(vel_filtered.velocityVec, [],[],1, false);
                     [peakLocMin, peakMagMin] =  peakfinder(vel_filtered.velocityVec, [],[],-1, false);
 
                     if strcmp(side, 'affected')
-                        %                         nexttile
-                        %                         plottitle = {['velocity data ' fileName]};
-                        %                         title(plottitle)
-                        %                         plot(vel_filtered.velocityVec)
-                        %                         hold on
-                        %                         plot(peakLocMin, peakMagMin, 'ko')
-                        %                         plot(peakLocMax, peakMagMax, 'ko')
-                        % the first rep should start after a local maximum
                         if peakLocMin(1) - peakLocMax(1) < 0
                             startpeak = 2;
-                            %                             plot(peakLocMin(startpeak:2:end), peakMagMin(startpeak:2:end), 'r*')
-                            %                             xline(peakLocMin(startpeak:2:end), 'r')
                             reps = peakLocMin(startpeak:2:end);
                         elseif peakLocMin(1) - peakLocMax(1) > 0
                             startpeak = 1;
-                            %                             plot(peakLocMin(startpeak:2:end), peakMagMin(startpeak:2:end), 'r*')
-                            %                             xline(peakLocMin(startpeak:2:end), 'r')
                             reps = peakLocMin(startpeak:2:end);
                         end
                     end
 
                     if peakLocMin(1) - peakLocMax(1) < 0
-                        %                             plot(peakLocMin(2:2:end), peakMagMin(2:2:end), 'r*')
-                        %                             xline(peakLocMin(2:2:end), 'r')
                         reps = peakLocMin(2:2:end);
                     elseif peakLocMin(1) - peakLocMax(1) > 0
-                        %                             plot(peakLocMin(1:2:end), peakMagMin(1:2:end), 'r*')
-                        %                             xline(peakLocMin(1:2:end), 'r')
                         reps = peakLocMin(1:2:end);
                     end
 
-
-
-                    %====================
-                    %                     if ~isempty(interest)
-                    %                         interest = interest(:,~ismissing(interest));
-                    %                         xline(interest{1,4:end}, 'LineWidth', 1.5, 'Color','#A2142F')
-                    %                     end
-                    %====================
-
-                    %% find out if there are excessive "rest" periods
+                    %% 3.1) excessive "rest" periods
                     %%
-                    %
+                    % 
                     %  Extensive rest periods in the data influence the
                     %  calculation of the movement qality parameters.
                     %  Therefore we need to remove those rest periods and
                     %  only retain the moving data.
-
-                    %%
-                    %
-                    %  
-                    %  THE DATA IS CAPTURED COMPARED TO A REFERENCE SIGNAL.
+                    %   
+                    %  THE DATA IS COMPARED TO A REFERENCE SIGNAL.
                     %  IN THIS CASE A SIMPLE INVERTED SINE WAVE in case of
                     %  the velocity in z-rection 
                     %  We use the rationalle that we only want to calculate
@@ -256,88 +213,6 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     for idx = 1:length(reps)-1
                         [istart.Z(idx),istop.Z(idx),dist.Z(idx)] = findsignal(vel_filtered.velocityZ(reps(idx):reps(idx+1)), x,'TimeAlignment','dtw','Metric','absolute');
                     end
-
-%                     % segmentation again on velocity vector?
-%                     t=0:0.001:1;
-%                     f=1;
-%                     x=abs(sin(2*pi*f*t));
-%                     for idx = 1:length(reps)-1
-%                         [istart.vec(idx),istop.vec(idx),dist.vec(idx)] = findsignal(vel_filtered.velocityVec(reps(idx):reps(idx+1),:), x,'TimeAlignment','dtw','Metric','absolute');
-%                     end
-% 
-% 
-%                     if strcmp(side, 'affected')
-%                         % vector segmentation
-%                         figure;
-%                         ax1 = subplot(2,2,1);
-%                         plot(vel_filtered.velocityX); hold on;
-% 
-% 
-%                         for idx = 1:length(reps)-1
-%                             temp_df = vel_filtered.velocityX(reps(idx):reps(idx+1));
-%                             x_as = reps(idx):reps(idx+1);
-%                             temp_istart = reps(idx) + istart.vec(idx);
-%                             temp_istop = reps(idx) + istop.vec(idx);
-% 
-%                             plot(x_as, temp_df)
-%                             xline(temp_istart, 'LineWidth', 1.5)
-%                             xline(temp_istop, ':')
-%                             clear temp_df
-%                         end
-% 
-%                         ax2 = subplot(2,2,2);
-%                         plot(vel_filtered.velocityY); hold on;
-% 
-% 
-%                         for idx = 1:length(reps)-1
-%                             temp_df = vel_filtered.velocityY(reps(idx):reps(idx+1));
-%                             x_as = reps(idx):reps(idx+1);
-%                             temp_istart = reps(idx) + istart.vec(idx);
-%                             temp_istop = reps(idx) + istop.vec(idx);
-% 
-%                             plot(x_as, temp_df)
-%                             xline(temp_istart, 'LineWidth', 1.5)
-%                             xline(temp_istop, ':')
-%                             clear temp_df
-%                         end
-% 
-% 
-%                         ax3 = subplot(2,2,3);
-%                         plot(vel_filtered.velocityZ); hold on;
-% 
-% 
-%                         for idx = 1:length(reps)-1
-%                             temp_df = vel_filtered.velocityZ(reps(idx):reps(idx+1));
-%                             x_as = reps(idx):reps(idx+1);
-%                             temp_istart = reps(idx) + istart.vec(idx);
-%                             temp_istop = reps(idx) + istop.vec(idx);
-% 
-%                             plot(x_as, temp_df)
-%                             xline(temp_istart, 'LineWidth', 1.5)
-%                             xline(temp_istop, ':')
-%                             clear temp_df
-%                         end
-% 
-%                         ax4 = subplot(2,2,4);
-%                         plot(vel_filtered.velocityVec); hold on;
-% 
-%                         for idx = 1:length(reps)-1
-%                             temp_df = vel_filtered.velocityVec(reps(idx):reps(idx+1));
-%                             x_as = reps(idx):reps(idx+1);
-%                             temp_istart = reps(idx) + istart.vec(idx);
-%                             temp_istop = reps(idx) + istop.vec(idx);
-% 
-%                             plot(x_as, temp_df)
-%                             xline(temp_istart, 'LineWidth', 1.5)
-%                             xline(temp_istop, ':')
-%                             clear temp_df
-%                         end
-%                         plottitle = {[subj_name, ' number of reps ', num2str(length(reps)), 'segmentation on Vector']};
-%                         sgtitle(plottitle)
-% 
-%                         linkaxes([ax1,ax2,ax3,ax4], 'xy')
-%                     end
-                    %% continue with segmentation on velocity in z direction
 
                     %plot individual velocity vectors
                     if plot_or_not
@@ -375,6 +250,7 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     end
 
 
+                    % concatinate the trimmed repetitions
                     for idx = 1:size(temp_df.rep,2)
                         if idx == 1
                             concat = temp_df.rep{:,idx};
@@ -385,43 +261,46 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
 
                         end
                     end
+                    figure;
                     plot(concat)
                     nexttile 
                     plot(vel.z(reps(1):reps(end)))
-                    %% table stetup
+                    %% 4) table stetup and calculati9on of the movement quality parameters
                     ppID    = string(subj_name);
                     trial   = string(fileName);
                     time    = string(Timepoint);
 
+                    %% 4.1) Lyapunov exponent matlab function
+                    
 
-                    %% Lyapunov exponent matlab function
                     %%
-                    %
-                    %DIVERGENCEEXPONENT FUNCTION CALCULATES THE LYAPUNOV EXPONENT
-                    %   1) it selects the relevant parameters signal and
-                    %   creates a time axis. 2) it will calculate the power
-                    %   spectrum to 3) determine the dominant frequency of
-                    %   the signal. 4) Determines the range over which the
-                    %   Lyapunov Exponent is calculated (i.e. half a
-                    %   cycle). 5) reconstructs the number of state spaces
-                    %   and timelag that fully capture the signal. And
-                    %   finaly 6) Calculates the Lyapunov Exponent with the
-                    %   predetermined parameters.
-
+                    % 
+                    %  DIVERGENCEEXPONENT FUNCTION CALCULATES THE LYAPUNOV EXPONENT
+                    %  1) it selects the relevant parameters signal and
+                    %  creates a time axis. 2) it will calculate the power
+                    %  spectrum to 3) determine the dominant frequency of
+                    %  the signal. 4) Determines the range over which the
+                    %  Lyapunov Exponent is calculated (i.e. half a
+                    %  cycle). 5) reconstructs the number of state spaces
+                    %  and timelag that fully capture the signal. And
+                    %  finaly 6) Calculates the Lyapunov Exponent with the
+                    %  predetermined parameters.
+                    % 
+             
                     [lyapExp_x ,eLag(1), eDim(1)] = DivergenceExponent(acc.x(reps(1):reps(end)), fs);
                     [lyapExp_y, eLag(2), eDim(2)] = DivergenceExponent(acc.y(reps(1):reps(end)), fs);
                     [lyapExp_z, eLag(3), eDim(3)] = DivergenceExponent(acc.z(reps(1):reps(end)), fs);
                     [lyapExp_res, eLag(4), eDim(4)] = DivergenceExponent(acc.res(reps(1):reps(end)), fs);
 
 
-                    %% LDLJ_A
+                    %% 4.2) LDLJ_A
+
                     %%
                     %
-                    %  log_dimensionless_jerk_IMU calculates the smoothness of movement directly
-                    %                           from acceleration signals.
+                    %  log_dimensionless_jerk_IMU calculates the smoothness of movement directly from acceleration signals.
                     %  Reference:
-                    %   Melendez-Calderon, A., Shirota, C., & Balasubramanian, S. (2020).
-                    %   Estimating Movement Smoothness from Inertial Measurement Units.
+                    %  Melendez-Calderon, A., Shirota, C., & Balasubramanian, S. (2020).
+                    %  Estimating Movement Smoothness from Inertial Measurement Units.
                     %
 
                     ldlj_a = zeros(1,size(reps,1)-1);
@@ -431,7 +310,7 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                         ldlj_a(:, idx) = log_dimensionless_jerk_IMU(acc{:,1:3},t, fs);
                     end
 
-                    %% SPARC --> SPECTRAL ARC LENGTH ON RAW ANGULAR VELOCITY
+                    %% 4.3) SPARC --> SPECTRAL ARC LENGTH ON RAW ANGULAR VELOCITY
                     params = [0.05, 20, 4];
 
                     sparc_x = zeros(1,size(reps,1)-1);
@@ -447,7 +326,8 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     end
 
 
-                    %% sample entropy Jill --> TO defines tollerance
+                    %% 4.4) sample entropy Jill --> TO defines tollerance
+
                     %%
                     %
                     %  sampen_Jill function calculates the sample entropy
@@ -488,20 +368,20 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     sampen_z = sampen_Jill(acc.z(reps(1):reps(end), :), m, r(3));
                     sampen_res = sampen_Jill(acc.res(reps(1):reps(end), :), m, r(4));
 
-                    %% Autocorrelation
+                    %% 4.5) Autocorrelation
                     %-----------------
                     [acorr_x, reg_x] = Symmetry(vel.x(reps(1):reps(end)));
                     [acorr_y, reg_y] = Symmetry(vel.y(reps(1):reps(end)));
                     [acorr_z, reg_z] = Symmetry(vel.z(reps(1):reps(end)));
                     [acorr_res, reg_res] = Symmetry(vel.res(reps(1):reps(end)));
 
-                    %% movement speed based on the repetitions
+                    %% 4.6) Movement speed based on the repetitions
                     movement_time = zeros(size(reps,1) - 1, 1);
                     for idx = 1:size(reps,1) - 1
                         movement_time(idx,1) = 1/fs * (reps(idx+1)-reps(idx));
                     end
 
-                    %% RMS
+                    %% 4.7) RMS
                     % --> moet in windows!!!! FIX THIS
                     rms_x = rms(acc.x(reps(1):reps(end)));
                     rms_y = rms(acc.y(reps(1):reps(end)));
@@ -514,7 +394,7 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     rmsr_y = rms_y/rms_T;
                     rmsr_z = rms_z/rms_T;
 
-                    %% save raw acc and avel data to struct
+                    %% 5) Save raw acc and avel data to struct
                     if strcmp(side, 'affected')
                         MoveQual.raw.affected.(ppID).(Timepoint).(trial).acc = acc(reps(1):reps(end), :);
                         MoveQual.raw.affected.(ppID).(Timepoint).(trial).avel = avel;
@@ -523,7 +403,7 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                         MoveQual.raw.unaffected.(ppID).(Timepoint).(trial).avel = acc;
                     end
 
-                    %% save movement quality to table
+                    %% 6) Save movement quality to table
                     if strcmp(side, 'affected')
                         aff.key(subj,:) = table(ppID, trial,time);
 
@@ -603,7 +483,7 @@ end% loop through number of subjects
 
 
 
-%% everything in one gigantic table.
+%% 7) everything in one gigantic table.
 % every timepoint has an individual tab
 % unaffected
 fields = fieldnames(unaff);
