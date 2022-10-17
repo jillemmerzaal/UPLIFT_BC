@@ -9,6 +9,16 @@
 %       KU Leuven, Tervuursevest 101, box 1501
 %       Research Group for Rehabilitation in Internal Disorders
 
+
+
+%%%%%
+% To Do: 
+% alleen de time curves naar excel wegschrijven. Genormaliseerd. 
+% geef opties om max/min eruit te halen 
+% gebruik find signal om de herhalingen eruit te halen 
+% maar het script simpel! 
+%%%%%
+
 clearvars; %close all; clc
 %% 1. input data
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")

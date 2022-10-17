@@ -239,16 +239,16 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
 
                     %%
                     %
-                    %  
+                    %  OPTION 1
                     %  THE DATA IS CAPTURED COMPARED TO A REFERENCE SIGNAL.
                     %  IN THIS CASE A SIMPLE INVERTED SINE WAVE in case of
                     %  the velocity in z-rection 
                     %  We use the rationalle that we only want to calculate
-                    %  the movement quality parameters on movement data.
-                    %  Therefore, we are strickt in our trimming process,
-                    %  and use the velocity data in Z-direction in stead of the vector. 
+                    %  the movement quality parameters on movement data. T
 
 
+                    % further segmentation on velocity in z-direction!
+                    % Strenge filter zou in dit geval beter zijn.
                     t=0:0.001:1;
                     f=1;
                     x=sin(2*pi*f*t)*-1;
@@ -461,8 +461,6 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
 
                     % if timepoint == T0, calculate the tollerance and save
                     % this to file
-                    % if timepoint ~= T0, load the previously saved tollerance
-
                     if strcmp(Timepoint, 'T0')
                         if exist('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat', 'file') == 2
                             load('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat')
@@ -474,7 +472,7 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
 
                         tollarance_table.(arm)(subj, :) = table(ppID, r);
 
-             
+                        % if timepoint ~= T0, load the previously saved tollerance
                     else
                         m = 2;
                         load C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat
@@ -494,6 +492,8 @@ for subj = (6)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 
                     [acorr_y, reg_y] = Symmetry(vel.y(reps(1):reps(end)));
                     [acorr_z, reg_z] = Symmetry(vel.z(reps(1):reps(end)));
                     [acorr_res, reg_res] = Symmetry(vel.res(reps(1):reps(end)));
+
+
 
                     %% movement speed based on the repetitions
                     movement_time = zeros(size(reps,1) - 1, 1);
