@@ -30,17 +30,18 @@ clearvars; clc; close all;
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 
-Timepoint   = 'T0';
-movement    = "F";
-path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
-path.out    = fullfile(path.root,'Output','Database_MovQual.mat');
-fs          = 60;
-plot_or_not = 1;
+Timepoint       = 'T1';
+movement        = "F";
+path.root       = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
+path.out        = fullfile(path.root,'Output','Database_MovQual.mat');
+fs              = 60;
+plot_or_not     = 0;
+safe_to_excel   = 1;
 
 Affected_table = readtable(fullfile(path.root,"Aangedane zijde.xlsx"));
 
 %% 2) Load data
-for subj = (1:21)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 21) == proefpersonen zonder "rust" data.
+for subj = 1:23%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 21) == proefpersonen zonder "rust" data.
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -173,22 +174,36 @@ for subj = (1:21)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 
                     [peakLocMax, peakMagMax] =  peakfinder(vel_filtered.velocityVec, [],[],1, false);
                     [peakLocMin, peakMagMin] =  peakfinder(vel_filtered.velocityVec, [],[],-1, false);
 
-                    if strcmp(side, 'affected')
-                        if peakLocMin(1) - peakLocMax(1) < 0
-                            startpeak = 2;
-                            reps = peakLocMin(startpeak:2:end);
-                        elseif peakLocMin(1) - peakLocMax(1) > 0
-                            startpeak = 1;
-                            reps = peakLocMin(startpeak:2:end);
-                        end
+                    if size(peakLocMin,1) > 32 % 32 change points indicate 16 repetitions. so more than that is usually false peak detection
+                        [peakLocMax, peakMagMax] =  peakfinder(vel_filtered.velocityVec, [],[],1, false);
+                        [peakLocMin, peakMagMin] =  peakfinder(vel_filtered.velocityVec, 1,[],-1, false);                     
                     end
+
 
                     if peakLocMin(1) - peakLocMax(1) < 0
-                        reps = peakLocMin(2:2:end);
+                        startpeak = 2;
                     elseif peakLocMin(1) - peakLocMax(1) > 0
-                        reps = peakLocMin(1:2:end);
+                        startpeak = 1;
                     end
 
+                    reps = peakLocMin(startpeak:2:end);
+
+                    %%
+                    % 
+                    %  contingency check peak detection
+                    %  TEXT
+                    % 
+                    
+                    
+                    temp_max = peakfinder(vel_filtered.velocityZ(reps(1):reps(2)), [],[],1,false);
+                    temp_min = peakfinder(vel_filtered.velocityZ(reps(1):reps(2)), [],[],-1,false);
+                    if temp_min - temp_max > 0
+                        fprintf('\t\t %s: first velcity in z-direction is not negative \n', content(file).name)
+                        fprintf('\t\t %s: Start peak will be redefined \n', content(file).name)
+                        startpeak = startpeak + 1;
+                        clear reps
+                        reps = peakLocMin(startpeak:2:end);
+                    end
                     %% 3.1) excessive "rest" periods
                     %%
                     % 
@@ -208,15 +223,37 @@ for subj = (1:21)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 
 
                     t=0:0.001:1;
                     f=1;
-                    x=sin(2*pi*f*t)*-1;
+                    x=sin(2*pi*f*t)* -1;
 
                     for idx = 1:length(reps)-1
                         [istart.Z(idx),istop.Z(idx),dist.Z(idx)] = findsignal(vel_filtered.velocityZ(reps(idx):reps(idx+1)), x,'TimeAlignment','dtw','Metric','absolute');
                     end
 
+                    % trim the repetitions and save them in a temporary
+                    % variable.
+                    for idx = 1:length(reps)-1
+                        temp_istart = reps(idx) + istart.Z(idx);
+                        temp_istop = reps(idx) + istop.Z(idx);
+                        temp.rep{:,idx} = vel.z(temp_istart:temp_istop);  
+                    end
+
+                   
+                    % concatinate the trimmed repetitions
+                    for idx = 1:size(temp.rep,2)
+                        if idx == 1
+                            concat = temp.rep{:,idx};
+                            fprintf('concatinate repetition: %d \n', idx)
+                        else
+                            concat = cat(1, concat, temp.rep{:,idx});
+                            fprintf('concatinate repetition: %d \n', idx)
+
+                        end
+                    end
+                   
                     %plot individual velocity vectors
                     if plot_or_not
-                        if strcmp(side, 'affected')
+                        figure; 
+                        %if strcmp(side, 'affected')
                             nexttile
                             for idx = 1:length(reps)-1
                                 plot(vel.z(reps(idx):reps(idx+1)))
@@ -228,43 +265,24 @@ for subj = (1:21)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 
 
                             nexttile
                             for idx = 1:length(reps)-1
-                                temp_istart = reps(idx) + istart.Z(idx);
-                                temp_istop = reps(idx) + istop.Z(idx);
-                                temp_df.rep{:,idx} = vel.z(temp_istart:temp_istop);
-
-
-                                plot(temp_df.rep{:,idx}); hold on
+                                plot(temp.rep{:,idx}); hold on
                             end
                             plottitle = {[subj_name, ' individual reps trimmed']};
                             title(plottitle)
-                        end
+
+                            nexttile
+                            plot(vel.z(reps(1):reps(end)))
+                            plottitle = {[subj_name, ' original timeseries']};
+                            title(plottitle)   
+
+                            nexttile
+                            plot(concat)
+                            plottitle = {[subj_name, ' trimmed repetitions concatinated']};
+                            title(plottitle)
+                        %end
                     end
 
-
-                    % trim the repetitions and save them in a temporary
-                    % variable.
-                    for idx = 1:length(reps)-1
-                        temp_istart = reps(idx) + istart.Z(idx);
-                        temp_istop = reps(idx) + istop.Z(idx);
-                        temp_df.rep{:,idx} = vel.z(temp_istart:temp_istop);  
-                    end
-
-
-                    % concatinate the trimmed repetitions
-                    for idx = 1:size(temp_df.rep,2)
-                        if idx == 1
-                            concat = temp_df.rep{:,idx};
-                            fprintf('concatinate repetition: %d \n', idx)
-                        else
-                            concat = cat(1, concat, temp_df.rep{:,idx});
-                            fprintf('concatinate repetition: %d \n', idx)
-
-                        end
-                    end
-                    figure;
-                    plot(concat)
-                    nexttile 
-                    plot(vel.z(reps(1):reps(end)))
+                    clear temp 
                     %% 4) table stetup and calculati9on of the movement quality parameters
                     ppID    = string(subj_name);
                     trial   = string(fileName);
@@ -360,7 +378,6 @@ for subj = (1:21)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 
                         load C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat
                         r = tollarance_table.(arm).r(strcmp(tollarance_table.(arm).ppID, subj_name),:);
 
-
                     end
 
                     sampen_x = sampen_Jill(acc.x(reps(1):reps(end), :), m, r(1));
@@ -369,7 +386,7 @@ for subj = (1:21)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 
                     sampen_res = sampen_Jill(acc.res(reps(1):reps(end), :), m, r(4));
 
                     %% 4.5) Autocorrelation
-                    %-----------------
+                    %----------------------
                     [acorr_x, reg_x] = Symmetry(vel.x(reps(1):reps(end)));
                     [acorr_y, reg_y] = Symmetry(vel.y(reps(1):reps(end)));
                     [acorr_z, reg_z] = Symmetry(vel.z(reps(1):reps(end)));
@@ -381,14 +398,54 @@ for subj = (1:21)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 
                         movement_time(idx,1) = 1/fs * (reps(idx+1)-reps(idx));
                     end
 
-                    %% 4.7) RMS
-                    % --> moet in windows!!!! FIX THIS
-                    rms_x = rms(acc.x(reps(1):reps(end)));
-                    rms_y = rms(acc.y(reps(1):reps(end)));
-                    rms_z = rms(acc.z(reps(1):reps(end)));
-                    rms_res = rms(acc.res(reps(1):reps(end)));
+                    %% 4.7) Root Mean Square
+                    
 
-                    rms_T = sqrt(rms_x.^2 + rms_y.^2 + rms_z.^2);
+                    %%
+                    % 
+                    %  RMS en RMS ratio is a measure of variability usually used in gait analysis. This
+                    %  measure is defined in windows of 10 samples and
+                    %  averaged to create one value. However, it has been
+                    %  often reported that RMS is related to walking speed,
+                    %  and therefore could also be related to movement
+                    %  speed in general. Theory goes that RMS ratio is independent of
+                    %  walking speed, therefore the superior parameter.
+                    %  Because there is very little known in RMS of RMS
+                    %  ratio calculation in the upper extremity, we
+                    %  consider them both. 
+                    % 
+
+                    b=10;
+                    points=floor(length(acc.x(reps(1):reps(end)))/b)*b;
+                    rms_x = [];
+                    rms_y = [];
+                    rms_z = [];
+                    rms_res = [];
+                    for i = reps(1):b:points
+                        temp0 = rms(acc.x(i:i+b));
+                        temp1 = rms(acc.y(i:i+b));
+                        temp2 = rms(acc.z(i:i+b));
+                        temp3 = rms(acc.res(i:i+b));
+
+                        rms_x = [rms_x; temp0];
+                        rms_y = [rms_y; temp1];
+                        rms_z = [rms_z; temp2];
+                        rms_res = [rms_res; temp3];
+
+                    end
+                    rms_x = mean(rms_x);
+                    rms_y = mean(rms_y);
+                    rms_z = mean(rms_z);
+                    rms_res = mean(rms_res);
+
+
+                    %%
+                    %
+                    %  rms_T = sqrt(rms_x.^2 + rms_y.^2 + rms_z.^2);
+                    %
+                    %
+
+                    rms_T = norm([rms_x, rms_y, rms_z]);
 
                     rmsr_x = rms_x/rms_T;
                     rmsr_y = rms_y/rms_T;
@@ -403,7 +460,7 @@ for subj = (1:21)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 
                         MoveQual.raw.unaffected.(ppID).(Timepoint).(trial).avel = acc;
                     end
 
-                    %% 6) Save movement quality to table
+                    %% 6) Write movement quality to table
                     if strcmp(side, 'affected')
                         aff.key(subj,:) = table(ppID, trial,time);
 
@@ -475,40 +532,46 @@ for subj = (1:21)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 
                         unaff.LDLJ_A_unaff.Properties.VariableNames = {'ppID', 'LDLJ_A'};
 
                     end
+                    clear reps
                 end% if information about the affected side is availible
             end% file name contains movement and .mvnx
         end% loop though the number of files
     end% check if data folder exists
 end% loop through number of subjects
 
+    save('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\tollarance_table.mat','tollarance_table')
 
 
-%% 7) everything in one gigantic table.
-% every timepoint has an individual tab
-% unaffected
-fields = fieldnames(unaff);
-MovementQual.unaff = rmmissing(unaff.key);
-for fld = 2:size(fields, 1)
-    MovementQual.unaff = join(MovementQual.unaff, unaff.(fields{fld}));
+if safe_to_excel 
+ 
+    %% 7) everything in one gigantic table.
+    % every timepoint has an individual tab
+    % unaffected
+
+    disp(['     ' 'Saving data to excel: .....'])
+    fields = fieldnames(unaff);
+    MovementQual.unaff = rmmissing(unaff.key);
+    for fld = 2:size(fields, 1)
+        MovementQual.unaff = join(MovementQual.unaff, unaff.(fields{fld}));
+    end
+
+    clear fields fld
+
+    %affected
+    fields = fieldnames(aff);
+    MovementQual.aff = rmmissing(aff.key);
+    for fld = 1:size(fields,1)
+        MovementQual.aff = join(MovementQual.aff, aff.(fields{fld}));
+    end
+
+    clear fields fld
+
+
+    writetable(MovementQual.unaff,'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\MoveQual_unaff.xlsx', 'FileType', 'spreadsheet',  ...
+        "WriteMode", "append", "Sheet", Timepoint)
+
+    writetable(MovementQual.aff, 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\MoveQual_aff.xlsx', 'FileType', 'spreadsheet', ...
+        'WriteMode', 'append', 'sheet', Timepoint)
+
+
 end
-
-clear fields fld
-
-%affected
-fields = fieldnames(aff);
-MovementQual.aff = rmmissing(aff.key);
-for fld = 1:size(fields,1)
-    MovementQual.aff = join(MovementQual.aff, aff.(fields{fld}));
-end
-
-clear fields fld
-
-
-writetable(MovementQual.unaff,'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\MoveQual_unaff.xlsx', 'FileType', 'spreadsheet',  ...
-    "WriteMode", "append", "Sheet", Timepoint)
-
-writetable(MovementQual.aff, 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\MoveQual_aff.xlsx', 'FileType', 'spreadsheet', ...
-    'WriteMode', 'append', 'sheet', Timepoint)
-
-save('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\tollarance_table.mat','tollarance_table')
-

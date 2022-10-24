@@ -1,4 +1,4 @@
-%% maximal range of motion task
+%% Extract the range of motion data and write to excel.
 % This code extracts the maximal range of motion as calculated by the xsens
 % system. Data collected with Xsens MVN 2021.2.
 % Nescesary functions: 
