@@ -24,7 +24,7 @@ affected_table = readtable(fullfile(path.root, "Aangedane zijde.xlsx"));
 
 
 %% 2. load data
-for subj = 2%(2:10)%20:27
+for subj = (1:10)%20:27
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -72,10 +72,8 @@ for subj = 2%(2:10)%20:27
                 fprintf('\t Analysing: %s \n', fileName)
                 fprintf('\t\t Arm of interest: %s \n',  arm)
                 if strcmp(arm, involved)
-                    fprintf('\t\t this is the affected side \n')
+                fprintf('\t\t this is the affected side')
                 else
-                    fprintf('\t\t this is the unaffected side \n')
-                end
 
                 %% 2.1 Load xsens data
                 % Change the filename here to the name of the file you would like to import
@@ -146,16 +144,26 @@ for subj = 2%(2:10)%20:27
                     %
 
                     norm_mean = mean(norm_data);
-                  
-                    if strcmp(arm, involved)
-                        BC.aff.(Timepoint)(rownr,:) = norm_mean;
-                    else
-                        BC.unaff.(Timepoint)(rownr,:) = norm_mean;
+                    % if right is affected
+                    if strcmp(arm, 'R')
+                        if strcmp(involved, 'R')
+                            BC.aff.(Timepoint)(rownr,:) = norm_mean;
+                        else
+                            BC.unaff.(Timepoint)(rownr,:) = norm_mean;
+                        end
+                    elseif strcmp(arm, 'L')
+                        if strcmp(involved, 'L')
+                            BC.aff.(Timepoint)(rownr,:) = norm_mean;
+                        else
+                            BC.unaff.(Timepoint)(rownr,:) = norm_mean;
+                        end
                     end
 
                 else
                     fprintf('\t \t %s: There are lange minima \n', content(file).name)
                     fprintf('\t \t check the data')
+
+
                 end% extra check in the data. If there are large minima in the data, don't perform the script
             end % if contains movement name and .mvnx
         end% loop through files
