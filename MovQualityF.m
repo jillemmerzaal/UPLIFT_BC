@@ -204,7 +204,7 @@ for subj = 1:23%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 1
                         clear reps
                         reps = peakLocMin(startpeak:2:end);
                     end
-                    %% 3.1) excessive "rest" periods
+                    %% 3.1) excessive "rest" periods before and after each movement
                     %%
                     % 
                     %  Extensive rest periods in the data influence the
@@ -327,22 +327,6 @@ for subj = 1:23%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 1
                         t = [reps(idx),reps(idx+1)];
                         ldlj_a(:, idx) = log_dimensionless_jerk_IMU(acc{:,1:3},t, fs);
                     end
-
-                    %% 4.3) SPARC --> SPECTRAL ARC LENGTH ON RAW ANGULAR VELOCITY
-                    params = [0.05, 20, 4];
-
-                    sparc_x = zeros(1,size(reps,1)-1);
-                    sparc_y = zeros(1,size(reps,1)-1);
-                    sparc_z = zeros(1,size(reps,1)-1);
-                    sparc_res = zeros(1,size(reps,1)-1);
-
-                    for idx = 1:size(reps)-1
-                        sparc_x(:,idx) = SpectralArcLength(avel.x(reps(idx):reps(idx+1)), fs, params);
-                        sparc_y(:,idx) = SpectralArcLength(avel.y(reps(idx):reps(idx+1)), fs, params);
-                        sparc_z(:,idx) = SpectralArcLength(avel.z(reps(idx):reps(idx+1)), fs, params);
-                        sparc_res(:,idx) = SpectralArcLength(avel.res(reps(idx):reps(idx+1)), fs, params);
-                    end
-
 
                     %% 4.4) sample entropy Jill --> TO defines tollerance
 
@@ -467,10 +451,8 @@ for subj = 1:23%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 1
                         %stability || lyapunov exponent
                         aff.lyapExp(subj,:) = table(ppID, lyapExp_x, lyapExp_y, lyapExp_z, lyapExp_res);
 
-
                         %predictability || Sample Entropy
                         aff.Entropy_aff(subj,:) = table(ppID, sampen_x, sampen_y, sampen_z, sampen_res);
-
 
                         %movement time || average
                         aff.avg_move_time_aff(subj,:) = table(ppID, mean(movement_time));
@@ -488,10 +470,6 @@ for subj = 1:23%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 1
 
                         %variability || root mean square ratio
                         aff.RMSR_x(subj,:) = table(ppID, rmsr_x, rmsr_y, rmsr_z);
-
-                        %smoothness || SPARC
-                        aff.SPARC_aff(subj,:) = table(ppID, mean(sparc_x), mean(sparc_y), mean(sparc_z), mean(sparc_res));
-                        aff.SPARC_aff.Properties.VariableNames = {'ppID', 'sparc_x', 'sparc_y', 'sparc_z', 'sparc_res'};
 
                         %smoothness || LDLJ
                         aff.LDLJ_A_aff (subj, :) = table(ppID, mean(ldlj_a));
@@ -522,10 +500,6 @@ for subj = 1:23%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 1
 
                         %variability || root mean square ratio
                         unaff.RMSR_x(subj,:) = table(ppID, rmsr_x, rmsr_y, rmsr_z);
-
-                        %smoothness || SPARC
-                        unaff.SPARC_unaff(subj,:) = table(ppID, mean(sparc_x), mean(sparc_y), mean(sparc_z), mean(sparc_res));
-                        unaff.SPARC_unaff.Properties.VariableNames = {'ppID', 'sparc_x', 'sparc_y', 'sparc_z', 'sparc_res'};
 
                         %smoothness ||LDLJ
                         unaff.LDLJ_A_unaff(subj, :) = table(ppID, mean(ldlj_a));
