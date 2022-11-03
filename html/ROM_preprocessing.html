@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>ROM_preprocessing</title><meta name="generator" content="MATLAB 9.11"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2022-10-24"><meta name="DC.source" content="ROM_preprocessing.m"><style type="text/css">
+      --><title>ROM_preprocessing</title><meta name="generator" content="MATLAB 9.11"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2022-11-03"><meta name="DC.source" content="ROM_preprocessing.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -67,17 +67,22 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Extract the range of motion data and write to excel.</a></li><li><a href="#2">1. input data</a></li><li><a href="#3">2. load data</a></li><li><a href="#5">2.1 Load xsens data</a></li><li><a href="#8">normalise the data to 100 data points</a></li></ul></div><h2 id="1">Extract the range of motion data and write to excel.</h2><p>This code extracts the range of motion timecurve as calculated by the xsens system. Data collected with Xsens MVN 2021.2. Nescesary functions:       1) MVN.m       2) load_mvnx.m code written by       dr. Jill Emmerzaal       KU Leuven, Tervuursevest 101, box 1501       Research Group for Rehabilitation in Internal Disorders</p><pre class="codeinput">clearvars; close <span class="string">all</span>; clc
-</pre><h2 id="2">1. input data</h2><pre class="codeinput">cd(<span class="string">"C:\Users\u0117545\Documents\GitHub\ULIFT_BC"</span>)
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Extract the range of motion data and write to excel.</a></li><li><a href="#2">1. input data</a></li><li><a href="#4">Specify joint angles to analyse</a></li><li><a href="#6">2. load data</a></li><li><a href="#8">2.1 Load xsens data</a></li><li><a href="#9">extract repetitions</a></li><li><a href="#10">double check</a></li><li><a href="#11">normalise the data to 100 data points</a></li><li><a href="#12">display the results</a></li><li><a href="#13">export to excel</a></li><li><a href="#15">extract scapulo or secondary angles if applicable</a></li></ul></div><h2 id="1">Extract the range of motion data and write to excel.</h2><p>This is the main file for the range of motion timecurve analysis as calculated by the xsens system. Data collected with Xsens MVN 2021.2. Nescesary functions:</p><div><ol><li>MVN.m</li><li>load_mvnx.m</li><li>peakfinder.m</li><li>signalmatching.m</li><li>normalisation.m</li></ol></div><p>code written by       dr. Jill Emmerzaal KU Leuven, Tervuursevest 101, box 1501 Research       Group for Rehabilitation in Internal Disorders</p><pre class="codeinput">clearvars; close <span class="string">all</span>; clc
+</pre><h2 id="2">1. input data</h2><pre>Specify:</pre><div><ol><li>Path where all the code is stored</li><li>Path where all the code sections are stored (if not in path.orig)</li><li>Timepoint you want to analyse (e.g. 'T0' or 'T1')</li><li>movement you want to analyse (i.e. 'Af', 'EXO', or 'ABD'</li><li>path where all the data is stored</li><li>define if you want to check the data: plot_or_not = 1 &amp; check_complete = 0</li><li>define if you want to safe the data: plot_or_not = 0 &amp; check_complete = 1</li><li>define the range of subjects you want to analyse (subj = 1:10 runs the first 10 subjects | subj = 10 only runs subject 10 | subj = (1:5 7:10) runs subject 1 through 10 except 6 ect.)</li></ol></div><pre class="codeinput">path.orig = <span class="string">"C:\Users\u0117545\Documents\GitHub\ULIFT_BC"</span>;
+cd(path.orig)
 addpath(<span class="string">"C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons"</span>)
+addpath(<span class="string">'C:\Users\u0117545\Documents\GitHub\ULIFT_BC'</span>)
 
-Timepoint   = <span class="string">'T0'</span>;
-movement    =  {<span class="string">'ABD'</span>};<span class="comment">%, 'AF', 'EXO'}; %Abductie'; %Abductie Anteflexie Exorotatie</span>
-path.root   = <span class="string">'C:\Users\u0117545\KU Leuven\An De Groef - DATA'</span>;
-<span class="comment">%path.out    = fullfile(path.root,'Output','Database_ROM.mat');</span>
-plot_or_not = 1;
-affected_table = readtable(fullfile(path.root, <span class="string">"Aangedane zijde.xlsx"</span>));
-</pre><h2 id="3">2. load data</h2><pre class="codeinput"><span class="keyword">for</span> subj = 2<span class="comment">%(2:10)%20:27</span>
+Timepoint       = <span class="string">'T0'</span>;
+movement        =  <span class="string">'ABD'</span>;
+path.root       = <span class="string">'C:\Users\u0117545\KU Leuven\An De Groef - DATA'</span>;
+path.out        = fullfile(path.orig,<span class="string">'Output'</span>);
+plot_or_not     = 1;
+check_complete  = 1;
+affected_table  = readtable(fullfile(path.root, <span class="string">"Aangedane zijde.xlsx"</span>));
+</pre><h2 id="4">Specify joint angles to analyse</h2><p>Scapulo also extracts the 3d scapulothoratic movement during the primary movement secondary also include the other two movements in the glenohumeral joint. e.g. if the momvent is ABD (abduction) than primary will only extract the abduction movement from the xsens data. scapulo, will extract abduction from the glenohumeral joint, plus 3D scapulotoracaal angles. secondary will extract the all glenohumaral joint angles. Thus, if you want glenohumeral abduction + the scapulothoratic joint angles than: scapulo = 1; secondary = 0;</p><pre class="codeinput">scapulo     = 0;
+secondary   = 0;
+</pre><h2 id="6">2. load data</h2><pre class="codeinput"><span class="keyword">for</span> subj = 3
     <span class="keyword">if</span> subj &lt; 10
         subj_name   = [<span class="string">'BC_00'</span> num2str(subj)];
     <span class="keyword">elseif</span> subj &lt; 100
@@ -86,8 +91,7 @@ affected_table = readtable(fullfile(path.root, <span class="string">"Aangedane z
         subj_name   = [<span class="string">'BC_'</span>, num2str(subj)];
     <span class="keyword">end</span>
 
-    fprintf(<span class="string">'\n'</span>)
-    cprintf(<span class="string">'*text'</span>, <span class="string">'Processing: %s at Timepoint: %s....... \n'</span>, subj_name, Timepoint)
+    fprintf(<span class="string">'Processing: %s at Timepoint: %s....... \n'</span>, subj_name, Timepoint)
 
     path.subj   = fullfile(path.root, subj_name, <span class="string">'Xsens'</span>, Timepoint, <span class="string">'Reproces'</span>);
     check_subj  = exist(path.subj);
@@ -114,130 +118,287 @@ affected_table = readtable(fullfile(path.root, <span class="string">"Aangedane z
 
         <span class="comment">% Start loop through files per subject</span>
         <span class="keyword">for</span> file = 1:nfiles
-            <span class="keyword">if</span> contains(content(file).name, movement) &amp;&amp; contains(content(file).name, <span class="string">'.mvnx'</span>)
-</pre><pre class="codeinput">                file_ik = content(file).name;
-                [~,name, ~] = fileparts(content(file).name);
-                [fileName] = regexprep(name, <span class="string">'-'</span>, <span class="string">'_'</span>);
+            <span class="keyword">try</span>
+                <span class="comment">% try  to run the following code, if an error occurs</span>
+                <span class="comment">% nothing will happen and no data will be exported.</span>
+                <span class="comment">% A file will be created with the subject name and</span>
+                <span class="comment">% timepoint that caused an error.</span>
+                <span class="keyword">if</span> contains(content(file).name, movement) &amp;&amp; contains(content(file).name, <span class="string">'.mvnx'</span>)
+</pre><pre class="codeinput">                    file_ik = content(file).name;
+                    [~,name, ~] = fileparts(content(file).name);
+                    [fileName] = regexprep(name, <span class="string">'-'</span>, <span class="string">'_'</span>);
 
-                d = strfind(name,<span class="string">'_'</span>);
-                arm = content(file).name(d+1);
+                    d = strfind(name,<span class="string">'_'</span>);
+                    arm = content(file).name(d+1);
 
-                fprintf(<span class="string">'\t Analysing: %s \n'</span>, fileName)
-                fprintf(<span class="string">'\t\t Arm of interest: %s \n'</span>,  arm)
-                <span class="keyword">if</span> strcmp(arm, involved)
-                    fprintf(<span class="string">'\t\t this is the affected side \n'</span>)
-                <span class="keyword">else</span>
-                    fprintf(<span class="string">'\t\t this is the unaffected side \n'</span>)
-                <span class="keyword">end</span>
+                    fprintf(<span class="string">'\t Analysing: %s \n'</span>, fileName)
+                    fprintf(<span class="string">'\t\t Arm of interest: %s \n'</span>,  arm)
+                    <span class="keyword">if</span> strcmp(arm, involved)
+                        fprintf(<span class="string">'\t\t this is the affected side \n'</span>)
+                    <span class="keyword">else</span>
+                        fprintf(<span class="string">'\t\t this is the unaffected side \n'</span>)
+                    <span class="keyword">end</span>
 </pre><pre class="codeoutput">	 Analysing: ABD_L_001 
 		 Arm of interest: L 
-		 this is the affected side 
+		 this is the unaffected side 
 </pre><pre class="codeoutput">	 Analysing: ABD_R_001 
 		 Arm of interest: R 
-		 this is the unaffected side 
-</pre><h2 id="5">2.1 Load xsens data</h2><p>Change the filename here to the name of the file you would like to import</p><pre class="codeinput">                fprintf(<span class="string">'\t \t %s: read xsens file \n'</span>, content(file).name)
-                [sensorData, segmentData, jointData, tree]= MVN(file_ik);
-                <span class="keyword">if</span> isfield(tree, <span class="string">'fileComments'</span>)
-                    fprintf(<span class="string">'\t \t \t Comment in file: %s \n'</span>, tree.fileComments)
-                <span class="keyword">end</span>
-
-                <span class="keyword">if</span> contains(arm, <span class="string">'L'</span>)
-                    jointno     = 12;
-                <span class="keyword">else</span>
-                    jointno     = 8;
-                <span class="keyword">end</span>
-
-                <span class="keyword">if</span> strcmp(movement, <span class="string">'ABD'</span>)
-                    col = 1;
-                    convention = <span class="string">'jointAngleXZY'</span>;
-                <span class="keyword">elseif</span> strcmp(movement, <span class="string">'AF'</span>)
-                    col = [];
-                    convention = <span class="string">'jointAngle'</span>;
-                <span class="keyword">elseif</span> strcmp(movement, <span class="string">'EXO'</span>)
-                    col = [];
-                    convention = <span class="string">'jointAngle'</span>;
-                <span class="keyword">end</span>
-
-                [peakLoc, peakMag] = peakfinder(jointData(jointno).(convention)(:,col), [],-5,-1,false);
-
-                <span class="keyword">if</span> isempty(peakMag)
-</pre><pre>We find the peak magnitude, and based on that mannitude
-we scale sine signal to match the height of the ROM
-repetition
-After that, we match the sine signal with the full ROM
-signal and match the individual repetitions.</pre><pre class="codeinput">                    [peakLoc, peakMag] = peakfinder(jointData(jointno).(convention)(:,col), [],[],1,false);
-
-                    iStart = zeros(size(peakMag));
-                    iStop = zeros(size(peakMag));
-                    norm_data = zeros(size(peakMag,1),101);
-
-                    figure;
-                    plot(jointData(jointno).(convention)(:,col))
-                    hold <span class="string">on</span>;
-
-                    temp = jointData(jointno).(convention)(:,col);
-                    <span class="keyword">for</span> idx = 1:size(peakMag,1)
-</pre><pre class="codeinput">                        t=0:0.01:1;
-                        f=1;
-                        x = sin(pi*f*t) * peakMag(idx);
-
-                        [iStart(idx,1), iStop(idx,1)] = findsignal(temp, x,<span class="string">'TimeAlignment'</span>,<span class="string">'dtw'</span>,<span class="string">'Metric'</span>,<span class="string">'absolute'</span>);
-
-                        plot(iStart(idx):iStop(idx), jointData(jointno).(convention)(iStart(idx):iStop(idx),col), <span class="string">'LineWidth'</span>, 1.5)
-
-                        temp(iStart(idx,1):iStop(idx,1)) = 0;
-</pre><img vspace="5" hspace="5" src="ROM_preprocessing_01.png" alt=""> <img vspace="5" hspace="5" src="ROM_preprocessing_02.png" alt=""> <img vspace="5" hspace="5" src="ROM_preprocessing_03.png" alt=""> <img vspace="5" hspace="5" src="ROM_preprocessing_04.png" alt=""> <img vspace="5" hspace="5" src="ROM_preprocessing_05.png" alt=""> <img vspace="5" hspace="5" src="ROM_preprocessing_06.png" alt=""> <h2 id="8">normalise the data to 100 data points</h2><pre class="codeinput">                        norm_data(idx, :) = normalisation(jointData(jointno).(convention)(iStart(idx):iStop(idx),col), []);
-</pre><pre class="codeinput">                    <span class="keyword">end</span>
-                    clear <span class="string">temp</span>
-</pre><pre>Prep data for export to excel.</pre><pre class="codeinput">                    norm_mean = mean(norm_data);
-
-                    <span class="keyword">if</span> strcmp(arm, involved)
-                        BC.aff.(Timepoint)(rownr,:) = norm_mean;
-                    <span class="keyword">else</span>
-                        BC.unaff.(Timepoint)(rownr,:) = norm_mean;
+		 this is the affected side 
+</pre><h2 id="8">2.1 Load xsens data</h2><p>Change the filename here to the name of the file you would like to import</p><pre class="codeinput">                    fprintf(<span class="string">'\t \t %s: read xsens file \n'</span>, content(file).name)
+                    [sensorData, segmentData, jointData, tree]= MVN(file_ik);
+                    <span class="keyword">if</span> isfield(tree, <span class="string">'fileComments'</span>)
+                        fprintf(<span class="string">'\t \t \t Comment in file: %s \n'</span>, tree.fileComments)
                     <span class="keyword">end</span>
-</pre><pre class="codeinput">                <span class="keyword">else</span>
-                    fprintf(<span class="string">'\t \t %s: There are lange minima \n'</span>, content(file).name)
-                    fprintf(<span class="string">'\t \t check the data'</span>)
-                <span class="keyword">end</span><span class="comment">% extra check in the data. If there are large minima in the data, don't perform the script</span>
+
+                    <span class="keyword">if</span> contains(arm, <span class="string">'L'</span>)
+                        jointno     = 12;
+                    <span class="keyword">elseif</span> contains(arm, <span class="string">'R'</span>)
+                        jointno     = 8;
+                    <span class="keyword">else</span>
+                        error(<span class="string">'Arm is not properly defined in file name'</span>)
+                    <span class="keyword">end</span>
+
+                    <span class="keyword">if</span> strcmp(movement, <span class="string">'ABD'</span>)
+                        prim = 1;
+                        convention = <span class="string">'jointAngleXZY'</span>;
+                        extrema = 1;
+
+                        <span class="keyword">if</span> secondary
+                            sec = [2,3];
+                            sec_names = {<span class="string">'EXO'</span>, <span class="string">'AF'</span>};
+                        <span class="keyword">end</span>
+                    <span class="keyword">elseif</span> strcmp(movement, <span class="string">'AF'</span>)
+                        prim = 3;
+                        convention = <span class="string">'jointAngle'</span>;
+                        extrema = 1;
+
+                        <span class="keyword">if</span> secondary
+                            sec = [1,2];
+                            sec_names = {<span class="string">'ABD'</span>, <span class="string">'EXO'</span>};
+                        <span class="keyword">end</span>
+                    <span class="keyword">elseif</span> strcmp(movement, <span class="string">'EXO'</span>)
+                        prim = 2;
+                        convention = <span class="string">'jointAngle'</span>;
+                        extrema = -1;
+
+                        <span class="keyword">if</span> secondary
+                            sec = [1,3];
+                            sec_names = {<span class="string">'ABD'</span>, <span class="string">'AF'</span>};
+                        <span class="keyword">end</span>
+                    <span class="keyword">end</span>
+
+                    df = jointData(jointno).(convention)(:,prim);
 </pre><pre class="codeoutput">	 	 ABD_L-001.mvnx: read xsens file 
 </pre><pre class="codeoutput">	 	 ABD_R-001.mvnx: read xsens file 
-</pre><pre class="codeinput">            <span class="keyword">end</span> <span class="comment">% if contains movement name and .mvnx</span>
+</pre><h2 id="9">extract repetitions</h2><pre class="codeinput">                    [iStart, iStop, signal] = signalmatching(df, extrema, plot_or_not, subj_name, content(file).name);
+</pre><img vspace="5" hspace="5" src="ROM_preprocessing_01.png" alt=""> <img vspace="5" hspace="5" src="ROM_preprocessing_03.png" alt=""> <h2 id="10">double check</h2><p>if the absolute difference between iStart and iStop is smaller than 75 samples, there is a high likelyhood that signal matching didn't converge properly. Then you will need to select all the individual start and stop indices manually by cliking in the graph. It might be that some are well defined</p><pre class="codeinput">                    div = abs(iStart - iStop);
+                    <span class="keyword">if</span> sum(div &lt; 75)
+                        fprintf(<span class="string">'\t \t %s signal matching did not properly converge \n'</span>, content(file).name)
+                        fprintf(<span class="string">'\t \t %s: Please refine the borders of the repetitions \n'</span>, content(file).name)
+
+                        figure(<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="string">'Position'</span>,[0.1 0.1 0.75 0.75]);
+                        plot(df); hold <span class="string">on</span>
+                        <span class="keyword">for</span> idx = 1:size(iStart,1)
+                            plot(iStart(idx):iStop(idx), df(iStart(idx):iStop(idx)), <span class="string">'o'</span>, <span class="string">'MarkerSize'</span>,2)
+                        <span class="keyword">end</span>
+                        title(<span class="string">"Manual segmentation iStart repetitions: "</span> + content(file).name)
+                        [loc, ~] = ginput(6);
+
+                        <span class="keyword">if</span> ~isempty(loc)
+                            iStart = round(loc(1:2:end));
+                            iStop = round(loc(2:2:end));
+
+                            clear <span class="string">loc</span>
+                            close <span class="string">gcf</span>
+
+                            warning(<span class="string">'signal matching did not converge \n iStart and iStop manually selected'</span>)
+                        <span class="keyword">else</span>
+                            error(<span class="string">'iStart and iStop are not defined'</span>)
+                        <span class="keyword">end</span>
+                    <span class="keyword">end</span>
+</pre><h2 id="11">normalise the data to 100 data points</h2><pre class="codeinput">                    norm_data = zeros(size(iStop,1), 101);
+                    <span class="keyword">for</span> idx=1:size(iStart,1)
+                        norm_data(idx, :) = normalisation(df(iStart(idx):iStop(idx)), []);
+                    <span class="keyword">end</span>
+</pre><h2 id="12">display the results</h2><pre class="codeinput">                    <span class="keyword">if</span> plot_or_not
+                        figure(<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="string">'Position'</span>,[0 0 1 1]);
+                        t = tiledlayout(1,3, <span class="string">'TileSpacing'</span>,<span class="string">'Compact'</span>);
+
+                        ax1 = nexttile([1 2]);
+                        plot(df); hold <span class="string">on</span>
+                        <span class="keyword">for</span> idx = 1:size(iStart,1)
+                            plot(iStart(idx):iStop(idx), df(iStart(idx):iStop(idx)), <span class="string">'o'</span>, <span class="string">'MarkerSize'</span>,3)
+                        <span class="keyword">end</span>
+                        title(<span class="string">'original timecurve with individual reps highlited'</span>)
+
+                        ax2 = nexttile;
+                        plot(norm_data')
+                        xlim([1 101])
+                        title(<span class="string">'timenormalised timecurved of the indiv reps'</span>)
+
+                        linkaxes([ax1 ax2],<span class="string">'y'</span>)
+                        sgtitle([<span class="string">'Subject: '</span>,subj_name, <span class="string">' File: '</span>, content(file).name])
+                    <span class="keyword">end</span>
+
+                    <span class="comment">% scapulo angles</span>
+                    <span class="keyword">if</span> scapulo
+
+                    <span class="keyword">end</span>
+
+                    <span class="comment">% secondary angles</span>
+                    <span class="keyword">if</span> secondary
+
+
+
+                    <span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="ROM_preprocessing_02.png" alt=""> <img vspace="5" hspace="5" src="ROM_preprocessing_04.png" alt=""> <h2 id="13">export to excel</h2><p>If the file already exists, than it will append the data to the already exsising file.</p><pre class="codeinput">                    <span class="keyword">if</span> check_complete
+</pre><pre class="codeinput">                        norm_mean = mean(norm_data);
+                        temp.prim.table = table(string(subj_name), string(Timepoint), norm_mean);
+                        temp.prim.table.Properties.VariableNames = {<span class="string">'ppID'</span>, <span class="string">'Time'</span>, char(movement)};
+
+                        <span class="keyword">if</span> strcmp(arm, involved)
+                            filename = fullfile(path.out, [<span class="string">'ROM_aff_'</span>, movement, <span class="string">'.xlsx'</span>]);
+                        <span class="keyword">else</span>
+                            filename = fullfile(path.out, [<span class="string">'ROM_unaff_'</span>, movement, <span class="string">'.xlsx'</span>]);
+                        <span class="keyword">end</span>
+
+
+                        writetable(temp.prim.table, filename, <span class="string">'WriteMode'</span>, <span class="string">'append'</span>, sheet=string(movement))
+</pre><h2 id="15">extract scapulo or secondary angles if applicable</h2><pre class="codeinput">                        <span class="keyword">if</span> scapulo
+                            <span class="keyword">if</span> strcmp(arm, <span class="string">'L'</span>)
+                                sc_no = 11;
+                            <span class="keyword">elseif</span> strcmp(arm, <span class="string">'R'</span>)
+                                sc_no = 8;
+                            <span class="keyword">end</span>
+
+                            <span class="keyword">for</span> idx = 1:size(iStart,1)
+                                norm_data_scapulo.X(idx, :) = normalisation(jointData(sc_no).jointAngle(iStart(idx):iStop(idx),1), []);
+                                norm_data_scapulo.Y(idx, :) = normalisation(jointData(sc_no).jointAngle(iStart(idx):iStop(idx),2), []);
+                                norm_data_scapulo.Z(idx, :) = normalisation(jointData(sc_no).jointAngle(iStart(idx):iStop(idx),3), []);
+                            <span class="keyword">end</span>
+
+                            scapulo_mean.X = mean(norm_data_scapulo.X);
+                            scapulo_mean.Y = mean(norm_data_scapulo.Y);
+                            scapulo_mean.Z = mean(norm_data_scapulo.Z);
+
+                            temp.scapulo.X = table(string(subj_name), string(Timepoint), scapulo_mean.X);
+                            temp.scapulo.Y = table(string(subj_name), string(Timepoint), scapulo_mean.Y);
+                            temp.scapulo.Z = table(string(subj_name), string(Timepoint), scapulo_mean.Z);
+
+                            writetable(temp.scapulo.X, filename, <span class="string">"WriteMode"</span>, <span class="string">'append'</span>, sheet = <span class="string">'ScapuloX'</span>)
+                            writetable(temp.scapulo.Y, filename, <span class="string">"WriteMode"</span>, <span class="string">'append'</span>, sheet = <span class="string">'ScapuloY'</span>)
+                            writetable(temp.scapulo.Z, filename, <span class="string">"WriteMode"</span>, <span class="string">'append'</span>, sheet = <span class="string">'ScapuloZ'</span>)
+                        <span class="keyword">end</span>
+
+                        <span class="keyword">if</span> secondary
+                            <span class="keyword">for</span> idx = 1:size(iStart,1)
+                                norm_data_sec.(sec_names{1})(idx,:) = normalisation(jointData(jointno).(convention)(iStart(idx):iStop(idx),1), []);
+                                norm_data_sec.(sec_names{2})(idx,:) = normalisation(jointData(jointno).(convention)(iStart(idx):iStop(idx),2), []);
+
+                            <span class="keyword">end</span>
+
+                            secondary_mean.(sec_names{1}) = mean(norm_data_sec.(sec_names{1}));
+                            secondary_mean.(sec_names{2}) = mean(norm_data_sec.(sec_names{2}));
+
+                            temp.sec.(sec_names{1}) = table(string(subj_name), string(Timepoint), secondary_mean.(sec_names{1}));
+                            temp.sec.(sec_names{2}) = table(string(subj_name), string(Timepoint), secondary_mean.(sec_names{2}));
+
+                            writetable(temp.sec.(sec_names{1}), filename, <span class="string">'WriteMode'</span>,<span class="string">'append'</span>, sheet = string(sec_names{1}))
+                            writetable(temp.sec.(sec_names{2}), filename, <span class="string">'WriteMode'</span>,<span class="string">'append'</span>, sheet = string(sec_names{2}))
+                        <span class="keyword">end</span>
+</pre><pre class="codeinput">                    <span class="keyword">end</span>
+</pre><pre class="codeinput">                <span class="keyword">end</span> <span class="comment">% if contains movement name and .mvnx</span>
+            <span class="keyword">catch</span> ME
+                <span class="comment">% this section of code displays the subject and filenames</span>
+                <span class="comment">% on which an error occured</span>
+                <span class="comment">%                 formatSpec = '\t ERROR: %s at TIMEPOINT: %s in FILENAME: %s \n %s LINE: %s ';</span>
+                <span class="comment">%                 fprintf(formatSpec, subj_name, Timepoint, fileName, ME.message, num2str(ME.stack.line));</span>
+                <span class="comment">%                 disp(' ')</span>
+
+                fprintf(<span class="string">'\t\t ERROR: %s at TIMEPOINT: %s in FILENAME: %s \n \t\t %s LINE: %s \n'</span>, <span class="keyword">...</span>
+                    subj_name, Timepoint, fileName, ME.message, num2str(ME.stack(:).line))
+            <span class="keyword">end</span><span class="comment">% try</span>
         <span class="keyword">end</span><span class="comment">% loop through files</span>
     <span class="keyword">end</span><span class="comment">% subject exists</span>
+    clear <span class="string">temp</span> <span class="string">df</span>
+    fprintf(<span class="string">'*********Finished %s **********\n'</span>, subj_name)
+    fprintf(<span class="string">'\n'</span>)
 <span class="keyword">end</span><span class="comment">% end loop through subjects</span>
-</pre><pre class="codeoutput">
-&lt;strong&gt;Processing: BC_002 at Timepoint: T0....... 
-&lt;/strong&gt;	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_002\Xsens\T0\Reproces 
+
+<span class="comment">% back to original path</span>
+cd(path.orig)
+</pre><pre class="codeoutput">Processing: BC_003 at Timepoint: T0....... 
+	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_003\Xsens\T0\Reproces 
+*********Finished BC_003 **********
+
 </pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2021b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% Extract the range of motion data and write to excel.
-% This code extracts the range of motion timecurve as calculated by the xsens
-% system. Data collected with Xsens MVN 2021.2.
+% This is the main file for the range of motion timecurve analysis as
+% calculated by the xsens system. Data collected with Xsens MVN 2021.2.
 % Nescesary functions:
-%       1) MVN.m
-%       2) load_mvnx.m
+%
+% # MVN.m
+% # load_mvnx.m
+% # peakfinder.m
+% # signalmatching.m
+% # normalisation.m
+%
+%
 % code written by
-%       dr. Jill Emmerzaal
-%       KU Leuven, Tervuursevest 101, box 1501
-%       Research Group for Rehabilitation in Internal Disorders
+%       dr. Jill Emmerzaal KU Leuven, Tervuursevest 101, box 1501 Research
+%       Group for Rehabilitation in Internal Disorders
 
 
 clearvars; close all; clc
 %% 1. input data
-cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
+%%
+%
+%  Specify:
+%
+% # Path where all the code is stored
+% # Path where all the code sections are stored (if not in path.orig)
+% # Timepoint you want to analyse (e.g. 'T0' or 'T1')
+% # movement you want to analyse (i.e. 'Af', 'EXO', or 'ABD'
+% # path where all the data is stored
+% # define if you want to check the data: plot_or_not = 1 & check_complete
+% = 0
+% # define if you want to safe the data: plot_or_not = 0 & check_complete =
+% 1
+% # define the range of subjects you want to analyse (subj = 1:10 runs the
+% first 10 subjects | subj = 10 only runs subject 10 | subj = (1:5 7:10)
+% runs subject 1 through 10 except 6 ect.)
+
+path.orig = "C:\Users\u0117545\Documents\GitHub\ULIFT_BC";
+cd(path.orig)
 addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
+addpath('C:\Users\u0117545\Documents\GitHub\ULIFT_BC')
 
-Timepoint   = 'T0';
-movement    =  {'ABD'};%, 'AF', 'EXO'}; %Abductie'; %Abductie Anteflexie Exorotatie
-path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
-%path.out    = fullfile(path.root,'Output','Database_ROM.mat');
-plot_or_not = 1;
-affected_table = readtable(fullfile(path.root, "Aangedane zijde.xlsx"));
+Timepoint       = 'T0';
+movement        =  'ABD';
+path.root       = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
+path.out        = fullfile(path.orig,'Output');
+plot_or_not     = 1;
+check_complete  = 1;
+affected_table  = readtable(fullfile(path.root, "Aangedane zijde.xlsx"));
 
+%% Specify joint angles to analyse
+%%
+% 
+% 
+% Scapulo also extracts the 3d scapulothoratic
+% movement during the primary movement secondary also include the other two
+% movements in the glenohumeral joint. e.g. if the momvent is ABD
+% (abduction) than primary will only extract the abduction movement from
+% the xsens data. scapulo, will extract abduction from the glenohumeral
+% joint, plus 3D scapulotoracaal angles. secondary will extract the all
+% glenohumaral joint angles. Thus, if you want glenohumeral abduction + the
+% scapulothoratic joint angles than: scapulo = 1; secondary = 0;
+scapulo     = 0;
+secondary   = 0;
 
 %% 2. load data
-for subj = 2%(2:10)%20:27
+for subj = 3
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -246,8 +407,7 @@ for subj = 2%(2:10)%20:27
         subj_name   = ['BC_', num2str(subj)];
     end
 
-    fprintf('\n')
-    cprintf('*text', 'Processing: %s at Timepoint: %s....... \n', subj_name, Timepoint)
+    fprintf('Processing: %s at Timepoint: %s....... \n', subj_name, Timepoint)
 
     path.subj   = fullfile(path.root, subj_name, 'Xsens', Timepoint, 'Reproces');
     check_subj  = exist(path.subj);
@@ -274,106 +434,238 @@ for subj = 2%(2:10)%20:27
 
         % Start loop through files per subject
         for file = 1:nfiles
-            if contains(content(file).name, movement) && contains(content(file).name, '.mvnx')
-                file_ik = content(file).name;
-                [~,name, ~] = fileparts(content(file).name);
-                [fileName] = regexprep(name, '-', '_');
+            try
+                % try  to run the following code, if an error occurs
+                % nothing will happen and no data will be exported.
+                % A file will be created with the subject name and
+                % timepoint that caused an error.
+                if contains(content(file).name, movement) && contains(content(file).name, '.mvnx')
+                    file_ik = content(file).name;
+                    [~,name, ~] = fileparts(content(file).name);
+                    [fileName] = regexprep(name, '-', '_');
 
-                d = strfind(name,'_');
-                arm = content(file).name(d+1);
+                    d = strfind(name,'_');
+                    arm = content(file).name(d+1);
 
-                fprintf('\t Analysing: %s \n', fileName)
-                fprintf('\t\t Arm of interest: %s \n',  arm)
-                if strcmp(arm, involved)
-                    fprintf('\t\t this is the affected side \n')
-                else
-                    fprintf('\t\t this is the unaffected side \n')
-                end
-
-                %% 2.1 Load xsens data
-                % Change the filename here to the name of the file you would like to import
-                fprintf('\t \t %s: read xsens file \n', content(file).name)
-                [sensorData, segmentData, jointData, tree]= MVN(file_ik);
-                if isfield(tree, 'fileComments')
-                    fprintf('\t \t \t Comment in file: %s \n', tree.fileComments)
-                end
-
-                if contains(arm, 'L')
-                    jointno     = 12;
-                else
-                    jointno     = 8;
-                end
-
-                if strcmp(movement, 'ABD')
-                    col = 1;
-                    convention = 'jointAngleXZY';
-                elseif strcmp(movement, 'AF')
-                    col = [];
-                    convention = 'jointAngle';
-                elseif strcmp(movement, 'EXO')
-                    col = [];
-                    convention = 'jointAngle';
-                end
-
-                [peakLoc, peakMag] = peakfinder(jointData(jointno).(convention)(:,col), [],-5,-1,false);
-
-                if isempty(peakMag)
-                    %%
-                    %
-                    %  We find the peak magnitude, and based on that mannitude
-                    %  we scale sine signal to match the height of the ROM
-                    %  repetition
-                    %  After that, we match the sine signal with the full ROM
-                    %  signal and match the individual repetitions.
-                    %
-
-                    [peakLoc, peakMag] = peakfinder(jointData(jointno).(convention)(:,col), [],[],1,false);
-
-                    iStart = zeros(size(peakMag));
-                    iStop = zeros(size(peakMag));
-                    norm_data = zeros(size(peakMag,1),101);
-
-                    figure;
-                    plot(jointData(jointno).(convention)(:,col))
-                    hold on;
-
-                    temp = jointData(jointno).(convention)(:,col);
-                    for idx = 1:size(peakMag,1)
-                        t=0:0.01:1;
-                        f=1;
-                        x = sin(pi*f*t) * peakMag(idx);
-
-                        [iStart(idx,1), iStop(idx,1)] = findsignal(temp, x,'TimeAlignment','dtw','Metric','absolute');
-
-                        plot(iStart(idx):iStop(idx), jointData(jointno).(convention)(iStart(idx):iStop(idx),col), 'LineWidth', 1.5)
-
-                        temp(iStart(idx,1):iStop(idx,1)) = 0;
-                        %% normalise the data to 100 data points
-                        norm_data(idx, :) = normalisation(jointData(jointno).(convention)(iStart(idx):iStop(idx),col), []);
-                    end
-                    clear temp
-                    %%
-                    %
-                    %  Prep data for export to excel.
-                    %
-                    %
-
-                    norm_mean = mean(norm_data);
-                  
+                    fprintf('\t Analysing: %s \n', fileName)
+                    fprintf('\t\t Arm of interest: %s \n',  arm)
                     if strcmp(arm, involved)
-                        BC.aff.(Timepoint)(rownr,:) = norm_mean;
+                        fprintf('\t\t this is the affected side \n')
                     else
-                        BC.unaff.(Timepoint)(rownr,:) = norm_mean;
+                        fprintf('\t\t this is the unaffected side \n')
                     end
 
-                else
-                    fprintf('\t \t %s: There are lange minima \n', content(file).name)
-                    fprintf('\t \t check the data')
-                end% extra check in the data. If there are large minima in the data, don't perform the script
-            end % if contains movement name and .mvnx
+                    %% 2.1 Load xsens data
+                    % Change the filename here to the name of the file you would like to import
+                    fprintf('\t \t %s: read xsens file \n', content(file).name)
+                    [sensorData, segmentData, jointData, tree]= MVN(file_ik);
+                    if isfield(tree, 'fileComments')
+                        fprintf('\t \t \t Comment in file: %s \n', tree.fileComments)
+                    end
+
+                    if contains(arm, 'L')
+                        jointno     = 12;
+                    elseif contains(arm, 'R')
+                        jointno     = 8;
+                    else
+                        error('Arm is not properly defined in file name')
+                    end
+
+                    if strcmp(movement, 'ABD')
+                        prim = 1;
+                        convention = 'jointAngleXZY';
+                        extrema = 1;
+
+                        if secondary
+                            sec = [2,3];
+                            sec_names = {'EXO', 'AF'};
+                        end
+                    elseif strcmp(movement, 'AF')
+                        prim = 3;
+                        convention = 'jointAngle';
+                        extrema = 1;
+
+                        if secondary
+                            sec = [1,2];
+                            sec_names = {'ABD', 'EXO'};
+                        end
+                    elseif strcmp(movement, 'EXO')
+                        prim = 2;
+                        convention = 'jointAngle';
+                        extrema = -1;
+
+                        if secondary
+                            sec = [1,3];
+                            sec_names = {'ABD', 'AF'};
+                        end
+                    end
+
+                    df = jointData(jointno).(convention)(:,prim);
+
+                    %% extract repetitions
+                    [iStart, iStop, signal] = signalmatching(df, extrema, plot_or_not, subj_name, content(file).name);
+
+                    %% double check
+                    %
+                    % if the absolute difference between iStart and iStop
+                    % is smaller than 75 samples, there is a high
+                    % likelyhood that signal matching didn't converge
+                    % properly. Then you will need to select all the individual
+                    % start and stop indices manually by cliking in the
+                    % graph. It might be that some are well defined
+                    div = abs(iStart - iStop);
+                    if sum(div < 75)
+                        fprintf('\t \t %s signal matching did not properly converge \n', content(file).name)
+                        fprintf('\t \t %s: Please refine the borders of the repetitions \n', content(file).name)
+
+                        figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
+                        plot(df); hold on
+                        for idx = 1:size(iStart,1)
+                            plot(iStart(idx):iStop(idx), df(iStart(idx):iStop(idx)), 'o', 'MarkerSize',2)
+                        end
+                        title("Manual segmentation iStart repetitions: " + content(file).name)
+                        [loc, ~] = ginput(6);
+
+                        if ~isempty(loc)
+                            iStart = round(loc(1:2:end));
+                            iStop = round(loc(2:2:end));
+
+                            clear loc
+                            close gcf
+
+                            warning('signal matching did not converge \n iStart and iStop manually selected')
+                        else
+                            error('iStart and iStop are not defined')
+                        end
+                    end
+                    %% normalise the data to 100 data points
+                    norm_data = zeros(size(iStop,1), 101);
+                    for idx=1:size(iStart,1)
+                        norm_data(idx, :) = normalisation(df(iStart(idx):iStop(idx)), []);
+                    end
+
+                    %% display the results
+                    if plot_or_not
+                        figure('Units','normalized','Position',[0 0 1 1]);
+                        t = tiledlayout(1,3, 'TileSpacing','Compact');
+
+                        ax1 = nexttile([1 2]);
+                        plot(df); hold on
+                        for idx = 1:size(iStart,1)
+                            plot(iStart(idx):iStop(idx), df(iStart(idx):iStop(idx)), 'o', 'MarkerSize',3)
+                        end
+                        title('original timecurve with individual reps highlited')
+
+                        ax2 = nexttile;
+                        plot(norm_data')
+                        xlim([1 101])
+                        title('timenormalised timecurved of the indiv reps')
+
+                        linkaxes([ax1 ax2],'y')
+                        sgtitle(['Subject: ',subj_name, ' File: ', content(file).name])
+                    end
+
+                    % scapulo angles
+                    if scapulo
+
+                    end
+
+                    % secondary angles
+                    if secondary
+
+
+
+                    end
+
+                    %% export to excel
+                    % If the file already exists, than it will append the
+                    % data to the already exsising file.
+                    if check_complete
+                        norm_mean = mean(norm_data);
+                        temp.prim.table = table(string(subj_name), string(Timepoint), norm_mean);
+                        temp.prim.table.Properties.VariableNames = {'ppID', 'Time', char(movement)};
+
+                        if strcmp(arm, involved)
+                            filename = fullfile(path.out, ['ROM_aff_', movement, '.xlsx']);
+                        else
+                            filename = fullfile(path.out, ['ROM_unaff_', movement, '.xlsx']);
+                        end
+
+
+                        writetable(temp.prim.table, filename, 'WriteMode', 'append', sheet=string(movement))
+
+                        %% extract scapulo or secondary angles if applicable
+                        if scapulo
+                            if strcmp(arm, 'L')
+                                sc_no = 11;
+                            elseif strcmp(arm, 'R')
+                                sc_no = 8;
+                            end
+
+                            for idx = 1:size(iStart,1)
+                                norm_data_scapulo.X(idx, :) = normalisation(jointData(sc_no).jointAngle(iStart(idx):iStop(idx),1), []);
+                                norm_data_scapulo.Y(idx, :) = normalisation(jointData(sc_no).jointAngle(iStart(idx):iStop(idx),2), []);
+                                norm_data_scapulo.Z(idx, :) = normalisation(jointData(sc_no).jointAngle(iStart(idx):iStop(idx),3), []);
+                            end
+
+                            scapulo_mean.X = mean(norm_data_scapulo.X);
+                            scapulo_mean.Y = mean(norm_data_scapulo.Y);
+                            scapulo_mean.Z = mean(norm_data_scapulo.Z);
+
+                            temp.scapulo.X = table(string(subj_name), string(Timepoint), scapulo_mean.X);
+                            temp.scapulo.Y = table(string(subj_name), string(Timepoint), scapulo_mean.Y);
+                            temp.scapulo.Z = table(string(subj_name), string(Timepoint), scapulo_mean.Z);
+
+                            writetable(temp.scapulo.X, filename, "WriteMode", 'append', sheet = 'ScapuloX')
+                            writetable(temp.scapulo.Y, filename, "WriteMode", 'append', sheet = 'ScapuloY')
+                            writetable(temp.scapulo.Z, filename, "WriteMode", 'append', sheet = 'ScapuloZ')
+                        end
+
+                        if secondary
+                            for idx = 1:size(iStart,1)
+                                norm_data_sec.(sec_names{1})(idx,:) = normalisation(jointData(jointno).(convention)(iStart(idx):iStop(idx),1), []);
+                                norm_data_sec.(sec_names{2})(idx,:) = normalisation(jointData(jointno).(convention)(iStart(idx):iStop(idx),2), []);
+
+                            end
+
+                            secondary_mean.(sec_names{1}) = mean(norm_data_sec.(sec_names{1}));
+                            secondary_mean.(sec_names{2}) = mean(norm_data_sec.(sec_names{2}));
+
+                            temp.sec.(sec_names{1}) = table(string(subj_name), string(Timepoint), secondary_mean.(sec_names{1}));
+                            temp.sec.(sec_names{2}) = table(string(subj_name), string(Timepoint), secondary_mean.(sec_names{2}));
+
+                            writetable(temp.sec.(sec_names{1}), filename, 'WriteMode','append', sheet = string(sec_names{1}))
+                            writetable(temp.sec.(sec_names{2}), filename, 'WriteMode','append', sheet = string(sec_names{2}))
+                        end
+                    end
+                end % if contains movement name and .mvnx
+            catch ME
+                % this section of code displays the subject and filenames
+                % on which an error occured
+                %                 formatSpec = '\t ERROR: %s at TIMEPOINT: %s in FILENAME: %s \n %s LINE: %s ';
+                %                 fprintf(formatSpec, subj_name, Timepoint, fileName, ME.message, num2str(ME.stack.line));
+                %                 disp(' ')
+
+                fprintf('\t\t ERROR: %s at TIMEPOINT: %s in FILENAME: %s \n \t\t %s LINE: %s \n', ...
+                    subj_name, Timepoint, fileName, ME.message, num2str(ME.stack(:).line))
+            end% try
         end% loop through files
     end% subject exists
+    clear temp df
+    fprintf('*********Finished %s **********\n', subj_name)
+    fprintf('\n')
 end% end loop through subjects
+
+% back to original path
+cd(path.orig)
+
+
+
+
+
+
+
+
 
 ##### SOURCE END #####
 --></body></html>
