@@ -40,11 +40,11 @@ addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 addpath('C:\Users\u0117545\Documents\GitHub\ULIFT_BC')
 
 Timepoint       = 'T0';
-movement        =  'ABD';
+movement        =  'EXO';
 path.root       = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 path.out        = fullfile(path.orig,'Output');
 plot_or_not     = 1;
-check_complete  = 1;
+check_complete  = 0;
 affected_table  = readtable(fullfile(path.root, "Aangedane zijde.xlsx"));
 
 %% Specify joint angles to analyse
@@ -63,7 +63,7 @@ scapulo     = 0;
 secondary   = 0;
 
 %% 2. load data
-for subj = 3
+for subj = (1:3)
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100

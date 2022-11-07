@@ -41,7 +41,7 @@ safe_to_excel   = 1;
 Affected_table = readtable(fullfile(path.root,"Aangedane zijde.xlsx"));
 
 %% 2) Load data
-for subj = 1:23%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 21) == proefpersonen zonder "rust" data.
+for subj = (1:23)%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 21) == proefpersonen zonder "rust" data.
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -545,7 +545,7 @@ if safe_to_excel
         "WriteMode", "append", "Sheet", Timepoint)
 
     writetable(MovementQual.aff, 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\MoveQual_aff.xlsx', 'FileType', 'spreadsheet', ...
-        'WriteMode', 'append', 'sheet', Timepoint)
+        'WriteMode', "append", 'sheet', Timepoint)
 
 
 end
