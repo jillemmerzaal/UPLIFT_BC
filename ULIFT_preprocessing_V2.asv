@@ -6,48 +6,33 @@
 % This is the main file for the analysis of the ULIFT data collected within
 % that project and spefied to only run that data.
 
-% code written by: dr. Jill Emmerzaal (jillemmerzaal@gmail.com)
-% last update v1 14/11/2022
-% functions needed for this script:
 %%
 % 
-% * MVN.m
-% * load_mvnx.m
-% * peakfinder.m
-% * normalisation.m
-
-
-
-%%
-% 
-%  Analysis steps within this code
+%  Analysis teps within this code
 %  input the data by setting the three folders. 
+% the current directory
 % 
-% # the current directory where the CODE is located
-% # the root folder where all the PARTICIPANTS are located
+% # the current directory
+% # ITEM2
 % 
-%  Then you will need to specify which time point you want to analyse and
-%  whether you want to plot the data (1) or not (0)
+%  where all the code is located. 2)
 % 
+
 
 
 clearvars; close all; clc
-
-%% set input path
+%% 1. input data
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 addpath("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
-
+Timepoint   = 'T1';
+movement    = "ULIFT";
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 path.out    = fullfile(path.root,'Output','Database_ULIFT.mat');
 path.table  = fullfile(path.root,'Output');
-%% input data
-
-Timepoint   = 'T1';
-movement    = "ULIFT";
 plot_or_not = 1;
 
-%diary myDiaryFile
+diary myDiaryFile
 
 %% 2. load data
 for subj = 14%20:27
@@ -62,7 +47,7 @@ for subj = 14%20:27
 
     
     fprintf('\n')
-    fprintf('Processing: %s at Timepoint: %s....... \n', subj_name, Timepoint)
+    cprintf('*text', 'Processing: %s at Timepoint: %s....... \n', subj_name, Timepoint)
 
     path.subj   = fullfile(path.root, subj_name, 'Xsens', Timepoint, 'Reproces');
     check_subj  = exist(path.subj);
@@ -108,7 +93,7 @@ for subj = 14%20:27
                         clear temp
                     end
 
-                    fprintf('\t Analysing: %s \n', fileName)
+                    cprintf('*text', '\t Analysing: %s \n', fileName)
                     fprintf('\t\t Arm of interest: %s \n',  arm)
 
                     %% 2.1 Load xsens data
@@ -938,4 +923,4 @@ cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 % end
 
 
-%diary off
+diary off
