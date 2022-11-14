@@ -1,0 +1,1979 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Extract the results of the ULIFT task</title><meta name="generator" content="MATLAB 9.11"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2022-11-14"><meta name="DC.source" content="ULIFT_preprocessing_V2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Extract the results of the ULIFT task</h1><!--introduction--><pre>for the UPLIFT
+project. This code was comissioned by Prof. A. De Groef and Prof. L.
+De Beats for the UPLIFT-BC project that analyses movement in people who
+survived breast cancer.
+This is the main file for the analysis of the ULIFT data collected within
+that project and spefied to only run that data.</pre><p>code written by: dr. Jill Emmerzaal (<a href="mailto:jillemmerzaal@gmail.com">jillemmerzaal@gmail.com</a>) last update v1 14/11/2022 functions needed for this script:</p><div><ul><li>MVN.m</li><li>load_mvnx.m</li><li>peakfinder.m</li><li>normalisation.m</li></ul></div><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#2">set input path</a></li><li><a href="#3">input data</a></li><li><a href="#4">2. load data</a></li><li><a href="#7">2.1 Load xsens data</a></li><li><a href="#8">2.2 Define data needed for segmentation</a></li><li><a href="#9">Step 1: define change points based on position data</a></li><li><a href="#10">set counters</a></li><li><a href="#11">Step 2: Start and end of the ULIFT task</a></li><li><a href="#12">Step 3: End phase 1 and start phase 4</a></li><li><a href="#13">in T_phase 1 and T_phase 4 should be 3 peaks of the posision data.</a></li><li><a href="#14">middle phase 1</a></li><li><a href="#15">middle phase 4</a></li><li><a href="#16">display the results</a></li><li><a href="#17">extract relevant kinematics</a></li><li><a href="#18">clear certain variables</a></li><li><a href="#20">Save data</a></li><li><a href="#22">plot joint angle data</a></li></ul></div><pre>Analysis steps within this code
+input the data by setting the three folders.</pre><div><ol><li>the current directory where the CODE is located</li><li>the root folder where all the PARTICIPANTS are located</li></ol></div><pre>Then you will need to specify which time point you want to analyse and
+whether you want to plot the data (1) or not (0)
+And the range of subjects you want to run. (i.e. subj = (1) runs
+participant 1. subj = (1:10) runs subject 1 to 10. subj = (1:5, 7:10)
+runs subject 1 to 10 except subject 6.</pre><pre class="codeinput">clearvars; close <span class="string">all</span>; clc
+</pre><h2 id="2">set input path</h2><pre class="codeinput">cd(<span class="string">"C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT"</span>)
+addpath(<span class="string">"C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT"</span>)
+path.root   = <span class="string">'C:\Users\u0117545\KU Leuven\An De Groef - DATA'</span>;
+path.out    = fullfile(path.root,<span class="string">'Output'</span>,<span class="string">'Database_ULIFT.mat'</span>);
+path.table  = fullfile(path.root,<span class="string">'Output'</span>);
+</pre><h2 id="3">input data</h2><pre class="codeinput">Timepoint   = <span class="string">'T0'</span>;
+movement    = <span class="string">"ULIFT"</span>;
+plot_or_not = 1;
+
+<span class="comment">%diary myDiaryFile</span>
+</pre><h2 id="4">2. load data</h2><pre class="codeinput"><span class="keyword">for</span> subj = (1)
+</pre><pre class="codeinput">    <span class="keyword">if</span> subj &lt; 10
+        subj_name   = [<span class="string">'BC_00'</span> num2str(subj)];
+    <span class="keyword">elseif</span> subj &lt; 100
+        subj_name   = [<span class="string">'BC_0'</span> num2str(subj)];
+    <span class="keyword">else</span>
+        subj_name   = [<span class="string">'BC_'</span>, num2str(subj)];
+    <span class="keyword">end</span>
+
+
+
+    fprintf(<span class="string">'\n'</span>)
+    fprintf(<span class="string">'Processing: %s at Timepoint: %s....... \n'</span>, subj_name, Timepoint)
+
+    path.subj   = fullfile(path.root, subj_name, <span class="string">'Xsens'</span>, Timepoint, <span class="string">'Reproces'</span>);
+    check_subj  = exist(path.subj);
+
+    <span class="keyword">if</span> check_subj == 7
+        <span class="comment">%T = readtable(fullfile(path.root, 'Output', [subj_name, '.xlsx']));</span>
+
+        cd(path.subj)
+
+        fprintf(<span class="string">'\t current directory changed: %s \n'</span>, path.subj)
+        <span class="comment">%initialize counters</span>
+        counterR        = 0;
+        counterR_SSS    = 0;
+        counterL        = 0;
+        counterL_SSS    = 0;
+
+        counterRUN      = 0;
+        content = dir(path.subj);
+        nfiles = size(content,1);
+
+        <span class="comment">% Start loop through ULIFT files per subject</span>
+        <span class="keyword">for</span> file = 1:nfiles
+            <span class="keyword">try</span>
+                <span class="comment">% try  to run the following code, if an error occurs</span>
+                <span class="comment">% nothing will happen and no data will be exported.</span>
+                <span class="comment">% A file will be created with the subject name and</span>
+                <span class="comment">% timepoint that caused an error.</span>
+                <span class="keyword">if</span> contains(content(file).name, movement) &amp;&amp; contains(content(file).name, <span class="string">'.mvnx'</span>)
+</pre><pre class="codeinput">                    number  = str2num(content(file).name(13:end-5));
+
+                    file_ik = content(file).name;
+
+                    [~,name, ~] = fileparts(content(file).name);
+                    [fileName] = regexprep(name, <span class="string">'-'</span>, <span class="string">'_'</span>);
+
+                    d = strfind(name,<span class="string">'_'</span>);
+                    <span class="keyword">if</span> size(d,2) == 1
+                        arm = content(file).name(d+1);
+
+                    <span class="keyword">elseif</span> size(d,2) == 2
+                        temp = content(file).name(d(2)+1);
+                        arm = [temp, <span class="string">'_SSS'</span>]; <span class="comment">% SSS = self-selected speed</span>
+                        clear <span class="string">temp</span>
+                    <span class="keyword">end</span>
+
+                    fprintf(<span class="string">'\t Analysing: %s \n'</span>, fileName)
+                    fprintf(<span class="string">'\t\t Arm of interest: %s \n'</span>,  arm)
+</pre><pre class="codeoutput">	 Analysing: ULIFT_L_001 
+		 Arm of interest: L 
+</pre><pre class="codeoutput">	 Analysing: ULIFT_L_002 
+		 Arm of interest: L 
+</pre><pre class="codeoutput">	 Analysing: ULIFT_L_003 
+		 Arm of interest: L 
+</pre><pre class="codeoutput">	 Analysing: ULIFT_R_001 
+		 Arm of interest: R 
+</pre><pre class="codeoutput">	 Analysing: ULIFT_R_002 
+		 Arm of interest: R 
+</pre><pre class="codeoutput">	 Analysing: ULIFT_R_003 
+		 Arm of interest: R 
+</pre><pre class="codeoutput">	 Analysing: ULIFT_R_L_001 
+		 Arm of interest: L_SSS 
+</pre><pre class="codeoutput">	 Analysing: ULIFT_R_L_002 
+		 Arm of interest: L_SSS 
+</pre><pre class="codeoutput">	 Analysing: ULIFT_R_L_003 
+		 Arm of interest: L_SSS 
+</pre><pre class="codeoutput">	 Analysing: ULIFT_R_R_001 
+		 Arm of interest: R_SSS 
+</pre><pre class="codeoutput">	 Analysing: ULIFT_R_R_002 
+		 Arm of interest: R_SSS 
+</pre><pre class="codeoutput">	 Analysing: ULIFT_R_R_003 
+		 Arm of interest: R_SSS 
+</pre><h2 id="7">2.1 Load xsens data</h2><p>Change the filename here to the name of the file you would like to import</p><pre class="codeinput">                    fprintf(<span class="string">'\t \t %s: read xsens file \n'</span>, content(file).name)
+                    [sensorData, segmentData, jointData, tree]= MVN(file_ik);
+                    <span class="keyword">if</span> isfield(tree, <span class="string">'fileComments'</span>)
+                        fprintf(<span class="string">'\t \t \t Comment in file: %s \n'</span>, tree.fileComments)
+                    <span class="keyword">end</span>
+
+                    <span class="keyword">if</span> contains(arm, <span class="string">'L'</span>)
+                        jointno     = 14;
+                        segmentno   = 14;
+                        sensorno    = 10;
+                    <span class="keyword">else</span>
+                        jointno     = 10;
+                        segmentno   = 10;
+                        sensorno    = 6;
+                    <span class="keyword">end</span>
+</pre><pre class="codeoutput">	 	 ULIFT_L-001.mvnx: read xsens file 
+</pre><pre class="codeoutput">	 	 ULIFT_L-002.mvnx: read xsens file 
+</pre><pre class="codeoutput">	 	 ULIFT_L-003.mvnx: read xsens file 
+</pre><pre class="codeoutput">	 	 ULIFT_R-001.mvnx: read xsens file 
+</pre><img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_05.png" alt=""> <pre class="codeoutput">	 	 ULIFT_R-002.mvnx: read xsens file 
+</pre><pre class="codeoutput">	 	 ULIFT_R-003.mvnx: read xsens file 
+</pre><pre class="codeoutput">	 	 ULIFT_R_L-001.mvnx: read xsens file 
+</pre><pre class="codeoutput">	 	 ULIFT_R_L-002.mvnx: read xsens file 
+</pre><pre class="codeoutput">	 	 ULIFT_R_L-003.mvnx: read xsens file 
+</pre><pre class="codeoutput">	 	 ULIFT_R_R-001.mvnx: read xsens file 
+</pre><pre class="codeoutput">	 	 ULIFT_R_R-002.mvnx: read xsens file 
+</pre><pre class="codeoutput">	 	 ULIFT_R_R-003.mvnx: read xsens file 
+</pre><h2 id="8">2.2 Define data needed for segmentation</h2><pre class="codeinput">                    <span class="comment">%-----------------------------------------</span>
+                    fprintf(<span class="string">'\t \t %s: define start and end points \n'</span>, content(file).name)
+
+                    <span class="comment">%filter data</span>
+                    fc = 2;  <span class="comment">%cutoff freq</span>
+                    fs = 60; <span class="comment">%sample freq</span>
+                    [b,a] = butter(2, fc/(fs/2));
+
+                    position = filtfilt(b,a, segmentData(segmentno).position);
+                    positionX = position(:,1);
+                    positionY = position(:,2);
+                    positionZ = position(:,3);
+                    positionVec = vecnorm(position, 2,2);
+
+                    SensorFree = filtfilt(b,a, sensorData(sensorno).sensorFreeAcceleration);
+                    SensorFreeX = SensorFree(:,1);
+                    SensorFreeY = SensorFree(:,2);
+                    SensorFreeZ = SensorFree(:,3);
+                    SensorFreeVec = vecnorm(SensorFree,2,2);
+                    SensorFreeDiff = [diff(SensorFreeVec); 0];
+
+                    angularVel_LA = filtfilt(b,a, segmentData(segmentno).angularVelocity);
+                    angularVelX = angularVel_LA(:,1);
+                    angularVelY = angularVel_LA(:,2);
+                    angularVelZ = angularVel_LA(:,3);
+                    angularVelVec = vecnorm(angularVel_LA, 2, 2);
+                    angularVelDiff = [diff(angularVelVec); 0];
+
+                    <span class="comment">% dataframes</span>
+                    df.pos      = table(positionX, positionY, positionZ, positionVec);
+                    df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec, SensorFreeDiff);
+                    df.Avel     = table(angularVelX, angularVelY, angularVelZ, angularVelVec, angularVelDiff);
+
+                    clear <span class="string">position</span> <span class="string">positionX</span> <span class="string">positionY</span> <span class="string">positionZ</span> <span class="string">positionVec</span>
+                    clear <span class="string">sensorFree</span> <span class="string">sensorFreeX</span> <span class="string">sensorFreeY</span> <span class="string">SensorFreeZ</span> <span class="string">sensorFreeVec</span> <span class="string">SensorFreeDiff</span>
+                    clear <span class="string">angularVel_X</span> <span class="string">angularVelY</span> <span class="string">angularVelZ</span> <span class="string">angularVelVec</span> <span class="string">angularVelDiff</span>
+
+                    counterRUN = counterRUN + 1;
+</pre><pre class="codeoutput">	 	 ULIFT_L-001.mvnx: define start and end points 
+</pre><pre class="codeoutput">	 	 ULIFT_L-002.mvnx: define start and end points 
+</pre><pre class="codeoutput">	 	 ULIFT_L-003.mvnx: define start and end points 
+</pre><pre class="codeoutput">	 	 ULIFT_R-001.mvnx: define start and end points 
+</pre><pre class="codeoutput">	 	 ULIFT_R-002.mvnx: define start and end points 
+</pre><pre class="codeoutput">	 	 ULIFT_R-003.mvnx: define start and end points 
+</pre><pre class="codeoutput">	 	 ULIFT_R_L-001.mvnx: define start and end points 
+</pre><pre class="codeoutput">	 	 ULIFT_R_L-002.mvnx: define start and end points 
+</pre><pre class="codeoutput">	 	 ULIFT_R_L-003.mvnx: define start and end points 
+</pre><pre class="codeoutput">	 	 ULIFT_R_R-001.mvnx: define start and end points 
+</pre><pre class="codeoutput">	 	 ULIFT_R_R-002.mvnx: define start and end points 
+</pre><pre class="codeoutput">	 	 ULIFT_R_R-003.mvnx: define start and end points 
+</pre><h2 id="9">Step 1: define change points based on position data</h2><pre class="codeinput">                    <span class="comment">%-----------------------------------------------------</span>
+                    [changeIndices,segmentMean] = ischange(df.pos.positionZ,<span class="string">"MaxNumChanges"</span>,2);
+                    x = find(changeIndices);
+
+                    <span class="keyword">if</span> isempty(x)
+                        fprintf(<span class="string">'\t\t %s: no change points were found \n'</span>, content(file).name)
+
+                        figure(<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="string">'Position'</span>,[0.1 0.1 0.75 0.75]);
+
+                        <span class="comment">% display the results of the change points</span>
+
+                        plot(df.pos.positionZ,<span class="string">"Color"</span>,[77 190 238]/255,<span class="string">"DisplayName"</span>,<span class="string">"Input data"</span>)
+                        title(<span class="string">"Manual selection change points: "</span> + fileName)
+
+                        [loc, ~  ] = ginput(2);
+                        <span class="keyword">if</span> ~isempty(loc)
+                            x(1) = round(loc(1));
+                            x(2) = round(loc(2));
+
+                            clear <span class="string">loc</span>
+                            close <span class="string">gcf</span>
+                        <span class="keyword">else</span>
+                            error(<span class="string">'No changepoints found \n NO change points were selected'</span>)
+                        <span class="keyword">end</span>
+                    <span class="keyword">else</span>
+                        fprintf(<span class="string">'\t\t %s: change points found \n'</span>, content(file).name)
+                    <span class="keyword">end</span>
+
+
+
+
+                    <span class="comment">% check the number of highest points -- should be 3 per phase</span>
+                    <span class="comment">% If there are more than 3, trial will not be run.</span>
+                    <span class="comment">%------------------------------------------------------------</span>
+                    thresh_ph1 = mean(segmentMean(1:x(1))) + mean(segmentMean(1:x(1)))*0.05;
+                    [maxIndices_pos1, peakMag] = peakfinder(df.pos.positionZ(1:x(1)), [], thresh_ph1, 1, []);
+
+                    <span class="comment">%                     if length(maxIndices_pos1) &gt; 3</span>
+                    <span class="comment">%                         thresh_ph1 = mean(peakMag) - 2*std(peakMag);</span>
+                    <span class="comment">%                         [maxIndices_pos1, ~] = peakfinder(df.pos.positionZ(1:x(1)), [], thresh_ph1, 1, []);</span>
+                    <span class="comment">%                     end</span>
+
+                    thresh_ph4 = mean(segmentMean(x(2):end)) + mean(segmentMean(x(2):end))*0.025;
+
+                    [maxIndices_pos4, peakMag] = peakfinder(df.pos.positionZ(x(2):end), [], thresh_ph4);
+
+                    <span class="comment">%                     if length(maxIndices_pos4) &gt; 3</span>
+                    <span class="comment">%                         thresh_ph4 = mean(peakMag) - std(peakMag);</span>
+                    <span class="comment">%                         [maxIndices_pos4, ~] = peakfinder(df.pos.positionZ(x(2):end), [], thresh_ph4, 1, []);</span>
+                    <span class="comment">%                     end</span>
+
+                    maxIndices_pos4 = maxIndices_pos4 + x(2);
+
+                    ppID{counterRUN, 1} = subj_name;
+                    Phase1(counterRUN,1) = size(maxIndices_pos1,1);
+                    filename{counterRUN,1} = fileName;
+                    Phase4(counterRUN,1) = size(maxIndices_pos4,1);
+                    Tpoint{counterRUN, 1} = Timepoint;
+
+
+                    <span class="keyword">if</span> Phase1(counterRUN,1) == 3 &amp;&amp; Phase4(counterRUN,1) == 3
+                        run(counterRUN,1) = 1;
+                    <span class="keyword">else</span>
+                        run(counterRUN,1 ) = 0;
+                    <span class="keyword">end</span>
+
+
+                    <span class="comment">%                      if run(counterRUN,1) == 1</span>
+</pre><pre class="codeoutput">		 ULIFT_L-001.mvnx: change points found 
+</pre><pre class="codeoutput">		 ULIFT_L-002.mvnx: change points found 
+</pre><pre class="codeoutput">		 ULIFT_L-003.mvnx: change points found 
+</pre><pre class="codeoutput">		 ULIFT_R-001.mvnx: change points found 
+</pre><pre class="codeoutput">		 ULIFT_R-002.mvnx: change points found 
+</pre><pre class="codeoutput">		 ULIFT_R-003.mvnx: change points found 
+</pre><pre class="codeoutput">		 ULIFT_R_L-001.mvnx: change points found 
+</pre><pre class="codeoutput">		 ULIFT_R_L-002.mvnx: change points found 
+</pre><pre class="codeoutput">		 ULIFT_R_L-003.mvnx: change points found 
+</pre><pre class="codeoutput">		 ULIFT_R_R-001.mvnx: change points found 
+</pre><pre class="codeoutput">		 ULIFT_R_R-002.mvnx: change points found 
+</pre><pre class="codeoutput">		 ULIFT_R_R-003.mvnx: change points found 
+</pre><h2 id="10">set counters</h2><pre class="codeinput">                    <span class="keyword">if</span> strcmp(arm, <span class="string">'R_SSS'</span>)
+                        counterR_SSS    = counterR_SSS + 1;
+                        counter         = counterR_SSS;
+                        jointNo         = 7:10; <span class="comment">% right upper extremity</span>
+                    <span class="keyword">elseif</span> strcmp(arm, <span class="string">'R'</span>)
+                        counterR        = counterR + 1;
+                        counter         = counterR;
+                        jointNo         = 7:10; <span class="comment">% right upper extremity</span>
+                    <span class="keyword">elseif</span> strcmp(arm, <span class="string">'L_SSS'</span>)
+                        counterL_SSS    = counterL_SSS + 1;
+                        counter         = counterL_SSS;
+                        jointNo         = 11:14; <span class="comment">% left upper extremity</span>
+                    <span class="keyword">elseif</span> strcmp(arm, <span class="string">'L'</span>)
+                        counterL        = counterL + 1;
+                        counter         = counterL;
+                        jointNo         = 11:14; <span class="comment">% left upper extremity</span>
+                    <span class="keyword">end</span>
+</pre><h2 id="11">Step 2: Start and end of the ULIFT task</h2><p>define start and end of the ULIFT task as using the peak rate of thange of the angular velocity vector of the lower arm sensor</p><pre class="codeinput">                    <span class="comment">%------------------------------------------------------</span>
+
+                    <span class="comment">% Start phase 1</span>
+                    [peakLoc, peakMag] = peakfinder(df.Avel.angularVelDiff(1:x(1)));
+                    localmax.all = peakLoc;
+                    Thresh = mean(peakMag) * 1.5;
+                    [peakLoc, peakMag] = peakfinder(df.Avel.angularVelDiff(1:x(1)), [], Thresh);
+                    localmax.thresh = peakLoc;
+
+                    <span class="keyword">if</span> isempty(localmax.thresh)
+                        startPhase1 = localmax.all(1);
+                    <span class="keyword">else</span>
+                        startPhase1 = localmax.thresh(1);
+                    <span class="keyword">end</span>
+
+
+                    clear <span class="string">localmax</span> <span class="string">peakLoc</span> <span class="string">peakMag</span>
+
+                    <span class="comment">% End phase 4</span>
+                    temp = df.Avel.angularVelDiff(x(2):end)*-1;
+                    [peakLoc, peakMag] = peakfinder(temp);
+                    localmin.all = peakLoc + x(2);
+
+                    N = 1:height(df.Avel.angularVelDiff);
+                    <span class="comment">% localmin.all = min;</span>
+                    average = mean(peakMag);
+                    Thresh = average *1.5;
+                    [peakLoc, peakMag] = peakfinder(temp, [], Thresh);
+
+                    localmin.thresh = peakLoc + x(2);
+                    localmin.prominent = N(localmin.thresh)+x(2);
+                    <span class="comment">%localmin.incon = N(localmin.all) + x(2);</span>
+
+                    <span class="keyword">if</span> isempty(localmin.thresh)
+                        Thresh = average ;
+                        [peakLoc, peakMag] = peakfinder(temp, [], Thresh);
+                        endPhase4 = peakLoc(end) + x(2);
+                    <span class="keyword">else</span>
+                        endPhase4 = peakLoc(end) + x(2);
+                    <span class="keyword">end</span>
+
+                    clear <span class="string">localmin</span> <span class="string">peakLoc</span> <span class="string">peakMag</span> <span class="string">temp</span>
+</pre><h2 id="12">Step 3: End phase 1 and start phase 4</h2><p>define the end of phase 1 and the start of phase 4 using the peak acceleration signal in x-direction of thelower arm sensor</p><pre class="codeinput">                    <span class="comment">%------------------------------------------------------</span>
+
+                    <span class="comment">% End phase 1</span>
+                    [temp, P] = islocalmin(df.SenAcc.SensorFreeX(1:x(1)));
+
+                    localmin.all = temp;
+                    Thresh = mean(P(localmin.all));
+
+                    clear <span class="string">temp</span> <span class="string">P</span>
+                    [temp, P] = islocalmin(df.SenAcc.SensorFreeX(1:x(1)), <span class="string">'MinProminence'</span>,Thresh);
+                    localmin.thresh = temp;
+                    N = 1:height(df.SenAcc.SensorFreeX);
+
+                    <span class="comment">%select the less prominent minima between the last two most prominent minima</span>
+                    localmin.prominent = N(localmin.thresh);
+                    localmin.incon = N(localmin.all);
+
+                    <span class="comment">% endPhase1_new = localmin.incon(find(localmin.incon == localmin.prominent(end))-1)</span>
+                    endPhase1 = localmin.incon(end-1);
+                    clear <span class="string">localmin</span> <span class="string">P</span> <span class="string">temp</span>
+
+                    <span class="comment">% start phase 4</span>
+                    temp = df.SenAcc.SensorFreeX(x(2):end);
+                    [minima, P] = islocalmin(temp);
+
+                    localmin.all = minima;
+                    Thresh = mean(P(localmin.all)) + std(P(localmin.all)) *0.25;
+                    clear <span class="string">minima</span> <span class="string">P</span>
+                    [minima, P] = islocalmin(temp, <span class="string">'MinProminence'</span>,Thresh);
+                    localmin.thresh = minima;
+
+                    <span class="comment">% the first prominent acceleration peak</span>
+                    localmin.prominent = N(localmin.thresh)+ x(2);
+                    localmin.incon = N(localmin.all)+ x(2);
+                    startPhase4 = localmin.prominent(1);
+
+                    clear <span class="string">localmin</span> <span class="string">temp</span> <span class="string">P</span>
+</pre><h2 id="13">in T_phase 1 and T_phase 4 should be 3 peaks of the posision data.</h2><p>if not, than select a better range using ginput.</p><pre class="codeinput">                    <span class="comment">% the time axis of the phases.</span>
+                    T_phase1 = startPhase1:endPhase1;
+
+                    <span class="comment">%                         nPositionPeaks = sum(maxIndices_pos1(:) &gt; T_phase1(1)) + sum(maxIndices_pos1(:) &lt; T_phase1(end));</span>
+                    <span class="keyword">if</span> ~isempty(T_phase1)
+                        nPositionPeaks = sum(maxIndices_pos1(:) &gt;= T_phase1(1) &amp; maxIndices_pos1(:) &lt; T_phase1(end));
+                    <span class="keyword">else</span>
+                        fprintf(<span class="string">'\t\t %s no data find for phase 1 \n'</span>, content(file).name)
+                        nPositionPeaks = 0;
+                    <span class="keyword">end</span>
+
+
+                    <span class="keyword">if</span> nPositionPeaks ~= 3 || isempty(T_phase1)
+                        <span class="keyword">if</span> nPositionPeaks &lt; 3
+                            fprintf(<span class="string">'\t\t %s: less than 3 position peaks found in phase 1 \n'</span>, content(file).name)
+                        <span class="keyword">elseif</span> nPositionPeaks &gt; 3
+                            fprintf(<span class="string">'\t\t %s: more than 3 position peaks found in phase 1 \n'</span>, content(file).name)
+                        <span class="keyword">end</span>
+                        fprintf(<span class="string">'\t \t %s: Please refine the borders of phase 1 \n'</span>, content(file).name)
+
+                        figure(<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="string">'Position'</span>,[0.1 0.1 0.75 0.75]);
+
+                        <span class="comment">% display the results of the change points</span>
+
+                        plot(df.pos.positionZ,<span class="string">"Color"</span>,[77 190 238]/255,<span class="string">"DisplayName"</span>,<span class="string">"Input data"</span>)
+                        hold <span class="string">on</span>
+
+                        <span class="comment">% Plot segments between change points</span>
+                        plot(segmentMean,<span class="string">"Color"</span>,[64 64 64]/255,<span class="string">"DisplayName"</span>,<span class="string">"Segment mean"</span>)
+
+                        <span class="comment">%Plot change points</span>
+                        x_rep = repelem(find(changeIndices),3);
+                        y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                        plot(x_rep,y,<span class="string">"Color"</span>,[51 160 44]/255,<span class="string">"LineWidth"</span>,1,<span class="string">"DisplayName"</span>,<span class="string">"Change points"</span>)
+                        title(<span class="string">"Number of change points: "</span> + nnz(changeIndices))
+
+                        xline(startPhase1, <span class="string">"Color"</span>, <span class="string">'#A2142F'</span>, <span class="string">"DisplayName"</span>,<span class="string">'StrPh1'</span>)
+                        xline(endPhase1, <span class="string">"Color"</span>, <span class="string">'#A2142F'</span>, <span class="string">"DisplayName"</span>,<span class="string">'EndPh1'</span>)
+
+                        hold <span class="string">off</span>
+
+                        title(<span class="string">"Manual segmentation Phase 1: "</span> + fileName)
+
+                        [loc, ~] = ginput(2);
+
+                        <span class="comment">% redidefine start and end of phase 1 based on input data</span>
+                        <span class="keyword">if</span> ~isempty(loc)
+                            startPhase1 = round(loc(1));
+                            endPhase1 = round(loc(2));
+
+                            T_phase1 = startPhase1:endPhase1;
+
+                            clear <span class="string">loc</span>
+                            close <span class="string">gcf</span>
+                        <span class="keyword">else</span>
+                            error(<span class="string">'Number of position peaks found ~= 6 \n NO borders were selected for phase 1'</span>)
+
+                        <span class="keyword">end</span>
+                    <span class="keyword">elseif</span> nPositionPeaks == 6
+                        fprintf(<span class="string">'\t\t %s: 3 position peaks found in phase 1 \n'</span>, content(file).name)
+                    <span class="keyword">end</span>
+
+                    clear <span class="string">nPositionPeaks</span>
+
+                    <span class="comment">% phase 4</span>
+                    <span class="comment">%========</span>
+                    T_phase4 = startPhase4:endPhase4;
+                    <span class="comment">%nPositionPeaks = sum(maxIndices_pos4(:) &gt; T_phase4(1)) + sum(maxIndices_pos4(:) &lt; T_phase4(end));</span>
+
+
+                    nPositionPeaks = sum(maxIndices_pos4(:) &gt;= T_phase4(1) &amp; maxIndices_pos4(:) &lt; T_phase4(end));
+
+                    <span class="keyword">if</span> nPositionPeaks ~= 3
+                        <span class="keyword">if</span> nPositionPeaks &lt; 3
+                            fprintf(<span class="string">'\t\t %s: less than 3 position peaks found in phase 4 \n'</span>, content(file).name)
+                        <span class="keyword">elseif</span> nPositionPeaks &gt; 3
+                            fprintf(<span class="string">'\t\t %s: more than 3 position peaks found in phase 4 \n'</span>, content(file).name)
+                        <span class="keyword">end</span>
+                        fprintf(<span class="string">'\t \t %s: Please refine the borders of phase 4 \n'</span>, content(file).name)
+
+                        figure(<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="string">'Position'</span>,[0.1 0.1 0.75 0.75]);
+
+                        <span class="comment">% display the results of the change points</span>
+
+                        plot(df.pos.positionZ,<span class="string">"Color"</span>,[77 190 238]/255,<span class="string">"DisplayName"</span>,<span class="string">"Input data"</span>)
+                        hold <span class="string">on</span>
+
+                        <span class="comment">% Plot segments between change points</span>
+                        plot(segmentMean,<span class="string">"Color"</span>,[64 64 64]/255,<span class="string">"DisplayName"</span>,<span class="string">"Segment mean"</span>)
+
+                        <span class="comment">%Plot change points</span>
+                        x_rep = repelem(find(changeIndices),3);
+                        y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                        plot(x_rep,y,<span class="string">"Color"</span>,[51 160 44]/255,<span class="string">"LineWidth"</span>,1,<span class="string">"DisplayName"</span>,<span class="string">"Change points"</span>)
+                        title(<span class="string">"Number of change points: "</span> + nnz(changeIndices))
+
+                        xline(startPhase4, <span class="string">"Color"</span>, <span class="string">'#EDB120'</span>,<span class="string">"LineWidth"</span>,1, <span class="string">"DisplayName"</span>,<span class="string">'StrPh4'</span>)
+                        xline(endPhase4, <span class="string">"Color"</span>, <span class="string">'#EDB120'</span>, <span class="string">"LineWidth"</span>,1,<span class="string">"DisplayName"</span>,<span class="string">'EndPh4'</span>)
+                        hold <span class="string">off</span>
+
+                        title(<span class="string">"Manual segmentation Phase 4: "</span> + fileName)
+
+                        [loc, ~] = ginput(2);
+
+                        <span class="comment">% redidefine start and end of phase 1 based on input data</span>
+                        <span class="keyword">if</span> ~isempty(loc)
+                            startPhase4 = round(loc(1));
+                            endPhase4 = round(loc(2));
+                            T_phase4 = startPhase4:endPhase4;
+
+                            clear <span class="string">loc</span>
+                            close <span class="string">gcf</span>
+
+                        <span class="keyword">else</span>
+                            error(<span class="string">'Number of position peaks found ~= 6 \n NO borders were selected for phase 4'</span>)
+
+                        <span class="keyword">end</span>
+                    <span class="keyword">elseif</span> nPositionPeaks == 6
+                        fprintf(<span class="string">'\t\t %s: 3 position peaks found in phase 4 \n'</span>, content(file).name)
+                    <span class="keyword">end</span>
+
+                    clear <span class="string">nPositionPeaks</span>
+</pre><pre class="codeoutput">		 ULIFT_L-001.mvnx: more than 3 position peaks found in phase 4 
+	 	 ULIFT_L-001.mvnx: Please refine the borders of phase 4 
+</pre><pre class="codeoutput">		 ULIFT_R_L-002.mvnx: less than 3 position peaks found in phase 1 
+	 	 ULIFT_R_L-002.mvnx: Please refine the borders of phase 1 
+		 ERROR: BC_001 at TIMEPOINT: T0 in FILENAME: ULIFT_R_L_002 
+ 		 Interrupted by figure deletion LINE: </pre><h2 id="14">middle phase 1</h2><pre class="codeinput">                    fprintf(<span class="string">'\t \t %s: Segment middle arm movement phase 1 \n'</span>, content(file).name)
+
+                    [peakLoc.phase1, peakMag.phase1] = peakfinder(df.SenAcc.SensorFreeX(T_phase1), [],[],-1);
+
+                    peakLoc.phase1 = peakLoc.phase1 + startPhase1;
+                    grab_idx.phase1 = peakLoc.phase1(1:2:end);
+                    release_idx.phase1 = peakLoc.phase1(2:2:end);
+
+                    T_middle_phase1 = grab_idx.phase1(2):grab_idx.phase1(3);
+
+                    <span class="comment">% throw error if the number of acceleration peaks exceed 6</span>
+                    <span class="comment">%=========================================================</span>
+                    <span class="keyword">if</span> size(peakLoc.phase1, 1) ~= 6
+                        fprintf(<span class="string">'\t \t %s: Please select peaks phase 1 \n'</span>, content(file).name)
+
+                        figure(<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="string">'Position'</span>,[0.1 0.1 0.75 0.75]);
+                        subplot(2,1,1);
+                        <span class="comment">% display the results of the change points</span>
+
+                        plot(df.pos.positionZ,<span class="string">"Color"</span>,[77 190 238]/255,<span class="string">"DisplayName"</span>,<span class="string">"Input data"</span>)
+                        hold <span class="string">on</span>
+
+                        <span class="comment">% Plot segments between change points</span>
+                        plot(segmentMean,<span class="string">"Color"</span>,[64 64 64]/255,<span class="string">"DisplayName"</span>,<span class="string">"Segment mean"</span>)
+
+                        <span class="comment">%Plot change points</span>
+                        x_rep = repelem(find(changeIndices),3);
+                        y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                        plot(x_rep,y,<span class="string">"Color"</span>,[51 160 44]/255,<span class="string">"LineWidth"</span>,1,<span class="string">"DisplayName"</span>,<span class="string">"Change points"</span>)
+                        title(<span class="string">"Number of change points: "</span> + nnz(changeIndices))
+
+                        xline(startPhase1, <span class="string">"Color"</span>, <span class="string">'#A2142F'</span>, <span class="string">"DisplayName"</span>,<span class="string">'StrPh1'</span>)
+                        xline(endPhase1, <span class="string">"Color"</span>, <span class="string">'#A2142F'</span>, <span class="string">"DisplayName"</span>,<span class="string">'EndPh1'</span>)
+
+                        xline(startPhase4, <span class="string">"Color"</span>, <span class="string">'#EDB120'</span>,<span class="string">"LineWidth"</span>,1, <span class="string">"DisplayName"</span>,<span class="string">'StrPh4'</span>)
+                        xline(endPhase4, <span class="string">"Color"</span>, <span class="string">'#EDB120'</span>, <span class="string">"LineWidth"</span>,1,<span class="string">"DisplayName"</span>,<span class="string">'EndPh4'</span>)
+                        hold <span class="string">off</span>
+
+                        <span class="comment">%phase 1</span>
+                        subplot(2,1,2)
+                        yline_phase1 = ones(size(T_phase1)) * (min(peakMag.phase1) * 1.2);
+
+                        plot(df.SenAcc.SensorFreeX); hold <span class="string">on</span>
+                        plot(T_phase1, yline_phase1, <span class="string">'LineWidth'</span>,10, <span class="string">'Color'</span>, <span class="string">'#097392'</span>)
+                        plot(grab_idx.phase1, peakMag.phase1(1:2:end),<span class="string">'o'</span>, <span class="string">'MarkerSize'</span>, 7.5, <span class="string">'MarkerFaceColor'</span>, 	<span class="string">'#A2142F'</span>, <span class="string">'MarkerEdgeColor'</span>, 	<span class="string">'#A2142F'</span>)
+                        plot(release_idx.phase1, peakMag.phase1(2:2:end), <span class="string">'o'</span>, <span class="string">'MarkerSize'</span>, 7.5, <span class="string">'MarkerEdgeColor'</span>, 	<span class="string">'#0072BD'</span>, <span class="string">'MarkerFaceColor'</span>, 	<span class="string">'#0072BD'</span>)
+
+                        yline_middle_phase1 = ones(size(T_middle_phase1))* (min(peakMag.phase1) * 1.1);
+                        plot(T_middle_phase1, yline_middle_phase1, <span class="string">'LineWidth'</span>,7.5, <span class="string">'Color'</span>,<span class="string">'#83B4B3'</span>)
+
+                        title(<span class="string">"Manual segmentation of middle Phase 1: "</span> + fileName)
+
+                        [loc, ~] = ginput(2);
+
+                        <span class="keyword">if</span> ~isempty(loc)
+                            <span class="comment">% find the selected locations that are close to</span>
+                            <span class="comment">% the found peaks</span>
+                            ind(1) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1) ,loc(1),<span class="string">'nearest'</span>);
+                            ind(2) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1), loc(2), <span class="string">'nearest'</span>);
+
+                            T_middle_phase1 = peakLoc.phase1(ind(1)):peakLoc.phase1(ind(2));
+                            clear <span class="string">loc</span>
+                            close <span class="string">gcf</span>
+
+
+                            warning(<span class="string">'Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1'</span>)
+
+                        <span class="keyword">else</span>
+                            error(<span class="string">'Number of peaks found exceeds ~= 6 \n NO peaks were selected phase 1'</span>)
+                        <span class="keyword">end</span>
+
+                    <span class="keyword">end</span>
+                    <span class="comment">%=========================================================</span>
+
+                    <span class="comment">%                         % throw error if the number of acceleration peaks does not reach 6</span>
+                    <span class="comment">%                         %=================================================================</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                         if size(peakLoc.phase1, 1) &lt; 6</span>
+                    <span class="comment">%                             fprintf('\t \t %s: Please select peaks phase 1 \n', content(file).name)</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             figure('Units','normalized','Position',[0 0 1 1]);</span>
+                    <span class="comment">%                             subplot(2,1,1);</span>
+                    <span class="comment">%                             % display the results of the change points</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")</span>
+                    <span class="comment">%                             hold on</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             % Plot segments between change points</span>
+                    <span class="comment">%                             plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             %Plot change points</span>
+                    <span class="comment">%                             x_rep = repelem(find(changeIndices),3);</span>
+                    <span class="comment">%                             y = repmat([ylim(gca) missing]',nnz(changeIndices),1);</span>
+                    <span class="comment">%                             plot(x_rep,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")</span>
+                    <span class="comment">%                             title("Number of change points: " + nnz(changeIndices))</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             xline(T_phase1(1), "Color", '#A2142F', "DisplayName",'StrPh1')</span>
+                    <span class="comment">%                             xline(T_phase1(end), "Color", '#A2142F', "DisplayName",'EndPh1')</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             xline(T_phase4(1), "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')</span>
+                    <span class="comment">%                             xline(T_phase4(end), "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')</span>
+                    <span class="comment">%                             hold off</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             %phase 1</span>
+                    <span class="comment">%                             subplot(2,1,2)</span>
+                    <span class="comment">%                             yline_phase1 = ones(size(T_phase1)) * (min(peakMag.phase1) * 1.2);</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             plot(df.SenAcc.SensorFreeX); hold on</span>
+                    <span class="comment">%                             plot(T_phase1, yline_phase1, 'LineWidth',10, 'Color', '#097392')</span>
+                    <span class="comment">%                             plot(grab_idx.phase1, peakMag.phase1(1:2:end),'o', 'MarkerSize', 7.5, 'MarkerFaceColor', 	'#A2142F', 'MarkerEdgeColor', 	'#A2142F')</span>
+                    <span class="comment">%                             plot(release_idx.phase1, peakMag.phase1(2:2:end), 'o', 'MarkerSize', 7.5, 'MarkerEdgeColor', 	'#0072BD', 'MarkerFaceColor', 	'#0072BD')</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             yline_middle_phase1 = ones(size(T_middle_phase1))* (min(peakMag.phase1) * 1.1);</span>
+                    <span class="comment">%                             plot(T_middle_phase1, yline_middle_phase1, 'LineWidth',7.5, 'Color','#83B4B3')</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             title("Manual segmentation Phase 1: " + fileName)</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             [loc, ~] = ginput(2);</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             if ~isempty(loc)</span>
+                    <span class="comment">%                                 % find the selected locations that are close to</span>
+                    <span class="comment">%                                 % the found peaks</span>
+                    <span class="comment">%                                 ind(1) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1) ,loc(1),'nearest');</span>
+                    <span class="comment">%                                 ind(2) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1), loc(2), 'nearest');</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                                 T_middle_phase1 = peakLoc.phase1(ind(1)):peakLoc.phase1(ind(2));</span>
+                    <span class="comment">%                                 clear loc</span>
+                    <span class="comment">%                                 close gcf</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                                 warning('Number of peaks found are less than 6 \n 2 peaks manually selected phase 1')</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             else</span>
+                    <span class="comment">%                                 error('Number of peaks found are less than 6 \n NO peaks were selected phase 1')</span>
+                    <span class="comment">%                             end</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                         end</span>
+</pre><pre class="codeoutput">	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 1 
+</pre><pre class="codeoutput">	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 1 
+</pre><pre class="codeoutput">	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 1 
+</pre><pre class="codeoutput">	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 1 
+</pre><pre class="codeoutput">	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-002.mvnx: Please select peaks phase 1 
+Warning: Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase
+1 
+</pre><img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_07.png" alt=""> <pre class="codeoutput">	 	 ULIFT_R-003.mvnx: Segment middle arm movement phase 1 
+	 	 ULIFT_R-003.mvnx: Please select peaks phase 1 
+		 ERROR: BC_001 at TIMEPOINT: T0 in FILENAME: ULIFT_R_003 
+ 		 Interrupted by figure deletion LINE: 	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 1 
+</pre><pre class="codeoutput">	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 1 
+</pre><pre class="codeoutput">	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 1 
+</pre><pre class="codeoutput">	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 1 
+</pre><pre class="codeoutput">	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 1 
+</pre><h2 id="15">middle phase 4</h2><pre class="codeinput">                    fprintf(<span class="string">'\t \t %s: Segment middle arm movement phase 4 \n'</span>, content(file).name)
+
+                    [peakLoc.phase4, peakMag.phase4] = peakfinder(df.SenAcc.SensorFreeX(T_phase4), [],[],-1);
+                    peakLoc.phase4 = peakLoc.phase4 + startPhase4;
+                    grab_idx.phase4 = peakLoc.phase4(1:2:end);
+                    release_idx.phase4 = peakLoc.phase4(2:2:end);
+
+
+
+                    <span class="comment">% throw error if the number of acceleration peaks</span>
+                    <span class="comment">% exceeds 7</span>
+                    <span class="comment">%================================================</span>
+                    <span class="keyword">if</span> size(peakLoc.phase4, 1) ~= 6 || strcmp(subj_name, <span class="string">'BC_010'</span>)
+                        fprintf(<span class="string">'\t \t %s: Please select peaks phase 4 \n'</span>, content(file).name)
+
+                        figure(<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="string">'Position'</span>,[0.1 0.1 0.75 0.75]);
+                        subplot(2,1,1);
+                        <span class="comment">% display the results of the change points</span>
+
+                        plot(df.pos.positionZ,<span class="string">"Color"</span>,[77 190 238]/255,<span class="string">"DisplayName"</span>,<span class="string">"Input data"</span>)
+                        hold <span class="string">on</span>
+
+                        <span class="comment">% Plot segments between change points</span>
+                        plot(segmentMean,<span class="string">"Color"</span>,[64 64 64]/255,<span class="string">"DisplayName"</span>,<span class="string">"Segment mean"</span>)
+
+                        <span class="comment">%Plot change points</span>
+                        x_rep = repelem(find(changeIndices),3);
+                        y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                        plot(x_rep,y,<span class="string">"Color"</span>,[51 160 44]/255,<span class="string">"LineWidth"</span>,1,<span class="string">"DisplayName"</span>,<span class="string">"Change points"</span>)
+                        title(<span class="string">"Number of change points: "</span> + nnz(changeIndices))
+
+                        xline(T_phase1(1), <span class="string">"Color"</span>, <span class="string">'#A2142F'</span>, <span class="string">"DisplayName"</span>,<span class="string">'StrPh1'</span>)
+                        xline(T_phase1(end), <span class="string">"Color"</span>, <span class="string">'#A2142F'</span>, <span class="string">"DisplayName"</span>,<span class="string">'EndPh1'</span>)
+
+                        xline(T_phase4(1), <span class="string">"Color"</span>, <span class="string">'#EDB120'</span>,<span class="string">"LineWidth"</span>,1, <span class="string">"DisplayName"</span>,<span class="string">'StrPh4'</span>)
+                        xline(T_phase4(end), <span class="string">"Color"</span>, <span class="string">'#EDB120'</span>, <span class="string">"LineWidth"</span>,1,<span class="string">"DisplayName"</span>,<span class="string">'EndPh4'</span>)
+                        hold <span class="string">off</span>
+
+                        subplot(2,1,2)
+
+                        plot(df.SenAcc.SensorFreeX); hold <span class="string">on</span>
+
+                        <span class="comment">% phase 4</span>
+                        yline_phase4 = ones(size(T_phase4)) * (min(peakMag.phase4) * 1.2);
+                        plot(T_phase4, yline_phase4, <span class="string">'LineWidth'</span>,10, <span class="string">'color'</span>, <span class="string">'#097392'</span>)
+
+                        plot(grab_idx.phase4, peakMag.phase4(1:2:end),<span class="string">'o'</span>, <span class="string">'MarkerSize'</span>, 7.5, <span class="string">'MarkerFaceColor'</span>, 	<span class="string">'#A2142F'</span>, <span class="string">'MarkerEdgeColor'</span>, 	<span class="string">'#A2142F'</span>)
+                        plot(release_idx.phase4, peakMag.phase4(2:2:end), <span class="string">'o'</span>, <span class="string">'MarkerSize'</span>, 7.5, <span class="string">'MarkerEdgeColor'</span>, 	<span class="string">'#0072BD'</span>, <span class="string">'MarkerFaceColor'</span>, 	<span class="string">'#0072BD'</span>)
+
+
+                        <span class="keyword">if</span> size(grab_idx.phase4,1) &gt; 2
+                            T_middle_phase4 = grab_idx.phase4(2):grab_idx.phase4(3);
+                        <span class="keyword">else</span>
+                            T_middle_phase4 = grab_idx.phase4(1):grab_idx.phase4(2);
+                        <span class="keyword">end</span>
+
+                        yline_middle_phase4 = ones(size(T_middle_phase4))*(min(peakMag.phase4) * 1.1);
+                        plot(T_middle_phase4, yline_middle_phase4, <span class="string">'LineWidth'</span>,7.5, <span class="string">'Color'</span>,<span class="string">'#83B4B3'</span>)
+
+                        title(<span class="string">"Manual segmentation Phase 4: "</span> + fileName)
+
+                        [loc, ~] = ginput(2);
+
+                        <span class="keyword">if</span> ~isempty(loc)
+                            <span class="comment">% find the selected locations that are close to</span>
+                            <span class="comment">% the found peaks</span>
+                            ind(1) = interp1(peakLoc.phase4, 1:length(peakLoc.phase4) ,loc(1),<span class="string">'nearest'</span>);
+                            ind(2) = interp1(peakLoc.phase4, 1:length(peakLoc.phase4), loc(2), <span class="string">'nearest'</span>);
+
+                            T_middle_phase4 = peakLoc.phase4(ind(1)):peakLoc.phase4(ind(2));
+                            clear <span class="string">loc</span>
+                            close <span class="string">gcf</span>
+
+
+                            warning(<span class="string">'Number of peaks found ~= 6 \n peaks manually selected'</span>)
+                        <span class="keyword">else</span>
+                            error(<span class="string">'Number of peaks found ~= 6 \n NO peaks were selected phase 1'</span>)
+                        <span class="keyword">end</span>
+                    <span class="keyword">else</span>
+                        T_middle_phase4 = grab_idx.phase4(2):grab_idx.phase4(3);
+                    <span class="keyword">end</span>
+                    <span class="comment">%================================================</span>
+
+                    <span class="comment">%                         % throw error if the number of acceleration peaks does not reach 6</span>
+                    <span class="comment">%                         %=================================================================</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                         if size(peakLoc.phase4, 1) &lt; 6</span>
+                    <span class="comment">%                             fprintf('\t \t %s: Please select peaks phase 4 \n', content(file).name)</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);</span>
+                    <span class="comment">%                             subplot(2,1,1);</span>
+                    <span class="comment">%                             % display the results of the change points</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")</span>
+                    <span class="comment">%                             hold on</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             % Plot segments between change points</span>
+                    <span class="comment">%                             plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             %Plot change points</span>
+                    <span class="comment">%                             x_rep = repelem(find(changeIndices),3);</span>
+                    <span class="comment">%                             y = repmat([ylim(gca) missing]',nnz(changeIndices),1);</span>
+                    <span class="comment">%                             plot(x_rep,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")</span>
+                    <span class="comment">%                             title("Number of change points: " + nnz(changeIndices))</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             xline(T_phase1(1), "Color", '#A2142F', "DisplayName",'StrPh1')</span>
+                    <span class="comment">%                             xline(T_phase1(end), "Color", '#A2142F', "DisplayName",'EndPh1')</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             xline(T_phase4(1), "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')</span>
+                    <span class="comment">%                             xline(T_phase4(end), "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')</span>
+                    <span class="comment">%                             hold off</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             subplot(2,1,2)</span>
+                    <span class="comment">%                             plot(df.SenAcc.SensorFreeX); hold on</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             % phase 4</span>
+                    <span class="comment">%                             yline_phase4 = ones(size(T_phase4)) * (min(peakMag.phase4) * 1.2);</span>
+                    <span class="comment">%                             plot(T_phase4, yline_phase4, 'LineWidth',10, 'color', '#097392')</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             plot(grab_idx.phase4, peakMag.phase4(1:2:end),'o', 'MarkerSize', 7.5, 'MarkerFaceColor', 	'#A2142F', 'MarkerEdgeColor', 	'#A2142F')</span>
+                    <span class="comment">%                             plot(release_idx.phase4, peakMag.phase4(2:2:end), 'o', 'MarkerSize', 7.5, 'MarkerEdgeColor', 	'#0072BD', 'MarkerFaceColor', 	'#0072BD')</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             yline_middle_phase4 = ones(size(T_middle_phase4))*(min(peakMag.phase4) * 1.1);</span>
+                    <span class="comment">%                             plot(T_middle_phase4, yline_middle_phase4, 'LineWidth',7.5, 'Color','#83B4B3')</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             title("Manual segmentation Phase 4: " + fileName)</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             [loc, ~] = ginput(2);</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                             if ~isempty(loc)</span>
+                    <span class="comment">%                                 % find the selected locations that are close to</span>
+                    <span class="comment">%                                 % the found peaks</span>
+                    <span class="comment">%                                 ind(1) = interp1(peakLoc.phase4, 1:length(peakLoc.phase4) ,loc(1),'nearest');</span>
+                    <span class="comment">%                                 ind(2) = interp1(peakLoc.phase4, 1:length(peakLoc.phase4), loc(2), 'nearest');</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                                 T_middle_phase4 = peakLoc.phase4(ind(1)):peakLoc.phase4(ind(2));</span>
+                    <span class="comment">%                                 clear loc</span>
+                    <span class="comment">%                                 close gcf</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%</span>
+                    <span class="comment">%                                 warning('Number of peaks found are less than 6 \n peaks manually selected')</span>
+                    <span class="comment">%                             else</span>
+                    <span class="comment">%                                 error('Number of peaks found are less than 6 \n NO peaks were selected phase 1')</span>
+                    <span class="comment">%                             end</span>
+                    <span class="comment">%                         end</span>
+                    <span class="comment">%</span>
+
+                    <span class="comment">%=================================================================</span>
+</pre><pre class="codeoutput">	 	 ULIFT_L-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_L-001.mvnx: Please select peaks phase 4 
+Warning: Number of peaks found ~= 6 \n peaks manually selected 
+</pre><pre class="codeoutput">	 	 ULIFT_L-002.mvnx: Segment middle arm movement phase 4 
+</pre><pre class="codeoutput">	 	 ULIFT_L-003.mvnx: Segment middle arm movement phase 4 
+</pre><pre class="codeoutput">	 	 ULIFT_R-001.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-001.mvnx: Please select peaks phase 4 
+Warning: Number of peaks found ~= 6 \n peaks manually selected 
+</pre><pre class="codeoutput">	 	 ULIFT_R-002.mvnx: Segment middle arm movement phase 4 
+	 	 ULIFT_R-002.mvnx: Please select peaks phase 4 
+Warning: Number of peaks found ~= 6 \n peaks manually selected 
+</pre><pre class="codeoutput">	 	 ULIFT_R_L-001.mvnx: Segment middle arm movement phase 4 
+</pre><pre class="codeoutput">	 	 ULIFT_R_L-003.mvnx: Segment middle arm movement phase 4 
+</pre><pre class="codeoutput">	 	 ULIFT_R_R-001.mvnx: Segment middle arm movement phase 4 
+</pre><pre class="codeoutput">	 	 ULIFT_R_R-002.mvnx: Segment middle arm movement phase 4 
+</pre><pre class="codeoutput">	 	 ULIFT_R_R-003.mvnx: Segment middle arm movement phase 4 
+</pre><h2 id="16">display the results</h2><pre class="codeinput">                    <span class="keyword">if</span> plot_or_not
+                        figure(<span class="string">'Units'</span>,<span class="string">'normalized'</span>,<span class="string">'Position'</span>,[0.1 0.1 0.75 0.75]);
+                        subplot(2,1,1);
+                        <span class="comment">% display the results of the change points</span>
+
+                        plot(df.pos.positionZ,<span class="string">"Color"</span>,[77 190 238]/255,<span class="string">"DisplayName"</span>,<span class="string">"Input data"</span>)
+                        hold <span class="string">on</span>
+
+                        <span class="comment">% Plot segments between change points</span>
+                        plot(segmentMean,<span class="string">"Color"</span>,[64 64 64]/255,<span class="string">"DisplayName"</span>,<span class="string">"Segment mean"</span>)
+
+                        <span class="comment">%Plot change points</span>
+                        x_rep = repelem(find(changeIndices),3);
+                        y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                        plot(x_rep,y,<span class="string">"Color"</span>,[51 160 44]/255,<span class="string">"LineWidth"</span>,1,<span class="string">"DisplayName"</span>,<span class="string">"Change points"</span>)
+                        title(<span class="string">"Number of change points: "</span> + nnz(changeIndices))
+
+                        xline(T_phase1(1), <span class="string">"Color"</span>, <span class="string">'#A2142F'</span>, <span class="string">"DisplayName"</span>,<span class="string">'StrPh1'</span>)
+                        xline(T_phase1(end), <span class="string">"Color"</span>, <span class="string">'#A2142F'</span>, <span class="string">"DisplayName"</span>,<span class="string">'EndPh1'</span>)
+                        yline = segmentMean(T_middle_phase1(1):T_middle_phase1(end));
+                        plot(T_middle_phase1, yline, <span class="string">'LineWidth'</span>,7.5, <span class="string">'Color'</span>,<span class="string">'#83B4B3'</span>)
+
+                        xline(T_phase4(1), <span class="string">"Color"</span>, <span class="string">'#EDB120'</span>,<span class="string">"LineWidth"</span>,1, <span class="string">"DisplayName"</span>,<span class="string">'StrPh4'</span>)
+                        xline(T_phase4(end), <span class="string">"Color"</span>, <span class="string">'#EDB120'</span>, <span class="string">"LineWidth"</span>,1,<span class="string">"DisplayName"</span>,<span class="string">'EndPh4'</span>)
+                        yline = segmentMean(T_middle_phase4(1):T_middle_phase4(end));
+                        plot(T_middle_phase4, yline, <span class="string">'LineWidth'</span>,7.5, <span class="string">'Color'</span>,<span class="string">'#83B4B3'</span>)
+                        hold <span class="string">off</span>
+
+                        <span class="comment">%phase 1</span>
+                        subplot(2,1,2)
+                        yline_phase1 = ones(size(T_phase1)) * (min(peakMag.phase1) * 1.2);
+
+                        plot(df.SenAcc.SensorFreeX); hold <span class="string">on</span>
+                        plot(T_phase1, yline_phase1, <span class="string">'LineWidth'</span>,10, <span class="string">'Color'</span>, <span class="string">'#097392'</span>)
+                        plot(grab_idx.phase1, peakMag.phase1(1:2:end),<span class="string">'o'</span>, <span class="string">'MarkerSize'</span>, 7.5, <span class="string">'MarkerFaceColor'</span>, 	<span class="string">'#A2142F'</span>, <span class="string">'MarkerEdgeColor'</span>, 	<span class="string">'#A2142F'</span>)
+                        plot(release_idx.phase1, peakMag.phase1(2:2:end), <span class="string">'o'</span>, <span class="string">'MarkerSize'</span>, 7.5, <span class="string">'MarkerEdgeColor'</span>, 	<span class="string">'#0072BD'</span>, <span class="string">'MarkerFaceColor'</span>, 	<span class="string">'#0072BD'</span>)
+
+                        yline_middle_phase1 = ones(size(T_middle_phase1))* (min(peakMag.phase1) * 1.1);
+                        plot(T_middle_phase1, yline_middle_phase1, <span class="string">'LineWidth'</span>,7.5, <span class="string">'Color'</span>,<span class="string">'#83B4B3'</span>)
+
+                        <span class="comment">% phase 4</span>
+                        yline_phase4 = ones(size(T_phase4)) * (min(peakMag.phase4) * 1.2);
+                        plot(T_phase4, yline_phase4, <span class="string">'LineWidth'</span>,10, <span class="string">'color'</span>, <span class="string">'#097392'</span>)
+
+                        plot(grab_idx.phase4, peakMag.phase4(1:2:end),<span class="string">'o'</span>, <span class="string">'MarkerSize'</span>, 7.5, <span class="string">'MarkerFaceColor'</span>, 	<span class="string">'#A2142F'</span>, <span class="string">'MarkerEdgeColor'</span>, 	<span class="string">'#A2142F'</span>)
+                        plot(release_idx.phase4, peakMag.phase4(2:2:end), <span class="string">'o'</span>, <span class="string">'MarkerSize'</span>, 7.5, <span class="string">'MarkerEdgeColor'</span>, 	<span class="string">'#0072BD'</span>, <span class="string">'MarkerFaceColor'</span>, 	<span class="string">'#0072BD'</span>)
+
+                        yline_middle_phase4 = ones(size(T_middle_phase4))*(min(peakMag.phase4) * 1.1);
+                        plot(T_middle_phase4, yline_middle_phase4, <span class="string">'LineWidth'</span>,7.5, <span class="string">'Color'</span>,<span class="string">'#83B4B3'</span>)
+
+                        title(<span class="string">"visual segmentation: "</span> + fileName)
+
+                    <span class="keyword">end</span>
+                    <span class="comment">%disp('      ')</span>
+</pre><img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_01.png" alt=""> <img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_02.png" alt=""> <img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_03.png" alt=""> <img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_04.png" alt=""> <img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_06.png" alt=""> <img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_08.png" alt=""> <img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_09.png" alt=""> <img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_10.png" alt=""> <img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_11.png" alt=""> <img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_12.png" alt=""> <img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_13.png" alt=""> <img vspace="5" hspace="5" src="ULIFT_preprocessing_V2_14.png" alt=""> <h2 id="17">extract relevant kinematics</h2><pre class="codeinput">                    fprintf(<span class="string">'\t\t %s: Extract relevant kinematics \n'</span>, fileName)
+                    <span class="comment">% initialise joint names</span>
+                    jointNames = [<span class="string">'Scapula'</span>, <span class="string">"Glenohumeraal"</span>, <span class="string">"Elbow"</span>, <span class="string">"Wrist"</span>];
+                    <span class="keyword">for</span> jnt = 1:4
+                        <span class="comment">% initiation of joint names</span>
+                        IK_X = [jointNames{jnt}, <span class="string">'_abbuction'</span>];
+                        IK_Y = [jointNames{jnt}, <span class="string">'_rotation'</span>];
+                        IK_Z = [jointNames{jnt}, <span class="string">'_flexion'</span>];
+
+                        Data_out.(Timepoint).phase1.(arm).(IK_X)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 1), T_middle_phase1);
+                        Data_out.(Timepoint).phase1.(arm).(IK_Y)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 2), T_middle_phase1);
+                        Data_out.(Timepoint).phase1.(arm).(IK_Z)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 3), T_middle_phase1);
+
+
+                        Data_out.(Timepoint).phase4.(arm).(IK_X)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 1), T_middle_phase4);
+                        Data_out.(Timepoint).phase4.(arm).(IK_Y)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 2), T_middle_phase4);
+                        Data_out.(Timepoint).phase4.(arm).(IK_Z)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 3), T_middle_phase4);
+
+                    <span class="keyword">end</span>
+                    <span class="comment">% Trunk data</span>
+                    trunk = jointData(2).jointAngle + jointData(3).jointAngle + jointData(4).jointAngle; <span class="comment">%+ jointData(5).jointAngle;</span>
+                    Trunk_lateroflexion = trunk(:,1);
+                    Trunk_rotation = trunk(:,2);
+                    Trunk_flexion = trunk(:,3);
+
+
+                    <span class="comment">% initiation of trunk names</span>
+                    IK_X = <span class="string">'Trunk_lateroflexion'</span>;
+                    IK_Y = <span class="string">'Trunk_rotation'</span>;
+                    IK_Z = <span class="string">'Trunk_flexion'</span>;
+
+                    Data_out.(Timepoint).phase1.(arm).(IK_X)(:, counter) = normalisation(trunk(:,1), T_middle_phase1);
+                    Data_out.(Timepoint).phase1.(arm).(IK_Y)(:, counter) = normalisation(trunk(:, 2), T_middle_phase1);
+                    Data_out.(Timepoint).phase1.(arm).(IK_Z)(:, counter) = normalisation(trunk(:, 3), T_middle_phase1);
+
+
+                    Data_out.(Timepoint).phase4.(arm).(IK_X)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 1), T_middle_phase4);
+                    Data_out.(Timepoint).phase4.(arm).(IK_Y)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 2), T_middle_phase4);
+                    Data_out.(Timepoint).phase4.(arm).(IK_Z)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 3), T_middle_phase4);
+</pre><pre class="codeoutput">		 ULIFT_L_001: Extract relevant kinematics 
+</pre><pre class="codeoutput">		 ULIFT_L_002: Extract relevant kinematics 
+</pre><pre class="codeoutput">		 ULIFT_L_003: Extract relevant kinematics 
+</pre><pre class="codeoutput">		 ULIFT_R_001: Extract relevant kinematics 
+</pre><pre class="codeoutput">		 ULIFT_R_002: Extract relevant kinematics 
+</pre><pre class="codeoutput">		 ULIFT_R_L_001: Extract relevant kinematics 
+</pre><pre class="codeoutput">		 ULIFT_R_L_003: Extract relevant kinematics 
+</pre><pre class="codeoutput">		 ULIFT_R_R_001: Extract relevant kinematics 
+</pre><pre class="codeoutput">		 ULIFT_R_R_002: Extract relevant kinematics 
+</pre><pre class="codeoutput">		 ULIFT_R_R_003: Extract relevant kinematics 
+</pre><h2 id="18">clear certain variables</h2><pre class="codeinput">                    clear <span class="string">peakLoc</span> <span class="string">peakMag</span>
+
+                    <span class="comment">%                     end% first check</span>
+</pre><pre class="codeinput">                <span class="keyword">end</span> <span class="comment">% end if movement &amp;&amp; .mvnx</span>
+            <span class="keyword">catch</span> ME
+                <span class="comment">% this section of code displays the subject and filenames</span>
+                <span class="comment">% on which an error occured</span>
+                <span class="comment">%                 formatSpec = '\t ERROR: %s at TIMEPOINT: %s in FILENAME: %s \n %s LINE: %s ';</span>
+                <span class="comment">%                 fprintf(formatSpec, subj_name, Timepoint, fileName, ME.message, num2str(ME.stack.line));</span>
+                <span class="comment">%                 disp(' ')</span>
+
+                fprintf(<span class="string">'\t\t ERROR: %s at TIMEPOINT: %s in FILENAME: %s \n \t\t %s LINE: %s \n'</span>, <span class="keyword">...</span>
+                    subj_name, Timepoint, fileName, ME.message)
+
+            <span class="keyword">end</span>
+        <span class="keyword">end</span> <span class="comment">%end number of files</span>
+
+        <span class="comment">%this section of code writes the peaks information to an excel file per subject</span>
+        <span class="comment">% This also indicates whether the ULIFT task is segmented (1) or not</span>
+        <span class="comment">% (0)</span>
+
+        <span class="comment">%         if strcmp(Timepoint, 'T0')</span>
+        <span class="comment">%             T = table(ppID, filename, Tpoint, Phase1, Phase4, run);</span>
+        <span class="comment">%             writetable(T, fullfile(path.table, [subj_name, '.xlsx']))</span>
+        <span class="comment">%         else</span>
+        <span class="comment">%             tablefile = fullfile(path.table, [subj_name, '.xlsx']);</span>
+        <span class="comment">%             T_orig = readtable(tablefile);</span>
+        <span class="comment">%</span>
+        <span class="comment">%             T_new = table(ppID, filename, Tpoint, Phase1, Phase4, run);</span>
+        <span class="comment">%             T = [T_orig; T_new];</span>
+        <span class="comment">%             writetable(T, fullfile(path.table, [subj_name, '.xlsx']))</span>
+        <span class="comment">%         end</span>
+    <span class="keyword">end</span><span class="comment">% end check if subject path exists</span>
+</pre><pre class="codeoutput">
+Processing: BC_001 at Timepoint: T0....... 
+	 current directory changed: C:\Users\u0117545\KU Leuven\An De Groef - DATA\BC_001\Xsens\T0\Reproces 
+</pre><h2 id="20">Save data</h2><pre class="codeinput">    <span class="comment">%--------------</span>
+
+        <span class="keyword">if</span> exist(<span class="string">'Data_out'</span>,<span class="string">'var'</span>)
+            <span class="keyword">if</span> exist(path.out,<span class="string">'file'</span>)
+                load(path.out)
+            <span class="keyword">end</span>
+
+            [Data.(subj_name).(Timepoint)] = Data_out.(Timepoint);
+            save(path.out,<span class="string">'Data'</span>)
+            clear <span class="string">Data</span> <span class="string">Data_out</span>
+        <span class="keyword">end</span>
+
+    fprintf(<span class="string">'*********Finished %s **********\n'</span>, subj_name)
+    <span class="comment">%close all</span>
+</pre><pre class="codeoutput">*********Finished BC_001 **********
+</pre><pre class="codeinput"><span class="keyword">end</span> <span class="comment">%end subjects</span>
+cd(<span class="string">"C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT"</span>)
+</pre><h2 id="22">plot joint angle data</h2><p>subj_name = 'BC_020'; arm = 'L' JointAngles = fieldnames(Data.(subj_name).T1.phase1.L);</p><p>figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]); p = tiledlayout('flow', 'TileSpacing','compact'); title(p,['Phase 1 Average left and right ', (Timepoint)]) xlabel(p,'% movement') ylabel(p,['Joint angle', char(176)])</p><p>for jnt = 1:length(JointAngles)     L.Phase1.(JointAngles{jnt}) = Data.(subj_name).T1.phase1.L.(JointAngles{jnt});     R.Phase1.(JointAngles{jnt}) = Data.(subj_name).T1.phase1.R.(JointAngles{jnt});</p><pre>   nexttile
+   plot(L.Phase1.(JointAngles{jnt}), 'DisplayName', "Avg Left")
+   hold on
+   plot(R.Phase1.(JointAngles{jnt}), 'DisplayName', "Avg Right")
+   xlim([0, 100])</pre><pre>   [PlotTitle] = regexprep(JointAngles{jnt}, '_', ' ');
+   title(PlotTitle)
+end</pre><pre class="codeinput"><span class="comment">%diary off</span>
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2021b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Extract the results of the ULIFT task
+%  for the UPLIFT
+% project. This code was comissioned by Prof. A. De Groef and Prof. L.
+% De Beats for the UPLIFT-BC project that analyses movement in people who
+% survived breast cancer. 
+% This is the main file for the analysis of the ULIFT data collected within
+% that project and spefied to only run that data.
+%
+% code written by: dr. Jill Emmerzaal (jillemmerzaal@gmail.com)
+% last update v1 14/11/2022
+% functions needed for this script:
+% 
+% * MVN.m
+% * load_mvnx.m
+% * peakfinder.m
+% * normalisation.m
+
+
+
+%%
+% 
+%  Analysis steps within this code
+%  input the data by setting the three folders. 
+% 
+% # the current directory where the CODE is located
+% # the root folder where all the PARTICIPANTS are located
+% 
+%  Then you will need to specify which time point you want to analyse and
+%  whether you want to plot the data (1) or not (0)
+%  And the range of subjects you want to run. (i.e. subj = (1) runs
+%  participant 1. subj = (1:10) runs subject 1 to 10. subj = (1:5, 7:10)
+%  runs subject 1 to 10 except subject 6.
+
+clearvars; close all; clc
+
+
+%% set input path
+cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT")
+addpath("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT")
+path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
+path.out    = fullfile(path.root,'Output','Database_ULIFT.mat');
+path.table  = fullfile(path.root,'Output');
+%% input data
+
+Timepoint   = 'T0';
+movement    = "ULIFT";
+plot_or_not = 1;
+
+%diary myDiaryFile
+
+%% 2. load data
+for subj = (1)
+    if subj < 10
+        subj_name   = ['BC_00' num2str(subj)];
+    elseif subj < 100
+        subj_name   = ['BC_0' num2str(subj)];
+    else
+        subj_name   = ['BC_', num2str(subj)];
+    end
+
+
+    
+    fprintf('\n')
+    fprintf('Processing: %s at Timepoint: %s....... \n', subj_name, Timepoint)
+
+    path.subj   = fullfile(path.root, subj_name, 'Xsens', Timepoint, 'Reproces');
+    check_subj  = exist(path.subj);
+
+    if check_subj == 7
+        %T = readtable(fullfile(path.root, 'Output', [subj_name, '.xlsx']));
+
+        cd(path.subj)
+
+        fprintf('\t current directory changed: %s \n', path.subj)
+        %initialize counters
+        counterR        = 0;
+        counterR_SSS    = 0;
+        counterL        = 0;
+        counterL_SSS    = 0;
+
+        counterRUN      = 0;
+        content = dir(path.subj);
+        nfiles = size(content,1);
+
+        % Start loop through ULIFT files per subject
+        for file = 1:nfiles
+            try
+                % try  to run the following code, if an error occurs
+                % nothing will happen and no data will be exported.
+                % A file will be created with the subject name and
+                % timepoint that caused an error.
+                if contains(content(file).name, movement) && contains(content(file).name, '.mvnx')
+                    number  = str2num(content(file).name(13:end-5));
+
+                    file_ik = content(file).name;
+
+                    [~,name, ~] = fileparts(content(file).name);
+                    [fileName] = regexprep(name, '-', '_');
+
+                    d = strfind(name,'_');
+                    if size(d,2) == 1
+                        arm = content(file).name(d+1);
+
+                    elseif size(d,2) == 2
+                        temp = content(file).name(d(2)+1);
+                        arm = [temp, '_SSS']; % SSS = self-selected speed
+                        clear temp
+                    end
+
+                    fprintf('\t Analysing: %s \n', fileName)
+                    fprintf('\t\t Arm of interest: %s \n',  arm)
+
+                    %% 2.1 Load xsens data
+                    % Change the filename here to the name of the file you would like to import
+                    fprintf('\t \t %s: read xsens file \n', content(file).name)
+                    [sensorData, segmentData, jointData, tree]= MVN(file_ik);
+                    if isfield(tree, 'fileComments')
+                        fprintf('\t \t \t Comment in file: %s \n', tree.fileComments)
+                    end
+
+                    if contains(arm, 'L')
+                        jointno     = 14;
+                        segmentno   = 14;
+                        sensorno    = 10;
+                    else
+                        jointno     = 10;
+                        segmentno   = 10;
+                        sensorno    = 6;
+                    end
+
+
+                    %% 2.2 Define data needed for segmentation
+                    %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+                    fprintf('\t \t %s: define start and end points \n', content(file).name)
+
+                    %filter data
+                    fc = 2;  %cutoff freq
+                    fs = 60; %sample freq
+                    [b,a] = butter(2, fc/(fs/2));
+
+                    position = filtfilt(b,a, segmentData(segmentno).position);
+                    positionX = position(:,1);
+                    positionY = position(:,2);
+                    positionZ = position(:,3);
+                    positionVec = vecnorm(position, 2,2);
+
+                    SensorFree = filtfilt(b,a, sensorData(sensorno).sensorFreeAcceleration);
+                    SensorFreeX = SensorFree(:,1);
+                    SensorFreeY = SensorFree(:,2);
+                    SensorFreeZ = SensorFree(:,3);
+                    SensorFreeVec = vecnorm(SensorFree,2,2);
+                    SensorFreeDiff = [diff(SensorFreeVec); 0];
+
+                    angularVel_LA = filtfilt(b,a, segmentData(segmentno).angularVelocity);
+                    angularVelX = angularVel_LA(:,1);
+                    angularVelY = angularVel_LA(:,2);
+                    angularVelZ = angularVel_LA(:,3);
+                    angularVelVec = vecnorm(angularVel_LA, 2, 2);
+                    angularVelDiff = [diff(angularVelVec); 0];
+
+                    % dataframes
+                    df.pos      = table(positionX, positionY, positionZ, positionVec);
+                    df.SenAcc   = table(SensorFreeX, SensorFreeY, SensorFreeZ, SensorFreeVec, SensorFreeDiff);
+                    df.Avel     = table(angularVelX, angularVelY, angularVelZ, angularVelVec, angularVelDiff);
+
+                    clear position positionX positionY positionZ positionVec
+                    clear sensorFree sensorFreeX sensorFreeY SensorFreeZ sensorFreeVec SensorFreeDiff
+                    clear angularVel_X angularVelY angularVelZ angularVelVec angularVelDiff
+
+                    counterRUN = counterRUN + 1;
+                    %% Step 1: define change points based on position data
+                    %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+                    [changeIndices,segmentMean] = ischange(df.pos.positionZ,"MaxNumChanges",2);
+                    x = find(changeIndices);
+
+                    if isempty(x)
+                        fprintf('\t\t %s: no change points were found \n', content(file).name)
+
+                        figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
+
+                        % display the results of the change points
+
+                        plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")
+                        title("Manual selection change points: " + fileName)
+
+                        [loc, ~  ] = ginput(2);
+                        if ~isempty(loc)
+                            x(1) = round(loc(1));
+                            x(2) = round(loc(2));
+
+                            clear loc
+                            close gcf
+                        else
+                            error('No changepoints found \n NO change points were selected')
+                        end
+                    else
+                        fprintf('\t\t %s: change points found \n', content(file).name)
+                    end
+
+
+
+
+                    % check the number of highest points REPLACE_WITH_DASH_DASH should be 3 per phase
+                    % If there are more than 3, trial will not be run.
+                    %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+                    thresh_ph1 = mean(segmentMean(1:x(1))) + mean(segmentMean(1:x(1)))*0.05;
+                    [maxIndices_pos1, peakMag] = peakfinder(df.pos.positionZ(1:x(1)), [], thresh_ph1, 1, []);
+
+                    %                     if length(maxIndices_pos1) > 3
+                    %                         thresh_ph1 = mean(peakMag) - 2*std(peakMag);
+                    %                         [maxIndices_pos1, ~] = peakfinder(df.pos.positionZ(1:x(1)), [], thresh_ph1, 1, []);
+                    %                     end
+
+                    thresh_ph4 = mean(segmentMean(x(2):end)) + mean(segmentMean(x(2):end))*0.025;
+
+                    [maxIndices_pos4, peakMag] = peakfinder(df.pos.positionZ(x(2):end), [], thresh_ph4);
+
+                    %                     if length(maxIndices_pos4) > 3
+                    %                         thresh_ph4 = mean(peakMag) - std(peakMag);
+                    %                         [maxIndices_pos4, ~] = peakfinder(df.pos.positionZ(x(2):end), [], thresh_ph4, 1, []);
+                    %                     end
+
+                    maxIndices_pos4 = maxIndices_pos4 + x(2);
+
+                    ppID{counterRUN, 1} = subj_name;
+                    Phase1(counterRUN,1) = size(maxIndices_pos1,1);
+                    filename{counterRUN,1} = fileName;
+                    Phase4(counterRUN,1) = size(maxIndices_pos4,1);
+                    Tpoint{counterRUN, 1} = Timepoint;
+
+
+                    if Phase1(counterRUN,1) == 3 && Phase4(counterRUN,1) == 3
+                        run(counterRUN,1) = 1;
+                    else
+                        run(counterRUN,1 ) = 0;
+                    end
+
+
+                    %                      if run(counterRUN,1) == 1
+                    %% set counters
+                    if strcmp(arm, 'R_SSS')
+                        counterR_SSS    = counterR_SSS + 1;
+                        counter         = counterR_SSS;
+                        jointNo         = 7:10; % right upper extremity
+                    elseif strcmp(arm, 'R')
+                        counterR        = counterR + 1;
+                        counter         = counterR;
+                        jointNo         = 7:10; % right upper extremity
+                    elseif strcmp(arm, 'L_SSS')
+                        counterL_SSS    = counterL_SSS + 1;
+                        counter         = counterL_SSS;
+                        jointNo         = 11:14; % left upper extremity
+                    elseif strcmp(arm, 'L')
+                        counterL        = counterL + 1;
+                        counter         = counterL;
+                        jointNo         = 11:14; % left upper extremity
+                    end
+                    %% Step 2: Start and end of the ULIFT task
+                    % define start and end of the ULIFT task as using the
+                    % peak rate of thange of the angular velocity vector of
+                    % the lower arm sensor
+                    %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+
+                    % Start phase 1
+                    [peakLoc, peakMag] = peakfinder(df.Avel.angularVelDiff(1:x(1)));
+                    localmax.all = peakLoc;
+                    Thresh = mean(peakMag) * 1.5;
+                    [peakLoc, peakMag] = peakfinder(df.Avel.angularVelDiff(1:x(1)), [], Thresh);
+                    localmax.thresh = peakLoc;
+
+                    if isempty(localmax.thresh)
+                        startPhase1 = localmax.all(1);
+                    else
+                        startPhase1 = localmax.thresh(1);
+                    end
+
+
+                    clear localmax peakLoc peakMag
+
+                    % End phase 4
+                    temp = df.Avel.angularVelDiff(x(2):end)*-1;
+                    [peakLoc, peakMag] = peakfinder(temp);
+                    localmin.all = peakLoc + x(2);
+
+                    N = 1:height(df.Avel.angularVelDiff);
+                    % localmin.all = min;
+                    average = mean(peakMag);
+                    Thresh = average *1.5;
+                    [peakLoc, peakMag] = peakfinder(temp, [], Thresh);
+
+                    localmin.thresh = peakLoc + x(2);
+                    localmin.prominent = N(localmin.thresh)+x(2);
+                    %localmin.incon = N(localmin.all) + x(2);
+
+                    if isempty(localmin.thresh)
+                        Thresh = average ;
+                        [peakLoc, peakMag] = peakfinder(temp, [], Thresh);
+                        endPhase4 = peakLoc(end) + x(2);
+                    else
+                        endPhase4 = peakLoc(end) + x(2);
+                    end
+
+                    clear localmin peakLoc peakMag temp
+
+                    %% Step 3: End phase 1 and start phase 4
+                    % define the end of phase 1 and the start of phase 4
+                    % using the peak acceleration signal in x-direction of
+                    % thelower arm sensor
+                    %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+
+                    % End phase 1
+                    [temp, P] = islocalmin(df.SenAcc.SensorFreeX(1:x(1)));
+
+                    localmin.all = temp;
+                    Thresh = mean(P(localmin.all));
+
+                    clear temp P
+                    [temp, P] = islocalmin(df.SenAcc.SensorFreeX(1:x(1)), 'MinProminence',Thresh);
+                    localmin.thresh = temp;
+                    N = 1:height(df.SenAcc.SensorFreeX);
+
+                    %select the less prominent minima between the last two most prominent minima
+                    localmin.prominent = N(localmin.thresh);
+                    localmin.incon = N(localmin.all);
+
+                    % endPhase1_new = localmin.incon(find(localmin.incon == localmin.prominent(end))-1)
+                    endPhase1 = localmin.incon(end-1);
+                    clear localmin P temp
+
+                    % start phase 4
+                    temp = df.SenAcc.SensorFreeX(x(2):end);
+                    [minima, P] = islocalmin(temp);
+
+                    localmin.all = minima;
+                    Thresh = mean(P(localmin.all)) + std(P(localmin.all)) *0.25;
+                    clear minima P
+                    [minima, P] = islocalmin(temp, 'MinProminence',Thresh);
+                    localmin.thresh = minima;
+
+                    % the first prominent acceleration peak
+                    localmin.prominent = N(localmin.thresh)+ x(2);
+                    localmin.incon = N(localmin.all)+ x(2);
+                    startPhase4 = localmin.prominent(1);
+
+                    clear localmin temp P
+
+                    %% in T_phase 1 and T_phase 4 should be 3 peaks of the posision data.
+                    % if not, than select a better range using ginput.
+
+                    % the time axis of the phases.
+                    T_phase1 = startPhase1:endPhase1;
+
+                    %                         nPositionPeaks = sum(maxIndices_pos1(:) > T_phase1(1)) + sum(maxIndices_pos1(:) < T_phase1(end));
+                    if ~isempty(T_phase1)
+                        nPositionPeaks = sum(maxIndices_pos1(:) >= T_phase1(1) & maxIndices_pos1(:) < T_phase1(end));
+                    else
+                        fprintf('\t\t %s no data find for phase 1 \n', content(file).name)
+                        nPositionPeaks = 0;
+                    end
+
+
+                    if nPositionPeaks ~= 3 || isempty(T_phase1)
+                        if nPositionPeaks < 3
+                            fprintf('\t\t %s: less than 3 position peaks found in phase 1 \n', content(file).name)
+                        elseif nPositionPeaks > 3
+                            fprintf('\t\t %s: more than 3 position peaks found in phase 1 \n', content(file).name)
+                        end
+                        fprintf('\t \t %s: Please refine the borders of phase 1 \n', content(file).name)
+
+                        figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
+
+                        % display the results of the change points
+
+                        plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")
+                        hold on
+
+                        % Plot segments between change points
+                        plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
+
+                        %Plot change points
+                        x_rep = repelem(find(changeIndices),3);
+                        y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                        plot(x_rep,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
+                        title("Number of change points: " + nnz(changeIndices))
+
+                        xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
+                        xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
+
+                        hold off
+
+                        title("Manual segmentation Phase 1: " + fileName)
+
+                        [loc, ~] = ginput(2);
+
+                        % redidefine start and end of phase 1 based on input data
+                        if ~isempty(loc)
+                            startPhase1 = round(loc(1));
+                            endPhase1 = round(loc(2));
+
+                            T_phase1 = startPhase1:endPhase1;
+
+                            clear loc
+                            close gcf
+                        else
+                            error('Number of position peaks found ~= 6 \n NO borders were selected for phase 1')
+
+                        end
+                    elseif nPositionPeaks == 6
+                        fprintf('\t\t %s: 3 position peaks found in phase 1 \n', content(file).name)
+                    end
+
+                    clear nPositionPeaks
+
+                    % phase 4
+                    %========
+                    T_phase4 = startPhase4:endPhase4;
+                    %nPositionPeaks = sum(maxIndices_pos4(:) > T_phase4(1)) + sum(maxIndices_pos4(:) < T_phase4(end));
+
+
+                    nPositionPeaks = sum(maxIndices_pos4(:) >= T_phase4(1) & maxIndices_pos4(:) < T_phase4(end));
+
+                    if nPositionPeaks ~= 3
+                        if nPositionPeaks < 3
+                            fprintf('\t\t %s: less than 3 position peaks found in phase 4 \n', content(file).name)
+                        elseif nPositionPeaks > 3
+                            fprintf('\t\t %s: more than 3 position peaks found in phase 4 \n', content(file).name)
+                        end
+                        fprintf('\t \t %s: Please refine the borders of phase 4 \n', content(file).name)
+
+                        figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
+
+                        % display the results of the change points
+
+                        plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")
+                        hold on
+
+                        % Plot segments between change points
+                        plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
+
+                        %Plot change points
+                        x_rep = repelem(find(changeIndices),3);
+                        y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                        plot(x_rep,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
+                        title("Number of change points: " + nnz(changeIndices))
+
+                        xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
+                        xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
+                        hold off
+
+                        title("Manual segmentation Phase 4: " + fileName)
+
+                        [loc, ~] = ginput(2);
+
+                        % redidefine start and end of phase 1 based on input data
+                        if ~isempty(loc)
+                            startPhase4 = round(loc(1));
+                            endPhase4 = round(loc(2));
+                            T_phase4 = startPhase4:endPhase4;
+
+                            clear loc
+                            close gcf
+
+                        else
+                            error('Number of position peaks found ~= 6 \n NO borders were selected for phase 4')
+
+                        end
+                    elseif nPositionPeaks == 6
+                        fprintf('\t\t %s: 3 position peaks found in phase 4 \n', content(file).name)
+                    end
+
+                    clear nPositionPeaks
+                    %% middle phase 1
+                    fprintf('\t \t %s: Segment middle arm movement phase 1 \n', content(file).name)
+
+                    [peakLoc.phase1, peakMag.phase1] = peakfinder(df.SenAcc.SensorFreeX(T_phase1), [],[],-1);
+
+                    peakLoc.phase1 = peakLoc.phase1 + startPhase1;
+                    grab_idx.phase1 = peakLoc.phase1(1:2:end);
+                    release_idx.phase1 = peakLoc.phase1(2:2:end);
+
+                    T_middle_phase1 = grab_idx.phase1(2):grab_idx.phase1(3);
+
+                    % throw error if the number of acceleration peaks exceed 6
+                    %=========================================================
+                    if size(peakLoc.phase1, 1) ~= 6
+                        fprintf('\t \t %s: Please select peaks phase 1 \n', content(file).name)
+
+                        figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
+                        subplot(2,1,1);
+                        % display the results of the change points
+
+                        plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")
+                        hold on
+
+                        % Plot segments between change points
+                        plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
+
+                        %Plot change points
+                        x_rep = repelem(find(changeIndices),3);
+                        y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                        plot(x_rep,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
+                        title("Number of change points: " + nnz(changeIndices))
+
+                        xline(startPhase1, "Color", '#A2142F', "DisplayName",'StrPh1')
+                        xline(endPhase1, "Color", '#A2142F', "DisplayName",'EndPh1')
+
+                        xline(startPhase4, "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
+                        xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
+                        hold off
+
+                        %phase 1
+                        subplot(2,1,2)
+                        yline_phase1 = ones(size(T_phase1)) * (min(peakMag.phase1) * 1.2);
+
+                        plot(df.SenAcc.SensorFreeX); hold on
+                        plot(T_phase1, yline_phase1, 'LineWidth',10, 'Color', '#097392')
+                        plot(grab_idx.phase1, peakMag.phase1(1:2:end),'o', 'MarkerSize', 7.5, 'MarkerFaceColor', 	'#A2142F', 'MarkerEdgeColor', 	'#A2142F')
+                        plot(release_idx.phase1, peakMag.phase1(2:2:end), 'o', 'MarkerSize', 7.5, 'MarkerEdgeColor', 	'#0072BD', 'MarkerFaceColor', 	'#0072BD')
+
+                        yline_middle_phase1 = ones(size(T_middle_phase1))* (min(peakMag.phase1) * 1.1);
+                        plot(T_middle_phase1, yline_middle_phase1, 'LineWidth',7.5, 'Color','#83B4B3')
+
+                        title("Manual segmentation of middle Phase 1: " + fileName)
+
+                        [loc, ~] = ginput(2);
+
+                        if ~isempty(loc)
+                            % find the selected locations that are close to
+                            % the found peaks
+                            ind(1) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1) ,loc(1),'nearest');
+                            ind(2) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1), loc(2), 'nearest');
+
+                            T_middle_phase1 = peakLoc.phase1(ind(1)):peakLoc.phase1(ind(2));
+                            clear loc
+                            close gcf
+
+
+                            warning('Number of peaks found exceeds ~= 6 \n 2 peaks manually selected phase 1')
+
+                        else
+                            error('Number of peaks found exceeds ~= 6 \n NO peaks were selected phase 1')
+                        end
+
+                    end
+                    %=========================================================
+
+                    %                         % throw error if the number of acceleration peaks does not reach 6
+                    %                         %=================================================================
+                    %
+                    %                         if size(peakLoc.phase1, 1) < 6
+                    %                             fprintf('\t \t %s: Please select peaks phase 1 \n', content(file).name)
+                    %
+                    %                             figure('Units','normalized','Position',[0 0 1 1]);
+                    %                             subplot(2,1,1);
+                    %                             % display the results of the change points
+                    %
+                    %                             plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")
+                    %                             hold on
+                    %
+                    %                             % Plot segments between change points
+                    %                             plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
+                    %
+                    %                             %Plot change points
+                    %                             x_rep = repelem(find(changeIndices),3);
+                    %                             y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                    %                             plot(x_rep,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
+                    %                             title("Number of change points: " + nnz(changeIndices))
+                    %
+                    %                             xline(T_phase1(1), "Color", '#A2142F', "DisplayName",'StrPh1')
+                    %                             xline(T_phase1(end), "Color", '#A2142F', "DisplayName",'EndPh1')
+                    %
+                    %                             xline(T_phase4(1), "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
+                    %                             xline(T_phase4(end), "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
+                    %                             hold off
+                    %
+                    %                             %phase 1
+                    %                             subplot(2,1,2)
+                    %                             yline_phase1 = ones(size(T_phase1)) * (min(peakMag.phase1) * 1.2);
+                    %
+                    %                             plot(df.SenAcc.SensorFreeX); hold on
+                    %                             plot(T_phase1, yline_phase1, 'LineWidth',10, 'Color', '#097392')
+                    %                             plot(grab_idx.phase1, peakMag.phase1(1:2:end),'o', 'MarkerSize', 7.5, 'MarkerFaceColor', 	'#A2142F', 'MarkerEdgeColor', 	'#A2142F')
+                    %                             plot(release_idx.phase1, peakMag.phase1(2:2:end), 'o', 'MarkerSize', 7.5, 'MarkerEdgeColor', 	'#0072BD', 'MarkerFaceColor', 	'#0072BD')
+                    %
+                    %                             yline_middle_phase1 = ones(size(T_middle_phase1))* (min(peakMag.phase1) * 1.1);
+                    %                             plot(T_middle_phase1, yline_middle_phase1, 'LineWidth',7.5, 'Color','#83B4B3')
+                    %
+                    %                             title("Manual segmentation Phase 1: " + fileName)
+                    %
+                    %                             [loc, ~] = ginput(2);
+                    %
+                    %                             if ~isempty(loc)
+                    %                                 % find the selected locations that are close to
+                    %                                 % the found peaks
+                    %                                 ind(1) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1) ,loc(1),'nearest');
+                    %                                 ind(2) = interp1(peakLoc.phase1, 1:length(peakLoc.phase1), loc(2), 'nearest');
+                    %
+                    %                                 T_middle_phase1 = peakLoc.phase1(ind(1)):peakLoc.phase1(ind(2));
+                    %                                 clear loc
+                    %                                 close gcf
+                    %
+                    %
+                    %                                 warning('Number of peaks found are less than 6 \n 2 peaks manually selected phase 1')
+                    %
+                    %                             else
+                    %                                 error('Number of peaks found are less than 6 \n NO peaks were selected phase 1')
+                    %                             end
+                    %
+                    %                         end
+
+                    %% middle phase 4
+                    fprintf('\t \t %s: Segment middle arm movement phase 4 \n', content(file).name)
+
+                    [peakLoc.phase4, peakMag.phase4] = peakfinder(df.SenAcc.SensorFreeX(T_phase4), [],[],-1);
+                    peakLoc.phase4 = peakLoc.phase4 + startPhase4;
+                    grab_idx.phase4 = peakLoc.phase4(1:2:end);
+                    release_idx.phase4 = peakLoc.phase4(2:2:end);
+
+
+
+                    % throw error if the number of acceleration peaks
+                    % exceeds 7
+                    %================================================
+                    if size(peakLoc.phase4, 1) ~= 6 || strcmp(subj_name, 'BC_010')
+                        fprintf('\t \t %s: Please select peaks phase 4 \n', content(file).name)
+
+                        figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
+                        subplot(2,1,1);
+                        % display the results of the change points
+
+                        plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")
+                        hold on
+
+                        % Plot segments between change points
+                        plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
+
+                        %Plot change points
+                        x_rep = repelem(find(changeIndices),3);
+                        y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                        plot(x_rep,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
+                        title("Number of change points: " + nnz(changeIndices))
+
+                        xline(T_phase1(1), "Color", '#A2142F', "DisplayName",'StrPh1')
+                        xline(T_phase1(end), "Color", '#A2142F', "DisplayName",'EndPh1')
+
+                        xline(T_phase4(1), "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
+                        xline(T_phase4(end), "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
+                        hold off
+
+                        subplot(2,1,2)
+
+                        plot(df.SenAcc.SensorFreeX); hold on
+
+                        % phase 4
+                        yline_phase4 = ones(size(T_phase4)) * (min(peakMag.phase4) * 1.2);
+                        plot(T_phase4, yline_phase4, 'LineWidth',10, 'color', '#097392')
+
+                        plot(grab_idx.phase4, peakMag.phase4(1:2:end),'o', 'MarkerSize', 7.5, 'MarkerFaceColor', 	'#A2142F', 'MarkerEdgeColor', 	'#A2142F')
+                        plot(release_idx.phase4, peakMag.phase4(2:2:end), 'o', 'MarkerSize', 7.5, 'MarkerEdgeColor', 	'#0072BD', 'MarkerFaceColor', 	'#0072BD')
+
+                        
+                        if size(grab_idx.phase4,1) > 2
+                            T_middle_phase4 = grab_idx.phase4(2):grab_idx.phase4(3);
+                        else
+                            T_middle_phase4 = grab_idx.phase4(1):grab_idx.phase4(2);
+                        end
+
+                        yline_middle_phase4 = ones(size(T_middle_phase4))*(min(peakMag.phase4) * 1.1);
+                        plot(T_middle_phase4, yline_middle_phase4, 'LineWidth',7.5, 'Color','#83B4B3')
+
+                        title("Manual segmentation Phase 4: " + fileName)
+
+                        [loc, ~] = ginput(2);
+
+                        if ~isempty(loc)
+                            % find the selected locations that are close to
+                            % the found peaks
+                            ind(1) = interp1(peakLoc.phase4, 1:length(peakLoc.phase4) ,loc(1),'nearest');
+                            ind(2) = interp1(peakLoc.phase4, 1:length(peakLoc.phase4), loc(2), 'nearest');
+
+                            T_middle_phase4 = peakLoc.phase4(ind(1)):peakLoc.phase4(ind(2));
+                            clear loc
+                            close gcf
+
+
+                            warning('Number of peaks found ~= 6 \n peaks manually selected')
+                        else
+                            error('Number of peaks found ~= 6 \n NO peaks were selected phase 1')
+                        end
+                    else
+                        T_middle_phase4 = grab_idx.phase4(2):grab_idx.phase4(3);
+                    end
+                    %================================================
+
+                    %                         % throw error if the number of acceleration peaks does not reach 6
+                    %                         %=================================================================
+                    %
+                    %                         if size(peakLoc.phase4, 1) < 6
+                    %                             fprintf('\t \t %s: Please select peaks phase 4 \n', content(file).name)
+                    %
+                    %                             figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
+                    %                             subplot(2,1,1);
+                    %                             % display the results of the change points
+                    %
+                    %                             plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")
+                    %                             hold on
+                    %
+                    %                             % Plot segments between change points
+                    %                             plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
+                    %
+                    %                             %Plot change points
+                    %                             x_rep = repelem(find(changeIndices),3);
+                    %                             y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                    %                             plot(x_rep,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
+                    %                             title("Number of change points: " + nnz(changeIndices))
+                    %
+                    %                             xline(T_phase1(1), "Color", '#A2142F', "DisplayName",'StrPh1')
+                    %                             xline(T_phase1(end), "Color", '#A2142F', "DisplayName",'EndPh1')
+                    %
+                    %                             xline(T_phase4(1), "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
+                    %                             xline(T_phase4(end), "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
+                    %                             hold off
+                    %
+                    %                             subplot(2,1,2)
+                    %                             plot(df.SenAcc.SensorFreeX); hold on
+                    %
+                    %                             % phase 4
+                    %                             yline_phase4 = ones(size(T_phase4)) * (min(peakMag.phase4) * 1.2);
+                    %                             plot(T_phase4, yline_phase4, 'LineWidth',10, 'color', '#097392')
+                    %
+                    %                             plot(grab_idx.phase4, peakMag.phase4(1:2:end),'o', 'MarkerSize', 7.5, 'MarkerFaceColor', 	'#A2142F', 'MarkerEdgeColor', 	'#A2142F')
+                    %                             plot(release_idx.phase4, peakMag.phase4(2:2:end), 'o', 'MarkerSize', 7.5, 'MarkerEdgeColor', 	'#0072BD', 'MarkerFaceColor', 	'#0072BD')
+                    %
+                    %                             yline_middle_phase4 = ones(size(T_middle_phase4))*(min(peakMag.phase4) * 1.1);
+                    %                             plot(T_middle_phase4, yline_middle_phase4, 'LineWidth',7.5, 'Color','#83B4B3')
+                    %
+                    %                             title("Manual segmentation Phase 4: " + fileName)
+                    %
+                    %                             [loc, ~] = ginput(2);
+                    %
+                    %                             if ~isempty(loc)
+                    %                                 % find the selected locations that are close to
+                    %                                 % the found peaks
+                    %                                 ind(1) = interp1(peakLoc.phase4, 1:length(peakLoc.phase4) ,loc(1),'nearest');
+                    %                                 ind(2) = interp1(peakLoc.phase4, 1:length(peakLoc.phase4), loc(2), 'nearest');
+                    %
+                    %                                 T_middle_phase4 = peakLoc.phase4(ind(1)):peakLoc.phase4(ind(2));
+                    %                                 clear loc
+                    %                                 close gcf
+                    %
+                    %
+                    %                                 warning('Number of peaks found are less than 6 \n peaks manually selected')
+                    %                             else
+                    %                                 error('Number of peaks found are less than 6 \n NO peaks were selected phase 1')
+                    %                             end
+                    %                         end
+                    %
+
+                    %=================================================================
+                    %% display the results
+                    if plot_or_not
+                        figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
+                        subplot(2,1,1);
+                        % display the results of the change points
+
+                        plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")
+                        hold on
+
+                        % Plot segments between change points
+                        plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
+
+                        %Plot change points
+                        x_rep = repelem(find(changeIndices),3);
+                        y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                        plot(x_rep,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
+                        title("Number of change points: " + nnz(changeIndices))
+
+                        xline(T_phase1(1), "Color", '#A2142F', "DisplayName",'StrPh1')
+                        xline(T_phase1(end), "Color", '#A2142F', "DisplayName",'EndPh1')
+                        yline = segmentMean(T_middle_phase1(1):T_middle_phase1(end));
+                        plot(T_middle_phase1, yline, 'LineWidth',7.5, 'Color','#83B4B3')
+
+                        xline(T_phase4(1), "Color", '#EDB120',"LineWidth",1, "DisplayName",'StrPh4')
+                        xline(T_phase4(end), "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
+                        yline = segmentMean(T_middle_phase4(1):T_middle_phase4(end));
+                        plot(T_middle_phase4, yline, 'LineWidth',7.5, 'Color','#83B4B3')
+                        hold off
+
+                        %phase 1
+                        subplot(2,1,2)
+                        yline_phase1 = ones(size(T_phase1)) * (min(peakMag.phase1) * 1.2);
+
+                        plot(df.SenAcc.SensorFreeX); hold on
+                        plot(T_phase1, yline_phase1, 'LineWidth',10, 'Color', '#097392')
+                        plot(grab_idx.phase1, peakMag.phase1(1:2:end),'o', 'MarkerSize', 7.5, 'MarkerFaceColor', 	'#A2142F', 'MarkerEdgeColor', 	'#A2142F')
+                        plot(release_idx.phase1, peakMag.phase1(2:2:end), 'o', 'MarkerSize', 7.5, 'MarkerEdgeColor', 	'#0072BD', 'MarkerFaceColor', 	'#0072BD')
+
+                        yline_middle_phase1 = ones(size(T_middle_phase1))* (min(peakMag.phase1) * 1.1);
+                        plot(T_middle_phase1, yline_middle_phase1, 'LineWidth',7.5, 'Color','#83B4B3')
+
+                        % phase 4
+                        yline_phase4 = ones(size(T_phase4)) * (min(peakMag.phase4) * 1.2);
+                        plot(T_phase4, yline_phase4, 'LineWidth',10, 'color', '#097392')
+
+                        plot(grab_idx.phase4, peakMag.phase4(1:2:end),'o', 'MarkerSize', 7.5, 'MarkerFaceColor', 	'#A2142F', 'MarkerEdgeColor', 	'#A2142F')
+                        plot(release_idx.phase4, peakMag.phase4(2:2:end), 'o', 'MarkerSize', 7.5, 'MarkerEdgeColor', 	'#0072BD', 'MarkerFaceColor', 	'#0072BD')
+
+                        yline_middle_phase4 = ones(size(T_middle_phase4))*(min(peakMag.phase4) * 1.1);
+                        plot(T_middle_phase4, yline_middle_phase4, 'LineWidth',7.5, 'Color','#83B4B3')
+
+                        title("visual segmentation: " + fileName)
+
+                    end
+                    %disp('      ')
+
+                    %% extract relevant kinematics
+                    fprintf('\t\t %s: Extract relevant kinematics \n', fileName)
+                    % initialise joint names
+                    jointNames = ['Scapula', "Glenohumeraal", "Elbow", "Wrist"];
+                    for jnt = 1:4
+                        % initiation of joint names
+                        IK_X = [jointNames{jnt}, '_abbuction'];
+                        IK_Y = [jointNames{jnt}, '_rotation'];
+                        IK_Z = [jointNames{jnt}, '_flexion'];
+
+                        Data_out.(Timepoint).phase1.(arm).(IK_X)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 1), T_middle_phase1);
+                        Data_out.(Timepoint).phase1.(arm).(IK_Y)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 2), T_middle_phase1);
+                        Data_out.(Timepoint).phase1.(arm).(IK_Z)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 3), T_middle_phase1);
+
+
+                        Data_out.(Timepoint).phase4.(arm).(IK_X)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 1), T_middle_phase4);
+                        Data_out.(Timepoint).phase4.(arm).(IK_Y)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 2), T_middle_phase4);
+                        Data_out.(Timepoint).phase4.(arm).(IK_Z)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 3), T_middle_phase4);
+
+                    end
+                    % Trunk data
+                    trunk = jointData(2).jointAngle + jointData(3).jointAngle + jointData(4).jointAngle; %+ jointData(5).jointAngle;
+                    Trunk_lateroflexion = trunk(:,1);
+                    Trunk_rotation = trunk(:,2);
+                    Trunk_flexion = trunk(:,3);
+
+
+                    % initiation of trunk names
+                    IK_X = 'Trunk_lateroflexion';
+                    IK_Y = 'Trunk_rotation';
+                    IK_Z = 'Trunk_flexion';
+
+                    Data_out.(Timepoint).phase1.(arm).(IK_X)(:, counter) = normalisation(trunk(:,1), T_middle_phase1);
+                    Data_out.(Timepoint).phase1.(arm).(IK_Y)(:, counter) = normalisation(trunk(:, 2), T_middle_phase1);
+                    Data_out.(Timepoint).phase1.(arm).(IK_Z)(:, counter) = normalisation(trunk(:, 3), T_middle_phase1);
+
+
+                    Data_out.(Timepoint).phase4.(arm).(IK_X)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 1), T_middle_phase4);
+                    Data_out.(Timepoint).phase4.(arm).(IK_Y)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 2), T_middle_phase4);
+                    Data_out.(Timepoint).phase4.(arm).(IK_Z)(:, counter) = normalisation(jointData(jointNo(jnt)).jointAngle(:, 3), T_middle_phase4);
+
+
+                    %% clear certain variables
+                    clear peakLoc peakMag
+
+                    %                     end% first check
+                end % end if movement && .mvnx
+            catch ME
+                % this section of code displays the subject and filenames
+                % on which an error occured
+                %                 formatSpec = '\t ERROR: %s at TIMEPOINT: %s in FILENAME: %s \n %s LINE: %s ';
+                %                 fprintf(formatSpec, subj_name, Timepoint, fileName, ME.message, num2str(ME.stack.line));
+                %                 disp(' ')
+
+                fprintf('\t\t ERROR: %s at TIMEPOINT: %s in FILENAME: %s \n \t\t %s LINE: %s \n', ...
+                    subj_name, Timepoint, fileName, ME.message)
+
+            end
+        end %end number of files
+
+        %this section of code writes the peaks information to an excel file per subject
+        % This also indicates whether the ULIFT task is segmented (1) or not
+        % (0)
+
+        %         if strcmp(Timepoint, 'T0')
+        %             T = table(ppID, filename, Tpoint, Phase1, Phase4, run);
+        %             writetable(T, fullfile(path.table, [subj_name, '.xlsx']))
+        %         else
+        %             tablefile = fullfile(path.table, [subj_name, '.xlsx']);
+        %             T_orig = readtable(tablefile);
+        %
+        %             T_new = table(ppID, filename, Tpoint, Phase1, Phase4, run);
+        %             T = [T_orig; T_new];
+        %             writetable(T, fullfile(path.table, [subj_name, '.xlsx']))
+        %         end
+    end% end check if subject path exists
+
+    %% Save data
+    %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+
+        if exist('Data_out','var')
+            if exist(path.out,'file')
+                load(path.out)
+            end
+    
+            [Data.(subj_name).(Timepoint)] = Data_out.(Timepoint);
+            save(path.out,'Data')
+            clear Data Data_out
+        end
+
+    fprintf('*********Finished %s **********\n', subj_name)
+    %close all
+
+end %end subjects
+cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT")
+
+
+
+%% plot joint angle data
+% subj_name = 'BC_020';
+% arm = 'L'
+% JointAngles = fieldnames(Data.(subj_name).T1.phase1.L);
+% 
+% figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
+% p = tiledlayout('flow', 'TileSpacing','compact');
+% title(p,['Phase 1 Average left and right ', (Timepoint)])
+% xlabel(p,'% movement')
+% ylabel(p,['Joint angle', char(176)])
+% 
+% for jnt = 1:length(JointAngles)
+%     L.Phase1.(JointAngles{jnt}) = Data.(subj_name).T1.phase1.L.(JointAngles{jnt});
+%     R.Phase1.(JointAngles{jnt}) = Data.(subj_name).T1.phase1.R.(JointAngles{jnt});
+% 
+%     nexttile
+%     plot(L.Phase1.(JointAngles{jnt}), 'DisplayName', "Avg Left")
+%     hold on
+%     plot(R.Phase1.(JointAngles{jnt}), 'DisplayName', "Avg Right")
+%     xlim([0, 100])
+% 
+%     [PlotTitle] = regexprep(JointAngles{jnt}, '_', ' ');
+%     title(PlotTitle)
+% end
+
+
+%diary off
+
+##### SOURCE END #####
+--></body></html>

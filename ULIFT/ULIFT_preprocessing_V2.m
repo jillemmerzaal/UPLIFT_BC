@@ -5,11 +5,10 @@
 % survived breast cancer. 
 % This is the main file for the analysis of the ULIFT data collected within
 % that project and spefied to only run that data.
-
+%
 % code written by: dr. Jill Emmerzaal (jillemmerzaal@gmail.com)
 % last update v1 14/11/2022
 % functions needed for this script:
-%%
 % 
 % * MVN.m
 % * load_mvnx.m
@@ -28,29 +27,29 @@
 % 
 %  Then you will need to specify which time point you want to analyse and
 %  whether you want to plot the data (1) or not (0)
-% 
-
+%  And the range of subjects you want to run. (i.e. subj = (1) runs
+%  participant 1. subj = (1:10) runs subject 1 to 10. subj = (1:5, 7:10)
+%  runs subject 1 to 10 except subject 6.
 
 clearvars; close all; clc
 
-%% set input path
-cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
-addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
-addpath("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 
+%% set input path
+cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT")
+addpath("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT")
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 path.out    = fullfile(path.root,'Output','Database_ULIFT.mat');
 path.table  = fullfile(path.root,'Output');
 %% input data
 
-Timepoint   = 'T1';
+Timepoint   = 'T0';
 movement    = "ULIFT";
 plot_or_not = 1;
 
 %diary myDiaryFile
 
 %% 2. load data
-for subj = 14%20:27
+for subj = (1)
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -760,7 +759,7 @@ for subj = 14%20:27
                     %=================================================================
                     %% display the results
                     if plot_or_not
-                        figure('Units','normalized','Position',[0 0 1 1]);
+                        figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
                         subplot(2,1,1);
                         % display the results of the change points
 
@@ -868,8 +867,8 @@ for subj = 14%20:27
                 %                 fprintf(formatSpec, subj_name, Timepoint, fileName, ME.message, num2str(ME.stack.line));
                 %                 disp(' ')
 
-                cprintf('*text', '\t\t ERROR: %s at TIMEPOINT: %s in FILENAME: %s \n \t\t %s LINE: %s \n', ...
-                    subj_name, Timepoint, fileName, ME.message, num2str(ME.stack(:).line))
+                fprintf('\t\t ERROR: %s at TIMEPOINT: %s in FILENAME: %s \n \t\t %s LINE: %s \n', ...
+                    subj_name, Timepoint, fileName, ME.message)
 
             end
         end %end number of files
@@ -908,7 +907,7 @@ for subj = 14%20:27
     %close all
 
 end %end subjects
-cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
+cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT")
 
 
 
