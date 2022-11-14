@@ -14,6 +14,7 @@
 %       dr. Jill Emmerzaal KU Leuven, Tervuursevest 101, box 1501 Research
 %       Group for Rehabilitation in Internal Disorders
 
+
 clearvars; close all; clc
 %% 1. input data
 %%
@@ -46,6 +47,12 @@ cd(path.code)
 addpath(path.code)
 
 %% input data
+Timepoint       = 'T0';
+movement        =  'EXO';
+plot_or_not     = 1;
+check_complete  = 0;
+
+%% Specify joint angles to analyse
 %%
 % 
 % 
@@ -57,17 +64,11 @@ addpath(path.code)
 % joint, plus 3D scapulotoracaal angles. secondary will extract the all
 % glenohumaral joint angles. Thus, if you want glenohumeral abduction + the
 % scapulothoratic joint angles than: scapulo = 1; secondary = 0;
-
-% manual input needed
-Timepoint       = 'T0';
-movement        = 'EXO';
-plot_or_not     = 1;
-check_complete  = 0;
-scapulo         = 0;
-secondary       = 0;
+scapulo     = 0;
+secondary   = 0;
 
 %% 2. load data
-for subj = (1:10) % manual input needed for subject ranges
+for subj = (1:10)
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
