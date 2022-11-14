@@ -20,7 +20,7 @@
 % 
 
 
-clearvars; clc; close all;
+clear; clc; close all;
 %% 1) Input
 %%
 %
@@ -30,18 +30,18 @@ clearvars; clc; close all;
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
 addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 
-Timepoint       = 'T1';
+Timepoint       = 'T0';
 movement        = "F";
 path.root       = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 path.out        = fullfile(path.root,'Output','Database_MovQual.mat');
 fs              = 60;
-plot_or_not     = 0;
-safe_to_excel   = 1;
+plot_or_not     = 1;
+safe_to_excel   = 0;
 
 Affected_table = readtable(fullfile(path.root,"Aangedane zijde.xlsx"));
 
-%% 2) Load data
-for subj = (1:23)%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14 16 17 19 21) == proefpersonen zonder "rust" data.
+%% 2) Load data (8 9 10 11 12 14 16 17 19 21) == proefpersonen zonder "rust" data
+for subj = (12)
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -174,9 +174,13 @@ for subj = (1:23)%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14
                     [peakLocMax, peakMagMax] =  peakfinder(vel_filtered.velocityVec, [],[],1, false);
                     [peakLocMin, peakMagMin] =  peakfinder(vel_filtered.velocityVec, [],[],-1, false);
 
-                    if size(peakLocMin,1) > 32 % 32 change points indicate 16 repetitions. so more than that is usually false peak detection
+                    if size(peakLocMin,1) >= 31 % 32 change points indicate 16 repetitions. so more than that is usually false peak detection
                         [peakLocMax, peakMagMax] =  peakfinder(vel_filtered.velocityVec, [],[],1, false);
-                        [peakLocMin, peakMagMin] =  peakfinder(vel_filtered.velocityVec, 1,[],-1, false);                     
+                        [peakLocMin, peakMagMin] =  peakfinder(vel_filtered.velocityVec, 1,[],-1, false);       
+                        if size(peakLocMin,1) < 16
+                            [peakLocMax, peakMagMax] =  peakfinder(vel_filtered.velocityVec, [],[],1, false);
+                            [peakLocMin, peakMagMin] =  peakfinder(vel_filtered.velocityVec, [],[],-1, false);
+                        end
                     end
 
 
@@ -191,13 +195,13 @@ for subj = (1:23)%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14
                     %%
                     % 
                     %  contingency check peak detection
-                    %  TEXT
+                    %  
                     % 
                     
                     
-                    temp_max = peakfinder(vel_filtered.velocityZ(reps(1):reps(2)), [],[],1,false);
-                    temp_min = peakfinder(vel_filtered.velocityZ(reps(1):reps(2)), [],[],-1,false);
-                    if temp_min - temp_max > 0
+                    temp_max = peakfinder(vel_filtered.velocityZ(reps(1):reps(end)), [],[],1,false);
+                    temp_min = peakfinder(vel_filtered.velocityZ(reps(1):reps(end)), [],[],-1,false);
+                    if temp_min(1) - temp_max(1) > 0
                         fprintf('\t\t %s: first velcity in z-direction is not negative \n', content(file).name)
                         fprintf('\t\t %s: Start peak will be redefined \n', content(file).name)
                         startpeak = startpeak + 1;
@@ -220,40 +224,121 @@ for subj = (1:23)%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14
                     %  Therefore, we are strickt in our trimming process,
                     %  and use the velocity data in Z-direction in stead of the vector. 
 
+                    if plot_or_not
+                        figure
+                    end
 
-                    t=0:0.001:1;
+                    t=-0.01:0.001:1.01;
                     f=1;
                     x=sin(2*pi*f*t)* -1;
 
                     for idx = 1:length(reps)-1
-                        [istart.Z(idx),istop.Z(idx),dist.Z(idx)] = findsignal(vel_filtered.velocityZ(reps(idx):reps(idx+1)), x,'TimeAlignment','dtw','Metric','absolute');
+                        temp.signal = vel_filtered.velocityZ(reps(idx):reps(idx+1));
+                        [temp.istart, temp.istop, temp.dist(idx)] = findsignal(temp.signal, x,'TimeAlignment','dtw','Metric','absolute');
+
+                        downcross = find(temp.signal(1:end-1) >= 0 & temp.signal(2:end) < 0);
+                        downcross = downcross - temp.signal(downcross) ./ (temp.signal(downcross+1)-temp.signal(downcross));
+                        downcross = round(downcross);
+
+                        if size(downcross,1) > 2
+                            istart.Z(idx) = downcross(find(downcross >= temp.istart, 1, 'first'));
+                            istop.Z(idx) = downcross(find(downcross <= temp.istop, 1, 'last'));
+
+                        elseif size(downcross,1) == 2
+                            if abs(temp.istart - downcross(1)) < 15
+                                istart.Z(idx) = downcross(find(downcross >= temp.istart, 1, 'first'));
+                            else
+                                istart.Z(idx) = temp.istart;
+                            end
+
+                            if abs(temp.istop - downcross(2)) < 25
+                                istop.Z(idx) = downcross(find(downcross <= temp.istop, 1, 'last'));
+                            else                               
+                                istop.Z(idx) = temp.istop;
+                            end
+
+                        elseif size(downcross,1) == 1
+                            if abs(temp.istart - downcross(1)) < 15
+                                istart.Z(idx) = downcross(find(downcross >= temp.istart, 1, 'first'));
+                            else
+                                istart.Z(idx) = temp.istart;
+                            end
+
+                            if abs(temp.istop - downcross(1)) < 15
+                                istop.Z(idx) = downcross(find(downcross <= temp.istop, 1, 'last'));
+                            else                               
+                                istop.Z(idx) = temp.istop;
+                            end
+
+                        else
+                            istart.Z(idx) = temp.istart;
+                            istop.Z(idx) = temp.istop;
+                        end
+
+                        if plot_or_not
+                            
+                            nexttile
+                            findsignal(temp.signal, x,'TimeAlignment','dtw','Metric','absolute');
+                            xline([istart.Z(idx), istop.Z(idx)])
+                            yline(0)
+                        end
+
+                        clear temp downcross
                     end
 
-                    % trim the repetitions and save them in a temporary
-                    % variable.
+
+                    %%
+                    % 
+                    %  trim the repetitions and save them in a temporary
+                    %  variable to check the results. And trim the
+                    %  accelerometer data aswell
+                    %  
+                    % 
+
+                  
                     for idx = 1:length(reps)-1
-                        temp_istart = reps(idx) + istart.Z(idx);
-                        temp_istop = reps(idx) + istop.Z(idx);
-                        temp.rep{:,idx} = vel.z(temp_istart:temp_istop);  
+                        temp.istart = reps(idx) + istart.Z(idx);
+                        temp.istop = reps(idx) + istop.Z(idx);
+                        temp.rep{:,idx} = vel.z(temp.istart:temp.istop);  
+                        
+                        reps_istart(idx) = temp.istart;
+                        reps_istop(idx) = temp.istop;
+                        temp.acc{:,idx} = acc(temp.istart:temp.istop, :);
                     end
 
+                    clear istart istop
                    
-                    % concatinate the trimmed repetitions
+                   %%
+                   % 
+                   %  Concatinate the trimmed repetitions into one
+                   %  timeseries
+                   %  
+                   % 
+                   
                     for idx = 1:size(temp.rep,2)
                         if idx == 1
                             concat = temp.rep{:,idx};
+                            acc_trim = temp.acc{:,idx};
                             fprintf('concatinate repetition: %d \n', idx)
                         else
                             concat = cat(1, concat, temp.rep{:,idx});
+                            acc_trim = cat(1, acc_trim, temp.acc{:,idx});
                             fprintf('concatinate repetition: %d \n', idx)
-
                         end
                     end
                    
-                    %plot individual velocity vectors
-                    if plot_or_not
-                        figure; 
-                        %if strcmp(side, 'affected')
+                    %%
+                    % 
+                    %  If plot or not is set to 1, this will plot the
+                    %  results of the repetitions segmentation, trimming of
+                    %  the repetitions, original time series and the
+                    %  concatinated timeseries. 
+                    %  
+                    % 
+                    
+                    
+                    if plot_or_not 
+                        figure;
                             nexttile
                             for idx = 1:length(reps)-1
                                 plot(vel.z(reps(idx):reps(idx+1)))
@@ -279,10 +364,10 @@ for subj = (1:23)%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14
                             plot(concat)
                             plottitle = {[subj_name, ' trimmed repetitions concatinated']};
                             title(plottitle)
-                        %end
                     end
 
                     clear temp 
+             
                     %% 4) table stetup and calculati9on of the movement quality parameters
                     ppID    = string(subj_name);
                     trial   = string(fileName);
@@ -305,10 +390,11 @@ for subj = (1:23)%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14
                     %  predetermined parameters.
                     % 
              
-                    [lyapExp_x ,eLag(1), eDim(1)] = DivergenceExponent(acc.x(reps(1):reps(end)), fs);
-                    [lyapExp_y, eLag(2), eDim(2)] = DivergenceExponent(acc.y(reps(1):reps(end)), fs);
-                    [lyapExp_z, eLag(3), eDim(3)] = DivergenceExponent(acc.z(reps(1):reps(end)), fs);
-                    [lyapExp_res, eLag(4), eDim(4)] = DivergenceExponent(acc.res(reps(1):reps(end)), fs);
+                    % deze acc omschrijven naar acc trim
+                    [lyapExp_x ,eLag(1), eDim(1)] = DivergenceExponent(acc_trim.x, fs);
+                    [lyapExp_y, eLag(2), eDim(2)] = DivergenceExponent(acc_trim.y, fs);
+                    [lyapExp_z, eLag(3), eDim(3)] = DivergenceExponent(acc_trim.z, fs);
+                    [lyapExp_res, eLag(4), eDim(4)] = DivergenceExponent(acc_trim.res, fs);
 
 
                     %% 4.2) LDLJ_A
@@ -321,14 +407,16 @@ for subj = (1:23)%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14
                     %  Estimating Movement Smoothness from Inertial Measurement Units.
                     %
 
+                    
                     ldlj_a = zeros(1,size(reps,1)-1);
 
                     for idx = 1:size(reps,1)-1
-                        t = [reps(idx),reps(idx+1)];
+
+                        t = [reps_istart(idx),reps_istop(idx)];
                         ldlj_a(:, idx) = log_dimensionless_jerk_IMU(acc{:,1:3},t, fs);
                     end
 
-                    %% 4.4) sample entropy Jill --> TO defines tollerance
+                    %% 4.4) sample entropy 
 
                     %%
                     %
@@ -344,44 +432,48 @@ for subj = (1:23)%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14
                     % if timepoint == T0, calculate the tollerance and save
                     % this to file
                     % if timepoint ~= T0, load the previously saved tollerance
+                    % howeverm if the tollerance is empty at ~= T0 than it will calcuate one. 
 
                     if strcmp(Timepoint, 'T0')
                         if exist('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat', 'file') == 2
                             load('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat')
                         end
 
-                        sigma = std(acc{reps(1):reps(end), :}, [], 1);
+                        sigma = std(acc_trim{:,:}, [], 1);
                         r = 0.2 * sigma;
                         m=2;
 
                         tollarance_table.(arm)(subj, :) = table(ppID, r);
-
              
                     else
                         m = 2;
                         load C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat
                         r = tollarance_table.(arm).r(strcmp(tollarance_table.(arm).ppID, subj_name),:);
 
+                        if isempty(r)
+                            sigma = std(acc_trim{:,:}, [], 1);
+                            r = 0.2 * sigma;
+                        end
+
                     end
 
-                    sampen_x = sampen_Jill(acc.x(reps(1):reps(end), :), m, r(1));
-                    sampen_y = sampen_Jill(acc.y(reps(1):reps(end), :), m, r(2));
-                    sampen_z = sampen_Jill(acc.z(reps(1):reps(end), :), m, r(3));
-                    sampen_res = sampen_Jill(acc.res(reps(1):reps(end), :), m, r(4));
+                    sampen_x = sampen_Jill(acc_trim.x, m, r(1));
+                    sampen_y = sampen_Jill(acc_trim.y, m, r(2));
+                    sampen_z = sampen_Jill(acc_trim.z, m, r(3));
+                    sampen_res = sampen_Jill(acc_trim.res, m, r(4));
 
                     %% 4.5) Autocorrelation
                     %----------------------
-                    [acorr_x, reg_x] = Symmetry(vel.x(reps(1):reps(end)));
-                    [acorr_y, reg_y] = Symmetry(vel.y(reps(1):reps(end)));
-                    [acorr_z, reg_z] = Symmetry(vel.z(reps(1):reps(end)));
-                    [acorr_res, reg_res] = Symmetry(vel.res(reps(1):reps(end)));
+                    [acorr_x, reg_x] = Symmetry(acc_trim.x, plot_or_not, 'autocorrelation X acc');
+                    [acorr_y, reg_y] = Symmetry(acc_trim.y, plot_or_not, 'autocorrelation Y acc');
+                    [acorr_z, reg_z] = Symmetry(acc_trim.z, plot_or_not, 'autocorrelation Z acc');
+                    [acorr_res, reg_res] = Symmetry(acc_trim.res, plot_or_not, 'autocorrelation Res acc');
 
                     %% 4.6) Movement speed based on the repetitions
-                    movement_time = zeros(size(reps,1) - 1, 1);
-                    for idx = 1:size(reps,1) - 1
-                        movement_time(idx,1) = 1/fs * (reps(idx+1)-reps(idx));
+                    movement_time = zeros(size(reps_istart,1) - 1, 1);
+                    for idx = 1:size(reps_istart,2) - 1
+                        movement_time(idx,1) = 1/fs * (reps_istop(idx)-reps_istart(idx));
                     end
-
                     %% 4.7) Root Mean Square
                     
 
@@ -400,16 +492,16 @@ for subj = (1:23)%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14
                     % 
 
                     b=10;
-                    points=floor(length(acc.x(reps(1):reps(end)))/b)*b;
+                    points=(floor(height(acc_trim.x)/b)*b)-b ;
                     rms_x = [];
                     rms_y = [];
                     rms_z = [];
                     rms_res = [];
-                    for i = reps(1):b:points
-                        temp0 = rms(acc.x(i:i+b));
-                        temp1 = rms(acc.y(i:i+b));
-                        temp2 = rms(acc.z(i:i+b));
-                        temp3 = rms(acc.res(i:i+b));
+                    for i = reps_istart(1):b:points
+                        temp0 = rms(acc_trim.x(i:i+b));
+                        temp1 = rms(acc_trim.y(i:i+b));
+                        temp2 = rms(acc_trim.z(i:i+b));
+                        temp3 = rms(acc_trim.res(i:i+b));
 
                         rms_x = [rms_x; temp0];
                         rms_y = [rms_y; temp1];
@@ -437,11 +529,11 @@ for subj = (1:23)%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14
 
                     %% 5) Save raw acc and avel data to struct
                     if strcmp(side, 'affected')
-                        MoveQual.raw.affected.(ppID).(Timepoint).(trial).acc = acc(reps(1):reps(end), :);
-                        MoveQual.raw.affected.(ppID).(Timepoint).(trial).avel = avel;
+                        MoveQual.raw.affected.(ppID).(Timepoint).(trial).acc = acc;
+                        MoveQual.raw.affected.(ppID).(Timepoint).(trial).acc_trim = acc_trim;
                     elseif strcmp(side, 'unaffected')
                         MoveQual.raw.unaffected.(ppID).(Timepoint).(trial).acc = acc;
-                        MoveQual.raw.unaffected.(ppID).(Timepoint).(trial).avel = acc;
+                        MoveQual.raw.unaffected.(ppID).(Timepoint).(trial).acc_trim = acc_trim;
                     end
 
                     %% 6) Write movement quality to table
@@ -513,10 +605,10 @@ for subj = (1:23)%(1:10)% 9 10 11 12 14 16 17 19 21)  % 1:21%21 (8 9 10 11 12 14
     end% check if data folder exists
 end% loop through number of subjects
 
-    save('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\tollarance_table.mat','tollarance_table')
-
+    
 
 if safe_to_excel 
+    save('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\Output\tollarance_table.mat','tollarance_table')
  
     %% 7) everything in one gigantic table.
     % every timepoint has an individual tab
