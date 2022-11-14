@@ -36,7 +36,7 @@
 %  runs subject 1 to 10 except subject 6.
 
 
-clearvars; close all; clc
+clearvars; close all; clc; beep on
 
 
 %% set input path
@@ -49,6 +49,7 @@ cd(path.code)
 addpath(path.code)
 path.out    = fullfile(path.root,'Output','Database_ULIFT.mat');
 path.table  = fullfile(path.root,'Output');
+
 
 %% input data
 % manual input needed
@@ -89,6 +90,8 @@ for subj = (6)
         counterL_SSS    = 0;
 
         counterRUN      = 0;
+
+        
         content = dir(path.subj);
         nfiles = size(content,1);
 
@@ -185,12 +188,12 @@ for subj = (6)
 
 
                     if isempty(x) || abs(x(1)-x(2)) < 100
+                        beep               
                         fprintf('\t\t %s: no change points were found \n', content(file).name)
 
                         figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
 
                         % display the results of the change points
-
                         plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")
                         title("Manual selection CHANGE POINTS: " + fileName)
 
@@ -366,6 +369,7 @@ for subj = (6)
 
 
                     if nPositionPeaks ~= 3 || isempty(T_phase1)
+                        beep
                         if nPositionPeaks < 3
                             fprintf('\t\t %s: less than 3 position peaks found in phase 1 \n', content(file).name)
                         elseif nPositionPeaks > 3
@@ -426,6 +430,7 @@ for subj = (6)
                     nPositionPeaks = sum(maxIndices_pos4(:) >= T_phase4(1) & maxIndices_pos4(:) < T_phase4(end));
 
                     if nPositionPeaks ~= 3
+                        beep
                         if nPositionPeaks < 3
                             fprintf('\t\t %s: less than 3 position peaks found in phase 4 \n', content(file).name)
                         elseif nPositionPeaks > 3
@@ -489,6 +494,7 @@ for subj = (6)
                     % throw error if the number of acceleration peaks exceed 6
                     %=========================================================
                     if size(peakLoc.phase1, 1) ~= 6
+                        beep
                         fprintf('\t \t %s: Please select peaks phase 1 \n', content(file).name)
 
                         figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
@@ -562,6 +568,7 @@ for subj = (6)
                     % exceeds 7
                     %================================================
                     if size(peakLoc.phase4, 1) ~= 6 || strcmp(subj_name, 'BC_010')
+                        beep
                         fprintf('\t \t %s: Please select peaks phase 4 \n', content(file).name)
 
                         figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);

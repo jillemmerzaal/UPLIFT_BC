@@ -1,23 +1,4 @@
 %% movement quality functional activity
-%
-%  TO DO
-%  selecteer de "rust fases" voor en na de gesegmenteerde herhalingen en
-%  verwijder deze. Plak daarna de signalen weer aan elkaar.
-%
-
-%%
-%
-%  I need to run this file using publish en use that as a help function.
-%  Which means I need to explain everyting in more detail. When the code is
-%  finished :)
-%
-
-
-%%
-% 
-%  BC_014 T2 --> heeft veel last. Dus misschien interessant om die data te
-%  bekijken. 
-% 
 
 
 clear; clc; close all;
@@ -27,8 +8,8 @@ clear; clc; close all;
 %  Change the U-number and path to match where the data is located. Change
 %  the timepoint that you want to analyse
 
-cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC")
-addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
+cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\MovQual")
+%addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 
 Timepoint       = 'T0';
 movement        = "F";
@@ -41,7 +22,7 @@ safe_to_excel   = 0;
 Affected_table = readtable(fullfile(path.root,"Aangedane zijde.xlsx"));
 
 %% 2) Load data (8 9 10 11 12 14 16 17 19 21) == proefpersonen zonder "rust" data
-for subj = (12)
+for subj = (6)
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -251,7 +232,7 @@ for subj = (12)
                                 istart.Z(idx) = temp.istart;
                             end
 
-                            if abs(temp.istop - downcross(2)) < 25
+                            if abs(temp.istop - downcross(2)) < 15
                                 istop.Z(idx) = downcross(find(downcross <= temp.istop, 1, 'last'));
                             else                               
                                 istop.Z(idx) = temp.istop;
@@ -343,7 +324,7 @@ for subj = (12)
                             for idx = 1:length(reps)-1
                                 plot(vel.z(reps(idx):reps(idx+1)))
                                 hold on;
-                                hline(0)
+                                yline(0)
                             end
                             plottitle = {[subj_name, ' individual reps']};
                             title(plottitle)
