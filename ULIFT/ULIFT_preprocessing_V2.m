@@ -61,7 +61,7 @@ plot_or_not = 1;
 
 %% 2. load data
 % manual input subject range needed
-for subj = (6)
+for subj = (51)
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -187,7 +187,7 @@ for subj = (6)
                     x = find(changeIndices);
 
 
-                    if isempty(x) || abs(x(1)-x(2)) < 100
+                    if isempty(x) || abs(x(1)-x(2)) < 150
                         beep               
                         fprintf('\t\t %s: no change points were found \n', content(file).name)
 
@@ -651,8 +651,8 @@ for subj = (6)
                         plot(segmentMean,"Color",[64 64 64]/255,"DisplayName","Segment mean")
 
                         %Plot change points
-                        x_rep = repelem(find(changeIndices),3);
-                        y = repmat([ylim(gca) missing]',nnz(changeIndices),1);
+                        x_rep = repelem(x,3);
+                        y = repmat([ylim(gca) missing]',nnz(x),1);
                         plot(x_rep,y,"Color",[51 160 44]/255,"LineWidth",1,"DisplayName","Change points")
                         title("Number of change points: " + nnz(changeIndices))
 
