@@ -9,20 +9,19 @@ clear; clc; close all;
 %  the timepoint that you want to analyse
 
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\MovQual")
+%addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
 
 Timepoint       = 'T0';
 movement        = "F";
 path.data       = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 path.root 		= 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\MovQual';
-plot_or_not     = 0;
-safe_to_excel   = 1;
-% manual input no longer nescesary
 path.out        = fullfile(path.data,'Output','Database_MovQual.mat');
 path.tol 		= fullfile(path.root, 'Output', 'tollarance_table.mat');
 path.unaff 		= fullfile(path.root, 'Output', 'MoveQual_unaff.xlsx');
 path.aff 		= fullfile(path.root, 'Output', 'MoveQual_aff.xlsx'); 
 fs              = 60;
-
+plot_or_not     = 0;
+safe_to_excel   = 1;
 
 Affected_table = readtable(fullfile(path.root,"Aangedane zijde.xlsx"));
 
