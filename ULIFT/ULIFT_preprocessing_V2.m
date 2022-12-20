@@ -187,6 +187,12 @@ for subj = (51)
                     x = find(changeIndices);
 
 
+                    %%
+                    % 
+                    %  als je niet de juiste change points vind,
+                    %  
+                    % 
+
                     if isempty(x) || abs(x(1)-x(2)) < 150
                         beep               
                         fprintf('\t\t %s: no change points were found \n', content(file).name)
@@ -195,7 +201,7 @@ for subj = (51)
 
                         % display the results of the change points
                         plot(df.pos.positionZ,"Color",[77 190 238]/255,"DisplayName","Input data")
-                        title("Manual selection CHANGE POINTS: " + fileName)
+                        title("Manual selection CHANGE POINTS: " + subj_name + ', ' + fileName)
 
                         [loc, ~  ] = ginput(2);
                         if ~isempty(loc)
@@ -398,7 +404,7 @@ for subj = (51)
 
                         hold off
 
-                        title("Manual segmentation PHASE 1: " + fileName)
+                        title("Manual segmentation PHASE 1: " + subj_name + ', ' + fileName)
 
                         [loc, ~] = ginput(2);
 
@@ -458,7 +464,7 @@ for subj = (51)
                         xline(endPhase4, "Color", '#EDB120', "LineWidth",1,"DisplayName",'EndPh4')
                         hold off
 
-                        title("Manual segmentation Phase 4: " + fileName)
+                        title("Manual segmentation Phase 4: " + subj_name + ', ' + fileName)
 
                         [loc, ~] = ginput(2);
 
@@ -532,7 +538,7 @@ for subj = (51)
                         yline_middle_phase1 = ones(size(T_middle_phase1))* (min(peakMag.phase1) * 1.1);
                         plot(T_middle_phase1, yline_middle_phase1, 'LineWidth',7.5, 'Color','#83B4B3')
 
-                        title("Manual segmentation of MIDDLE PHASE 1: " + fileName)
+                        title("Manual segmentation of MIDDLE PHASE 1: " + subj_name + ', ' + fileName)
 
                         [loc, ~] = ginput(2);
 
@@ -615,7 +621,7 @@ for subj = (51)
                         yline_middle_phase4 = ones(size(T_middle_phase4))*(min(peakMag.phase4) * 1.1);
                         plot(T_middle_phase4, yline_middle_phase4, 'LineWidth',7.5, 'Color','#83B4B3')
 
-                        title("Manual segmentation MIDDLE PHASE 4: " + fileName)
+                        title("Manual segmentation MIDDLE PHASE 4: " + subj_name + ', ' + fileName)
 
                         [loc, ~] = ginput(2);
 
@@ -689,7 +695,7 @@ for subj = (51)
                         yline_middle_phase4 = ones(size(T_middle_phase4))*(min(peakMag.phase4) * 1.1);
                         plot(T_middle_phase4, yline_middle_phase4, 'LineWidth',7.5, 'Color','#83B4B3')
 
-                        title("visual segmentation: " + fileName)
+                        title("visual segmentation: " + subj_name + ', ' + fileName)
 
                     end
 

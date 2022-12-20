@@ -35,7 +35,7 @@ clearvars; close all; clc
 
 %% set path
 % manual input path
-path.code = "C:\Users\u0117545\Documents\GitHub\ULIFT_BC";
+path.code = "C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ROM";
 path.root       = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 
 %addpath("C:\Users\u0117545\OneDrive - KU Leuven\2.Dataprocessing\Matlab\addons")
@@ -60,14 +60,14 @@ addpath(path.code)
 
 % manual input needed
 Timepoint       = 'T0';
-movement        = 'EXO';
-plot_or_not     = 1;
-check_complete  = 0;
+movement        = 'ABD';
+plot_or_not     = 0;
+check_complete  = 1;
 scapulo         = 0;
 secondary       = 0;
 
 %% 2. load data
-for subj = (1:10) % manual input needed for subject ranges
+for subj = [2:4, 6:7, 9:10] % manual input needed for subject ranges
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -217,7 +217,7 @@ for subj = (1:10) % manual input needed for subject ranges
                     end
 
                     %% display the results
-                    if strcmp(invlolved, arm)
+                    if strcmp(involved, arm)
                         if plot_or_not
                             figure('Units','normalized','Position',[0.1 0.1 0.75 0.75]);
                             t = tiledlayout(1,3, 'TileSpacing','Compact');
@@ -239,17 +239,7 @@ for subj = (1:10) % manual input needed for subject ranges
                         end
                     end
 
-                    % scapulo angles
-                    if scapulo
-
-                    end
-
-                    % secondary angles
-                    if secondary
-
-
-
-                    end
+                  
 
                     %% export primary results to excel
                     % If the file already exists, than it will append the
