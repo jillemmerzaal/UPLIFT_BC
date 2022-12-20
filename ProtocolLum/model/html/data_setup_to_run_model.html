@@ -1,0 +1,576 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>data_setup_to_run_model</title><meta name="generator" content="MATLAB 9.11"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2022-10-14"><meta name="DC.source" content="data_setup_to_run_model.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Upper limb functioning from accelerometer data validation</a></li><li><a href="#2">Input data paths and names</a></li><li><a href="#3">manulal input no longer nesesary after this point</a></li><li><a href="#4">Set up the Import Options and import the data</a></li><li><a href="#5">Create timetable data and cut out relevant time section</a></li><li><a href="#6">Redefine axis to Lum configuration</a></li><li><a href="#8">resample data from 30Hz (our sensors) to 50Hz (needed for the model)</a></li><li><a href="#9">Set up the Import Options and import the VIDEO data</a></li><li><a href="#10">get timepoints of labeled events</a></li><li><a href="#12">Get frame number</a></li><li><a href="#14">code the functional activities</a></li><li><a href="#16">plot to check the results</a></li></ul></div><h2 id="1">Upper limb functioning from accelerometer data validation</h2><p>This code was commissioned by Prof An de Groef and Prof Liesbet De Baets for the UPLIFT breast cancer project and is writen for that purpose. This code reads in the csv files from the actigraph sensors and the annotated video data from Adobe Premiere Pro. This code preprocesses the accelerometer and video data to be used in the machine learning model developed by Lum and colleagues.</p><div><ul><li>Sensor specifications: ActiGraph wGT3X-BT (Serial Numbers Starting with MOS2)</li><li>camera specifications: 25 fps</li></ul></div><pre>Writen by dr. Jill Emmerzaal, Research group for Rehabilitation in
+Internal Disorders Version v1 14-10-2022</pre><pre>references needed:
+Lum, P. S., Shu, L., Bochniewicz, E. M., Tran, T., Chang, L. C., Barth, J., &amp;
+Dromerick, A. W. (2020). Improving accelerometry-based measurement of
+functional use of the upper extremity after stroke: machine learning
+versus counts threshold method. Neurorehabilitation and neural repair,
+34(12), 1078-1087.</pre><pre class="codeinput">clearvars; close <span class="string">all</span>; clc
+</pre><h2 id="2">Input data paths and names</h2><pre>INPUT 1: corresponding path where all files are to path.root
+INPUT 2: corresponging ppID number that is being analysed
+INPUT 3: approximate timerange when this participant was measured
+INPUT 4: file names to the data for left, right, and video files respectively</pre><pre class="codeinput">path.root   = <span class="string">'C:\Users\u0117545\KU Leuven\An De Groef - DATA\UL Functioning pilot test'</span>;
+ppID        = <span class="string">'Trail 2'</span>;
+TR          = timerange(<span class="string">"23/09/2022 10:50:42.467"</span>, <span class="string">'23/09/2022 11:19:42.834'</span>);
+file_l      = <span class="string">'MOS2D31170535 (2022-09-26)RAW L.csv'</span>;
+file_r      = <span class="string">'MOS2D31170705 (2022-09-26)RAW R.csv'</span>;
+file_video  = <span class="string">'OUTPUT_Pilot_002_3.csv'</span>;
+</pre><h2 id="3">manulal input no longer nesesary after this point</h2><pre class="codeinput">fileName_L      = fullfile(path.root, ppID, <span class="string">'csv'</span>, file_l);
+fileName_R      = fullfile(path.root, ppID, <span class="string">'csv'</span>, file_r);
+FileName_video  = fullfile(path.root, file_video);
+</pre><h2 id="4">Set up the Import Options and import the data</h2><pre class="codeinput">opts = delimitedTextImportOptions(<span class="string">"NumVariables"</span>, 4);
+
+<span class="comment">% Specify range and delimiter</span>
+opts.DataLines = [12, Inf];
+opts.Delimiter = <span class="string">","</span>;
+
+<span class="comment">% Specify column names and types</span>
+opts.VariableNames = [<span class="string">"Timestamp"</span>, <span class="string">"AccelerometerX"</span>, <span class="string">"AccelerometerY"</span>, <span class="string">"AccelerometerZ"</span>];
+opts.VariableTypes = [<span class="string">"datetime"</span>, <span class="string">"double"</span>, <span class="string">"double"</span>, <span class="string">"double"</span>];
+
+<span class="comment">% Specify file level properties</span>
+opts.ExtraColumnsRule = <span class="string">"ignore"</span>;
+opts.EmptyLineRule = <span class="string">"read"</span>;
+
+<span class="comment">% Specify variable properties</span>
+opts = setvaropts(opts, <span class="string">"Timestamp"</span>, <span class="string">"InputFormat"</span>, <span class="string">"dd/MM/yyyy HH:mm:ss.SSS"</span>);
+
+<span class="comment">% Import the data</span>
+L = readtable(fileName_L, opts);
+R = readtable(fileName_R, opts);
+<span class="comment">% Clear temporary variables</span>
+clear <span class="string">opts</span>
+</pre><h2 id="5">Create timetable data and cut out relevant time section</h2><pre class="codeinput">L_time = table2timetable(L);
+data.L_time = L_time(TR,:);
+
+R_time = table2timetable(R);
+data.R_time = R_time(TR,:);
+
+
+figure;
+tiledlayout(<span class="string">'flow'</span>)
+nexttile
+stackedplot(data.L_time);
+title(<span class="string">'Left Arm'</span>)
+
+nexttile
+stackedplot(data.R_time);
+title(<span class="string">'Right Arm'</span>)
+
+clear <span class="string">R_time</span> <span class="string">L_time</span>
+</pre><img vspace="5" hspace="5" src="data_setup_to_run_model_01.png" alt=""> <h2 id="6">Redefine axis to Lum configuration</h2><p><img vspace="5" hspace="5" src="LeftArm.PNG" alt=""> </p><p><img vspace="5" hspace="5" src="RightArm.PNG" alt=""> </p><pre class="codeinput"><span class="comment">% Left</span>
+acc.x = data.L_time.AccelerometerY;
+acc.y = data.L_time.AccelerometerX;
+acc.z = data.R_time.AccelerometerZ;
+
+data.L = [acc.x, acc.y, acc.z];
+clear <span class="string">acc</span>
+
+<span class="comment">% Right</span>
+acc.x = data.R_time.AccelerometerY * -1;
+acc.y = data.R_time.AccelerometerX * -1;
+acc.z = data.R_time.AccelerometerZ;
+
+data.R = [acc.x, acc.y, acc.z];
+clear <span class="string">acc</span>
+</pre><h2 id="8">resample data from 30Hz (our sensors) to 50Hz (needed for the model)</h2><pre class="codeinput">fs = 30;
+fs_new = 50;
+
+x = 1:length(data.L); <span class="comment">% old time axis of the data</span>
+xq = 1:fs/fs_new:length(data.L); <span class="comment">% new time axis for the data</span>
+
+data.L_sp = interp1(x, data.L, xq, <span class="string">'spline'</span>);
+data.R_sp = interp1(x, data.R, xq, <span class="string">'spline'</span>);
+</pre><h2 id="9">Set up the Import Options and import the VIDEO data</h2><pre class="codeinput">opts = delimitedTextImportOptions(<span class="string">"NumVariables"</span>, 6, <span class="string">"Encoding"</span>, <span class="string">"UTF16-LE"</span>);
+
+<span class="comment">% Specify range and delimiter</span>
+opts.DataLines = [2, Inf];
+opts.Delimiter = <span class="string">"\t"</span>;
+
+<span class="comment">% Specify column names and types</span>
+opts.VariableNames = [<span class="string">"MarkerName"</span>, <span class="string">"Description"</span>, <span class="string">"In"</span>, <span class="string">"Out"</span>, <span class="string">"Duration"</span>, <span class="string">"MarkerType"</span>];
+opts.VariableTypes = [<span class="string">"categorical"</span>, <span class="string">"string"</span>, <span class="string">"string"</span>, <span class="string">"string"</span>, <span class="string">"string"</span>, <span class="string">"categorical"</span>];
+
+<span class="comment">% Specify file level properties</span>
+opts.ExtraColumnsRule = <span class="string">"ignore"</span>;
+opts.EmptyLineRule = <span class="string">"read"</span>;
+
+<span class="comment">% Specify variable properties</span>
+opts = setvaropts(opts, [<span class="string">"Description"</span>, <span class="string">"In"</span>, <span class="string">"Out"</span>, <span class="string">"Duration"</span>], <span class="string">"WhitespaceRule"</span>, <span class="string">"preserve"</span>);
+opts = setvaropts(opts, [<span class="string">"MarkerName"</span>, <span class="string">"Description"</span>, <span class="string">"In"</span>, <span class="string">"Out"</span>, <span class="string">"Duration"</span>, <span class="string">"MarkerType"</span>], <span class="string">"EmptyFieldRule"</span>, <span class="string">"auto"</span>);
+
+<span class="comment">% Import the data</span>
+vid = readtable(FileName_video, opts);
+
+
+<span class="comment">% Clear temporary variables</span>
+clear <span class="string">opts</span>
+</pre><h2 id="10">get timepoints of labeled events</h2><p>From the marker data in the video we get the timepoints as HH:mm:ss:ff meaning hours:minutes:seconds:frames The frames go from 00 till 24 and the 25th is the addition of a second. for the firts rudimental segmentation we will only ise HH:mm:ss. The frames data will be used in the next section</p><pre class="codeinput">in = char(vid.In);
+<span class="keyword">for</span> idx = 1:length(in)
+        tp(idx,1) = duration(in(idx,1:8));
+<span class="keyword">end</span>
+
+<span class="comment">%end times of the activity</span>
+out = char(vid.Out);
+<span class="keyword">for</span> idx = 1:length(out)
+    tp(idx,2) = duration(out(idx,1:8));
+<span class="keyword">end</span>
+</pre><h2 id="12">Get frame number</h2><pre>start times of the labels in the video data To attone for the frequency
+difference and the lack of miliseconds in the video data, we'll use the
+frame rate of the video to round the frames up or down.</pre><div><ul><li>Block 1 if the last 3 numbers [0:6] =       frames + (0 * 2);</li><li>Block 2 if the last 2 numbers [7:12] =       frames + (6 * 2);</li><li>Block 3 if the last 2 numbers [13:18] =       frames + (12 * 2);</li><li>Block 4 if the last 2 numbers [19:24] =        frames + (18 * 2);</li></ul></div><p>formula to get frame number for the labeled activity at point idx:</p><pre class="language-matlab">(seconds(tp(idx,1)) * vd_frames) / vd_secs
+</pre><pre class="codeinput">vd_secs = seconds(duration(tp(end,2))); <span class="comment">% total length of the video</span>
+vd_frames = vd_secs * 50; <span class="comment">% total length of the video in frames</span>
+
+relevantframe = zeros(size(tp,1),2);
+
+<span class="comment">% Start point of the markers</span>
+<span class="keyword">for</span> idx = 1:length(in)
+    <span class="keyword">if</span> str2double(in(idx,10:11)) &lt;= 6
+        <span class="comment">% Block_1</span>
+        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
+        relevantframe(idx,1) = relevantframe(idx,1) + (0 * 2);
+
+    <span class="keyword">elseif</span> str2double(in(idx,10:11)) &gt; 6 &amp;&amp; str2double(in(idx,10:11)) &lt;= 12
+        <span class="comment">% Block_2</span>
+        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
+        relevantframe(idx,1) = relevantframe(idx,1) + (6 * 2);
+
+    <span class="keyword">elseif</span> str2double(in(idx,10:11)) &gt; 12 &amp;&amp; str2double(in(idx,10:11)) &lt;= 18
+        <span class="comment">% Block_3</span>
+        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
+        relevantframe(idx,1) = relevantframe(idx,1) + (12 * 2);
+
+    <span class="keyword">elseif</span> str2double(in(idx,10:11)) &gt; 18 &amp;&amp; str2double(in(idx,10:11)) &lt;= 24
+        <span class="comment">% Block_4</span>
+        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
+        relevantframe(idx,1) = relevantframe(idx,1) + (18 * 2);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% end point of the markers</span>
+<span class="keyword">for</span> idx = 1:length(out)
+    <span class="keyword">if</span> str2double(out(idx,10:11)) &lt;= 6
+        <span class="comment">% Block_1</span>
+        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
+        relevantframe(idx,2) = relevantframe(idx,2) + (0 * 2);
+
+    <span class="keyword">elseif</span> str2double(out(idx,10:11)) &gt; 6 &amp;&amp; str2double(out(idx,10:11)) &lt;= 12
+        <span class="comment">% Block_2</span>
+        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
+        relevantframe(idx,2) = relevantframe(idx,2) + (6 * 2);
+
+    <span class="keyword">elseif</span> str2double(out(idx,10:11)) &gt; 12 &amp;&amp; str2double(out(idx,10:11)) &lt;= 18
+        <span class="comment">% Block_3</span>
+        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
+        relevantframe(idx,2) = relevantframe(idx,2) + (12 * 2);
+
+    <span class="keyword">elseif</span> str2double(out(idx,10:11)) &gt; 18 &amp;&amp; str2double(out(idx,10:11)) &lt;= 24
+        <span class="comment">% Block_4</span>
+        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
+        relevantframe(idx,2) = relevantframe(idx,2) + (18 * 2);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+vid.frameIn = relevantframe(:,1);
+vid.frameOut = relevantframe(:,2);
+clear <span class="string">relevantframe</span>
+</pre><h2 id="14">code the functional activities</h2><pre>coding is 1=&gt;nonfunctional, 2=&gt;functional, 0=&gt;unknown
+From the marker names of the video data we know if there is activity of
+the left or right side or bimanual. The marker data is added as the fourth collum to
+acceleration signals. The matrix now consists of</pre><div><ul><li>Column 1: x-acceleration</li><li>Column 2: y-acceleration</li><li>Column 3: z-acceleration</li><li>Column 4: labels.</li></ul></div><pre class="codeinput"><span class="comment">% left</span>
+LeftActive = vid(ismember(vid.MarkerName,{<span class="string">'L'</span>, <span class="string">'L + R'</span>}), :);
+<span class="keyword">for</span> idx = 1:height(LeftActive)
+    data.L_sp(LeftActive.frameIn(idx):LeftActive.frameOut(idx),4) = 2;
+<span class="keyword">end</span>
+
+data.L_sp(data.L_sp(:,4)==0, 4) = 1;
+
+<span class="comment">% right</span>
+RightActive = vid(ismember(vid.MarkerName, {<span class="string">'R'</span>, <span class="string">'L + R'</span>}),:);
+<span class="keyword">for</span> idx = 1:height(RightActive)
+    data.R_sp(RightActive.frameIn(idx):RightActive.frameOut(idx),4) = 2;
+<span class="keyword">end</span>
+data.R_sp(data.R_sp(:,4)==0, 4) = 1;
+</pre><h2 id="16">plot to check the results</h2><pre class="codeinput">SpotCheck = vid(ismember(vid.MarkerName, {<span class="string">'Calibratie'</span>, <span class="string">'SpotCheck'</span>}),:);
+
+figure
+nexttile
+h = stackedplot(data.L_sp);
+ax = findobj(h.NodeChildren, <span class="string">'Type'</span>, <span class="string">'Axes'</span>);
+arrayfun(@(h)xline(h, SpotCheck.frameIn, <span class="string">'g-'</span>, <span class="string">'LineWidth'</span>,0.5), ax)
+arrayfun(@(h)xline(h, SpotCheck.frameOut, <span class="string">'r-'</span>, <span class="string">'LineWidth'</span>, 0.5), ax)
+set(h, <span class="string">'DisplayLabels'</span>,[<span class="string">"Acc X"</span> <span class="string">"Acc Y"</span> <span class="string">"Acc Z"</span> <span class="string">"Lable"</span>])
+h.AxesProperties(4).YLimits = [0.5 2.5];
+
+
+nexttile
+h = stackedplot(data.R_sp);
+ax = findobj(h.NodeChildren, <span class="string">'Type'</span>, <span class="string">'Axes'</span>);
+arrayfun(@(h)xline(h,SpotCheck.frameIn, <span class="string">'g-'</span>, <span class="string">'LineWidth'</span>,0.5), ax)
+arrayfun(@(h)xline(h, SpotCheck.frameOut, <span class="string">'r-'</span>, <span class="string">'LineWidth'</span>, 0.5),ax)
+set(h, <span class="string">'DisplayLabels'</span>,[<span class="string">"Acc X"</span> <span class="string">"Acc Y"</span> <span class="string">"Acc Z"</span> <span class="string">"Lable"</span>])
+h.AxesProperties(4).YLimits = [0.5 2.5];
+</pre><img vspace="5" hspace="5" src="data_setup_to_run_model_02.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2021b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Upper limb functioning from accelerometer data validation 
+% 
+% 
+% This code was commissioned by Prof An de Groef and Prof Liesbet De Baets
+% for the UPLIFT breast cancer project and is writen for that purpose. This
+% code reads in the csv files from the actigraph sensors and the annotated
+% video data from Adobe Premiere Pro. This code preprocesses the
+% accelerometer and video data to be used in the machine learning model
+% developed by Lum and colleagues.
+% 
+% * Sensor specifications: ActiGraph wGT3X-BT (Serial Numbers Starting with MOS2)
+% * camera specifications: 25 fps
+% 
+% 
+% 
+%  Writen by dr. Jill Emmerzaal, Research group for Rehabilitation in
+%  Internal Disorders Version v1 14-10-2022 
+% 
+%  references needed: 
+%  Lum, P. S., Shu, L., Bochniewicz, E. M., Tran, T., Chang, L. C., Barth, J., &
+%  Dromerick, A. W. (2020). Improving accelerometry-based measurement of
+%  functional use of the upper extremity after stroke: machine learning
+%  versus counts threshold method. Neurorehabilitation and neural repair,
+%  34(12), 1078-1087.
+%  
+clearvars; close all; clc
+%% Input data paths and names
+% 
+%  INPUT 1: corresponding path where all files are to path.root
+%  INPUT 2: corresponging ppID number that is being analysed 
+%  INPUT 3: approximate timerange when this participant was measured
+%  INPUT 4: file names to the data for left, right, and video files respectively
+
+path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA\UL Functioning pilot test'; 
+ppID        = 'Trail 2'; 
+TR          = timerange("23/09/2022 10:50:42.467", '23/09/2022 11:19:42.834');
+file_l      = 'MOS2D31170535 (2022-09-26)RAW L.csv';
+file_r      = 'MOS2D31170705 (2022-09-26)RAW R.csv';
+file_video  = 'OUTPUT_Pilot_002_3.csv';
+%% manulal input no longer nesesary after this point
+fileName_L      = fullfile(path.root, ppID, 'csv', file_l);
+fileName_R      = fullfile(path.root, ppID, 'csv', file_r);
+FileName_video  = fullfile(path.root, file_video);
+%% Set up the Import Options and import the data
+opts = delimitedTextImportOptions("NumVariables", 4);
+
+% Specify range and delimiter
+opts.DataLines = [12, Inf];
+opts.Delimiter = ",";
+
+% Specify column names and types
+opts.VariableNames = ["Timestamp", "AccelerometerX", "AccelerometerY", "AccelerometerZ"];
+opts.VariableTypes = ["datetime", "double", "double", "double"];
+
+% Specify file level properties
+opts.ExtraColumnsRule = "ignore";
+opts.EmptyLineRule = "read";
+
+% Specify variable properties
+opts = setvaropts(opts, "Timestamp", "InputFormat", "dd/MM/yyyy HH:mm:ss.SSS");
+
+% Import the data
+L = readtable(fileName_L, opts);
+R = readtable(fileName_R, opts);
+% Clear temporary variables
+clear opts
+%% Create timetable data and cut out relevant time section
+L_time = table2timetable(L);
+data.L_time = L_time(TR,:);
+
+R_time = table2timetable(R);
+data.R_time = R_time(TR,:);
+
+
+figure; 
+tiledlayout('flow')
+nexttile
+stackedplot(data.L_time);
+title('Left Arm')
+ 
+nexttile
+stackedplot(data.R_time);
+title('Right Arm')
+
+clear R_time L_time
+%% Redefine axis to Lum configuration
+%%
+% 
+% <<LeftArm.PNG>>
+% 
+% 
+% <<RightArm.PNG>>
+% 
+
+
+% Left
+acc.x = data.L_time.AccelerometerY;
+acc.y = data.L_time.AccelerometerX;
+acc.z = data.R_time.AccelerometerZ;
+
+data.L = [acc.x, acc.y, acc.z];
+clear acc
+
+% Right
+acc.x = data.R_time.AccelerometerY * -1;
+acc.y = data.R_time.AccelerometerX * -1;
+acc.z = data.R_time.AccelerometerZ;
+
+data.R = [acc.x, acc.y, acc.z];
+clear acc
+%% resample data from 30Hz (our sensors) to 50Hz (needed for the model) 
+fs = 30;
+fs_new = 50;
+
+x = 1:length(data.L); % old time axis of the data
+xq = 1:fs/fs_new:length(data.L); % new time axis for the data
+
+data.L_sp = interp1(x, data.L, xq, 'spline');
+data.R_sp = interp1(x, data.R, xq, 'spline');
+%% Set up the Import Options and import the VIDEO data
+opts = delimitedTextImportOptions("NumVariables", 6, "Encoding", "UTF16-LE");
+
+% Specify range and delimiter
+opts.DataLines = [2, Inf];
+opts.Delimiter = "\t";
+
+% Specify column names and types
+opts.VariableNames = ["MarkerName", "Description", "In", "Out", "Duration", "MarkerType"];
+opts.VariableTypes = ["categorical", "string", "string", "string", "string", "categorical"];
+
+% Specify file level properties
+opts.ExtraColumnsRule = "ignore";
+opts.EmptyLineRule = "read";
+
+% Specify variable properties
+opts = setvaropts(opts, ["Description", "In", "Out", "Duration"], "WhitespaceRule", "preserve");
+opts = setvaropts(opts, ["MarkerName", "Description", "In", "Out", "Duration", "MarkerType"], "EmptyFieldRule", "auto");
+
+% Import the data
+vid = readtable(FileName_video, opts);
+
+
+% Clear temporary variables
+clear opts
+%% get timepoints of labeled events
+%% 
+% From the marker data in the video we get the timepoints as HH:mm:ss:ff 
+% meaning hours:minutes:seconds:frames 
+% The frames go from 00 till 24 and the 25th is the addition of a second.
+% for the firts rudimental segmentation we will only ise HH:mm:ss. The
+% frames data will be used in the next section
+% 
+
+in = char(vid.In);
+for idx = 1:length(in)
+        tp(idx,1) = duration(in(idx,1:8)); 
+end
+
+%end times of the activity
+out = char(vid.Out);
+for idx = 1:length(out)
+    tp(idx,2) = duration(out(idx,1:8));
+end
+%% Get frame number
+%%
+%  start times of the labels in the video data To attone for the frequency
+%  difference and the lack of miliseconds in the video data, we'll use the
+%  frame rate of the video to round the frames up or down.
+%  
+% 
+% * Block 1 if the last 3 numbers [0:6] = 
+%       frames + (0 * 2);
+% * Block 2 if the last 2 numbers [7:12] =
+%       frames + (6 * 2);
+% * Block 3 if the last 2 numbers [13:18] =
+%       frames + (12 * 2);
+% * Block 4 if the last 2 numbers [19:24] =
+%        frames + (18 * 2);
+%
+% formula to get frame number for the labeled activity at point idx:
+% 
+%   (seconds(tp(idx,1)) * vd_frames) / vd_secs
+% 
+% 
+vd_secs = seconds(duration(tp(end,2))); % total length of the video
+vd_frames = vd_secs * 50; % total length of the video in frames
+
+relevantframe = zeros(size(tp,1),2);
+
+% Start point of the markers
+for idx = 1:length(in)
+    if str2double(in(idx,10:11)) <= 6
+        % Block_1
+        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
+        relevantframe(idx,1) = relevantframe(idx,1) + (0 * 2);
+
+    elseif str2double(in(idx,10:11)) > 6 && str2double(in(idx,10:11)) <= 12
+        % Block_2
+        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
+        relevantframe(idx,1) = relevantframe(idx,1) + (6 * 2);
+
+    elseif str2double(in(idx,10:11)) > 12 && str2double(in(idx,10:11)) <= 18
+        % Block_3
+        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
+        relevantframe(idx,1) = relevantframe(idx,1) + (12 * 2);
+
+    elseif str2double(in(idx,10:11)) > 18 && str2double(in(idx,10:11)) <= 24
+        % Block_4
+        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
+        relevantframe(idx,1) = relevantframe(idx,1) + (18 * 2);
+    end
+end
+
+% end point of the markers
+for idx = 1:length(out)
+    if str2double(out(idx,10:11)) <= 6
+        % Block_1
+        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
+        relevantframe(idx,2) = relevantframe(idx,2) + (0 * 2);
+
+    elseif str2double(out(idx,10:11)) > 6 && str2double(out(idx,10:11)) <= 12
+        % Block_2
+        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
+        relevantframe(idx,2) = relevantframe(idx,2) + (6 * 2);
+
+    elseif str2double(out(idx,10:11)) > 12 && str2double(out(idx,10:11)) <= 18
+        % Block_3
+        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
+        relevantframe(idx,2) = relevantframe(idx,2) + (12 * 2);
+
+    elseif str2double(out(idx,10:11)) > 18 && str2double(out(idx,10:11)) <= 24
+        % Block_4
+        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
+        relevantframe(idx,2) = relevantframe(idx,2) + (18 * 2);
+    end
+end
+vid.frameIn = relevantframe(:,1);
+vid.frameOut = relevantframe(:,2);
+clear relevantframe
+%% code the functional activities
+%%
+% 
+%  coding is 1=>nonfunctional, 2=>functional, 0=>unknown
+%  From the marker names of the video data we know if there is activity of
+%  the left or right side or bimanual. The marker data is added as the fourth collum to
+%  acceleration signals. The matrix now consists of 
+% 
+% 
+% 
+% * Column 1: x-acceleration
+% * Column 2: y-acceleration
+% * Column 3: z-acceleration 
+% * Column 4: labels. 
+
+% left
+LeftActive = vid(ismember(vid.MarkerName,{'L', 'L + R'}), :);
+for idx = 1:height(LeftActive)
+    data.L_sp(LeftActive.frameIn(idx):LeftActive.frameOut(idx),4) = 2;
+end
+
+data.L_sp(data.L_sp(:,4)==0, 4) = 1;
+
+% right
+RightActive = vid(ismember(vid.MarkerName, {'R', 'L + R'}),:);
+for idx = 1:height(RightActive)
+    data.R_sp(RightActive.frameIn(idx):RightActive.frameOut(idx),4) = 2;
+end
+data.R_sp(data.R_sp(:,4)==0, 4) = 1;
+
+%% plot to check the results
+
+SpotCheck = vid(ismember(vid.MarkerName, {'Calibratie', 'SpotCheck'}),:);
+
+figure
+nexttile
+h = stackedplot(data.L_sp);
+ax = findobj(h.NodeChildren, 'Type', 'Axes');
+arrayfun(@(h)xline(h, SpotCheck.frameIn, 'g-', 'LineWidth',0.5), ax)
+arrayfun(@(h)xline(h, SpotCheck.frameOut, 'r-', 'LineWidth', 0.5), ax)
+set(h, 'DisplayLabels',["Acc X" "Acc Y" "Acc Z" "Lable"])
+h.AxesProperties(4).YLimits = [0.5 2.5];
+
+
+nexttile
+h = stackedplot(data.R_sp);
+ax = findobj(h.NodeChildren, 'Type', 'Axes');
+arrayfun(@(h)xline(h,SpotCheck.frameIn, 'g-', 'LineWidth',0.5), ax)
+arrayfun(@(h)xline(h, SpotCheck.frameOut, 'r-', 'LineWidth', 0.5),ax)
+set(h, 'DisplayLabels',["Acc X" "Acc Y" "Acc Z" "Lable"])
+h.AxesProperties(4).YLimits = [0.5 2.5];
+
+
+
+##### SOURCE END #####
+--></body></html>
