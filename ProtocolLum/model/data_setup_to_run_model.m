@@ -412,4 +412,4 @@ Accuracy.R_dummy=(CC_dummy(1,1)+CC_dummy(2,2))/(CC_dummy(1,1)+CC_dummy(1,2)+CC_d
 %% total minutes active: ground truth
 total_active.GT = (size(feature2 ,1) * 4) / 60; % total minutes active in minutes of the ground truth;
 total_active.pred = (size(yyfit(yyfit == 1), 1) * 4) / 60;
-total_active.count = []
+total_active.count = [];
