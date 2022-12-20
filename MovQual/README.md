@@ -1,7 +1,12 @@
-# Movement Quality parameters from a pseudo-cyclic reaching task
+<h1 align="center">Movement Quality</h1>
+
+<p align="center">
+Code calculate movement quality to determine upper limb function in people before and after breast cancer surgery
+</p>
 
 ## project description
-This project is written with the soul purpose of working for the UPLIFT-BC project. Here we calculate the movement quality paramters:
+This project is written with the soul purpose of working for the UPLIFT-BC project.
+
 1) dynamic stability of movement as defined by the Lyapunov Exponent
 2) signal smoothness as defined by the log dimensionless jerk
 3) signal predictability with sample entropy
