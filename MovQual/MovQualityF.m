@@ -565,37 +565,6 @@ for subj = (1:50)
                         rmsr_y = rms_y/rms_T;
                         rmsr_z = rms_z/rms_T;
 
-                        %% extract standard frequency data
-                        sFE = signalFrequencyFeatureExtractor(SampleRate=fs, ...
-                            MeanFrequency=true, ...
-                            PeakAmplitude=true, ...
-                            PowerBandwidth=true);
-
-                        % sFE.FeatureFormat = "table";
-                        [freq_features_x, info_freq] = extract(sFE, acc_trim.x);
-                        [freq_features_y] = extract(sFE, acc_trim.y);
-                        [freq_features_z] = extract(sFE, acc_trim.z);
-                        [freq_features_res] = extract(sFE, acc_trim.res);
-
-                        clear sFFE
-                        %% extract standard statistical data
-                        sFE = signalTimeFeatureExtractor(SampleRate=fs, ...
-                            Mean=true, ...
-                            RMS=true, ...
-                            StandardDeviation=true, ...
-                            PeakValue=true, ...
-                            THD=true, ...
-                            ImpulseFactor=true, ...
-                            CrestFactor=true, ...
-                            ClearanceFactor=true);
-
-                        %sFE.FeatureFormat = "table";
-                        [time_features_x, info_time] = extract(sFE, acc_trim.x);
-                        [time_features_y] = extract(sFE, acc_trim.y);
-                        [time_features_z] = extract(sFE, acc_trim.z);
-                        [time_features_res] = extract(sFE, acc_trim.res);
-
-                        clear sFE
                         %% 5) Save raw acc and avel data to struct
                         if strcmp(side, 'affected')
                             MoveQual.raw.affected.(ppID).(Timepoint).(trial).acc = acc;
@@ -636,32 +605,6 @@ for subj = (1:50)
                             aff.LDLJ_A_aff (subj, :) = table(ppID, mean(ldlj_a));
                             aff.LDLJ_A_aff.Properties.VariableNames = {'ppID', 'LDLJ_A'};
 
-%                             %statistical features
-%                             unaff.THD(subj,:) = table(ppID, time_features_x(4), time_features_y(4), time_features_z(4), time_features_res(4));
-%                             unaff.THD.Properties.VariableNames = {'ppID', 'THD_x', 'THD_y', 'THD_z', 'THD_res'};
-% 
-%                             aff.PeakValue(subj,:) = table(ppID, time_features_x(5), time_features_y(5), time_features_z(5), time_features_res(5));
-%                             aff.PeakValue.Properties.VariableNames = {'ppID', 'PeakValue_x', 'PeakValue_y', 'PeakValue_z', 'PeakValue_res'};
-% 
-%                             aff.CrestFactor(subj,:) = table(ppID, time_features_x(6), time_features_y(6), time_features_z(6), time_features_res(6));
-%                             aff.CrestFactor.Properties.VariableNames = {'ppID', 'CrestFactor_x', 'CrestFactor_y', 'CrestFactor_z', 'CrestFactor_res'};
-% 
-%                             aff.ClearanceFactor(subj,:) = table(ppID, time_features_x(7), time_features_y(7), time_features_z(7), time_features_res(7));
-%                             aff.ClearanceFactor.Properties.VariableNames = {'ppID', 'ClearanceFactor_x', 'ClearanceFactor_y', 'ClearanceFactor_z', 'ClearanceFactor_res'};
-% 
-%                             aff.ImpulseFactor(subj,:) = table(ppID, time_features_x(8), time_features_y(8), time_features_z(8), time_features_res(8));
-%                             aff.ImpulseFactor.Properties.VariableNames = {'ppID', 'ImpulseFactor_x', 'ImpulseFactor_y', 'ImpulseFactor_z', 'ImpulseFactor_res'};
-% 
-%                             %frequency features
-%                             aff.MeanFrequency(subj,:) = table(ppID, freq_features_x(1), freq_features_y(1), freq_features_z(1), freq_features_res(1));
-%                             aff.MeanFrequency.Properties.VariableNames = {'ppID', 'MeanFrequency_x', 'MeanFrequency_y', 'MeanFrequency_z', 'MeanFrequency_res'};
-% 
-%                             aff.PowerBandwidth(subj,:) = table(ppID, freq_features_x(2), freq_features_y(2), freq_features_z(2), freq_features_res(2));
-%                             aff.PowerBandwidth.Properties.VariableNames = {'ppID', 'PowerBandwidth_x', 'PowerBandwidth_y', 'PowerBandwidth_z', 'PowerBandwidth_res'};
-% 
-%                             aff.PeakAmplitude(subj,:) = table(ppID, freq_features_x(3), freq_features_y(3), freq_features_z(3), freq_features_res(3));
-%                             aff.PeakAmplitude.Properties.VariableNames = {'ppID', 'PeakAmplitude_x', 'PeakAmplitude_y', 'PeakAmplitude_z', 'PeakAmplitude_res'};
-
 
                         elseif strcmp(side, 'unaffected')
                             unaff.key(subj,:) = table(ppID, trial, time);
@@ -692,32 +635,6 @@ for subj = (1:50)
                             %movement time || varibility
                             unaff.var_move_time_unaff(subj,:) = table(ppID, std(movement_time));
                             unaff.var_move_time_unaff.Properties.VariableNames = {'ppID', 'var_movement_time'};
-
-%                             %statistical features
-%                             unaff.THD(subj,:) = table(ppID, time_features_x(4), time_features_y(4), time_features_z(4), time_features_res(4));
-%                             unaff.THD.Properties.VariableNames = {'ppID', 'THD_x', 'THD_y', 'THD_z', 'THD_res'};
-% 
-%                             unaff.PeakValue(subj,:) = table(ppID, time_features_x(5), time_features_y(5), time_features_z(5), time_features_res(5));
-%                             unaff.PeakValue.Properties.VariableNames = {'ppID', 'PeakValue_x', 'PeakValue_y', 'PeakValue_z', 'PeakValue_res'};
-% 
-%                             unaff.CrestFactor(subj,:) = table(ppID, time_features_x(6), time_features_y(6), time_features_z(6), time_features_res(6));
-%                             unaff.CrestFactor.Properties.VariableNames = {'ppID', 'CrestFactor_x', 'CrestFactor_y', 'CrestFactor_z', 'CrestFactor_res'};
-% 
-%                             unaff.ClearanceFactor(subj,:) = table(ppID, time_features_x(7), time_features_y(7), time_features_z(7), time_features_res(7));
-%                             unaff.ClearanceFactor.Properties.VariableNames = {'ppID', 'ClearanceFactor_x', 'ClearanceFactor_y', 'ClearanceFactor_z', 'ClearanceFactor_res'};
-% 
-%                             unaff.ImpulseFactor(subj,:) = table(ppID, time_features_x(8), time_features_y(8), time_features_z(8), time_features_res(8));
-%                             unaff.ImpulseFactor.Properties.VariableNames = {'ppID', 'ImpulseFactor_x', 'ImpulseFactor_y', 'ImpulseFactor_z', 'ImpulseFactor_res'};
-% 
-%                             %frequency features
-%                             unaff.MeanFrequency(subj,:) = table(ppID, freq_features_x(1), freq_features_y(1), freq_features_z(1), freq_features_res(1));
-%                             unaff.MeanFrequency.Properties.VariableNames = {'ppID', 'MeanFrequency_x', 'MeanFrequency_y', 'MeanFrequency_z', 'MeanFrequency_res'};
-% 
-%                             unaff.PowerBandwidth(subj,:) = table(ppID, freq_features_x(2), freq_features_y(2), freq_features_z(2), freq_features_res(2));
-%                             unaff.PowerBandwidth.Properties.VariableNames = {'ppID', 'PowerBandwidth_x', 'PowerBandwidth_y', 'PowerBandwidth_z', 'PowerBandwidth_res'};
-% 
-%                             unaff.PeakAmplitude(subj,:) = table(ppID, freq_features_x(3), freq_features_y(3), freq_features_z(3), freq_features_res(3));
-%                             unaff.PeakAmplitude.Properties.VariableNames = {'ppID', 'PeakAmplitude_x', 'PeakAmplitude_y', 'PeakAmplitude_z', 'PeakAmplitude_res'};
 
 
                         end
