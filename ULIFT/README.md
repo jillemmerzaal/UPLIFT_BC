@@ -5,16 +5,13 @@
 The ULIFT task consists of 4 distinct phases: Phase 1) is from the upper level to the middle level, Phase 2) from the middle level to the floor, Phase 3) from the floor to the middle level, and Phase 4) from the middle level to the upper level. 
 These different tasks require a different neuromuscular control in terms of the displacement of the weights—where Phases 1 and 2 can be considered eccentric and Phases 3 and 4 concentric activities. Since the movement of the weight to and from the floor require activities from the trunk and legs alongside upper extremity activity these will not be taken into consideration for the rest of this analysis (too much variability possible, and no sensor information from the lower extremities).
 
-A rough distinction of the Phases 1 and 4 from Phases 2 and 3 happen through the abrupt changes in average position data from the lower arm (Figure 1 upper plot). More precise segmentation of Phases 1 and 4 happen using the sensor acceleration and angular velocity of the lower arm sensor. Phase 1 starts when the rate of change of the Euclidian norm of the lower arm angular velocity is at its first maximum. Similarly, Phase 4 ends with the last prominent minima of the rate of change of the Euclidian norm of the lower arm angular velocity (Figure 1, middle plot).
+A rough distinction of the Phases 1 and 4 from Phases 2 and 3 happen through the abrupt changes in average position data from the lower arm. More precise segmentation of Phases 1 and 4 happen using the sensor acceleration and angular velocity of the lower arm sensor. Phase 1 starts when the rate of change of the Euclidian norm of the lower arm angular velocity is at its first maximum. Similarly, Phase 4 ends with the last prominent minima of the rate of change of the Euclidian norm of the lower arm angular velocity.
 
-Detection of the end of phase 1 and start of phase 4 happen through local minima and maxima of the sensor acceleration in X direction. The most prominent local minima correspond to the initiation to move the weight. The less prominent local minima correspond to the release of the weight. Using the knowledge that the height of the hand sensor changes, we select that second to last local minima prior to the substantial change of arm height as the end of phase 1—which corresponds to a less prominent minima, the last prominent minima equal the initiation to phase 2. Similarly, the first most prominent local minima of the sensor’s acceleration signal after the arm's position is high again is selected as the start of phase 4 (Figure 1, lower plot). 
+Detection of the end of phase 1 and start of phase 4 happen through local minima and maxima of the sensor acceleration in X direction. The most prominent local minima correspond to the initiation to move the weight. The less prominent local minima correspond to the release of the weight. Using the knowledge that the height of the hand sensor changes, we select that second to last local minima prior to the substantial change of arm height as the end of phase 1—which corresponds to a less prominent minima, the last prominent minima equal the initiation to phase 2. Similarly, the first most prominent local minima of the sensor’s acceleration signal after the arm's position is high again is selected as the start of phase 4. 
 
-After segmenting the first and fourth phase, we found that there was too much inter-person variability for time curve comparison. Therefore, we only selected the middle arm movement—i.e., grabbing of the second weight to grabbing the subsequent weight—for further processing. This further segmentation was again using the acceleration in X direction.
-
-![https://github.com/jillemmerzaal/ULIFT_BC/blob/Version-2/ULIFT/Uitleg/Picture1.tif]
+After segmenting the first and fourth phase, we found that there was too much inter-person variability for time curve comparison. Therefore, we only selected the middle arm movement—i.e., grabbing of the second weight to grabbing the subsequent weight—for further processing. This further segmentation was again using the acceleration in X direction. If the data is as expected, than it should look similar to the figure below. 
 
 ![(/ULIFT_BC/ULIFT/Uitleg/As expected.jpg)](https://github.com/jillemmerzaal/ULIFT_BC/blob/Version-2/ULIFT/Uitleg/As%20expected.jpg)
-
 
 <h2> How to use the code </h2>
 
@@ -64,4 +61,14 @@ After setting all this up, the code should run semi-automatically for the UPLIFT
 
 <h3> Manual plot input </h3>
 
-If the data is as expected, than the code will run automatically. It will determine the start and end points of the seperate phases of the ULIFT task and determine the middle movement of phase 1 and phase 4 as desribed in the project description
+If the data is as expected, than the code will run automatically. It will determine the start and end points of the seperate phases of the ULIFT task and determine the middle movement of phase 1 and phase 4 as desribed in the project description.
+
+However, if the data is not as expected (e.g., no change points are found, or more/less peaks are found ) than the scripts asks for manual input. 
+
+> **Warning**
+> No or faulty phase detection
+
+Select the start and end points of the phases as best as posible. 
+
+
+
