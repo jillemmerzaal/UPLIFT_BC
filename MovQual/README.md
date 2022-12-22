@@ -19,9 +19,11 @@ Within this project, the following movement quality parameters will be calculate
 - movement speed 
 - movement variability 
 
+Detailed information about the movement quality parameters can be found at the end of this document.
+
 The calculated movement quality parameters will be stored in an Excel file in the Output folder within this repository. If the output file excists, the data will be appended. Else a new file will be created. 
 > **Note** 
-> Keep in mind that the data will be added. Thus if you run a subject twice, the data will be stored twice!
+> Keep in mind that the data will be added to an existing document. Thus if you run a subject twice, that subject will be stored twice!
 
 <h2> How to use the code </h2>
 
@@ -68,3 +70,11 @@ subj = (1:50)
 ```
 
 After setting all this up, the code should run automatically for the UPLIFT-BC project.
+
+
+<h2> Parameters </h2>
+
+<h3> Lyapunov Exponent </h3>
+The Lyapunov exponent is a mathematical concept that helps to quantify the rate at which the system becomes regular over time. It is commonly used to study the behaviour of chaotic systems over time, such as weather reports or the stock market. 
+In biomechanics, the LyE can be used to study the stability of human movement. For example, when a person is walking or running, small perturbations or disturbances in their movement can cause the center of mass to move in unpredictable ways. By calculating the LyE for these movements, we can determine how stable the movement is and the sensitivity to initial conditions. By understanding how sensitive the movement is to changes in the initial condition, we could develop strategies to improve performance and reduce risk of injury. 
+In terms of arm movements, researchers have used the Lyapunov Exponent to study the stability of reaching movements, playing an instrument, or throwing movements. Overall, the Lyapunov exponent is a usefull tool for understangin the behaviour of movement in a variety of settings including sports, rehabilitation and ergonomics.  
