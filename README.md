@@ -1,6 +1,6 @@
 <h1> UPLIFT_BC </h1>
 
-Calculate kinematics from the UPLIFT-BC project
+This code was commissioned by Prof An de Groef and Prof Liesbet De Baets for the UPLIFT Breast Cancer project and is written for that purpose.
 
 <h2> Project abstract </h2>
 
