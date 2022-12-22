@@ -11,7 +11,9 @@ Detection of the end of phase 1 and start of phase 4 happen through local minima
 
 After segmenting the first and fourth phase, we found that there was too much inter-person variability for time curve comparison. Therefore, we only selected the middle arm movement—i.e., grabbing of the second weight to grabbing the subsequent weight—for further processing. This further segmentation was again using the acceleration in X direction.
 
-![alt text](/ULIFT_BC/ULIFT/Uitleg/As expected.jpg)
+![https://github.com/jillemmerzaal/ULIFT_BC/blob/Version-2/ULIFT/Uitleg/Picture1.tif]
+
+![(/ULIFT_BC/ULIFT/Uitleg/As expected.jpg)](https://github.com/jillemmerzaal/ULIFT_BC/blob/Version-2/ULIFT/Uitleg/As%20expected.jpg)
 
 
 <h2> How to use the code </h2>
