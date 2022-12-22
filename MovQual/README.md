@@ -1,11 +1,11 @@
 <h1> Movement Quality</h1>
 
-Code to calculate movement quality to determine upper limb function in people before and after breast cancer surgery
-
-<h2> Project abstract </h2>
+Code to calculate movement quality to determine upper limb function in people before and after breast cancer surgery.
 
 > **Note**
-> This project is written with the single purpose of working for the UPLIFT-BC project. 
+> This project is written with the sole purpose of working for the UPLIFT-BC project. 
+
+<h2> Project abstract </h2>
 
 Participants performed a weighted pseudo-cyclic motion task. They wore an IMU (Xsens technologies, MVN awinda, 60Hz) on each wrist. The weight they were holding was aproximatly 1 kg. They moved the weight from the side of their body to a shelf that was fixed at shoulder height and back. This was repeated 14 times and performed at two timepoints: baseline and follow-up at 1 month post-surgery. 
 From each trial, the raw acceleration signal was extracted, and from that the movement quality parameters were calculated:
@@ -74,7 +74,12 @@ After setting all this up, the code should run automatically for the UPLIFT-BC p
 
 <h2> Parameters </h2>
 
-<h3> Lyapunov Exponent </h3>
+<h4> Lyapunov Exponent </h4>
+
 The Lyapunov exponent is a mathematical concept that helps to quantify the rate at which the system becomes regular over time. It is commonly used to study the behaviour of chaotic systems over time, such as weather reports or the stock market. 
 In biomechanics, the LyE can be used to study the stability of human movement. For example, when a person is walking or running, small perturbations or disturbances in their movement can cause the center of mass to move in unpredictable ways. By calculating the LyE for these movements, we can determine how stable the movement is and the sensitivity to initial conditions. By understanding how sensitive the movement is to changes in the initial condition, we could develop strategies to improve performance and reduce risk of injury. 
 In terms of arm movements, researchers have used the Lyapunov Exponent to study the stability of reaching movements, playing an instrument, or throwing movements. Overall, the Lyapunov exponent is a usefull tool for understangin the behaviour of movement in a variety of settings including sports, rehabilitation and ergonomics.  
+
+<h4> Sample Entropy </h4>
+
+Sample Entropy is a measure of randomness or predictability of a time series data set. It is a mathematical algorithm tha compares the similarity of patterns withing a dataset over different times scales and can be used to assess predictability of a signal. In simple terms, sample entropy lookts at how similar patterns are within a dataset. A data set with a high sample entropy would indicate a high degree of randomness *(unpredictable)*, while a data set with low sample entropy would indicate low degree of randomness *(predictable)*. 
