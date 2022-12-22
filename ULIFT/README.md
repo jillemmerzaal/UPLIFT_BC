@@ -68,7 +68,13 @@ However, if the data is not as expected (e.g., no change points are found, or mo
 > **Warning**
 > No or faulty phase detection
 
-Select the start and end points of the phases as best as posible. 
+Select the start and end points of the phases as best as posible by clicking on the graph. 
 
+![https://github.com/jillemmerzaal/ULIFT_BC/blob/Version-2/ULIFT/Uitleg/Screenshot%202022-12-22%20143512.jpg](https://github.com/jillemmerzaal/ULIFT_BC/blob/Version-2/ULIFT/Uitleg/Screenshot%202022-12-22%20143512.jpg)
 
+> **Warning**
+> Too many negative peaks found. Could not determine the middle section
 
+Select the start and end of the middle movement based on the red or blue dots in the lower graph. Inportant is that for thase 1, the start and end of the middle movement should correspond to a maximum peak in the position data (upper plot). While for phase 4 the start and end should correpond with a minimum in the position data. 
+
+![https://github.com/jillemmerzaal/ULIFT_BC/blob/Version-2/ULIFT/Uitleg/Screenshot%202022-12-22%20143630.jpg](https://github.com/jillemmerzaal/ULIFT_BC/blob/Version-2/ULIFT/Uitleg/Screenshot%202022-12-22%20143630.jpg)
