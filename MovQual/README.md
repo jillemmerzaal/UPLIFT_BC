@@ -8,7 +8,7 @@ Code to calculate movement quality to determine upper limb function in people be
 <h2> Project abstract </h2>
 
 Participants performed a weighted pseudo-cyclic motion task. They wore an IMU (Xsens technologies, MVN awinda, 60Hz) on each wrist. The weight they were holding was aproximatly 1 kg. They moved the weight from the side of their body to a shelf that was fixed at shoulder height and back. This was repeated 14 times and performed at two timepoints: baseline and follow-up at 1 month post-surgery. 
-From each trial, the raw acceleration signal was extracted, and from that the movement quality parameters were calculated:
+From each trial, the raw acceleration signal was extracted, the vector was calculated, and from that the movement quality parameters were calculated:
 
 Within this project, the following movement quality parameters will be calculated per participant, per activit: 
 - dynamic stability || Lyapunov Exponent and state space reconstruction
