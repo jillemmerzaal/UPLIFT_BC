@@ -47,8 +47,8 @@ path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 % no manual input needed
 cd(path.code)
 addpath(path.code)
-path.out    = fullfile(path.root,'Output','Database_ULIFT.mat');
-path.table  = fullfile(path.root,'Output');
+path.out    = fullfile(path.code,'Output','Database_ULIFT.mat');
+path.table  = fullfile(path.code,'Output');
 
 
 %% input data
@@ -61,7 +61,7 @@ plot_or_not = 1;
 
 %% 2. load data
 % manual input subject range needed
-for subj = (51)
+for subj = (2)
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -69,8 +69,6 @@ for subj = (51)
     else
         subj_name   = ['BC_', num2str(subj)];
     end
-
-
     
     fprintf('\n')
     fprintf('Processing: %s at Timepoint: %s....... \n', subj_name, Timepoint)
