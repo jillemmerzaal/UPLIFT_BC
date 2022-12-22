@@ -31,6 +31,7 @@ Easiest way to do that is to `cd` in the commant window:
 cd C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT 
 ```
 
+<h4> Preprocessing </h4>
 If you set the correct directory, simply open the main file `ULIFT_preprocessing_V2.m` with the following code in the command window:
 
 ```
@@ -58,8 +59,9 @@ subj = (1:50)
 ```
 
 After setting all this up, the code should run semi-automatically for the UPLIFT-BC project.
+The preprocessed data will be saved to `Database_ULIFT.mat` as matlab struct within the Output folder in the current directory. This data structure will be used in the subsequent script.
 
-<h3> Manual plot input </h3>
+<h5> Manual plot input </h5>
 
 If the data is as expected, than the code will run automatically. It will determine the start and end points of the seperate phases of the ULIFT task and determine the middle movement of phase 1 and phase 4 as desribed in the project description.
 
@@ -78,3 +80,24 @@ Select the start and end points of the phases as best as posible by clicking on 
 Select the start and end of the middle movement based on the red or blue dots in the lower graph. Inportant is that for thase 1, the start and end of the middle movement should correspond to a maximum peak in the position data (upper plot). While for phase 4 the start and end should correpond with a minimum in the position data. 
 
 ![https://github.com/jillemmerzaal/ULIFT_BC/blob/Version-2/ULIFT/Uitleg/Screenshot%202022-12-22%20143630.jpg](https://github.com/jillemmerzaal/ULIFT_BC/blob/Version-2/ULIFT/Uitleg/Screenshot%202022-12-22%20143630.jpg)
+
+<h4> SPM preperation </h4>
+
+If you set the correct directory, simply open the main file `SPM_prepV2.m` with the following code in the command window:
+
+```
+open SPM_prepV2.m
+```
+
+This is the second step in the analysis of the ULIFT data. This code works completely automatically and it will read in the data previously saved in the prepocessing step. Then it will time normalise the data, average the three ULIFT repetitions and safe the data to an Excel fille
+
+
+Fill out the path where the code and the data is stored. Set the timepoints and phase you want to analyse. The timepoints can be multiple at once, but just fill out 1 phase (i.e. `phase1` or `phase4`). As a final step, set the number of participants. 
+
+```
+path.code   = "C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT";
+path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
+Timepoints  = {'T0', 'T1'};
+Phase       = 'phase1';
+subj        = (1:20)
+```
