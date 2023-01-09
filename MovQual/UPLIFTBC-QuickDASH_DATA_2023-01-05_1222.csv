@@ -1,0 +1,129 @@
+record_id	redcap_event_name	quickdash_1	quickdash_2	quickdash_3	quickdash_4	quickdash_5	quickdash_6	quickdash_7	quickdash_8	quickdash_9	quickdash_10	quickdash_11	pain_score
+BC_001	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_001	t1_1_month_postsur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_001	t2_1_month_postrad_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_001	t3_6_months_postra_arm_1	1	1	1	1	1		1	1	2	1	1	
+BC_002	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_002	t1_1_month_postsur_arm_1	2	3	1	3	1	3	1	2	2	1	1	1
+BC_002	tch_1_month_postch_arm_1	1	1	1	1	1	1	1	1	2	2	1	2
+BC_003	t0_baseline_presur_arm_1	2	1	1	2	1	1	1	1	2	1	2	3
+BC_003	t1_1_month_postsur_arm_1	2	2	2	2	1	2	1	2	2	1	1	4
+BC_003	t2_1_month_postrad_arm_1	2	1	1	2	1	1	1	1	2	1	3	3
+BC_004	t0_baseline_presur_arm_1	4	3	1	3	1	2	1	3	1	1	1	4
+BC_005	t0_baseline_presur_arm_1	3	2	2	1	1	2	2	2	3	3	3	3
+BC_005	t1_1_month_postsur_arm_1	3	2	2	1	1	2	2	2	3	3	3	5
+BC_005	t2_1_month_postrad_arm_1	3	3	3	2	3	3	3	3	3	3	3	5
+BC_006	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_006	t1_1_month_postsur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_007	t0_baseline_presur_arm_1	5	4	4	4	1	4	2	3	3	3	3	4
+BC_007	t1_1_month_postsur_arm_1	5	3	4	3	1	3	2	3	3	4	3	4
+BC_008	t0_baseline_presur_arm_1	3	2	2	3	1	2	1	1	1	2	2	2
+BC_008	t1_1_month_postsur_arm_1	3	2	5		1	5	2		1	1	1	5
+BC_009	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_009	t1_1_month_postsur_arm_1	1	2	1	1	1	2	2	2	2	1	2	1
+BC_009	tch_1_month_postch_arm_1	2	2	1	1	1	1	1	2	2	3	1	3
+BC_010	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_010	t1_1_month_postsur_arm_1	5	5	4	1	3	3	4	4	4	4	3	7
+BC_011	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_011	t1_1_month_postsur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_011	t2_1_month_postrad_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_012	t0_baseline_presur_arm_1												
+BC_012	t1_1_month_postsur_arm_1												
+BC_013	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	1
+BC_013	t1_1_month_postsur_arm_1	1	1	1	1	1	2	1	2	2	2	1	7
+BC_014	t0_baseline_presur_arm_1	3	2	3	2	1	1	1	1	1	1	1	0
+BC_014	t1_1_month_postsur_arm_1	2	2	3	2	1	2	2	3	3	3	2	2
+BC_014	tch_1_month_postch_arm_1												
+BC_014	t2_1_month_postrad_arm_1	3	3	3	3	1	3	3	4	4	4	2	7
+BC_015	t0_baseline_presur_arm_1	2	1	1	1	1	1	1	1	1	1	1	0
+BC_015	t1_1_month_postsur_arm_1	3	5	2	5	2	5	2	4	4	1	4	4
+BC_015	t2_1_month_postrad_arm_1												
+BC_016	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	3	2
+BC_016	t1_1_month_postsur_arm_1	1	1	2	1	1	2	1	1	1	2	1	2
+BC_017	t0_baseline_presur_arm_1	1	1	1	1	1	2	1	1	1	1	1	0
+BC_017	t1_1_month_postsur_arm_1	1	1	1	1	1	2	1	1	1	1	1	4
+BC_018	t0_baseline_presur_arm_1	3	1	1	3	1	1	1	1	1	1	1	0
+BC_018	t1_1_month_postsur_arm_1												
+BC_019	t0_baseline_presur_arm_1	3	1	1	1	1	2	1	1		2	2	0
+BC_019	t1_1_month_postsur_arm_1	2	3	3	2	1	2	2	2	3	3	2	
+BC_019	t2_1_month_postrad_arm_1												
+BC_020	t0_baseline_presur_arm_1	1	3	3	1	1	3	1	1	3	3	3	1
+BC_020	t1_1_month_postsur_arm_1	3	4	4	4	2	4	4	4	4	4	5	6
+BC_021	t0_baseline_presur_arm_1	1	2	2	2	2	1	1	1	1	4	1	0
+BC_021	t1_1_month_postsur_arm_1	1	2	1	1	1	2	1	2	3	3	3	0
+BC_022	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	2	1	1	1
+BC_023	t0_baseline_presur_arm_1	1	1	1	2	1		1	1	1	1	1	0
+BC_023	t1_1_month_postsur_arm_1		5	3	4	2	3	2	4	3	3	3	3
+BC_024	t0_baseline_presur_arm_1	4	1	2	2	1	2	2	1	1	1	1	0
+BC_024	t1_1_month_postsur_arm_1	2	2	1	1	1	1	1	1	1	1	1	0
+BC_025	t0_baseline_presur_arm_1	2	2	1	1	1	2	1	1	1	1	1	4
+BC_025	t1_1_month_postsur_arm_1	1	1	2	1	1	1	2	1	1	2	1	1
+BC_026	t0_baseline_presur_arm_1	2	2	2	1	1	2	1	2	1	1	1	1
+BC_026	t1_1_month_postsur_arm_1	2	2	2		1	2	1	2	1	1	1	1
+BC_026	t2_1_month_postrad_arm_1	1	1	1	2	1	2	1	1	2	1	2	1
+BC_027	t0_baseline_presur_arm_1	3	2	2	1	1	2	2	3	2	2	1	2
+BC_027	t1_1_month_postsur_arm_1	2	2	2	1	1	1	1	1	1	2	1	1
+BC_028	t0_baseline_presur_arm_1												
+BC_029	t0_baseline_presur_arm_1	1	3	1	1	1	2	1	1	1	2	1	0
+BC_029	t1_1_month_postsur_arm_1	2	2	2	2	2	2	2	2	1	1	2	1
+BC_030	t0_baseline_presur_arm_1	2	2	1	2	1	2	1	1	1	1	1	0
+BC_030	t1_1_month_postsur_arm_1	2	1	1	1	1	1	1	1	1	1	1	0
+BC_031	t0_baseline_presur_arm_1	3	3	2	1	1		1	1	1	1	1	0
+BC_031	t1_1_month_postsur_arm_1	3	4	2		1		1	3	3	1	4	2
+BC_032	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_032	t1_1_month_postsur_arm_1	2	2	2		1	3	2	2	2	1	1	4
+BC_033	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	1
+BC_033	t1_1_month_postsur_arm_1	1	5	1	1	1		2	3	2	3	1	2
+BC_034	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_034	t1_1_month_postsur_arm_1												
+BC_035	t0_baseline_presur_arm_1	2	1	1	1	1	1	1	1	1	1	1	0
+BC_035	t1_1_month_postsur_arm_1												
+BC_036	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	2
+BC_036	t1_1_month_postsur_arm_1	2	3	5	2	1	3	1	2	2	2	2	3
+BC_037	t0_baseline_presur_arm_1	1	2	1	1	1	2	1	1	2	1	1	4
+BC_037	t1_1_month_postsur_arm_1	1	3	4	2	1	5	2	3	4	4	3	6
+BC_038	t0_baseline_presur_arm_1	2	1	1	2	1	2	1	1	1	1	2	1
+BC_038	t1_1_month_postsur_arm_1	3	3	3	1	1	2	1	2	2	1	2	2
+BC_039	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_039	t1_1_month_postsur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_040	t0_baseline_presur_arm_1	1	5	1	1	1	1	2	3		3	1	2
+BC_040	t1_1_month_postsur_arm_1	4	4	4	3	3	5	2	4	5	3	4	7
+BC_041	t0_baseline_presur_arm_1	1	1	1		1	1	1	1	1	1	1	1
+BC_041	t1_1_month_postsur_arm_1												
+BC_042	t0_baseline_presur_arm_1	1	1	1	2	1	1		1	1	1	1	2
+BC_043	t0_baseline_presur_arm_1	2	3	2		1	5	1	1	1	3	1	4
+BC_043	t1_1_month_postsur_arm_1	2	1	2	1	1	3	1	3	2	3	2	3
+BC_044	t0_baseline_presur_arm_1	2	1	1	1	1	1	1	1	1	1	1	2
+BC_044	t1_1_month_postsur_arm_1	2		3	1	1	2	1	2	1	1	2	3
+BC_045	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	2	0
+BC_045	t1_1_month_postsur_arm_1	1	1	1	1	1	1	1	2	1	1	1	1
+BC_046	t0_baseline_presur_arm_1	1	1	1	1	1	2	1	1	2	1	1	2
+BC_046	t1_1_month_postsur_arm_1	1	2	1	1	1	1	1	1	1	1	1	4
+BC_047	t0_baseline_presur_arm_1	2	1	1	1	1	1	1	1	2	1	2	0
+BC_047	t1_1_month_postsur_arm_1	2	1	1	1	1	1	1	1	2	1	2	1
+BC_048	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_048	t1_1_month_postsur_arm_1	1	2	1	1	1	1	1	2	2	1	3	0
+BC_049	t0_baseline_presur_arm_1	2	2	2	3	1	1	2	2	1	1	3	2
+BC_049	t1_1_month_postsur_arm_1	1	1		2	1	1	1	1	1	1	1	7
+BC_050	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_050	t1_1_month_postsur_arm_1												1
+BC_051	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	3
+BC_051	t1_1_month_postsur_arm_1	1	1	1	1	1	1	1	1	3	1	1	
+BC_052	t0_baseline_presur_arm_1												
+BC_053	t0_baseline_presur_arm_1	2	2	1	1	1	2	1	1	2	1	1	1
+BC_053	t1_1_month_postsur_arm_1	1	5	3	1	1	5	1	4	4	4	1	
+BC_054	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_054	t1_1_month_postsur_arm_1	1	1	1	1	1	1	1	1	3	3	1	1
+BC_055	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_055	t1_1_month_postsur_arm_1	1	2	2	1	1	2	1	1	2	1	1	6
+BC_056	t0_baseline_presur_arm_1	3	2	2	1	1	1	1	1	2	1	1	0
+BC_057	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_058	t0_baseline_presur_arm_1	2	1	1	1	1	1	1	1	1	1	1	3
+BC_058	t1_1_month_postsur_arm_1	3	3	2	2	1	3	1	3	3	3	3	3
+BC_059	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_059	t1_1_month_postsur_arm_1	2	2	1	1	1	1	1	1	1	1	5	2
+BC_060	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	1
+BC_061	t0_baseline_presur_arm_1	2	1	1	1	1	1	1	1	1	1	1	0
+BC_062	t0_baseline_presur_arm_1	1	1	1	1	1	1	1	1	1	1	1	0
+BC_063	t0_baseline_presur_arm_1												
+BC_47	t0_baseline_presur_arm_1	2	1	1	1	1	1	1	1	2	1	2	0

@@ -10,13 +10,13 @@ clear; clc; close all;
 
 cd("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\MovQual")
 
-Timepoint       = 'T0';
+Timepoint       = 'T1';
 movement        = "F";
 path.data       = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 path.root 		= 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\MovQual';
 plot_or_not     = 0;
 safe_to_excel   = 1;
-% manual input no longer nescesary
+
 path.out        = fullfile(path.data,'Output','Database_MovQual.mat');
 path.tol 		= fullfile(path.root, 'Output', 'tollarance_table.mat');
 path.unaff 		= fullfile(path.root, 'Output', 'MoveQual_unaff.xlsx');
@@ -24,10 +24,16 @@ path.aff 		= fullfile(path.root, 'Output', 'MoveQual_aff.xlsx');
 fs              = 60;
 
 
-Affected_table = readtable(fullfile(path.root,"Aangedane zijde.xlsx"));
+Affected_table = readtable(fullfile(path.data,"Aangedane zijde.xlsx"));
 
 %% 2) Load data (8 9 10 11 12 14 16 17 19 21) == proefpersonen zonder "rust" data
-for subj = (1:50)
+%%
+% 
+% * T0: 63
+% * T1: 58, 59
+% 
+
+for subj = [60:64] 
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -42,7 +48,7 @@ for subj = (1:50)
     disp(' ')
     disp(['Processing ' subj_name ': ' Timepoint '.....'])
 
-    path.subj   = fullfile(path.root, subj_name, 'Xsens', Timepoint, 'Reproces');
+    path.subj   = fullfile(path.data, subj_name, 'Xsens', Timepoint, 'Reproces');
     check_subj  = exist(path.subj, "dir");
 
     if check_subj == 7
@@ -490,7 +496,8 @@ for subj = (1:50)
 
                         else
                             m = 2;
-                            load C:\Users\u0117545\Documents\GitHub\ULIFT_BC\output\tollarance_table.mat
+
+                            load(path.tol)
                             r = tollarance_table.(arm).r(strcmp(tollarance_table.(arm).ppID, subj_name),:);
 
                             if isempty(r)
@@ -680,10 +687,10 @@ if safe_to_excel
 
 
     writetable(MovementQual.unaff, path.unaff, 'FileType', 'spreadsheet',  ...
-        "WriteMode", "overwritesheet", "Sheet", Timepoint)
+        "WriteMode", "append", "Sheet", Timepoint)
 
     writetable(MovementQual.aff, path.aff, 'FileType', 'spreadsheet', ...
-        'WriteMode', "overwritesheet", 'sheet', Timepoint)
+        'WriteMode', "append", 'sheet', Timepoint)
 
 
 end

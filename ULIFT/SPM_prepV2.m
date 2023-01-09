@@ -23,8 +23,8 @@ path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 % no manual input needed
 cd(path.code)
 addpath(path.code)
-path.in     = fullfile(path.root, 'Output', 'Database_ULIFT.mat');
-path.out    = fullfile(path.root,'Output','Database_SPM.mat');
+path.in     = fullfile(path.code, 'Output', 'Database_ULIFT.mat');
+path.out    = fullfile(path.code,'Output','Database_SPM.mat');
 
 
 %% load data
@@ -54,7 +54,7 @@ ntime = size(Timepoints,2);
 
 
 for t = 1:ntime
-    for subj = 1:20 %30
+    for subj = (1:20) 
         if subj < 10
             subj_name   = ['BC_00' num2str(subj)];
         elseif subj < 100
@@ -126,6 +126,7 @@ for t = 1:ntime
 end% end number of timepoints
 
 %% write data to excel
+
 
 for ang = 1:nangles
     temp.table = [BC.aff.(Phase).T0.(jointsOfInterst{ang}); BC.aff.(Phase).T1.(jointsOfInterst{ang})];
