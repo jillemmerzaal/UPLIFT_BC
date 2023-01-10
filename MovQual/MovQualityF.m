@@ -33,7 +33,7 @@ Affected_table = readtable(fullfile(path.data,"Aangedane zijde.xlsx"));
 % * T1: 58, 59
 % 
 
-for subj = [60:64] 
+for subj = [58:59] 
     if subj < 10
         subj_name   = ['BC_00' num2str(subj)];
     elseif subj < 100
@@ -63,7 +63,7 @@ for subj = [60:64]
 
         % Start loop through ULIFT files per subject
         for file = 1:nfiles
-            if contains(content(file).name, movement) && contains(content(file).name, '.mvnx') && ~contains(content(file).name, 'AF') && ~contains(content(file).name, 'ULIFT')
+            if contains(content(file).name, movement) && contains(content(file).name, '.mvnx') && ~contains(content(file).name, 'AF') && ~contains(content(file).name, 'ULIFT') && ~contains(content(file).name, 'UPLIFT')
                 file_ik = fullfile(path.subj, content(file).name);
 
                 [~,name, ~] = fileparts(content(file).name);
