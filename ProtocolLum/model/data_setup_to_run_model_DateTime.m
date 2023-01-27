@@ -34,7 +34,6 @@ clearvars; close all; clc
 
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA\LUM'; 
 ppID        = 'L_002'; 
-fileName_TR = "C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ProtocolLum\model\TR_2.txt";
 
 subj_path   = fullfile(path.root, ppID, 'csv');
 
@@ -70,27 +69,25 @@ FileName_video  = fullfile(subj_path, file_video);
 opts = delimitedTextImportOptions("NumVariables", 4);
 
 % Specify range and delimiter
-opts.DataLines = [2, Inf];
+opts.DataLines = [12, Inf];
 opts.Delimiter = ",";
 
 % Specify column names and types
-opts.VariableNames = ["Var1", "X", "Y", "Z"];
-opts.SelectedVariableNames = ["X", "Y", "Z"];
-opts.VariableTypes = ["string", "double", "double", "double"];
+opts.VariableNames = ["Timestamp", "AccelerometerX", "AccelerometerY", "AccelerometerZ"];
+opts.VariableTypes = ["datetime", "double", "double", "double"];
 
 % Specify file level properties
 opts.ExtraColumnsRule = "ignore";
 opts.EmptyLineRule = "read";
 
 % Specify variable properties
-opts = setvaropts(opts, "Var1", "WhitespaceRule", "preserve");
-opts = setvaropts(opts, "Var1", "EmptyFieldRule", "auto");
+opts = setvaropts(opts, "Timestamp", "InputFormat", "dd/MM/yyyy HH:mm:ss.SSS");
 
-R = readtable(fileName_R, opts);
+% Import the data
 L = readtable(fileName_L, opts);
-
+R = readtable(fileName_R, opts);
 % Clear temporary variables
-clear opts
+% clear opts
 
 %% import start and stop times
 opts = delimitedTextImportOptions("NumVariables", 3);
@@ -101,20 +98,20 @@ opts.Delimiter = ",";
 
 % Specify column names and types
 opts.VariableNames = ["ppID", "Start", "Stop"];
-opts.VariableTypes = ["string", "double", "double"];
+opts.VariableTypes = ["string", "datetime", "datetime"];
 
 % Specify file level properties
 opts.ExtraColumnsRule = "ignore";
 opts.EmptyLineRule = "read";
 
 % Specify variable properties
-% opts = setvaropts(opts, "Start", "InputFormat", "dd/MM/yyyy HH:mm:ss.SSS");
-% opts = setvaropts(opts, "Stop", "InputFormat", "dd/MM/yyyy HH:mm:ss.SSS");
+opts = setvaropts(opts, "Start", "InputFormat", "dd/MM/yyyy HH:mm:ss.SSS");
+opts = setvaropts(opts, "Stop", "InputFormat", "dd/MM/yyyy HH:mm:ss.SSS");
 % opts = setvaropts(opts, "ppID", "TrimNonNumeric", true);
 % opts = setvaropts(opts, "ppID", "ThousandsSeparator", ",");
 
 % Import the data
-TR_temp = readtable(fileName_TR, opts);
+TR_temp = readtable("C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ProtocolLum\model\TR.txt", opts);
 
 
 Subj_TR = TR_temp((TR_temp.ppID == ppID),:);
