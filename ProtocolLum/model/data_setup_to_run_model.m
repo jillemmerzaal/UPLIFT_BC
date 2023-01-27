@@ -23,7 +23,7 @@
 %  versus counts threshold method. Neurorehabilitation and neural repair,
 %  34(12), 1078-1087.
 %  
-clearvars; close all; clc
+clearvars; clc ; close all; 
 %% Input data paths and names
 % 
 %  INPUT 1: corresponding path where all files are to path.root
@@ -33,7 +33,7 @@ clearvars; close all; clc
 
 
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA\LUM'; 
-ppID        = 'L_006'; 
+ppID        = 'L_011'; 
 fileName_TR = "C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ProtocolLum\model\TR_samples.txt";
 
 subj_path   = fullfile(path.root, ppID, 'csv');
@@ -42,12 +42,12 @@ content     = dir(subj_path);
 nFiles      = length(content);
 
 for file = 1:nFiles
-    if contains(content(file).name, ' L.2.')
+    if contains(content(file).name, 'L.2.')
         disp(content(file).name)
         disp("  File for the LEFT arm")
         file_l = content(file).name;
 
-    elseif contains(content(file).name, ' R.2.')
+    elseif contains(content(file).name, 'R.2.')
         disp(content(file).name)
         disp("  File for the RIGHT arm")
         file_r = content(file).name;
@@ -93,15 +93,15 @@ L = readtable(fileName_L, opts);
 clear opts
 
 %% import start and stop times
-opts = delimitedTextImportOptions("NumVariables", 3);
+opts = delimitedTextImportOptions("NumVariables", 4);
 
 % Specify range and delimiter
 opts.DataLines = [1, Inf];
 opts.Delimiter = ",";
 
 % Specify column names and types
-opts.VariableNames = ["ppID", "Start", "Stop"];
-opts.VariableTypes = ["string", "double", "double"];
+opts.VariableNames = ["ppID", "Start", "Stop", "delay"];
+opts.VariableTypes = ["string", "double", "double", 'double'];
 
 % Specify file level properties
 opts.ExtraColumnsRule = "ignore";
@@ -123,10 +123,28 @@ TR = [Subj_TR.Start:Subj_TR.Stop];
 %% Create timetable data and cut out relevant time section
 %L_time = table2timetable(L);
 
+%% sync the shit 
+
+% 
+% signal1 = L.X(Subj_TR.gi1:Subj_TR.gi2);
+% signal2 = R.X(Subj_TR.gi1:Subj_TR.gi2);
+% 
+% corr = xcorr(signal1, signal2);
+% [~, idx] = max(corr);
+% delay = idx - length(signal1);
+% 
+% signal2_synced = circshift(signal2, delay);
+% 
+% R_synced = circshift(R, delay);
+
+
+R_synced = circshift(R, Subj_TR.delay);
+
+
 data.L_time = L(TR,:);
 
 %R_time = table2timetable(R);
-data.R_time = R(TR,:);
+data.R_time = R_synced(TR,:);
 
 figure; 
 tiledlayout('flow')
@@ -139,6 +157,8 @@ stackedplot(data.R_time);
 title('Right Arm')
 
 clear R_time L_time
+
+
 %% Redefine axis to Lum configuration
 %%
 % 

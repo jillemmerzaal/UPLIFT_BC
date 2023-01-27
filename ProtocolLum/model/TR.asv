@@ -12,7 +12,7 @@ clearvars; close all; clc
 %  INPUT 4: file names to the data for left, right, and video files respectively
 
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA\LUM'; 
-ppID        = 'L_002'; 
+ppID        = 'L_006'; 
 
 subj_path   = fullfile(path.root, ppID, 'csv');
 
@@ -99,7 +99,18 @@ figure;
 plot(L.X(round(gi(1)):round(gi(2))));
 hold on
 plot(R.X(round(gi(1)):round(gi(2))));
-plot(R_synced.X(round(gi(1)):round(gi(2))), 'LineWidth', 1.5)
+plot(R_synced.X(round(gi(1)):round(gi(2))))
+
+figure; 
+plot(L.X);
+hold on
+plot(R.X)
+
+figure; 
+plot(L.X);
+hold on
+plot(R_synced.X)
+
 
 
 %% Create timetable data and cut out relevant time section
