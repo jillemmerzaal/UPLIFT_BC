@@ -33,8 +33,8 @@ clearvars; close all; clc
 
 
 path.root   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA\LUM'; 
-ppID        = 'L_002'; 
-fileName_TR = "C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ProtocolLum\model\TR_2.txt";
+ppID        = 'L_006'; 
+fileName_TR = "C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ProtocolLum\model\TR_samples.txt";
 
 subj_path   = fullfile(path.root, ppID, 'csv');
 
@@ -119,14 +119,14 @@ TR_temp = readtable(fileName_TR, opts);
 
 Subj_TR = TR_temp((TR_temp.ppID == ppID),:);
 
-TR = timerange(Subj_TR.Start, Subj_TR.Stop);
+TR = [Subj_TR.Start:Subj_TR.Stop];
 %% Create timetable data and cut out relevant time section
-L_time = table2timetable(L);
+%L_time = table2timetable(L);
 
-data.L_time = L_time(TR,:);
+data.L_time = L(TR,:);
 
-R_time = table2timetable(R);
-data.R_time = R_time(TR,:);
+%R_time = table2timetable(R);
+data.R_time = R(TR,:);
 
 figure; 
 tiledlayout('flow')
@@ -150,18 +150,18 @@ clear R_time L_time
 
 
 % Left
-acc.x = data.L_time.AccelerometerY;
-acc.y = data.L_time.AccelerometerX;
-acc.z = data.L_time.AccelerometerZ * -1;
+acc.x = data.L_time.Y;
+acc.y = data.L_time.X;
+acc.z = data.L_time.Z * -1;
 
 data.L = [acc.x, acc.y,  acc.z];
 
 clear acc
 
 % Right
-acc.x = data.R_time.AccelerometerY * -1;
-acc.y = data.R_time.AccelerometerX * -1;
-acc.z = data.R_time.AccelerometerZ * -1;
+acc.x = data.R_time.Y * -1;
+acc.y = data.R_time.X * -1;
+acc.z = data.R_time.Z * -1;
 
 data.R = [acc.x, acc.y,  acc.z];
 
