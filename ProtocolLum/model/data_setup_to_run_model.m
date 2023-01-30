@@ -9,7 +9,7 @@
 % developed by Lum and colleagues.
 % 
 % * Sensor specifications: ActiGraph wGT3X-BT (Serial Numbers Starting with MOS2)
-% * camera specifications: 25 fps
+% * camera specifications: Sony FDR-AX33 25 fps
 % 
 % 
 % 
