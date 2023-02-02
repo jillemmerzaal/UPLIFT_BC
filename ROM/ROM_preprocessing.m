@@ -59,7 +59,7 @@ addpath(path.code)
 % scapulothoratic joint angles than: scapulo = 1; secondary = 0;
 
 % manual input needed
-Timepoint       = 'T0';
+Timepoint       = 'T1';
 movement        = 'ABD';
 plot_or_not     = 0;
 check_complete  = 1;
@@ -250,9 +250,9 @@ for subj = [2:4, 6:7, 9:10] % manual input needed for subject ranges
                         temp.prim.table.Properties.VariableNames = {'ppID', 'Time', char(movement)};
 
                         if strcmp(arm, involved)
-                            filename = fullfile(path.out, ['ROM_aff_', movement, '.xlsx']);
+                            filename = fullfile(path.out, ['ROM_aff_', Timepoint, '_', movement, '.xlsx']);
                         else
-                            filename = fullfile(path.out, ['ROM_unaff_', movement, '.xlsx']);
+                            filename = fullfile(path.out, ['ROM_unaff_', Timepoint, '_', movement, '.xlsx']);
                         end
 
 

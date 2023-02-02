@@ -35,7 +35,7 @@ affected_table = readtable(fullfile(path.root, "Aangedane zijde.xlsx"));
 
 %% set up
 Timepoints = {'T0', 'T1'};
-Phase       = 'phase1';
+Phase       = 'phase4';
 
 
 jointsOfInterst ={'Scapula_abbuction'
@@ -123,19 +123,18 @@ for t = 1:ntime
             end % check if timepoint is in that particular subject.
         end % check if subject name is in struct
     end % number of subjects
+
+    %% write data to excel
+    for ang = 1:nangles
+        temp.table = [BC.aff.(Phase).(Timepoints{t}).(jointsOfInterst{ang})];
+        temp.table.Properties.VariableNames = {'ppID', 'Time', jointsOfInterst{ang}};
+
+        % create filename
+        fileName = fullfile(path.code, 'Output', [Timepoints{t}, '_', Phase, '.xlsx']);
+
+        %  write the table to an excel file
+        writetable(temp.table, fileName, Sheet=jointsOfInterst{ang})
+    end
+
 end% end number of timepoints
 
-%% write data to excel
-
-
-for ang = 1:nangles
-    temp.table = [BC.aff.(Phase).T0.(jointsOfInterst{ang}); BC.aff.(Phase).T1.(jointsOfInterst{ang})];
-    temp.table.Properties.VariableNames = {'ppID', 'Time', jointsOfInterst{ang}};
-
-    % create filename
-    fileName = fullfile([Phase, '.xlsx']);
-
-    %  write the table to an excel file
-    writetable(temp.table, fileName, Sheet=jointsOfInterst{ang}) 
-
-end
