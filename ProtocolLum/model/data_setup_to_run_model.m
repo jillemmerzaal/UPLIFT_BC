@@ -238,7 +238,93 @@ out = char(vid.Out);
 for idx = 1:length(out)
     tp(idx,2) = duration(out(idx,1:8));
 end
-%% Get frame number
+
+%% Export data for counts analysis 
+%  start times of the labels in the video data To attone for the frequency
+%  difference and the lack of miliseconds in the video data, we'll use the
+%  frame rate of the video to round the frames up or down.
+% 
+% * Block 1 if the last 2 numbers [0:6] = 
+%       frames + (0 * 2);
+% * Block 2 if the last 2 numbers [7:12] =
+%       frames + (6 * 2);
+% * Block 3 if the last 2 numbers [13:18] =
+%       frames + (12 * 2);
+% * Block 4 if the last 2 numbers [19:24] =
+%        frames + (18 * 2);
+%
+% formula to get frame number for the labeled activity at point idx:
+% 
+%   (seconds(tp(idx,1)) * vd_frames) / vd_secs
+% 
+% 
+vd_secs = seconds(duration(tp(end,2))); % total length of the video
+vd_frames = vd_secs * 30; % total length of the video in frames
+
+relevantframe = zeros(size(tp,1),2);
+
+% Start point of the markers
+for idx = 1:length(in)
+    if str2double(in(idx,10:11)) <= 6
+        % Block_1
+        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
+        relevantframe(idx,1) = relevantframe(idx,1) + (0 * 2);
+
+    elseif str2double(in(idx,10:11)) > 6 && str2double(in(idx,10:11)) <= 12
+        % Block_2
+        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
+        relevantframe(idx,1) = relevantframe(idx,1) + (6 * 2);
+
+    elseif str2double(in(idx,10:11)) > 12 && str2double(in(idx,10:11)) <= 18
+        % Block_3
+        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
+        relevantframe(idx,1) = relevantframe(idx,1) + (12 * 2);
+
+    elseif str2double(in(idx,10:11)) > 18 && str2double(in(idx,10:11)) <= 24
+        % Block_4
+        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
+        relevantframe(idx,1) = relevantframe(idx,1) + (18 * 2);
+    end
+end
+
+% end point of the markers
+for idx = 1:length(out)
+    if str2double(out(idx,10:11)) <= 6
+        % Block_1
+        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
+        relevantframe(idx,2) = relevantframe(idx,2) + (0 * 2);
+
+    elseif str2double(out(idx,10:11)) > 6 && str2double(out(idx,10:11)) <= 12
+        % Block_2
+        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
+        relevantframe(idx,2) = relevantframe(idx,2) + (6 * 2);
+
+    elseif str2double(out(idx,10:11)) > 12 && str2double(out(idx,10:11)) <= 18
+        % Block_3
+        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
+        relevantframe(idx,2) = relevantframe(idx,2) + (12 * 2);
+
+    elseif str2double(out(idx,10:11)) > 18 && str2double(out(idx,10:11)) <= 24
+        % Block_4
+        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
+        relevantframe(idx,2) = relevantframe(idx,2) + (18 * 2);
+    end
+end
+vid.frameIn30 = relevantframe(:,1);
+vid.frameOut30 = relevantframe(:,2);
+clear relevantframe
+
+calibratie = vid(ismember(vid.MarkerName, {'Calibration'}),:);
+
+data.expL = data.L(calibratie.frameOut30(1):calibratie.frameIn30(2),:);
+data.expR = data.R(calibratie.frameOut30(1):calibratie.frameIn30(2),:);
+
+% writematrix(data.expL, 'Export_for_countsL.xlsx', 'Sheet', ppID)
+% writematrix(data.expR, 'Export_for_countsR.xlsx', 'Sheet', ppID)
+
+clear calibratie
+
+%% Get frame number machin learning pipeline
 %%
 %  start times of the labels in the video data To attone for the frequency
 %  difference and the lack of miliseconds in the video data, we'll use the
@@ -398,6 +484,7 @@ for i=1:b:points
     end
 end
 
+
 data_1=data_1(2:length(data_1),:);
 data_2=data_2(2:length(data_2),:);
 
@@ -417,13 +504,17 @@ CC_dummy(:,:)=confusionmat(output,yyfit_dummy);
 Accuracy.L_dummy=(CC_dummy(1,1)+CC_dummy(2,2))/(CC_dummy(1,1)+CC_dummy(1,2)+CC_dummy(2,1)+CC_dummy(2,2));
 %% total minutes active predictor
 total_active.pred_L = (size(yyfit(yyfit == 1), 1) * 4) / 60;
+perc_functional.pred_L = (size(yyfit(yyfit == 1), 1) * 4) / (size(data.expL,1) / 30);
+
 clear yyfit
 %% total minutes active ground truth
 total_active.GT_L = (size(feature2 ,1) * 4) / 60; % total minutes active in minutes of the ground truth;
+perc_functional.GT_L = (size(feature2 ,1) * 4) / (size(data.expL,1) / 30);
+
+clear feature2 feature1
 %% total minutes active counts
 total_active.count_L = nan;
-
-
+perc_functional.count_L = nan;
 %__________________________________________________________________________
 
 %% ML Model for right
@@ -467,11 +558,16 @@ CC_dummy(:,:)=confusionmat(output,yyfit_dummy);
 Accuracy.R_dummy=(CC_dummy(1,1)+CC_dummy(2,2))/(CC_dummy(1,1)+CC_dummy(1,2)+CC_dummy(2,1)+CC_dummy(2,2));
 %% total minutes active predictor
 total_active.pred_R = (size(yyfit(yyfit == 1), 1) * 4) / 60;
+perc_functional.pred_R = (size(yyfit(yyfit == 1),1) * 4) /  (size(data.expR,1) /30);
+
 clear yyfit
 %% total minutes active ground truth
 total_active.GT_R = (size(feature2 ,1) * 4) / 60; % total minutes active in minutes of the ground truth;
+perc_functional.GT_R = (size(feature2 ,1) * 4) / (size(data.expR,1) /30);
+
 %% total minutes active counts
 total_active.count_R = nan;
+perc_functional.count_R = nan;
 %__________________________________________________________________________
 
 %% write output data 
@@ -489,88 +585,15 @@ Active_table.Properties.VariableNames= {'ppID', 'GT L', 'Pred L', 'Count L', 'GT
 
 writetable(Active_table, 'ResultsProtocolLum.xlsx', 'WriteMode','append', 'Sheet' ,'MinutesActive')
 
+% percentage in functional 
+percentage_table = table(string(ppID), perc_functional.GT_L, perc_functional.pred_L, perc_functional.count_L, ...
+    perc_functional.GT_R, perc_functional.pred_R, perc_functional.count_R);
+percentage_table.Properties.VariableNames = {'ppID', 'GT L', 'Pred L', 'Count L', 'GT R', 'Pred R', 'Count R'};
 
+writetable(percentage_table, 'ResultsProtocolLum.xlsx', 'WriteMode','append', 'Sheet' ,'PercentageFunctional')
 
+return
 %% Export data for counts analysis 
-%  start times of the labels in the video data To attone for the frequency
-%  difference and the lack of miliseconds in the video data, we'll use the
-%  frame rate of the video to round the frames up or down.
-% 
-% * Block 1 if the last 2 numbers [0:6] = 
-%       frames + (0 * 2);
-% * Block 2 if the last 2 numbers [7:12] =
-%       frames + (6 * 2);
-% * Block 3 if the last 2 numbers [13:18] =
-%       frames + (12 * 2);
-% * Block 4 if the last 2 numbers [19:24] =
-%        frames + (18 * 2);
-%
-% formula to get frame number for the labeled activity at point idx:
-% 
-%   (seconds(tp(idx,1)) * vd_frames) / vd_secs
-% 
-% 
-vd_secs = seconds(duration(tp(end,2))); % total length of the video
-vd_frames = vd_secs * 30; % total length of the video in frames
-
-relevantframe = zeros(size(tp,1),2);
-
-% Start point of the markers
-for idx = 1:length(in)
-    if str2double(in(idx,10:11)) <= 6
-        % Block_1
-        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
-        relevantframe(idx,1) = relevantframe(idx,1) + (0 * 2);
-
-    elseif str2double(in(idx,10:11)) > 6 && str2double(in(idx,10:11)) <= 12
-        % Block_2
-        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
-        relevantframe(idx,1) = relevantframe(idx,1) + (6 * 2);
-
-    elseif str2double(in(idx,10:11)) > 12 && str2double(in(idx,10:11)) <= 18
-        % Block_3
-        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
-        relevantframe(idx,1) = relevantframe(idx,1) + (12 * 2);
-
-    elseif str2double(in(idx,10:11)) > 18 && str2double(in(idx,10:11)) <= 24
-        % Block_4
-        relevantframe(idx,1) = (seconds(tp(idx,1)) * vd_frames) / vd_secs;
-        relevantframe(idx,1) = relevantframe(idx,1) + (18 * 2);
-    end
-end
-
-% end point of the markers
-for idx = 1:length(out)
-    if str2double(out(idx,10:11)) <= 6
-        % Block_1
-        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
-        relevantframe(idx,2) = relevantframe(idx,2) + (0 * 2);
-
-    elseif str2double(out(idx,10:11)) > 6 && str2double(out(idx,10:11)) <= 12
-        % Block_2
-        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
-        relevantframe(idx,2) = relevantframe(idx,2) + (6 * 2);
-
-    elseif str2double(out(idx,10:11)) > 12 && str2double(out(idx,10:11)) <= 18
-        % Block_3
-        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
-        relevantframe(idx,2) = relevantframe(idx,2) + (12 * 2);
-
-    elseif str2double(out(idx,10:11)) > 18 && str2double(out(idx,10:11)) <= 24
-        % Block_4
-        relevantframe(idx,2) = (seconds(tp(idx,2)) * vd_frames) / vd_secs;
-        relevantframe(idx,2) = relevantframe(idx,2) + (18 * 2);
-    end
-end
-vid.frameIn30 = relevantframe(:,1);
-vid.frameOut30 = relevantframe(:,2);
-clear relevantframe
-
-calibratie = vid(ismember(vid.MarkerName, {'Calibration'}),:);
-
-data.expL = data.L(calibratie.frameOut30(1):calibratie.frameIn30(2),:);
-data.expR = data.R(calibratie.frameOut30(1):calibratie.frameIn30(2),:);
-
 writematrix(data.expL, 'Export_for_countsL.xlsx', 'Sheet', ppID)
 writematrix(data.expR, 'Export_for_countsR.xlsx', 'Sheet', ppID)
 
