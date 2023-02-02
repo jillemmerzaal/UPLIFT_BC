@@ -28,6 +28,7 @@ The calculated movement quality parameters will be stored in an Excel file in th
 <h2> How to use the code </h2>
 
 <h3> Instalation </h3>
+For those who don't know how to code.
 
 Download the code from this GitHub page and put in in a folder that is ealiy accesible from your matlab directory. 
 
@@ -89,3 +90,9 @@ In the field of biomechancis, sample entropy have been used to assess the gait o
 <h4> Log dimensionless jerk </h4>
 
 The log dimensionless jerk is a measure of how quickly the acceleration of an object changes over time. For example, if the acceleration is constant, than the log dimensionless jerk is zero. However, if the acceleration is increasing of decreasing rapidly and constantly, the log dimensionless jerk would be higher. LDLJ is often used in the analysis of motion and control systems, as it can provide usefull insight into the movement behaviour. Within biomechanics, LDLJ is often used as a measure of movement smoothness. The closer the number is to zero, the smoother the acceleration signal is, while unsmooth, jerky signals are characterised by a large deviation from zero. 
+
+<h4> Root mean square </h4>
+The variability of movement was evaluated using the Root Mean Square (RMS) method. The RMS method is a statistical calculation that determines the square root of the average of the squares of individual data points within a signal. The higher the RMS value, the greater the movement variability, while a lower RMS value suggests less variability. The RMS value of the acceleration signal was obtained with a sliding window of ten samples, providing a comprehensive assessment of movement variability throughout the task.
+
+<h4> Autocorrelation </h4>
+The autocorrelation of the signal was used to assess movement symmetry. Since the movement was of a pseudo-cyclic nature, the acceleration signal should repeat itself with a specific time interval. As a result, autocorrelation would exhibit maximum values at a time delay that is equal to the period of the signal. The height of the first most prominent peak represents the autocorrelation coefficient of consecutive repetitions with complete symmetry, which is equal to one.
