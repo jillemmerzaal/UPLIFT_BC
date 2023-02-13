@@ -12,7 +12,8 @@ Therefore, this code will implement the model developed by Lum et al., and teste
 
 > To call Python® modules in MATLAB®, you must have a supported version of the reference implementation (CPython) installed on your system. 
 > This code is created using MATLAB 2022b and Python 3.9 in [Anaconda Distribution](https://www.anaconda.com/products/distribution)
-> for other versions of either MATLAB or Python check the [version compatibility](https://nl.mathworks.com/support/requirements/python-compatibility.html)
+> 
+> For other versions of either MATLAB or Python check the [version compatibility](https://nl.mathworks.com/support/requirements/python-compatibility.html)
 
 4. Have the python modules installed || see requirements.txt
 
