@@ -69,6 +69,7 @@ for subj = 2%1:5
         pyOut = py.gt3x2df.gt3x2df(path.subj, hip_data);
 
         disp('     Done')
+        disp('     __________________________')
 
         %% from np.array to double
        disp('     From numpy to double......')
@@ -78,7 +79,7 @@ for subj = 2%1:5
         non_wear_vector = double(py.array.array('d', py.numpy.nditer(pyOut{5})))';
 
         disp('     Done')
-
+        disp('     __________________________')
         %% Wear periods
         disp('     Segment wear vs non-wear periods......')
 
@@ -118,8 +119,9 @@ for subj = 2%1:5
         wear_blocks(4,:) = wear_blocks(3,:) / 60; % number of hours in a block
 
         disp('     Done')
+        disp('     __________________________')
         if size(wear_blocks,2) >= 5 && sum(wear_blocks(4,:) >= 12) >= 5
-            disp('     Wear time check completed. Conclusion: Data will be analysed ')
+            disp('     Wear time check completed. Conclusion: Data will be analysed')
             Conclusion = 'Analysed';
             basic_table = table(string(subj_name), string(timepoint), wear_blocks(4,:), string(Conclusion));
             basic_table.Properties.VariableNames = {'ppID', 'Timepoint', 'wear time', 'Conclusion'};
