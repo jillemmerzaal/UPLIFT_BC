@@ -39,7 +39,7 @@ for subj = [58:59]
     elseif subj < 100
         subj_name   = ['BC_0' num2str(subj)];
     else
-        subj_name   = ['BC_', num2str(subj)];
+        subj_name   = ['BC_' num2str(subj)];
     end
 
     affected = Affected_table(strcmp(Affected_table.ppID, subj_name), "involved");
