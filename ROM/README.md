@@ -2,6 +2,8 @@
 
 This is the main repository for the upper limb range of motion timecurve analysis as calculated by the xsens system. Data collected in funtion of the UPLIFT_BC project using Xsens MVN 2021.2 software.
 
+ROM_preprocessing.m performs the analysis
+
 **specify**
 - Path where all the code is stored
 - Path where all the code sections are stored (if not in path.orig)
