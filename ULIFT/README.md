@@ -1,6 +1,6 @@
-<h1> Kinematical analysis of the ULIFT task </h1>
+# Kinematical analysis of the ULIFT task 
 
-<h2> Project abstract </h2>
+## Project abstract 
 
 The ULIFT task consists of 4 distinct phases: Phase 1) is from the upper level to the middle level, Phase 2) from the middle level to the floor, Phase 3) from the floor to the middle level, and Phase 4) from the middle level to the upper level. 
 These different tasks require a different neuromuscular control in terms of the displacement of the weights—where Phases 1 and 2 can be considered eccentric and Phases 3 and 4 concentric activities. Since the movement of the weight to and from the floor require activities from the trunk and legs alongside upper extremity activity these will not be taken into consideration for the rest of this analysis (too much variability possible, and no sensor information from the lower extremities).
@@ -13,16 +13,17 @@ After segmenting the first and fourth phase, we found that there was too much in
 
 ![(/ULIFT_BC/ULIFT/Uitleg/As expected.jpg)](https://github.com/jillemmerzaal/ULIFT_BC/blob/Version-2/ULIFT/Uitleg/As%20expected.jpg)
 
-<h2> How to use the code </h2>
 
-<h3> Instalation </h3>
+## How to use the code
+
+### Instalation
 
 Download the code from this GitHub page and put in in a folder that is ealiy accesible from your matlab directory. 
 
 > **Warning** 
 > Keep the file structure as is
 
-<h3> Workflow </h3>
+### Workflow 
 
 To run the code, the folder where the code is should be set as the current directory. 
 Easiest way to do that is to `cd` in the commant window: 
@@ -31,7 +32,7 @@ Easiest way to do that is to `cd` in the commant window:
 cd C:\Users\u0117545\Documents\GitHub\ULIFT_BC\ULIFT 
 ```
 
-<h4> Preprocessing </h4>
+**Preprocessing**
 If you set the correct directory, simply open the main file `ULIFT_preprocessing_V2.m` with the following code in the command window:
 
 ```
@@ -61,8 +62,7 @@ subj = (1:50)
 After setting all this up, the code should run semi-automatically for the UPLIFT-BC project.
 The preprocessed data will be saved to `Database_ULIFT.mat` as matlab struct within the Output folder in the current directory. This data structure will be used in the subsequent script.
 
-<h5> Manual plot input </h5>
-
+**Manual plot input**
 If the data is as expected, than the code will run automatically. It will determine the start and end points of the seperate phases of the ULIFT task and determine the middle movement of phase 1 and phase 4 as desribed in the project description.
 
 However, if the data is not as expected (e.g., no change points are found, or more/less peaks are found ) than the scripts asks for manual input. 
@@ -81,7 +81,7 @@ Select the start and end of the middle movement based on the red or blue dots in
 
 ![https://github.com/jillemmerzaal/ULIFT_BC/blob/Version-2/ULIFT/Uitleg/Screenshot%202022-12-22%20143630.jpg](https://github.com/jillemmerzaal/ULIFT_BC/blob/Version-2/ULIFT/Uitleg/Screenshot%202022-12-22%20143630.jpg)
 
-<h4> SPM preperation </h4>
+**SPM preperation**
 
 If you set the correct directory, simply open the main file `SPM_prepV2.m` with the following code in the command window:
 
@@ -90,7 +90,6 @@ open SPM_prepV2.m
 ```
 
 This is the second step in the analysis of the ULIFT data. This code works completely automatically and it will read in the data previously saved in the prepocessing step. Then it will time normalise the data, average the three ULIFT repetitions and safe the data to an Excel fille
-
 
 Fill out the path where the code and the data is stored. Set the timepoints and phase you want to analyse. The timepoints can be multiple at once, but just fill out 1 phase (i.e. `phase1` or `phase4`). As a final step, set the number of participants. 
 
@@ -101,3 +100,9 @@ Timepoints  = {'T0', 'T1'};
 Phase       = 'phase1';
 subj        = (1:20)
 ```
+
+**SPM example**
+For more information on SPM, its download, and implementation in MATLAB, please visit the [SPM website](https://spm1d.org/Downloads.html). Script examples can also be found in the Matlab source code on that same website. Another great source of information is the youtube page from [Stuart McErlain-Naylor](https://www.youtube.com/@biomechstu). There are step-by-step examples of how to implement SPM in MATLAB when you are not very familliar with programming.
+In function of the ULIFT task; the file SPM_Example.m is an example script to read in the data solely for the ULIFT task of the UPLIFT-BC project.
+
+
