@@ -20,6 +20,7 @@ Therefore, this code will implement the model developed by Lum et al., and teste
 ### What does the code do? 
 
 **Data segmentating steps:**
+
 1. Read the native actigraph data usting the pygt3x module in python (implemented in MATLAB).
 2. Calculate wear/non-wear time  based on the hip accelerometer.
     - Code from [Syed et al., 2020](https://www.nature.com/articles/s41598-020-62821-2), who implemented [van Hees' Algorithm 1993](https://pubmed.ncbi.nlm.nih.gov/21829556/) using raw acceleration data. We used a non-wear time of 135 minutes and a sliding window of 1 minute, as shown by [Syed et al (2022)](https://www.nature.com/articles/s41598-021-87757-z) to have a high f1-score without needing to resort to deep learning. 
@@ -33,9 +34,10 @@ Therefore, this code will implement the model developed by Lum et al., and teste
 
 
 **processing**
-4. use the pretrained model to predict functional (label 1) and non-functional (label 0) activities of the upper limb
-5. calculate the minutes functional active per wear block. 
-6. Calulcate the percentage of minutes functional active with respect to the total wear time
-7. export all outcome to excel
+
+1. use the pretrained model to predict functional (label 1) and non-functional (label 0) activities of the upper limb
+2. calculate the minutes functional active per wear block. 
+3. Calulcate the percentage of minutes functional active with respect to the total wear time
+4. export all outcome to excel
 
 
