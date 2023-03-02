@@ -16,7 +16,8 @@ path.data   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 timepoint   = 'T1';
 plot_or_not = 1;
 fs          = 30;
-
+import_ext  = 'parq'; %OR csv
+csv         = 0;
 
 %% set python environment
 pe = pyenv("Version", "C:\GBW_MyPrograms\Anaconda3\envs\MATLAB_PYTHON\python.exe");
@@ -27,7 +28,7 @@ if count(py.sys.path,pathToFunc) == 0
 end
 
 %%
-for subj = [1 3]%6:10
+for subj = 1:10
     if subj < 10
         subj_name = ['BC_00', num2str(subj)];
     elseif subj < 100
@@ -43,17 +44,23 @@ for subj = [1 3]%6:10
 
     path.subj   = fullfile(path.data, subj_name, 'Accelerometrie', timepoint);
     check_subj  = exist(path.subj, "dir");
-    content_check = isfile(fullfile(path.subj, 'rawdata_hip.parq'));
+    content_check_parq = isfile(fullfile(path.subj, 'rawdata_hip.parq'));
+    content_check_csv = isfile(fullfile(path.sub), 'rawdata_hip.csv');
 
-    if check_subj == 7 && content_check == 1
+    if check_subj == 7 && content_check_parq == 1 || content_check_csv == 1
         clearvars -except path timepoint fs plot_or_not pe pathToFunc subj_name subj content nfiles file_counter file_name
 
         disp('     Reading in the hip data......')
 
-        rawdata.hip_t = parquetread(fullfile(path.subj, 'rawdata_hip.parq'));
-        rawdata.hip = table2array(rawdata.hip_t);
-        hip_data = mat2np(rawdata.hip);
-
+        if strcmp(import_ext, 'parq')
+            rawdata.hip_t = parquetread(fullfile(path.subj, 'rawdata_hip.parq'));
+            rawdata.hip = table2array(rawdata.hip_t);
+            hip_data = mat2np(rawdata.hip);
+        elseif strcmp(import_ext, 'csv')
+            rawdata.hip_t = readtable(fullfile(path.subj,'rawdata_hip.csv'));
+            rawdata.hip = table2array(rawdata.hip_t);
+            hip_data = mat2np(rawdata.hip);
+        end
         %% obtain raw acceleration data non-wear-periods from the hip sensor
         disp('     Segment wear vs non-wear periods......')
         sample_rate = py.int(fs);
@@ -110,17 +117,26 @@ for subj = [1 3]%6:10
             end
 
             if size(blocks,1) >= 5
-                disp('     Load left arm data:......')
-                rawdata.left_t = parquetread(fullfile(path.subj, 'rawdata_left.parq'));
-                rawdata.left = table2array(rawdata.left_t);
-                %left_data = mat2np(rawdata.left);
+                if strcmp(import_ext,'parq')
+                    disp('     Load left arm data:......')
+                    rawdata.left_t = parquetread(fullfile(path.subj, 'rawdata_left.parq'));
+                    rawdata.left = table2array(rawdata.left_t);
+
+                    disp('     Load right arm data:......')
+                    rawdata.right_t = parquetread(fullfile(path.subj, 'rawdata_right.parq'));
+                    rawdata.right = table2array(rawdata.right_t);
+                elseif strcmp(inport_ext, 'csv')
+                    disp('     Load left arm data:......')
+                    rawdata.left_t = readtable(fullfile(path.subj, 'rawdata_left.csv'));
+                    rawdata.left = table2array(rawdata.left_t);
+
+                    disp('     Load right arm data:......')
+                    rawdata.right_t = readtable(fullfile(paht.subj, 'rawdata_right.csv'));
+                    rawdata.right = table2array(rawdata.right_t);
+                end
 
 
-                disp('     Load right arm data:......')
-                rawdata.right_t = parquetread(fullfile(path.subj, 'rawdata_right.parq'));
-                rawdata.right = table2array(rawdata.right_t);
-                %right_data = mat2np(rawdata.right);
-
+               
                 if ~isempty(rawdata.right) && ~isempty(rawdata.left)
                     disp(['     Wear time and data check completed......', newline, '     Conclusion: Data will be analysed'])
                     Conclusion = 'Analysed';
