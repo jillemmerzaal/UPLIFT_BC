@@ -40,4 +40,27 @@ Therefore, this code will implement the model developed by Lum et al., and teste
 3. Calulcate the percentage of minutes functional active with respect to the total wear time
 4. export all outcome to excel
 
+### How to run the code
+
+###### .gt3x files
+First, read the native acigraph files in using ```workflow_gt3x.m```. 
+```
+open workflow_gt3x.m
+```
+This will write the raw acceleration data plus the sample frenquency and acceleration scale to a parq file. 
+When reading in of the files is completed, **restart matlab** before you run ```workflow_fa.m``` to perform the segmentation of the wear blocks, prepare the data for the pretrained model, calculate the minutes of functional activity per limb in absolute values and as a percentage of total wear time.
+```
+open workflow_fa.m
+```
+The restart is nescesary because of the change in python environment. The requirement.txt is for the workflow_fa.m code.
+
+###### csv files
+If the workflow_gt3x fails you can also use .csv files extracted from the actigraph software. The naming of the files should be the same as for the .parq files: **rawdata_hip.csv** | **rawdata.left.csv** | **rawdata_right.csv**
+change the folowing code from 'parq' to 'csv'
+```
+import_ext = 'csv'
+```
+specify the subjects for which you want to use the csv files. Make sure that the data is in subject paths.
+
+
 
