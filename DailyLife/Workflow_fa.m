@@ -15,7 +15,7 @@ path.root   = 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\DailyLife\';
 path.data   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 timepoint   = 'T1';
 plot_or_not = 0;
-import_ext  = 'csv'; %OR csv, parq
+import_ext  = 'parq'; %OR csv, parq
 
 %% set python environment
 pe = pyenv("Version", "C:\GBW_MyPrograms\Anaconda3\envs\MATLAB_PYTHON\python.exe");
