@@ -14,10 +14,8 @@ cd('C:\Users\u0117545\Documents\GitHub\ULIFT_BC\DailyLife\')
 path.root   = 'C:\Users\u0117545\Documents\GitHub\ULIFT_BC\DailyLife\';
 path.data   = 'C:\Users\u0117545\KU Leuven\An De Groef - DATA';
 timepoint   = 'T1';
-plot_or_not = 1;
-fs          = 30;
-import_ext  = 'parq'; %OR csv
-csv         = 0;
+plot_or_not = 0;
+import_ext  = 'csv'; %OR csv, parq
 
 %% set python environment
 pe = pyenv("Version", "C:\GBW_MyPrograms\Anaconda3\envs\MATLAB_PYTHON\python.exe");
@@ -28,7 +26,7 @@ if count(py.sys.path,pathToFunc) == 0
 end
 
 %%
-for subj = 1:10
+for subj = 5
     if subj < 10
         subj_name = ['BC_00', num2str(subj)];
     elseif subj < 100
@@ -44,11 +42,19 @@ for subj = 1:10
 
     path.subj   = fullfile(path.data, subj_name, 'Accelerometrie', timepoint);
     check_subj  = exist(path.subj, "dir");
-    content_check_parq = isfile(fullfile(path.subj, 'rawdata_hip.parq'));
-    content_check_csv = isfile(fullfile(path.sub), 'rawdata_hip.csv');
 
-    if check_subj == 7 && content_check_parq == 1 || content_check_csv == 1
-        clearvars -except path timepoint fs plot_or_not pe pathToFunc subj_name subj content nfiles file_counter file_name
+    if strcmp(import_ext, 'parq')
+        content_check = isfile(fullfile(path.subj, 'rawdata_hip.parq'));
+    elseif strcmp(import_ext, 'csv')
+        content_check = isfile(fullfile(path.subj, 'rawdata_hip.csv'));
+    end
+
+    if check_subj == 7 && content_check == 1 
+        clearvars -except path timepoint fs plot_or_not pe pathToFunc subj_name subj content nfiles file_counter file_name import_ext
+
+        disp('     Reading in the meta data......')
+        rawdata.meta = parquetread(fullfile(path.subj, 'metadata.parq'));
+        fs = rawdata.meta.Sample_Rate;
 
         disp('     Reading in the hip data......')
 
@@ -57,10 +63,28 @@ for subj = 1:10
             rawdata.hip = table2array(rawdata.hip_t);
             hip_data = mat2np(rawdata.hip);
         elseif strcmp(import_ext, 'csv')
-            rawdata.hip_t = readtable(fullfile(path.subj,'rawdata_hip.csv'));
-            rawdata.hip = table2array(rawdata.hip_t);
-            hip_data = mat2np(rawdata.hip);
+            opts = delimitedTextImportOptions("NumVariables", 3);
+
+            % Specify range and delimiter
+            opts.DataLines = [12, Inf];
+            opts.Delimiter = ",";
+
+            % Specify column names and types
+            opts.VariableNames = ["AccelerometerX", "AccelerometerY", "AccelerometerZ"];
+            opts.VariableTypes = ["double", "double", "double"];
+
+            % Specify file level properties
+            opts.ExtraColumnsRule = "ignore";
+            opts.EmptyLineRule = "read";
+
+            % Specify variable properties
+            opts = setvaropts(opts, ["AccelerometerX", "AccelerometerY", "AccelerometerZ"], "EmptyFieldRule", "auto");
+
+            rawdata.hip_t = readtable(fullfile(path.subj,'rawdata_hip.csv'), opts);            
         end
+        
+        rawdata.hip = table2array(rawdata.hip_t);
+        hip_data = mat2np(rawdata.hip);
         %% obtain raw acceleration data non-wear-periods from the hip sensor
         disp('     Segment wear vs non-wear periods......')
         sample_rate = py.int(fs);
@@ -127,16 +151,14 @@ for subj = 1:10
                     rawdata.right = table2array(rawdata.right_t);
                 elseif strcmp(inport_ext, 'csv')
                     disp('     Load left arm data:......')
-                    rawdata.left_t = readtable(fullfile(path.subj, 'rawdata_left.csv'));
+                    rawdata.left_t = readtable(fullfile(path.subj, 'rawdata_left.csv'), opts);
                     rawdata.left = table2array(rawdata.left_t);
 
                     disp('     Load right arm data:......')
-                    rawdata.right_t = readtable(fullfile(paht.subj, 'rawdata_right.csv'));
+                    rawdata.right_t = readtable(fullfile(paht.subj, 'rawdata_right.csv'), opts);
                     rawdata.right = table2array(rawdata.right_t);
                 end
-
-
-               
+  
                 if ~isempty(rawdata.right) && ~isempty(rawdata.left)
                     disp(['     Wear time and data check completed......', newline, '     Conclusion: Data will be analysed'])
                     Conclusion = 'Analysed';
