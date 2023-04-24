@@ -57,10 +57,7 @@ for file = 1:nFiles
         disp("  File Video antoated data")
         file_video = content(file).name;
     end
-
 end
-
-
 
 %% manulal input no longer nesesary after this point
 fileName_L      = fullfile(subj_path, file_l);
@@ -324,7 +321,7 @@ data.expR = data.R(calibratie.frameOut30(1):calibratie.frameIn30(2),:);
 
 clear calibratie
 
-%% Get frame number machin learning pipeline
+%% Get frame number machine learning pipeline
 %%
 %  start times of the labels in the video data To attone for the frequency
 %  difference and the lack of miliseconds in the video data, we'll use the
@@ -494,14 +491,58 @@ feature2=featurecalc1(data_2,b);  %functional
 output=[zeros(length(feature1(:,1)),1);ones(length(feature2(:,1)),1)];
 feature=[feature1;feature2];
 
-%% accuracy predictor
+%% Predictions Left arm
 yyfit = trainedModel.predictFcn(feature);
 CC(:,:)=confusionmat(output,yyfit);
-Accuracy.L=(CC(1,1)+CC(2,2))/(CC(1,1)+CC(1,2)+CC(2,1)+CC(2,2));
+
+%% Accuracy, sensitivity, reacall, f1-score, and specificity
+%%
+% 
+%  useful source: <https://towardsdatascience.com/accuracy-recall-precision-f-score-specificity-which-to-optimize-on-867d3f11124 towardsdatascience> 
+%  True positives (TP) = when the model preditcts functional activity
+%  and it acctually is --> DESIRED
+%  True negative (TN) = when the model predicts not-functional activity and
+%  it actually is --> DESIRED
+%  False positives (FP) = when the model predicts functional activity and
+%  it is not --> false alarm, NOT DESIRABLE
+%  False negatives (FN) = when the model predicts not-fucntional and it is
+%  functional activity
+%  --> VERY BAD
+% 
+% Accuracy: How many did we correctly label 
+% accuracy = (TP + TN) /(TP + TN + FP + FN)
+%
+% Precision: How many of all labeled functional activity are indeed
+% functional activity
+% precision = TP / (TP + FP)
+%
+% Recall: Of all the sections of functional activity, how much did we
+% correctly predict
+% recall = TP / (TP + FN)
+% 
+% F1-score: the harmonic mean of the precision and recall
+% f1_score = 2* (recall * precision) / (recall + precision)
+%
+% Specificity: of all the sections of not-functional, how much is actially
+% not functional
+% specificity = TN / (TN + FP)
+
+TP = CC(1,1);
+TN = CC(2,2);
+FP = CC(1,2);
+FN = CC(2,1);
+
+accuracy.L      = (TP + TN) / (TP + TN + FP + FN);
+precision.L     = TP / (TP + FP);
+recall.L        = TP / (TP + FN);
+f1_score.L      = 2* (recall * precision) / (recall + precision);
+specificity.L   = TN / (TN + FP);
+
+clear TP TN FP FN
 %% dummy predictor
 yyfit_dummy = ones(length(output),1);
 CC_dummy(:,:)=confusionmat(output,yyfit_dummy);
-Accuracy.L_dummy=(CC_dummy(1,1)+CC_dummy(2,2))/(CC_dummy(1,1)+CC_dummy(1,2)+CC_dummy(2,1)+CC_dummy(2,2));
+accuracy.L_dummy=(CC_dummy(1,1)+CC_dummy(2,2))/(CC_dummy(1,1)+CC_dummy(1,2)+CC_dummy(2,1)+CC_dummy(2,2));
 %% total minutes active predictor
 total_active.pred_L = (size(yyfit(yyfit == 1), 1) * 4) / 60;
 perc_functional.pred_L = (size(yyfit(yyfit == 1), 1) * 4) / (size(data.expL,1) / 30);
@@ -548,14 +589,28 @@ feature2=featurecalc1(data_2,b);  %functional
 output=[zeros(length(feature1(:,1)),1);ones(length(feature2(:,1)),1)];
 feature=[feature1;feature2];
 
-%% accuracy predictor
+%% Predictions right arm
 yyfit = trainedModel.predictFcn(feature);
 CC(:,:)=confusionmat(output,yyfit);
-Accuracy.R=(CC(1,1)+CC(2,2))/(CC(1,1)+CC(1,2)+CC(2,1)+CC(2,2));
+
+%% Accuracy, sensitivity, reacall, f1-score, and specificity
+
+TP = CC(1,1);
+TN = CC(2,2);
+FP = CC(1,2);
+FN = CC(2,1);
+
+accuracy.R      = (TP + TN) / (TP + TN + FP + FN);
+precision.R     = TP / (TP + FP);
+recall.R        = TP / (TP + FN);
+f1_score.R      = 2* (recall * precision) / (recall + precision);
+specificity.R   = TN / (TN + FP);
+
+clear TP TN FP FN
 %% dummy predictor
 yyfit_dummy = ones(length(output),1);
 CC_dummy(:,:)=confusionmat(output,yyfit_dummy);
-Accuracy.R_dummy=(CC_dummy(1,1)+CC_dummy(2,2))/(CC_dummy(1,1)+CC_dummy(1,2)+CC_dummy(2,1)+CC_dummy(2,2));
+accuracy.R_dummy=(CC_dummy(1,1)+CC_dummy(2,2))/(CC_dummy(1,1)+CC_dummy(1,2)+CC_dummy(2,1)+CC_dummy(2,2));
 %% total minutes active predictor
 total_active.pred_R = (size(yyfit(yyfit == 1), 1) * 4) / 60;
 perc_functional.pred_R = (size(yyfit(yyfit == 1),1) * 4) /  (size(data.expR,1) /30);
@@ -572,25 +627,26 @@ perc_functional.count_R = nan;
 
 %% write output data 
 % Accuracy
-Accuracy_table = table(string(ppID), round(Accuracy.L,4), round(Accuracy.L_dummy,4), ...
-    round(Accuracy.R,4), round(Accuracy.R_dummy,4));
-Accuracy_table.Properties.VariableNames = {'ppID', 'Acc L', 'Acc L d', 'Acc R', 'Acc R d'};
+Accuracy_table = table(string(ppID), round(accuracy.L,4), round(precision.L,4), round(recall.L,4), round(f1_score.L,4), round(specificity.L,4), ...
+    round(accuracy.R,4), round(precision.R,4), round(recall.R,4), round(f1_score.R,4), round(specificity.R,4));
+Accuracy_table.Properties.VariableNames = {'ppID', 'accuracy L', 'precision L', 'recall L', 'f1-score L', 'specificity L', ...
+    'accuracy R', 'precision R', 'recall R', 'f1-score R', 'specificity R'};
 
-writetable(Accuracy_table, 'ResultsProtocolLum.xlsx', 'WriteMode','append','Sheet', 'Accuracy')
+writetable(Accuracy_table, 'ResultsProtocolLum_2.xlsx', 'WriteMode','append','Sheet', 'Metrics')
 
 % Minutes active
 Active_table = table(string(ppID), total_active.GT_L, total_active.pred_L, total_active.count_L, ...
     total_active.GT_R, total_active.pred_R, total_active.count_L);
 Active_table.Properties.VariableNames= {'ppID', 'GT L', 'Pred L', 'Count L', 'GT R', 'Pred R', 'Count R'};   
 
-writetable(Active_table, 'ResultsProtocolLum.xlsx', 'WriteMode','append', 'Sheet' ,'MinutesActive')
+writetable(Active_table, 'ResultsProtocolLum_2.xlsx', 'WriteMode','append', 'Sheet' ,'MinutesActive')
 
 % percentage in functional 
 percentage_table = table(string(ppID), perc_functional.GT_L, perc_functional.pred_L, perc_functional.count_L, ...
     perc_functional.GT_R, perc_functional.pred_R, perc_functional.count_R);
 percentage_table.Properties.VariableNames = {'ppID', 'GT L', 'Pred L', 'Count L', 'GT R', 'Pred R', 'Count R'};
 
-writetable(percentage_table, 'ResultsProtocolLum.xlsx', 'WriteMode','append', 'Sheet' ,'PercentageFunctional')
+writetable(percentage_table, 'ResultsProtocolLum.xlsx_2', 'WriteMode','append', 'Sheet' ,'PercentageFunctional')
 
 return
 %% Export data for counts analysis 
