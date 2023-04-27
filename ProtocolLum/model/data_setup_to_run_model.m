@@ -420,11 +420,12 @@ end
 
 data.L_sp(data.L_sp(:,4)==0, 4) = 1;
 
-calibratie = vid(ismember(vid.MarkerName, {'Calibration'}),:);
-for idx = 1:height(calibratie)
-    data.L_sp(calibratie.frameIn(idx):calibratie.frameOut(idx),4) = 0;
+Remove_data = vid(ismember(vid.MarkerName, {'Calibration', 'Unknown', 'unknown'}),:);
+for idx = 1:height(Remove_data)
+    data.L_sp(Remove_data.frameIn(idx):Remove_data.frameOut(idx),4) = 0;
 end
 
+clear Remove_data
 % right
 RightActive = vid(ismember(vid.MarkerName, {'R', 'L + R', 'R + L'}),:);
 for idx = 1:height(RightActive)
@@ -432,11 +433,11 @@ for idx = 1:height(RightActive)
 end
 data.R_sp(data.R_sp(:,4)==0, 4) = 1;
 
-calibratie = vid(ismember(vid.MarkerName, {'Calibration'}),:);
-for idx = 1:height(calibratie)
-    data.R_sp(calibratie.frameIn(idx):calibratie.frameOut(idx),4) = 0;
+Remove_data = vid(ismember(vid.MarkerName, {'Calibration', 'Unknown', 'unknown'}),:);
+for idx = 1:height(Remove_data)
+    data.R_sp(Remove_data.frameIn(idx):Remove_data.frameOut(idx),4) = 0;
 end
-
+clear Remove_data
 
 %% plot to check the results
 Spotcheck = vid(ismember(vid.MarkerName, {'Calibration', 'Spotcheck'}),:);
